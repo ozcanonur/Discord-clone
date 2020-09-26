@@ -1,21 +1,22 @@
 import React from 'react';
-import Main from 'components/Main/index';
-import Sidebar from 'components/Sidebar/index';
 import Grid from '@material-ui/core/Grid';
 
-const App = () => {
+import ServerList from './ServerList/index';
+import ChannelList from './ChannelList/index';
+
+const Sidebar = () => {
   return (
     <div>
       <Grid container direction='row'>
         <Grid item xs={3}>
-          <Sidebar />
+          <ServerList />
         </Grid>
         <Grid item xs={9}>
-          <Main />
+          <ChannelList />
         </Grid>
       </Grid>
     </div>
   );
 };
 
-export default App;
+export default Sidebar;
