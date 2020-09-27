@@ -1,19 +1,31 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Header from './Header';
-import Chat from './Chat';
+import Chat from './Body/index';
+
+const useStyles = makeStyles({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  header: {
+    flexGrow: 1,
+  },
+  chat: {
+    flexGrow: 2,
+  },
+});
 
 const Main = () => {
+  const classes = useStyles();
+
   return (
-    <Grid container direction='column'>
-      <Grid item>
-        <Header />
-      </Grid>
-      <Grid item>
-        <Chat />
-      </Grid>
-    </Grid>
+    <div className={classes.container}>
+      <Header className={classes.header} />
+      <Chat className={classes.chat} />
+    </div>
   );
 };
 

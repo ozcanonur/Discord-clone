@@ -11,6 +11,9 @@ const useStyles = makeStyles({
     backgroundColor: 'rgb(47,49,54)',
     color: 'white',
     fontSize: '2rem',
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 

@@ -8,7 +8,7 @@ import Settings from '@material-ui/icons/Settings';
 
 const useStyles = makeStyles({
   footer: {
-    height: '5vh',
+    height: '6rem',
     color: 'white',
     padding: '1rem',
     display: 'flex',
@@ -34,15 +34,16 @@ const useStyles = makeStyles({
     fontWeight: 1000,
   },
   userId: {
-    fontSize: '1rem',
+    fontSize: '1.2rem',
+    color: 'rgb(185,187, 190)',
   },
   buttons: {
     display: 'flex',
     alignItems: 'center',
-    marginLeft: '3rem',
+    marginLeft: '2.5rem',
   },
   button: {
-    color: 'white',
+    color: 'rgb(220,221,222)',
   },
   buttonIcon: {
     fontSize: '2rem',

@@ -3,10 +3,11 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 const useStyles = makeStyles({
   body: {
-    height: '90vh',
     color: 'white',
-    fontSize: '2rem',
-    padding: '1rem',
+    fontSize: '1.5rem',
+    fontWeight: 1000,
+    padding: '2rem',
+    flexGrow: 1,
   },
 });
 
