@@ -1,6 +1,6 @@
 import React from 'react';
-import Main from 'components/Main/index';
-import Sidebar from 'components/Sidebar/index';
+import Main from 'views/Main/index';
+import Sidebar from 'views/Sidebar/index';
 import Grid from '@material-ui/core/Grid';
 
 const App = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import Server from './Server';
+import ServerIcon from 'components/ServerIcon';
 
 const useStyles = makeStyles({
   serverList: {
@@ -19,10 +19,10 @@ const ServerList = () => {
 
   return (
     <div className={classes.serverList}>
-      <Server />
-      <Server />
-      <Server />
-      <Server />
+      <ServerIcon />
+      <ServerIcon />
+      <ServerIcon />
+      <ServerIcon />
     </div>
   );
 };

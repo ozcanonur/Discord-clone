@@ -1,7 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import IconButton from '@material-ui/core/IconButton';
+import Button from 'components/Button';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
 import Settings from '@material-ui/icons/Settings';
@@ -42,12 +42,6 @@ const useStyles = makeStyles({
     alignItems: 'center',
     marginLeft: '2.5rem',
   },
-  button: {
-    color: 'rgb(220,221,222)',
-  },
-  buttonIcon: {
-    fontSize: '2rem',
-  },
 });
 
 const Footer = () => {
@@ -61,15 +55,15 @@ const Footer = () => {
         <div className={classes.userId}>#5421</div>
       </div>
       <div className={classes.buttons}>
-        <IconButton className={classes.button}>
-          <Mic className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <Headset className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <Settings className={classes.buttonIcon} />
-        </IconButton>
+        <Button>
+          <Mic />
+        </Button>
+        <Button>
+          <Headset />
+        </Button>
+        <Button>
+          <Settings />
+        </Button>
       </div>
     </div>
   );

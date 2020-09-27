@@ -1,6 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import IconButton from '@material-ui/core/IconButton';
+import Button from 'components/Button';
+
 import Notifications from '@material-ui/icons/Notifications';
 import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
@@ -34,13 +35,6 @@ const useStyles = makeStyles({
   optionsContainer: {
     display: 'flex',
   },
-  button: {
-    color: 'rgb(220,221,222)',
-  },
-  buttonIcon: {
-    fontSize: '2rem',
-  },
-  input: {},
 });
 
 const Header = () => {
@@ -53,21 +47,21 @@ const Header = () => {
         <div className={classes.titleText}>general</div>
       </div>
       <div className={classes.optionsContainer}>
-        <IconButton className={classes.button}>
-          <Notifications className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <Room className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <PeopleAlt className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <Inbox className={classes.buttonIcon} />
-        </IconButton>
-        <IconButton className={classes.button}>
-          <Help className={classes.buttonIcon} style={{ color: '#3CB371' }} />
-        </IconButton>
+        <Button>
+          <Notifications />
+        </Button>
+        <Button>
+          <Room />
+        </Button>
+        <Button>
+          <PeopleAlt />
+        </Button>
+        <Button>
+          <Inbox />
+        </Button>
+        <Button>
+          <Help />
+        </Button>
       </div>
     </div>
   );
