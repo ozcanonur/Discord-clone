@@ -11,3 +11,10 @@ export const sendMessage = (message) => {
     payload: message,
   };
 };
+
+export const createRoom = (roomName) => {
+  return {
+    type: 'io/createRoom',
+    payload: roomName,
+  };
+};

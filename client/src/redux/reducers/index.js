@@ -18,7 +18,17 @@ const users = (state = [], action) => {
   }
 };
 
+const rooms = (state = [], action) => {
+  switch (action.type) {
+    case 'rooms':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   users,
+  rooms,
 });
