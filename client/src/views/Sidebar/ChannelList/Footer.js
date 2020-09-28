@@ -1,5 +1,6 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import qs from 'qs';
 
 import Button from 'components/Button';
 import Mic from '@material-ui/icons/Mic';
@@ -47,12 +48,14 @@ const useStyles = makeStyles({
 const Footer = () => {
   const classes = useStyles();
 
+  const { username } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
   return (
     <div className={classes.footer}>
       <div className={classes.icon} />
       <div className={classes.user}>
-        <div className={classes.userName}>Onur</div>
-        <div className={classes.userId}>#5421</div>
+        <div className={classes.userName}>{username}</div>
+        {/* <div className={classes.userId}>#5421</div> */}
       </div>
       <div className={classes.buttons}>
         <Button>

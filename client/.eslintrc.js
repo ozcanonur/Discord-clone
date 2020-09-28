@@ -24,6 +24,7 @@ module.exports = {
     camelcase: 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-indent': 'off',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     'import/resolver': {

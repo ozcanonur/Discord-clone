@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ActiveUser from 'components/ActiveUser';
 
@@ -17,11 +18,14 @@ const useStyles = makeStyles({
 const ActiveUsers = () => {
   const classes = useStyles();
 
+  const users = useSelector((state) => state.users);
+
   return (
     <div className={classes.activeUsers}>
       <div className={classes.usersStatus}>ONLINE &ndash; 1</div>
-      <ActiveUser name='Onur' />
-      <ActiveUser name='Rachel' />
+      {users.map((user, key) => (
+        <ActiveUser key={key} name={user} />
+      ))}
     </div>
   );
 };

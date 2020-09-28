@@ -48,6 +48,10 @@ const useStyles = makeStyles({
 const Input = () => {
   const classes = useStyles();
 
+  const handleSubmit = (e) => {
+    if (e.which === 13) console.log('Submitted');
+  };
+
   return (
     <TextField
       className={classes.inputContainer}
@@ -63,6 +67,7 @@ const Input = () => {
           </InputAdornment>
         ),
       }}
+      onKeyPress={(e) => handleSubmit(e)}
     />
   );
 };
