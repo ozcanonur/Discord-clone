@@ -19,12 +19,13 @@ const ActiveUsers = () => {
   const classes = useStyles();
 
   const users = useSelector((state) => state.users);
+  const usernames = users.map((user) => user.username);
 
   return (
     <div className={classes.activeUsers}>
       <div className={classes.usersStatus}>ONLINE &ndash; 1</div>
-      {users.map((user, key) => (
-        <ActiveUser key={key} name={user} />
+      {usernames.map((username, key) => (
+        <ActiveUser key={key} name={username} />
       ))}
     </div>
   );

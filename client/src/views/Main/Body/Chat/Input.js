@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddCircle from '@material-ui/icons/AddCircle';
+import { sendMessage } from 'redux/actions/index';
 
 const useStyles = makeStyles({
   inputContainer: {
@@ -48,8 +50,18 @@ const useStyles = makeStyles({
 const Input = () => {
   const classes = useStyles();
 
+  const [text, setText] = useState('');
+
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
-    if (e.which === 13) console.log('Submitted');
+    if (e.which === 13 && !e.shiftKey) {
+      dispatch(sendMessage(e.target.value));
+      setText('');
+    }
   };
 
   return (
@@ -68,6 +80,8 @@ const Input = () => {
         ),
       }}
       onKeyPress={(e) => handleSubmit(e)}
+      value={text}
+      onChange={(e) => handleChange(e)}
     />
   );
 };

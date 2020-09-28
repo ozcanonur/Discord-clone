@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 
-const message = (state = {}, action) => {
+const messages = (state = [], action) => {
   switch (action.type) {
-    case 'message':
+    case 'messages':
       return action.payload;
     default:
       return state;
@@ -11,7 +11,7 @@ const message = (state = {}, action) => {
 
 const users = (state = [], action) => {
   switch (action.type) {
-    case 'join':
+    case 'users':
       return action.payload;
     default:
       return state;
@@ -19,6 +19,6 @@ const users = (state = [], action) => {
 };
 
 export default combineReducers({
-  message,
+  messages,
   users,
 });
