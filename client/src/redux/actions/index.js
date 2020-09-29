@@ -12,9 +12,22 @@ export const sendMessage = (message) => {
   };
 };
 
-export const createRoom = (roomName) => {
+export const createServer = (serverName) => {
   return {
-    type: 'io/createRoom',
-    payload: roomName,
+    type: 'io/createServer',
+    payload: {
+      name: serverName,
+      channels: [
+        { name: 'general', type: 'text' },
+        { name: 'voice', type: 'voice' },
+      ],
+    },
+  };
+};
+
+export const selectServerName = (serverName) => {
+  return {
+    type: 'SELECT_SERVER_NAME',
+    payload: serverName,
   };
 };

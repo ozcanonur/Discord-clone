@@ -7,7 +7,15 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 let users = [];
-let rooms = [];
+const defaultServer = {
+  name: 'Def',
+  channels: [
+    { name: 'general', type: 'text' },
+    { name: 'games', type: 'text' },
+    { name: 'voice', type: 'voice' },
+  ],
+};
+let servers = [defaultServer];
 let messages = [];
 
 // Emit the current users to all sockets
@@ -33,8 +41,8 @@ const addMessage = (messages, username, text) => {
   messages.push({ username, text });
 };
 
-const emitRooms = (io, rooms) => {
-  io.emit('action', { type: 'rooms', payload: rooms });
+const emitServers = (io, servers) => {
+  io.emit('action', { type: 'servers', payload: servers });
 };
 
 io.on('connection', (socket) => {
@@ -48,12 +56,12 @@ io.on('connection', (socket) => {
       case 'io/join':
         onJoin(io, socket, action, users);
         emitMessages(io, messages);
-        emitRooms(io, rooms);
+        emitServers(io, servers);
         break;
-      case 'io/createRoom':
-        const roomName = action.payload;
-        rooms.push(roomName);
-        emitRooms(io, rooms);
+      case 'io/createServer':
+        const server = action.payload;
+        servers.push(server);
+        emitServers(io, servers);
         break;
       default:
         break;

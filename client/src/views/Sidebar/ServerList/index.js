@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Add from '@material-ui/icons/Add';
-import { createRoom } from 'redux/actions/index';
+import { createServer, selectServerName } from 'redux/actions/index';
 
 import ServerIcon from 'components/ServerIcon';
 
@@ -15,28 +15,32 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     padding: '0.8rem',
   },
-  roomText: {
-    fontSize: '1rem',
-  },
 });
 
 const ServerList = () => {
   const classes = useStyles();
 
-  const rooms = useSelector((state) => state.rooms);
+  const servers = useSelector((state) => state.servers);
+  const serverNames = servers.map((server) => server.name);
 
   const dispatch = useDispatch();
-  const createRoomOnClick = () => {
-    dispatch(createRoom('Rm'));
+  const createServerOnClick = () => {
+    dispatch(createServer('Rm'));
+  };
+
+  const selectServerNameOnClick = (serverName) => {
+    dispatch(selectServerName(serverName));
   };
 
   return (
     <div className={classes.serverList}>
       <ServerIcon>
-        <Add onClick={createRoomOnClick} />
+        <Add onClick={createServerOnClick} />
       </ServerIcon>
-      {rooms.map((room, key) => (
-        <ServerIcon key={key}>{room}</ServerIcon>
+      {serverNames.map((serverName, key) => (
+        <ServerIcon key={key} onClick={() => selectServerNameOnClick(serverName)}>
+          {serverName}
+        </ServerIcon>
       ))}
     </div>
   );

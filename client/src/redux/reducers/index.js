@@ -18,9 +18,18 @@ const users = (state = [], action) => {
   }
 };
 
-const rooms = (state = [], action) => {
+const servers = (state = [], action) => {
   switch (action.type) {
-    case 'rooms':
+    case 'servers':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const selectedServerName = (state = '', action) => {
+  switch (action.type) {
+    case 'SELECT_SERVER_NAME':
       return action.payload;
     default:
       return state;
@@ -30,5 +39,6 @@ const rooms = (state = [], action) => {
 export default combineReducers({
   messages,
   users,
-  rooms,
+  servers,
+  selectedServerName,
 });
