@@ -12,6 +12,10 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  channelWarning: {
+    margin: 'auto auto',
+    fontSize: '2rem',
+  },
 });
 
 const Chat = () => {
@@ -25,7 +29,9 @@ const Chat = () => {
           <Messages />
           <Input />
         </>
-      ) : null}
+      ) : (
+        <div className={classes.channelWarning}>Select a server and channel</div>
+      )}
     </div>
   );
 };

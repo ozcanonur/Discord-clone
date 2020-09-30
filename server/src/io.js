@@ -54,6 +54,14 @@ const onUserConnected = async (socket, action) => {
   socket.emit('action', { type: 'io/servers', payload: user.servers });
 };
 
+const onUserDisconnected = async (socket) => {
+  // Update the user's online status to false
+  await User.updateOne({ socketId: socket.id }, { online: false });
+  // Let other users know
+  const users = await User.find({ online: true });
+  io.emit('action', { type: 'io/users', payload: users });
+};
+
 const onUserCreatedServer = async (socket, action) => {
   const { name, server } = action.payload;
   let user = await User.findOne({ name });
@@ -68,7 +76,7 @@ const onUserCreatedServer = async (socket, action) => {
 
   // Update the user's servers
   await User.updateOne({ name }, { $addToSet: { servers: newServer } });
-  // Find the current user's servers and send them back
+  // Find the user's servers and send them back
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } });
   socket.emit('action', { type: 'io/servers', payload: userServers });
@@ -138,10 +146,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', async () => {
-    // Update the user's online status to false
-    await User.updateOne({ socketId: socket.id }, { online: false });
-    // Let other users know
-    const users = await User.find({ online: true });
-    io.emit('action', { type: 'io/users', payload: users });
+    onUserDisconnected(socket);
   });
 });
