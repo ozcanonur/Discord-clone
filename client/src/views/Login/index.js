@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const classes = useStyles();
 
-  const [username, setUserName] = useState('Onur');
+  const [name, setName] = useState('Onur');
 
   const handleChange = (e) => {
-    setUserName(e.target.value);
+    setName(e.target.value);
   };
 
   return (
@@ -67,7 +67,7 @@ const Login = () => {
               name='name'
               autoComplete='name'
               autoFocus
-              value={username}
+              value={name}
               onChange={handleChange}
             />
             <TextField
@@ -88,7 +88,7 @@ const Login = () => {
               color='primary'
               className={classes.submit}
               component={Link}
-              to={`/main?username=${username}`}
+              to={`/main?name=${name}`}
             >
               Sign In
             </Button>

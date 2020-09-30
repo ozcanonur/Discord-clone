@@ -3,14 +3,12 @@ import { useDispatch } from 'react-redux';
 import Main from 'views/Main/index';
 import Sidebar from 'views/Sidebar/index';
 import Grid from '@material-ui/core/Grid';
-import { join } from 'redux/actions/index';
-import qs from 'qs';
+import { connect } from 'redux/actions/socket';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const { username } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-    dispatch(join(username));
+    dispatch(connect());
   }, [dispatch]);
 
   return (

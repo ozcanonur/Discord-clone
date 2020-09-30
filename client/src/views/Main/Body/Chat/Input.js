@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddCircle from '@material-ui/icons/AddCircle';
-import { sendMessage } from 'redux/actions/index';
+import { message } from 'redux/actions/socket';
 
 const useStyles = makeStyles({
   inputContainer: {
@@ -59,7 +59,7 @@ const Input = () => {
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     if (e.which === 13 && !e.shiftKey) {
-      dispatch(sendMessage(e.target.value));
+      dispatch(message(e.target.value));
       setText('');
     }
   };

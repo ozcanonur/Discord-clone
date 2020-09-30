@@ -48,13 +48,13 @@ const useStyles = makeStyles({
 const Footer = () => {
   const classes = useStyles();
 
-  const { username } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   return (
     <div className={classes.footer}>
       <div className={classes.icon} />
       <div className={classes.user}>
-        <div className={classes.userName}>{username}</div>
+        <div className={classes.userName}>{name}</div>
         {/* <div className={classes.userId}>#5421</div> */}
       </div>
       <div className={classes.buttons}>

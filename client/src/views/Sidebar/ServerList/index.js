@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Add from '@material-ui/icons/Add';
-import { createServer, selectServerName } from 'redux/actions/index';
-
+import { createServer } from 'redux/actions/socket';
+import { selectServer } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
 
 const useStyles = makeStyles({
@@ -29,7 +29,7 @@ const ServerList = () => {
   };
 
   const selectServerNameOnClick = (serverName) => {
-    dispatch(selectServerName(serverName));
+    dispatch(selectServer(serverName));
   };
 
   return (
