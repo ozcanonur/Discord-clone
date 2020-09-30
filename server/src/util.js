@@ -1,15 +1,5 @@
 const { Server } = require('./db/models/server');
 
-const userExists = (users, newUser) => {
-  const existingUser = users.filter((user) => user === newUser);
-  if (existingUser.length > 0) return true;
-  return false;
-};
-
-const findUserByUsername = (users, username) => {
-  return users.find((user) => user.username === username);
-};
-
 const setupDefaultServer = async () => {
   let defaultServer = await Server.findOne({ name: 'Def' });
   if (!defaultServer) {
@@ -26,4 +16,4 @@ const setupDefaultServer = async () => {
   }
 };
 
-module.exports = { userExists, findUserByUsername, setupDefaultServer };
+module.exports = { setupDefaultServer };

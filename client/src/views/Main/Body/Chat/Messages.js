@@ -20,8 +20,8 @@ const Messages = () => {
 
   return (
     <div className={classes.messages}>
-      {messages.map(({ username, message }, key) => (
-        <Message key={key} username={username} text={message} />
+      {messages.map(({ name, message }, key) => (
+        <Message key={key} username={name} text={message} />
       ))}
     </div>
   );

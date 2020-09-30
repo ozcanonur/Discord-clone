@@ -43,13 +43,13 @@ const Body = () => {
   const classes = useStyles();
 
   const servers = useSelector((state) => state.servers);
-  const selectedServerName = useSelector((state) => state.selectedServerName);
+  const selectedServerName = useSelector((state) => state.selectedServer);
   const selectedServer = servers.find((server) => server.name === selectedServerName);
 
   const selectedChannelName = useSelector((state) => state.selectedChannelName);
 
   const dispatch = useDispatch();
-  const channelSelected = (channel) => {
+  const selectChannelOnClick = (channel) => {
     dispatch(clearMessages());
     dispatch(selectChannel(channel));
     dispatch(selectChannelIo(selectedServer, channel));
@@ -63,14 +63,14 @@ const Body = () => {
               <ListItem
                 key={key}
                 button
-                onClick={() => channelSelected(channel)}
-                selected={selectedChannelName === channel}
+                onClick={() => selectChannelOnClick(channel.name)}
+                selected={selectedChannelName === channel.name}
                 classes={{ selected: classes.channelSelected, root: classes.channel }}
               >
                 <ListItemIcon>
                   <ForumIcon className={classes.icon} />
                 </ListItemIcon>
-                <ListItemText primary={channel} className={classes.text} />
+                <ListItemText primary={channel.name} className={classes.text} />
               </ListItem>
             ))
           : null}

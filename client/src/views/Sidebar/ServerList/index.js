@@ -28,17 +28,17 @@ const ServerList = () => {
     dispatch(createServer('Rm'));
   };
 
-  const selectServerNameOnClick = (serverName) => {
+  const selectServerOnClick = (serverName) => {
     dispatch(selectServer(serverName));
   };
 
   return (
     <div className={classes.serverList}>
-      <ServerIcon>
-        <Add onClick={createServerOnClick} />
+      <ServerIcon onClick={createServerOnClick}>
+        <Add />
       </ServerIcon>
       {serverNames.map((serverName, key) => (
-        <ServerIcon key={key} onClick={() => selectServerNameOnClick(serverName)}>
+        <ServerIcon key={key} onClick={() => selectServerOnClick(serverName)}>
           {serverName}
         </ServerIcon>
       ))}

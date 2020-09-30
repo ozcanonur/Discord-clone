@@ -22,16 +22,16 @@ const users = (state = [], action) => {
 
 const servers = (state = [], action) => {
   switch (action.type) {
-    case 'servers':
+    case 'io/servers':
       return action.payload;
     default:
       return state;
   }
 };
 
-const selectedServerName = (state = '', action) => {
+const selectedServer = (state = '', action) => {
   switch (action.type) {
-    case 'SELECT_SERVER_NAME':
+    case 'SELECT_SERVER':
       return action.payload;
     default:
       return state;
@@ -51,6 +51,6 @@ export default combineReducers({
   messages,
   users,
   servers,
-  selectedServerName,
+  selectedServer,
   selectedChannelName,
 });
