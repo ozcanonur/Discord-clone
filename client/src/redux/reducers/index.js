@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 
 const messages = (state = [], action) => {
   switch (action.type) {
-    case 'messages':
-      return [...state, action.payload];
+    case 'io/messages':
+      return action.payload;
     case 'CLEAR_MESSAGES':
       return [];
     default:

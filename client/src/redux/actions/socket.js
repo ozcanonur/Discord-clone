@@ -9,30 +9,26 @@ export const connect = () => {
   };
 };
 
-export const message = (message) => {
-  return {
-    type: 'io/userMessaged',
-    payload: { name, message },
-  };
-};
-
 export const createServer = (serverName) => {
   return {
     type: 'io/userCreatedServer',
     payload: {
       name,
-      server: {
-        name: serverName,
-        channels: [],
-        users: [name],
-      },
+      server: serverName,
     },
   };
 };
 
-export const selectChannel = (server, channel) => {
+export const selectChannel = (channel) => {
   return {
     type: 'io/userSelectedChannel',
-    payload: { name, server, channel },
+    payload: { name, channel },
+  };
+};
+
+export const message = (message) => {
+  return {
+    type: 'io/userMessaged',
+    payload: { name, message },
   };
 };

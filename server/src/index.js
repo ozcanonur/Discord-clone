@@ -4,7 +4,7 @@ const http = require('http');
 const app = express();
 const server = http.createServer(app);
 
-module.exports = { server };
+module.exports = server;
 
 require('./db/mongoose');
 require('./io');

@@ -7,21 +7,20 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
-  socketId: {
-    type: String,
-  },
+  socketId: String,
   servers: [
     {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'Server',
     },
   ],
   currentChannel: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'Channel',
   },
-  online: {
-    type: Boolean,
-  },
+  online: Boolean,
+  lastActiveAt: Date,
 });
 
 const User = mongoose.model('User', UserSchema);
-module.exports = { User };
+module.exports = User;

@@ -49,10 +49,11 @@ const Body = () => {
   const selectedChannelName = useSelector((state) => state.selectedChannelName);
 
   const dispatch = useDispatch();
-  const selectChannelOnClick = (channel) => {
+  const selectChannelOnClick = (channelName) => {
     dispatch(clearMessages());
-    dispatch(selectChannel(channel));
-    dispatch(selectChannelIo(selectedServer, channel));
+    dispatch(selectChannel(channelName));
+    const channel = selectedServer.channels.find((c) => c.name === channelName);
+    dispatch(selectChannelIo(channel));
   };
 
   return (

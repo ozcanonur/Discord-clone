@@ -1,15 +1,32 @@
-const { Server } = require('./db/models/server');
+const Server = require('./db/models/server');
+const Channel = require('./db/models/channel');
+
+const defaultChannel = async (name) => {
+  const channel = new Channel({
+    name,
+    messages: [],
+  });
+
+  await channel.save();
+  return channel;
+};
+
+const setupDefaultChannels = async () => {
+  const channels = await Promise.all([
+    defaultChannel('general'),
+    defaultChannel('games'),
+    defaultChannel('covid-19'),
+  ]);
+  return channels;
+};
 
 const setupDefaultServer = async () => {
-  let defaultServer = await Server.findOne({ name: 'Def' });
-  if (!defaultServer) {
-    defaultServer = new Server({
+  const defaultServerExists = await Server.exists({ name: 'Def' });
+  if (!defaultServerExists) {
+    const defaultChannels = await setupDefaultChannels();
+    const defaultServer = new Server({
       name: 'Def',
-      channels: [
-        { name: 'general', messages: [] },
-        { name: 'games', messages: [] },
-        { name: 'covid-19', messages: [] },
-      ],
+      channels: defaultChannels,
       users: [],
     });
     await defaultServer.save();
