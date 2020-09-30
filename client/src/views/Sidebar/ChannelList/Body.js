@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ForumIcon from '@material-ui/icons/Forum';
-import { selectChannel, clearMessages } from 'redux/actions/react';
+import { selectChannel } from 'redux/actions/react';
 import { selectChannel as selectChannelIo } from 'redux/actions/socket';
 import qs from 'qs';
 
@@ -43,19 +43,14 @@ const useStyles = makeStyles({
 const Body = () => {
   const classes = useStyles();
 
-  const servers = useSelector((state) => state.servers);
-  const selectedServerName = useSelector((state) => state.selectedServer);
-  const selectedServer = servers.find((server) => server.name === selectedServerName);
-
-  const selectedChannelName = useSelector((state) => state.selectedChannelName);
+  const selectedServer = useSelector((state) => state.selectedServer);
+  const selectedChannel = useSelector((state) => state.selectedChannel);
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
-  const selectChannelOnClick = (channelName) => {
-    dispatch(clearMessages());
-    dispatch(selectChannel(channelName));
-    const channel = selectedServer.channels.find((c) => c.name === channelName);
+  const selectChannelOnClick = (channel) => {
+    dispatch(selectChannel(channel));
     dispatch(selectChannelIo(name, channel));
   };
 
@@ -67,8 +62,8 @@ const Body = () => {
               <ListItem
                 key={key}
                 button
-                onClick={() => selectChannelOnClick(channel.name)}
-                selected={selectedChannelName === channel.name}
+                onClick={() => selectChannelOnClick(channel)}
+                selected={selectedChannel.name === channel.name}
                 classes={{ selected: classes.channelSelected, root: classes.channel }}
               >
                 <ListItemIcon>

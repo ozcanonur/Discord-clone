@@ -5,6 +5,7 @@ import Add from '@material-ui/icons/Add';
 import { createServer } from 'redux/actions/socket';
 import { selectServer } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
+import qs from 'qs';
 
 const useStyles = makeStyles({
   serverList: {
@@ -21,15 +22,16 @@ const ServerList = () => {
   const classes = useStyles();
 
   const servers = useSelector((state) => state.servers);
-  const serverNames = servers.map((server) => server.name);
+
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
-  const createServerOnClick = () => {
-    dispatch(createServer('Rm'));
+  const selectServerOnClick = (server) => {
+    dispatch(selectServer(server));
   };
 
-  const selectServerOnClick = (serverName) => {
-    dispatch(selectServer(serverName));
+  const createServerOnClick = () => {
+    dispatch(createServer(name, 'Rm'));
   };
 
   return (
@@ -37,9 +39,9 @@ const ServerList = () => {
       <ServerIcon onClick={createServerOnClick}>
         <Add />
       </ServerIcon>
-      {serverNames.map((serverName, key) => (
-        <ServerIcon key={key} onClick={() => selectServerOnClick(serverName)}>
-          {serverName}
+      {servers.map((server, key) => (
+        <ServerIcon key={key} onClick={() => selectServerOnClick(server)}>
+          {server.name}
         </ServerIcon>
       ))}
     </div>

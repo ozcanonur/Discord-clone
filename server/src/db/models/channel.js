@@ -12,6 +12,10 @@ const ChannelSchema = new Schema({
       ref: 'Message',
     },
   ],
+  voice: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Channel = mongoose.model('Channel', ChannelSchema);

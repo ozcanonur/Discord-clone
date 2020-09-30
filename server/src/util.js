@@ -1,10 +1,11 @@
 const Server = require('./db/models/server');
 const Channel = require('./db/models/channel');
 
-const defaultChannel = async (name) => {
+const defaultChannel = async (name, voice) => {
   const channel = new Channel({
     name,
     messages: [],
+    voice,
   });
 
   await channel.save();
@@ -16,6 +17,7 @@ const setupDefaultChannels = async () => {
     defaultChannel('general'),
     defaultChannel('games'),
     defaultChannel('covid-19'),
+    defaultChannel('voice', true),
   ]);
   return channels;
 };

@@ -1,19 +1,8 @@
 import { combineReducers } from 'redux';
 
-const messages = (state = [], action) => {
+const activeUsers = (state = [], action) => {
   switch (action.type) {
-    case 'io/messages':
-      return action.payload;
-    case 'CLEAR_MESSAGES':
-      return [];
-    default:
-      return state;
-  }
-};
-
-const users = (state = [], action) => {
-  switch (action.type) {
-    case 'io/users':
+    case 'io/activeUsers':
       return action.payload;
     default:
       return state;
@@ -29,7 +18,16 @@ const servers = (state = [], action) => {
   }
 };
 
-const selectedServer = (state = '', action) => {
+const messages = (state = [], action) => {
+  switch (action.type) {
+    case 'io/messages':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const selectedServer = (state = { channels: [] }, action) => {
   switch (action.type) {
     case 'SELECT_SERVER':
       return action.payload;
@@ -38,9 +36,9 @@ const selectedServer = (state = '', action) => {
   }
 };
 
-const selectedChannelName = (state = '', action) => {
+const selectedChannel = (state = { messages: [] }, action) => {
   switch (action.type) {
-    case 'SELECT_CHANNEL_NAME':
+    case 'SELECT_CHANNEL':
       return action.payload;
     default:
       return state;
@@ -49,8 +47,8 @@ const selectedChannelName = (state = '', action) => {
 
 export default combineReducers({
   messages,
-  users,
+  activeUsers,
   servers,
   selectedServer,
-  selectedChannelName,
+  selectedChannel,
 });

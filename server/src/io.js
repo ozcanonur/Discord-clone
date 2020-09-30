@@ -48,7 +48,7 @@ const onUserConnected = async (socket, action) => {
 
   // Let other users know
   const users = await User.find({ online: true });
-  io.emit('action', { type: 'io/users', payload: users });
+  io.emit('action', { type: 'io/activeUsers', payload: users });
 
   // Send the current user's servers (with channels populated) and send to client
   socket.emit('action', { type: 'io/servers', payload: user.servers });
@@ -59,7 +59,7 @@ const onUserDisconnected = async (socket) => {
   await User.updateOne({ socketId: socket.id }, { online: false });
   // Let other users know
   const users = await User.find({ online: true });
-  io.emit('action', { type: 'io/users', payload: users });
+  io.emit('action', { type: 'io/activeUsers', payload: users });
 };
 
 const onUserCreatedServer = async (socket, action) => {
@@ -78,7 +78,7 @@ const onUserCreatedServer = async (socket, action) => {
   await User.updateOne({ name }, { $addToSet: { servers: newServer } });
   // Find the user's servers and send them back
   user = await User.findOne({ name });
-  const userServers = await Server.find({ _id: { $in: user.servers } });
+  const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
   socket.emit('action', { type: 'io/servers', payload: userServers });
 };
 
@@ -138,7 +138,6 @@ io.on('connection', (socket) => {
   socket.on('action', async (action) => {
     // Create default server if it doesn't exist
     await setupDefaultServer();
-
     if (action.type === 'io/userConnected') await onUserConnected(socket, action);
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
     else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
