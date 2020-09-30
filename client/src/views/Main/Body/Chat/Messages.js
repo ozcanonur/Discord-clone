@@ -18,7 +18,6 @@ const Messages = () => {
   const classes = useStyles();
   const messages = useSelector((state) => state.messages);
 
-  console.log(messages);
   return (
     <div className={classes.messages}>
       {messages.map((message, key) => {

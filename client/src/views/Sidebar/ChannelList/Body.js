@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ForumIcon from '@material-ui/icons/Forum';
 import { selectChannel, clearMessages } from 'redux/actions/react';
 import { selectChannel as selectChannelIo } from 'redux/actions/socket';
+import qs from 'qs';
 
 const useStyles = makeStyles({
   body: {
@@ -48,12 +49,14 @@ const Body = () => {
 
   const selectedChannelName = useSelector((state) => state.selectedChannelName);
 
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
   const dispatch = useDispatch();
   const selectChannelOnClick = (channelName) => {
     dispatch(clearMessages());
     dispatch(selectChannel(channelName));
     const channel = selectedServer.channels.find((c) => c.name === channelName);
-    dispatch(selectChannelIo(channel));
+    dispatch(selectChannelIo(name, channel));
   };
 
   return (

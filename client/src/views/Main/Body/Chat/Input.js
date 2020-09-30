@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AddCircle from '@material-ui/icons/AddCircle';
 import { message } from 'redux/actions/socket';
+import qs from 'qs';
 
 const useStyles = makeStyles({
   inputContainer: {
@@ -56,10 +57,12 @@ const Input = () => {
     setText(e.target.value);
   };
 
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
   const dispatch = useDispatch();
   const handleSubmit = (e) => {
     if (e.which === 13 && !e.shiftKey) {
-      dispatch(message(e.target.value));
+      dispatch(message(name, e.target.value));
       setText('');
     }
   };

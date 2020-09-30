@@ -10,12 +10,6 @@ const { setupDefaultServer } = require('./util');
 
 const io = socketIo(server);
 
-// Emit the current users to all sockets
-const emitOnlineUsers = async () => {
-  const users = await User.find({ online: true });
-  io.emit('action', { type: 'io/users', payload: users });
-};
-
 const onUserConnected = async (socket, action) => {
   const name = action.payload;
   // If user is already in DB, update its socketId and online status
@@ -51,8 +45,11 @@ const onUserConnected = async (socket, action) => {
     defaultServer.users.push(user);
     await defaultServer.save();
   }
+
   // Let other users know
-  await emitOnlineUsers();
+  const users = await User.find({ online: true });
+  io.emit('action', { type: 'io/users', payload: users });
+
   // Send the current user's servers (with channels populated) and send to client
   socket.emit('action', { type: 'io/servers', payload: user.servers });
 };
@@ -143,7 +140,8 @@ io.on('connection', (socket) => {
   socket.on('disconnect', async () => {
     // Update the user's online status to false
     await User.updateOne({ socketId: socket.id }, { online: false });
-    // Let the other users know
-    await emitOnlineUsers();
+    // Let other users know
+    const users = await User.find({ online: true });
+    io.emit('action', { type: 'io/users', payload: users });
   });
 });

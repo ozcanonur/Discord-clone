@@ -1,15 +1,11 @@
-import qs from 'qs';
-
-const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-
-export const connect = () => {
+export const connect = (name) => {
   return {
     type: 'io/userConnected',
     payload: name,
   };
 };
 
-export const createServer = (serverName) => {
+export const createServer = (name, serverName) => {
   return {
     type: 'io/userCreatedServer',
     payload: {
@@ -19,14 +15,14 @@ export const createServer = (serverName) => {
   };
 };
 
-export const selectChannel = (channel) => {
+export const selectChannel = (name, channel) => {
   return {
     type: 'io/userSelectedChannel',
     payload: { name, channel },
   };
 };
 
-export const message = (message) => {
+export const message = (name, message) => {
   return {
     type: 'io/userMessaged',
     payload: { name, message },

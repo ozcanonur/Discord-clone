@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Input from './Input';
 import Messages from './Messages';
@@ -15,11 +16,16 @@ const useStyles = makeStyles({
 
 const Chat = () => {
   const classes = useStyles();
+  const selectedChannelName = useSelector((state) => state.selectedChannelName);
 
   return (
     <div className={classes.chat}>
-      <Messages />
-      <Input />
+      {selectedChannelName !== '' ? (
+        <>
+          <Messages />
+          <Input />
+        </>
+      ) : null}
     </div>
   );
 };
