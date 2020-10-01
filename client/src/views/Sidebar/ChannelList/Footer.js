@@ -28,14 +28,15 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    marginLeft: '2rem',
+    marginLeft: '1.5rem',
   },
   userName: {
     fontSize: '1.5rem',
     fontWeight: 1000,
+    color: 'rgb(220,221,222)',
   },
   userId: {
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
     color: 'rgb(185,187, 190)',
   },
   buttons: {
@@ -55,7 +56,7 @@ const Footer = () => {
       <div className={classes.icon} />
       <div className={classes.user}>
         <div className={classes.userName}>{name}</div>
-        {/* <div className={classes.userId}>#5421</div> */}
+        <div className={classes.userId}>#5421</div>
       </div>
       <div className={classes.buttons}>
         <Button>

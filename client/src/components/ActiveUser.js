@@ -23,6 +23,7 @@ const useStyles = makeStyles({
   username: {
     fontSize: '1.5rem',
     marginLeft: '1rem',
+    color: 'rgb(220,221,222)',
   },
 });
 

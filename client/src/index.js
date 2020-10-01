@@ -4,6 +4,7 @@ import { store } from 'redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Private from 'views/Private/index';
 import Login from 'views/Login/index';
 import App from './App';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Switch>
         <Route exact path='/' component={Login} />
         <Route path='/main' component={App} />
+        <Route path='/private' component={Private} />
       </Switch>
     </BrowserRouter>
   </Provider>,

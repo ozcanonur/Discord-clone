@@ -165,13 +165,11 @@ const onUserCreatedChannel = async (io, action) => {
   });
 };
 
-// TODO Test things, doesn't work properly
 const onUserJoinedServer = async (socket, action) => {
   const { name, serverName } = action.payload;
   // Find server and user
   let user = await User.findOne({ name });
   const server = await Server.findOne({ name: serverName }).populate('users');
-  console.log(server);
   // Update server's users
   server.users.push(user);
   await server.save();

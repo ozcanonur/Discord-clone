@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
+    color: 'rgb(220,221,222)',
   },
   iconButton: {
     display: 'inline-block',
@@ -33,9 +35,11 @@ const useStyles = makeStyles({
 const Header = () => {
   const classes = useStyles();
 
+  const selectedServerName = useSelector((state) => state.selectedServerName);
+
   return (
     <div className={classes.header}>
-      <div className={classes.serverName}>Onur server</div>
+      <div className={classes.serverName}>{selectedServerName}</div>
       <IconButton className={classes.iconButton}>
         <KeyboardArrowDown className={classes.item} />
       </IconButton>

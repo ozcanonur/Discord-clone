@@ -22,9 +22,10 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     transition: 'background-color .3s',
-    fontSize: '1.7rem',
+    fontSize: '1.6rem',
     fontWeight: 600,
     textAlign: 'center',
+    color: 'rgb(220,221,222)',
 
     '& > svg': {
       fontSize: '3rem',
@@ -42,9 +43,10 @@ const useStyles = makeStyles({
   },
 });
 
-const Server = ({ children, onClick, style }) => {
+const ServerIcon = ({ children, onClick, style, privateRoute }) => {
   const selectedServerName = useSelector((state) => state.selectedServerName);
-  const isSelected = selectedServerName === children;
+  const isSelected =
+    selectedServerName === children || (privateRoute && selectedServerName === 'private');
   const classes = useStyles(isSelected);
 
   return (
@@ -56,4 +58,4 @@ const Server = ({ children, onClick, style }) => {
   );
 };
 
-export default Server;
+export default ServerIcon;

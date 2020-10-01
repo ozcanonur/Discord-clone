@@ -61,6 +61,7 @@ const useStyles = makeStyles({
   inputProps: {
     fontSize: '1.3rem',
     fontWeight: 500,
+    fontFamily: 'Lato, sans-serif',
     color: 'rgb(79, 86, 96)',
   },
   modalFooter: {
@@ -70,8 +71,9 @@ const useStyles = makeStyles({
     marginTop: '2rem',
   },
   modalButton: {
-    fontSize: '1.2rem',
-    fontWeight: 500,
+    fontSize: '1.5rem',
+    fontWeight: 700,
+    fontFamily: 'Lato, sans-serif',
     backgroundColor: '#7289da',
     color: 'white',
     padding: '1rem 3rem',

@@ -34,6 +34,7 @@ const useStyles = makeStyles({
   messageText: {
     fontWeight: 500,
     marginTop: '0.5rem',
+    color: 'rgb(220,221,222)',
   },
 });
 

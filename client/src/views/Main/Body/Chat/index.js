@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   warning: {
     margin: 'auto auto',
     fontSize: '2rem',
+    color: 'rgb(220,221,222)',
   },
   messages: {
     flexGrow: 1,

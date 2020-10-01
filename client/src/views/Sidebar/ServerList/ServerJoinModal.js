@@ -53,8 +53,9 @@ const useStyles = makeStyles({
     marginTop: '1rem',
   },
   inputProps: {
-    fontSize: '1.3rem',
+    fontSize: '1.6rem',
     fontWeight: 500,
+    fontFamily: 'Lato, sans-serif',
     color: 'rgb(79, 86, 96)',
   },
   modalFooter: {
@@ -70,6 +71,7 @@ const useStyles = makeStyles({
     marginTop: '2rem',
     fontFamily: 'Lato, sans-serif',
     backgroundColor: '#7289da',
+    padding: '1rem 3rem',
 
     '&:hover': {
       backgroundColor: '#5869a8',

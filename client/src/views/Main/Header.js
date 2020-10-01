@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from 'components/Button';
 
@@ -26,11 +27,13 @@ const useStyles = makeStyles({
   },
   titleIcon: {
     fontSize: '2rem',
+    color: 'rgb(220,221,222)',
   },
   titleText: {
     marginLeft: '1rem',
     fontSize: '1.5rem',
     fontWeight: 1000,
+    color: 'rgb(220,221,222)',
   },
   optionsContainer: {
     display: 'flex',
@@ -39,12 +42,13 @@ const useStyles = makeStyles({
 
 const Header = () => {
   const classes = useStyles();
+  const selectedChannel = useSelector((state) => state.selectedChannel);
 
   return (
     <div className={classes.headerContainer}>
       <div className={classes.titleContainer}>
         <div className={classes.titleIcon}>#</div>
-        <div className={classes.titleText}>general</div>
+        <div className={classes.titleText}>{selectedChannel.name}</div>
       </div>
       <div className={classes.optionsContainer}>
         <Button>
