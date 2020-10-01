@@ -26,8 +26,12 @@ const Body = () => {
 
   return (
     <div className={classes.body}>
-      <Channels channels={textChannels} voice={false} />
-      <Channels channels={voiceChannels} voice />
+      {selectedServerName !== '' ? (
+        <>
+          <Channels channels={textChannels} voice={false} />
+          <Channels channels={voiceChannels} voice />
+        </>
+      ) : null}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
@@ -6,13 +6,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { selectChannel } from 'redux/actions/react';
-import { selectChannel as selectChannelIo, createChannel } from 'redux/actions/socket';
+import { selectChannel as selectChannelIo } from 'redux/actions/socket';
 import qs from 'qs';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Forum from '@material-ui/icons/Forum';
 import Add from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
+import ChannelCreateModal from './ChannelCreateModal';
 
 const useStyles = makeStyles({
   body: {
@@ -78,6 +79,7 @@ const Channels = ({ channels, voice }) => {
   const servers = useSelector((state) => state.servers);
   const selectedServerName = useSelector((state) => state.selectedServerName);
   const selectedChannel = useSelector((state) => state.selectedChannel);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
@@ -90,48 +92,49 @@ const Channels = ({ channels, voice }) => {
   const selectedServer = servers.find((server) => server.name === selectedServerName) || {
     channels: [],
   };
-  const createChannelOnClick = (channelName, isVoice) => {
-    dispatch(createChannel(selectedServer, channelName, isVoice));
-  };
 
   return (
-    <div className={classes.category}>
-      <div className={classes.categoryDescription}>
-        <IconButton className={classes.iconButton}>
-          <KeyboardArrowRight className={classes.categoryIcon} />
-        </IconButton>
-        <div className={classes.categoryText}>{voice ? 'Voice channels' : 'Text channels'}</div>
-        <IconButton
-          className={classes.iconButton}
-          onClick={() => createChannelOnClick('New channel', voice)}
-        >
-          <Add className={classes.categoryIcon} />
-        </IconButton>
+    <>
+      <div className={classes.category}>
+        <div className={classes.categoryDescription}>
+          <IconButton className={classes.iconButton}>
+            <KeyboardArrowRight className={classes.categoryIcon} />
+          </IconButton>
+          <div className={classes.categoryText}>{voice ? 'Voice channels' : 'Text channels'}</div>
+          <IconButton className={classes.iconButton} onClick={() => setModalOpen(true)}>
+            <Add className={classes.categoryIcon} />
+          </IconButton>
+        </div>
+        <ChannelCreateModal
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          selectedServer={selectedServer}
+        />
+        {channels.length > 0 ? (
+          <List className={classes.channelList}>
+            {channels.map((channel, key) => (
+              <ListItem
+                key={key}
+                button
+                onClick={() => selectChannelOnClick(channel)}
+                selected={selectedChannel.name === channel.name}
+                classes={{ selected: classes.channelSelected, root: classes.channel }}
+                disableGutters
+              >
+                <ListItemIcon>
+                  {channel.voice ? (
+                    <VolumeUp className={classes.icon} />
+                  ) : (
+                    <Forum className={classes.icon} />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={channel.name} className={classes.text} />
+              </ListItem>
+            ))}
+          </List>
+        ) : null}
       </div>
-      {channels.length > 0 ? (
-        <List className={classes.channelList}>
-          {channels.map((channel, key) => (
-            <ListItem
-              key={key}
-              button
-              onClick={() => selectChannelOnClick(channel)}
-              selected={selectedChannel.name === channel.name}
-              classes={{ selected: classes.channelSelected, root: classes.channel }}
-              disableGutters
-            >
-              <ListItemIcon>
-                {channel.voice ? (
-                  <VolumeUp className={classes.icon} />
-                ) : (
-                  <Forum className={classes.icon} />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={channel.name} className={classes.text} />
-            </ListItem>
-          ))}
-        </List>
-      ) : null}
-    </div>
+    </>
   );
 };
 
