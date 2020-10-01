@@ -42,14 +42,16 @@ const useStyles = makeStyles({
   },
 });
 
-const Server = ({ children, onClick }) => {
+const Server = ({ children, onClick, style }) => {
   const selectedServerName = useSelector((state) => state.selectedServerName);
   const isSelected = selectedServerName === children;
   const classes = useStyles(isSelected);
 
   return (
     <div onClick={onClick} className={classes.serverContainer}>
-      <div className={classes.server}>{children}</div>
+      <div className={classes.server} style={style}>
+        {children}
+      </div>
     </div>
   );
 };

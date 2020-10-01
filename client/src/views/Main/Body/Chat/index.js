@@ -40,7 +40,7 @@ const Chat = () => {
         <div className={classes.warning}>Select a server</div>
       ) : !selectedChannel.name ? (
         <div className={classes.warning}>Select a channel</div>
-      ) : (
+      ) : !selectedChannel.voice ? (
         <>
           <div className={classes.messages}>
             {messages.map((message, key) => (
@@ -49,7 +49,7 @@ const Chat = () => {
           </div>
           <Input />
         </>
-      )}
+      ) : null}
     </div>
   );
 };

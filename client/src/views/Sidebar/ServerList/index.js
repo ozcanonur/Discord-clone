@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Add from '@material-ui/icons/Add';
-import { createServer } from 'redux/actions/socket';
 import { selectServerName } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
-import qs from 'qs';
+import ServerCreateModal from './ServerCreateModal';
 
 const useStyles = makeStyles({
   serverList: {
@@ -21,30 +20,29 @@ const useStyles = makeStyles({
 const ServerList = () => {
   const classes = useStyles();
 
-  const servers = useSelector((state) => state.servers);
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const servers = useSelector((state) => state.servers);
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName) => {
     dispatch(selectServerName(serverName));
   };
 
-  const createServerOnClick = () => {
-    dispatch(createServer(name, 'Rm'));
-  };
-
   return (
-    <div className={classes.serverList}>
-      <ServerIcon onClick={createServerOnClick}>
-        <Add />
-      </ServerIcon>
-      {servers.map((server, key) => (
-        <ServerIcon key={key} onClick={() => selectServerOnClick(server.name)}>
-          {server.name}
+    <>
+      <div className={classes.serverList}>
+        <ServerIcon onClick={() => setModalOpen(true)}>
+          <Add />
         </ServerIcon>
-      ))}
-    </div>
+        {servers.map((server, key) => (
+          <ServerIcon key={key} onClick={() => selectServerOnClick(server.name)}>
+            {server.name}
+          </ServerIcon>
+        ))}
+      </div>
+      <ServerCreateModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+    </>
   );
 };
 

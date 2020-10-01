@@ -36,16 +36,13 @@ const useStyles = makeStyles({
   categoryIcon: {
     fontSize: '2rem',
   },
-  categoryText: {
-    marginRight: '0.8rem',
-  },
+  categoryText: {},
   channelList: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     cursor: 'pointer',
     padding: 0,
-    paddingLeft: '1rem',
   },
   channel: {
     '&:hover': {
@@ -53,6 +50,7 @@ const useStyles = makeStyles({
       borderRadius: '4px',
     },
     marginBottom: '4px',
+    padding: '0.5rem',
   },
   channelSelected: {
     backgroundColor: 'rgb(64, 67, 74) !important',
@@ -70,6 +68,7 @@ const useStyles = makeStyles({
   icon: { fontSize: '2rem', color: 'rgb(163, 168, 173)' },
   iconButton: {
     color: 'rgb(163, 168, 173)',
+    padding: '1rem 0',
   },
 });
 
@@ -104,7 +103,7 @@ const Channels = ({ channels, voice }) => {
         <div className={classes.categoryText}>{voice ? 'Voice channels' : 'Text channels'}</div>
         <IconButton
           className={classes.iconButton}
-          onClick={() => createChannelOnClick('New channel', false)}
+          onClick={() => createChannelOnClick('New channel', voice)}
         >
           <Add className={classes.categoryIcon} />
         </IconButton>
