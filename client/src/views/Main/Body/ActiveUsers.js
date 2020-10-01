@@ -23,7 +23,7 @@ const ActiveUsers = () => {
 
   return (
     <div className={classes.activeUsers}>
-      <div className={classes.usersStatus}>ONLINE &ndash; 1</div>
+      <div className={classes.usersStatus}>{`Online - ${users.length}`}</div>
       {usernames.map((username, key) => (
         <ActiveUser key={key} name={username} />
       ))}

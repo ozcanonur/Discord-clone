@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Add from '@material-ui/icons/Add';
 import { selectServerName } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
-import ServerCreateModal from './ServerCreateModal';
+import ServerModal from './ServerModal';
 
 const useStyles = makeStyles({
   serverList: {
@@ -41,7 +41,7 @@ const ServerList = () => {
           </ServerIcon>
         ))}
       </div>
-      <ServerCreateModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <ServerModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </>
   );
 };

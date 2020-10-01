@@ -35,3 +35,10 @@ export const createChannel = (server, channelName, isVoice) => {
     payload: { server, channelName, isVoice },
   };
 };
+
+export const joinServer = (name, serverName) => {
+  return {
+    type: 'io/userJoinedServer',
+    payload: { name, serverName },
+  };
+};

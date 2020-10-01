@@ -127,8 +127,9 @@ const onUserMessaged = async (io, action) => {
       model: 'User',
     },
   });
+
   // Send the messages in the channel back
-  io.to(user.currentChannel).emit('action', {
+  io.to(user.currentChannel._id).emit('action', {
     type: 'io/messages',
     payload: currChannel.messages,
   });
@@ -164,6 +165,25 @@ const onUserCreatedChannel = async (io, action) => {
   });
 };
 
+// TODO Test things, doesn't work properly
+const onUserJoinedServer = async (socket, action) => {
+  const { name, serverName } = action.payload;
+  // Find server and user
+  let user = await User.findOne({ name });
+  const server = await Server.findOne({ name: serverName }).populate('users');
+  console.log(server);
+  // Update server's users
+  server.users.push(user);
+  await server.save();
+  // Update user's servers
+  user.servers.push(server);
+  await user.save();
+  // Find the user's servers and send them back
+  user = await User.findOne({ name });
+  const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
+  socket.emit('action', { type: 'io/servers', payload: userServers });
+};
+
 io.on('connection', (socket) => {
   socket.on('action', async (action) => {
     // Create default server if it doesn't exist
@@ -173,6 +193,7 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
     else if (action.type === 'io/userCreatedChannel') await onUserCreatedChannel(io, action);
+    else if (action.type === 'io/userJoinedServer') await onUserJoinedServer(socket, action);
   });
 
   socket.on('disconnect', async () => {

@@ -77,12 +77,12 @@ const useStyles = makeStyles({
     padding: '1rem 3rem',
 
     '&:hover': {
-      backgroundColor: '#677bc4',
+      backgroundColor: '#5869a8',
     },
   },
 });
 
-const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
+const ServerCreateModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
   const classes = useStyles();
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -96,6 +96,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
   const createServerOnClick = () => {
     dispatch(createServer(name, modalInputValue));
     setModalOpen(false);
+    setBaseOpen(false);
   };
 
   return (
