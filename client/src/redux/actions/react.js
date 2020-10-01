@@ -1,7 +1,7 @@
-export const selectServer = (server) => {
+export const selectServerName = (serverName) => {
   return {
-    type: 'SELECT_SERVER',
-    payload: server,
+    type: 'SELECT_SERVER_NAME',
+    payload: serverName,
   };
 };
 

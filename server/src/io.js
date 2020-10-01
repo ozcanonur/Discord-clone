@@ -134,6 +134,36 @@ const onUserMessaged = async (io, action) => {
   });
 };
 
+const onUserCreatedChannel = async (io, action) => {
+  const { server, channelName, isVoice } = action.payload;
+  // Create and save channel
+  const channel = new Channel({
+    name: channelName,
+    messages: [],
+    voice: isVoice,
+  });
+  await channel.save();
+
+  // Add the channel to its server
+  await Server.updateOne({ _id: server._id }, { $addToSet: { channels: channel } });
+  // Find the users which are subscribed to this server
+  const channelsServer = await Server.findOne({ _id: server._id }).populate('users');
+  const userIds = channelsServer.users;
+  const users = await User.find({ _id: { $in: userIds } }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+    },
+  });
+  // Send the updated servers to each of them
+  users.forEach((user) => {
+    const { socketId, servers } = user;
+    io.to(socketId).emit('action', { type: 'io/servers', payload: servers });
+  });
+};
+
 io.on('connection', (socket) => {
   socket.on('action', async (action) => {
     // Create default server if it doesn't exist
@@ -142,6 +172,7 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
     else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
+    else if (action.type === 'io/userCreatedChannel') await onUserCreatedChannel(io, action);
   });
 
   socket.on('disconnect', async () => {

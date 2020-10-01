@@ -16,6 +16,7 @@ const ChannelSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  category: String,
 });
 
 const Channel = mongoose.model('Channel', ChannelSchema);

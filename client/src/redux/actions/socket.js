@@ -28,3 +28,10 @@ export const message = (name, message) => {
     payload: { name, message },
   };
 };
+
+export const createChannel = (server, channelName, isVoice) => {
+  return {
+    type: 'io/userCreatedChannel',
+    payload: { server, channelName, isVoice },
+  };
+};

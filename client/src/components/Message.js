@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     fontWeight: 1000,
   },
   date: {
-    marginLeft: '1rem',
+    marginLeft: '0.5rem',
     fontSize: '1.2rem',
     color: 'rgb(114,118,125)',
   },
@@ -37,18 +37,31 @@ const useStyles = makeStyles({
   },
 });
 
-const Message = ({ username, text }) => {
+const convertCreatedAt = (date) => {
+  // eslint-disable-next-line prefer-const
+  let [yyyymmdd, time] = date.split('T');
+  [time] = time.split('.');
+  time = time.substring(0, time.length - 3);
+
+  if (new Date().toISOString().split('T')[0] === yyyymmdd) yyyymmdd = 'Today';
+
+  return `${yyyymmdd} at ${time}`;
+};
+
+const Message = ({ message }) => {
   const classes = useStyles();
+  const { user, createdAt } = message;
+  const messageText = message.message;
 
   return (
     <div className={classes.container}>
       <div className={classes.avatar} />
       <div className={classes.message}>
         <div className={classes.header}>
-          <div className={classes.username}>{username}</div>
-          <div className={classes.date}>04/09/2020</div>
+          <div className={classes.username}>{user.name}</div>
+          <div className={classes.date}>{convertCreatedAt(createdAt)}</div>
         </div>
-        <div className={classes.messageText}>{text}</div>
+        <div className={classes.messageText}>{messageText}</div>
       </div>
     </div>
   );

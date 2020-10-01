@@ -1,8 +1,9 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Message from 'components/Message';
 import Input from './Input';
-import Messages from './Messages';
 
 const useStyles = makeStyles({
   chat: {
@@ -12,25 +13,42 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
-  channelWarning: {
+  warning: {
     margin: 'auto auto',
     fontSize: '2rem',
+  },
+  messages: {
+    flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    marginBottom: '1rem',
+    overflowY: 'auto',
   },
 });
 
 const Chat = () => {
   const classes = useStyles();
-  const selectedChannelName = useSelector((state) => state.selectedChannelName);
+
+  const selectedServerName = useSelector((state) => state.selectedServerName);
+  const selectedChannel = useSelector((state) => state.selectedChannel);
+  const messages = useSelector((state) => state.messages);
 
   return (
     <div className={classes.chat}>
-      {selectedChannelName !== '' ? (
+      {selectedServerName === '' ? (
+        <div className={classes.warning}>Select a server</div>
+      ) : !selectedChannel.name ? (
+        <div className={classes.warning}>Select a channel</div>
+      ) : (
         <>
-          <Messages />
+          <div className={classes.messages}>
+            {messages.map((message, key) => (
+              <Message key={key} message={message} />
+            ))}
+          </div>
           <Input />
         </>
-      ) : (
-        <div className={classes.channelWarning}>Select a server and channel</div>
       )}
     </div>
   );

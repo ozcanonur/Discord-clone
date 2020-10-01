@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -52,6 +52,7 @@ const Input = () => {
   const classes = useStyles();
 
   const [text, setText] = useState('');
+  const selectedChannel = useSelector((state) => state.selectedChannel);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -70,7 +71,7 @@ const Input = () => {
   return (
     <TextField
       className={classes.inputContainer}
-      placeholder='Message # general'
+      placeholder={`Message # ${selectedChannel.name}`}
       variant='outlined'
       fullWidth
       InputLabelProps={{ className: classes.inputLabel }}

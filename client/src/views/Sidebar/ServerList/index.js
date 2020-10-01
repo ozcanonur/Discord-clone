@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Add from '@material-ui/icons/Add';
 import { createServer } from 'redux/actions/socket';
-import { selectServer } from 'redux/actions/react';
+import { selectServerName } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
 import qs from 'qs';
 
@@ -26,8 +26,8 @@ const ServerList = () => {
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
-  const selectServerOnClick = (server) => {
-    dispatch(selectServer(server));
+  const selectServerOnClick = (serverName) => {
+    dispatch(selectServerName(serverName));
   };
 
   const createServerOnClick = () => {
@@ -40,7 +40,7 @@ const ServerList = () => {
         <Add />
       </ServerIcon>
       {servers.map((server, key) => (
-        <ServerIcon key={key} onClick={() => selectServerOnClick(server)}>
+        <ServerIcon key={key} onClick={() => selectServerOnClick(server.name)}>
           {server.name}
         </ServerIcon>
       ))}
