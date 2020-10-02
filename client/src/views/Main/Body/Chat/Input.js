@@ -47,12 +47,24 @@ const useStyles = makeStyles({
     color: 'rgb(220,221,222)',
   },
   buttonIcon: {
-    fontSize: '2rem',
+    fontSize: '3rem',
     cursor: 'pointer',
+    transition: 'scale .2s',
+    '&:hover': {
+      transform: 'scale(1.2)',
+      color: '#3CB371',
+    },
   },
   emojiMenuIcon: {
     fontSize: '3rem',
     marginRight: '1rem',
+    cursor: 'pointer',
+    transition: 'scale .2s',
+
+    '&:hover': {
+      transform: 'scale(1.2)',
+      color: '#3CB371',
+    },
   },
   emojiMenu: {
     position: 'absolute',
@@ -130,5 +142,3 @@ const Input = () => {
 };
 
 export default Input;
-
-// onSelect={(e) => handleEmojiClick(e)}

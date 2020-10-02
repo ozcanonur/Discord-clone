@@ -45,18 +45,20 @@ const Chat = () => {
 
   return (
     <div className={classes.chat}>
-      <List className={classes.messages}>
-        {selectedFriend !== '' ? (
-          messages.map((message, key) => (
-            <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
-              <Message key={key} message={message} />
-            </ListItem>
-          ))
-        ) : (
-          <div className={classes.warning}>Select a friend to chat!</div>
-        )}
-      </List>
-      <Input />
+      {selectedFriend !== '' ? (
+        <>
+          <List className={classes.messages}>
+            {messages.map((message, key) => (
+              <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
+                <Message key={key} message={message} />
+              </ListItem>
+            ))}
+          </List>
+          <Input />
+        </>
+      ) : (
+        <div className={classes.warning}>Select a friend to chat!</div>
+      )}
     </div>
   );
 };

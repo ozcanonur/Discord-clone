@@ -23,9 +23,10 @@ const useStyles = makeStyles({
     alignItems: 'center',
     transition: 'background-color .3s',
     fontSize: '1.6rem',
-    fontWeight: 600,
+    fontWeight: 1000,
     textAlign: 'center',
     color: 'rgb(220,221,222)',
+    letterSpacing: '1.5px',
 
     '& > svg': {
       fontSize: '3rem',

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Tooltip from '@material-ui/core/Tooltip';
 import qs from 'qs';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
@@ -18,6 +19,17 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     padding: '0.8rem',
   },
+  tooltip: {
+    backgroundColor: 'black',
+    color: 'rgb(220,221,222)',
+    fontSize: '1.5rem',
+    fontWeight: 700,
+    textAlign: 'center',
+    letterSpacing: 0,
+  },
+  arrow: {
+    color: 'black',
+  },
 });
 
 const ServerList = () => {
@@ -30,6 +42,10 @@ const ServerList = () => {
   const selectServerOnClick = (serverName) => {
     dispatch(selectServerName(serverName));
     dispatch(selectFriend(''));
+  };
+
+  const shortenServerName = (name) => {
+    return name.split(' ').map((word) => word.slice(0, 1));
   };
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -46,11 +62,19 @@ const ServerList = () => {
           <Add />
         </ServerIcon>
         {servers.map((server, key) => (
-          <NavLink key={key} to={`/main?name=${name}`} style={{ textDecoration: 'none' }}>
-            <ServerIcon onClick={() => selectServerOnClick(server.name)} privateRoute={false}>
-              {server.name}
-            </ServerIcon>
-          </NavLink>
+          <Tooltip
+            key={key}
+            title={server.name}
+            arrow
+            placement='right'
+            classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
+          >
+            <NavLink to={`/main?name=${name}`} style={{ textDecoration: 'none' }}>
+              <ServerIcon onClick={() => selectServerOnClick(server.name)} privateRoute={false}>
+                {shortenServerName(server.name)}
+              </ServerIcon>
+            </NavLink>
+          </Tooltip>
         ))}
       </div>
       <ServerModal modalOpen={modalOpen} setModalOpen={setModalOpen} />

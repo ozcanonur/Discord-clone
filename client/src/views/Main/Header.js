@@ -48,11 +48,12 @@ const useStyles = makeStyles({
     width: '1rem',
   },
   notificationTooltip: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: 'black',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
-    fontWeight: 500,
+    fontWeight: 700,
     textAlign: 'center',
+    letterSpacing: 0,
   },
 });
 
@@ -86,7 +87,7 @@ const Header = () => {
           title={
             userNotification.hasNotification
               ? `You have a new message from ${userNotification.from}!`
-              : ''
+              : `You don't have any notifications`
           }
           classes={{ tooltip: classes.notificationTooltip }}
         >
