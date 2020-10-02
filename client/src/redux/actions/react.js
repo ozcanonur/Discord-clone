@@ -32,3 +32,9 @@ export const selectFriend = (friendName) => {
     payload: friendName,
   };
 };
+
+export const toggleActiveUsers = () => {
+  return {
+    type: 'TOGGLE_ACTIVE_USERS',
+  };
+};

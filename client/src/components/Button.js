@@ -11,10 +11,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Button = ({ children }) => {
+const Button = ({ children, onClick, style }) => {
   const classes = useStyles();
 
-  return <IconButton className={classes.button}>{children}</IconButton>;
+  return (
+    <IconButton disableRipple className={classes.button} onClick={onClick} style={style}>
+      {children}
+    </IconButton>
+  );
 };
 
 export default Button;

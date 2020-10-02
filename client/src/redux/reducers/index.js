@@ -72,6 +72,15 @@ const selectedFriend = (state = '', action) => {
   }
 };
 
+const activeUsersOpen = (state = true, action) => {
+  switch (action.type) {
+    case 'TOGGLE_ACTIVE_USERS':
+      return !state;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   activeUsers,
@@ -81,4 +90,5 @@ export default combineReducers({
   selectedTabInPrivate,
   friends,
   selectedFriend,
+  activeUsersOpen,
 });
