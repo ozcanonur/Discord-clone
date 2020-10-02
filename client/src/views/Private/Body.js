@@ -5,25 +5,9 @@ import Header from './Header';
 import Chat from './Chat';
 import ActiveUsers from '../Main/ActiveUsers';
 import AddFriendBox from './AddFriendBox';
+import bodyStyles from './styles/body';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  header: {
-    flexGrow: 1,
-  },
-  chatContainer: {
-    backgroundColor: '#36393f',
-    color: 'white',
-    fontWeight: 1000,
-    flexGrow: 1,
-    display: 'flex',
-    height: 0, // for stopping overflow, needs more work
-  },
-});
+const useStyles = makeStyles(bodyStyles);
 
 const Main = () => {
   const classes = useStyles();

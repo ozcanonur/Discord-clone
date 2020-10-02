@@ -3,18 +3,9 @@ import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ActiveUser from 'components/ActiveUser';
 import Fade from '@material-ui/core/Fade';
+import activeUsersStyles from './styles/activeUsers';
 
-const useStyles = makeStyles({
-  activeUsers: {
-    width: '27rem',
-    backgroundColor: 'rgb(47,49,54)',
-    padding: '3rem',
-  },
-  usersStatus: {
-    color: 'rgb(142,146,151)',
-    fontSize: '1.3rem',
-  },
-});
+const useStyles = makeStyles(activeUsersStyles);
 
 const ActiveUsers = () => {
   const classes = useStyles();

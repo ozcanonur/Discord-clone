@@ -3,17 +3,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Chat from './Chat';
 import ActiveUsers from './ActiveUsers';
+import bodyStyles from './styles/body';
 
-const useStyles = makeStyles({
-  chatContainer: {
-    backgroundColor: '#36393f',
-    color: 'white',
-    fontWeight: 1000,
-    flexGrow: 1,
-    display: 'flex',
-    height: 0, // for stopping overflow, needs more work
-  },
-});
+const useStyles = makeStyles(bodyStyles);
 
 const ChatIndex = () => {
   const classes = useStyles();

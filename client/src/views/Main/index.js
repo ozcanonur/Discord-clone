@@ -3,20 +3,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Header from './Header';
 import Chat from './Body';
+import indexStyles from './styles/index';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-  },
-  header: {
-    flexGrow: 1,
-  },
-  chat: {
-    flexGrow: 2,
-  },
-});
+const useStyles = makeStyles(indexStyles);
 
 const Main = () => {
   const classes = useStyles();

@@ -1,15 +1,9 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IconButton from '@material-ui/core/IconButton';
+import buttonStyles from './styles/button';
 
-const useStyles = makeStyles({
-  button: {
-    color: 'rgb(220,221,222)',
-    '& > span > svg': {
-      fontSize: '2rem',
-    },
-  },
-});
+const useStyles = makeStyles(buttonStyles);
 
 const Button = ({ children, onClick, style }) => {
   const classes = useStyles();

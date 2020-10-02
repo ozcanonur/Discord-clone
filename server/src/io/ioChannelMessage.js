@@ -43,6 +43,8 @@ const onUserMessaged = async (io, action) => {
     const recipient = await User.findOne({ name: recipientName });
     // Emit to the recipient that a message is received
     io.to(recipient.socketId).emit('action', { type: 'io/notification', payload: name });
+
+    console.log(recipient.socketId, typeof recipient.socketId);
   }
 };
 

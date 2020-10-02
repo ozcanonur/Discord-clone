@@ -6,32 +6,9 @@ import { selectFriendChannel, selectFriend, selectTabInPrivate } from 'redux/act
 import { selectFriendChannel as selectFriendChannelIo } from 'redux/actions/socket';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import qs from 'qs';
+import friendStyles from './styles/friend';
 
-const useStyles = makeStyles({
-  user: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: '1rem',
-    cursor: 'pointer',
-    padding: '0.8rem',
-    '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74) !important',
-    },
-  },
-  icon: {
-    display: 'inline-block',
-    backgroundColor: '#3CB371',
-    borderRadius: '50%',
-    padding: '1.5rem',
-    width: '1.5rem',
-    height: '1.5rem',
-  },
-  username: {
-    fontSize: '1.5rem',
-    marginLeft: '1rem',
-    color: 'rgb(220,221,222)',
-  },
-});
+const useStyles = makeStyles(friendStyles);
 
 const Friend = ({ friendName }) => {
   const classes = useStyles();
