@@ -1,7 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import Chat from './Chat/index';
+import Chat from './Chat';
 import ActiveUsers from './ActiveUsers';
 
 const useStyles = makeStyles({

@@ -23,11 +23,11 @@ const setupDefaultChannels = async () => {
 };
 
 const setupDefaultServer = async () => {
-  const defaultServerExists = await Server.exists({ name: 'Def' });
+  const defaultServerExists = await Server.exists({ name: 'Default' });
   if (!defaultServerExists) {
     const defaultChannels = await setupDefaultChannels();
     const defaultServer = new Server({
-      name: 'Def',
+      name: 'Default',
       channels: defaultChannels,
       users: [],
     });

@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Header from './Header';
-import Chat from './Body/index';
+import Chat from './Body';
 
 const useStyles = makeStyles({
   container: {

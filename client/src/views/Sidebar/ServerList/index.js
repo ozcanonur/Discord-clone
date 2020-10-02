@@ -44,9 +44,7 @@ const ServerList = () => {
     dispatch(selectFriend(''));
   };
 
-  const shortenServerName = (name) => {
-    return name.split(' ').map((word) => word.slice(0, 1));
-  };
+  const shortenServerName = (name) => name.split(' ').map((word) => word.slice(0, 1));
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 

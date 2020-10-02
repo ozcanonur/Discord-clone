@@ -32,7 +32,7 @@ const onUserConnected = async (io, socket, action) => {
       online: true,
       lastActiveAt: new Date(),
     });
-    const defaultServer = await Server.findOne({ name: 'Def' }).populate('channels');
+    const defaultServer = await Server.findOne({ name: 'Default' }).populate('channels');
     user.servers.push(defaultServer);
     await user.save();
 

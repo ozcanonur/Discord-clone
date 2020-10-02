@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Header from './Header';
 import Chat from './Chat';
-import ActiveUsers from '../Main/Body/ActiveUsers';
+import ActiveUsers from '../Main/ActiveUsers';
 import AddFriendBox from './AddFriendBox';
 
 const useStyles = makeStyles({

@@ -5,7 +5,7 @@ import { connect } from 'redux/actions/socket';
 import qs from 'qs';
 import FriendList from './FriendList';
 import ServerList from '../Sidebar/ServerList/index';
-import Main from './Main';
+import Main from './Body';
 
 const Private = () => {
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });

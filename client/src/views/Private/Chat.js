@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Message from 'components/Message';
-import Input from '../Main/Body/Chat/Input';
+import Input from 'components/Input';
 
 const useStyles = makeStyles({
   chat: {
@@ -27,6 +27,9 @@ const useStyles = makeStyles({
   listItem: {
     paddingTop: 0,
   },
+  stretch: {
+    flexGrow: 1,
+  },
 });
 
 const Chat = () => {
@@ -47,6 +50,7 @@ const Chat = () => {
     <div className={classes.chat}>
       {selectedFriend !== '' ? (
         <>
+          <div className={classes.stretch} />
           <List className={classes.messages}>
             {messages.map((message, key) => (
               <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
