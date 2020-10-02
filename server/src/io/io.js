@@ -18,15 +18,32 @@ io.on('connection', (socket) => {
   socket.on('action', async (action) => {
     // Create default server if it doesn't exist
     await setupDefaultServer();
-    if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);
-    else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
-    else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
-    else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
-    else if (action.type === 'io/userCreatedChannel') await onUserCreatedChannel(io, action);
-    else if (action.type === 'io/userJoinedServer') await onUserJoinedServer(socket, action);
-    else if (action.type === 'io/userSentFriendRequest') await onUserSentFriendRequest(io, action);
-    else if (action.type === 'io/userSelectedFriendChannel')
-      await onUserSelectedFriendChannel(socket, action);
+    switch (action.type) {
+      case 'io/userConnected':
+        await onUserConnected(io, socket, action);
+        break;
+      case 'io/userCreatedServer':
+        await onUserCreatedServer(socket, action);
+        break;
+      case 'io/userCreatedChannel':
+        await onUserCreatedChannel(io, action);
+        break;
+      case 'io/userJoinedServer':
+        await onUserJoinedServer(socket, action);
+        break;
+      case 'io/userSentFriendRequest':
+        await onUserSentFriendRequest(io, action);
+        break;
+      case 'io/userSelectedChannel':
+        await onUserSelectedChannel(socket, action);
+        break;
+      case 'io/userSelectedFriendChannel':
+        await onUserSelectedFriendChannel(socket, action);
+        break;
+      case 'io/userMessaged':
+        await onUserMessaged(io, action);
+        break;
+    }
   });
 
   socket.on('disconnect', async () => {

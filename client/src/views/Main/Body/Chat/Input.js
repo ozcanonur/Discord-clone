@@ -13,7 +13,6 @@ const useStyles = makeStyles({
     display: 'flex',
     fontSize: '1.5rem',
     borderRadius: '1rem',
-    position: 'relative',
 
     '& input': {
       color: 'rgb(220,221,222)',

@@ -8,7 +8,6 @@ const useStyles = makeStyles({
     padding: '1rem 0',
   },
   avatar: {
-    display: 'inline-block',
     backgroundColor: '#3CB371',
     borderRadius: '50%',
     padding: '2rem',

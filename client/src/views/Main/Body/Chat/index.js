@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import Message from 'components/Message';
 import Input from './Input';
 
@@ -12,6 +14,7 @@ const useStyles = makeStyles({
     fontSize: '1.5rem',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   warning: {
     margin: 'auto auto',
@@ -19,12 +22,11 @@ const useStyles = makeStyles({
     color: 'rgb(220,221,222)',
   },
   messages: {
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
     marginBottom: '1rem',
-    overflowY: 'auto',
+    overflow: 'auto',
+  },
+  listItem: {
+    paddingTop: 0,
   },
 });
 
@@ -35,6 +37,14 @@ const Chat = () => {
   const selectedChannel = useSelector((state) => state.selectedChannel);
   const messages = useSelector((state) => state.messages);
 
+  // Scroll messages to bottom on change
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
+    }
+  }, [messages]);
+
   return (
     <div className={classes.chat}>
       {selectedServerName === '' ? (
@@ -43,11 +53,13 @@ const Chat = () => {
         <div className={classes.warning}>Select a channel</div>
       ) : !selectedChannel.voice ? (
         <>
-          <div className={classes.messages}>
+          <List className={classes.messages}>
             {messages.map((message, key) => (
-              <Message key={key} message={message} />
+              <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
+                <Message key={key} message={message} />
+              </ListItem>
             ))}
-          </div>
+          </List>
           <Input />
         </>
       ) : null}

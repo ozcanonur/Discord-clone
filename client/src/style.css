@@ -20,4 +20,21 @@ html {
   font-size: 62.5%;
   box-sizing: border-box;
   border-collapse: collapse;
+  --scrollbarBG: rgb(32, 34, 37);
+  --thumbBG: rgb(99, 102, 105);
+}
+
+*::-webkit-scrollbar {
+  width: 11px;
+}
+* {
+  scrollbar-width: thin;
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbarBG);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--thumbBG);
+  border-radius: 6px;
+  border: 3px solid var(--scrollbarBG);
 }
