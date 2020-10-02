@@ -2,14 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from 'components/Button';
-
 import Notifications from '@material-ui/icons/Notifications';
 import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import Inbox from '@material-ui/icons/Inbox';
-import Help from '@material-ui/icons/Help';
 import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
 import Tooltip from '@material-ui/core/Tooltip';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -73,6 +71,10 @@ const Header = () => {
     dispatch(clearNotification());
   };
 
+  const gitHubOnClick = () => {
+    window.open('https://github.com/ozcanonur/Discord-clone', '_blank');
+  };
+
   return (
     <div className={classes.headerContainer}>
       <div className={classes.titleContainer}>
@@ -84,11 +86,11 @@ const Header = () => {
           title={
             userNotification.hasNotification
               ? `You have a new message from ${userNotification.from}!`
-              : undefined
+              : ''
           }
           classes={{ tooltip: classes.notificationTooltip }}
         >
-          <div>
+          <div style={{ marginRight: '2rem' }}>
             <Button onClick={handleNotificationClick}>
               <Notifications style={{ position: 'relative' }} />
               {userNotification.hasNotification ? (
@@ -97,22 +99,20 @@ const Header = () => {
             </Button>
           </div>
         </Tooltip>
-        <Button>
+        <Button style={{ marginRight: '2rem' }}>
           <Room />
         </Button>
         <Button
           onClick={toggleActiveUsersOnClick}
           style={{
             backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
+            marginRight: '2rem',
           }}
         >
           <PeopleAlt />
         </Button>
-        <Button>
-          <Inbox />
-        </Button>
-        <Button>
-          <Help />
+        <Button onClick={gitHubOnClick}>
+          <GitHubIcon />
         </Button>
       </div>
     </div>

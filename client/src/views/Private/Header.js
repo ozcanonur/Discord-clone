@@ -4,8 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import CustomButton from 'components/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import Inbox from '@material-ui/icons/Inbox';
-import Help from '@material-ui/icons/Help';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import { selectTabInPrivate } from 'redux/actions/react';
 
 const useStyles = makeStyles({
@@ -80,6 +79,10 @@ const Header = () => {
     dispatch(selectTabInPrivate(tabName));
   };
 
+  const gitHubOnClick = () => {
+    window.open('https://github.com/ozcanonur/Discord-clone', '_blank');
+  };
+
   return (
     <div className={classes.headerContainer}>
       <div className={classes.statusContainer}>
@@ -113,11 +116,8 @@ const Header = () => {
         </div>
       </div>
       <div className={classes.optionsContainer}>
-        <CustomButton>
-          <Inbox />
-        </CustomButton>
-        <CustomButton>
-          <Help />
+        <CustomButton onClick={gitHubOnClick}>
+          <GitHubIcon />
         </CustomButton>
       </div>
     </div>
