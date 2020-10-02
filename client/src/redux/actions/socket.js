@@ -42,3 +42,17 @@ export const joinServer = (name, serverName) => {
     payload: { name, serverName },
   };
 };
+
+export const sendFriendRequest = (name, friendName) => {
+  return {
+    type: 'io/userSentFriendRequest',
+    payload: { name, friendName },
+  };
+};
+
+export const selectFriendChannel = (name, friendName) => {
+  return {
+    type: 'io/userSelectedFriendChannel',
+    payload: { name, friendName },
+  };
+};

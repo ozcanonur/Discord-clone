@@ -45,10 +45,40 @@ const selectedChannel = (state = { messages: [] }, action) => {
   }
 };
 
+const selectedTabInPrivate = (state = 'Chat', action) => {
+  switch (action.type) {
+    case 'SELECT_TAB_IN_PRIVATE':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+const friends = (state = [], action) => {
+  switch (action.type) {
+    case 'io/friends':
+      return [...action.payload];
+    default:
+      return state;
+  }
+};
+
+const selectedFriend = (state = '', action) => {
+  switch (action.type) {
+    case 'SELECT_FRIEND':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   activeUsers,
   servers,
   selectedServerName,
   selectedChannel,
+  selectedTabInPrivate,
+  friends,
+  selectedFriend,
 });

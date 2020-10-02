@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import ActiveUser from 'components/ActiveUser';
+import Friend from './Friend';
+import Footer from '../Sidebar/ChannelList/Footer';
 
 const useStyles = makeStyles({
   container: {
@@ -13,8 +15,11 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
   },
+  subContainer: {
+    flexGrow: 1,
+  },
   heading: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: 'rgb(41,43,47)',
     padding: '1rem',
     height: '6rem',
     display: 'flex',
@@ -29,8 +34,8 @@ const useStyles = makeStyles({
   titleContainer: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'space-between',
     padding: '2rem',
-    paddingBottom: 0,
   },
   friendsIcon: {
     fontSize: '3rem',
@@ -47,6 +52,8 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     padding: '2rem',
+    paddingTop: 0,
+    fontWeight: 1000,
   },
   directMessages: {
     fontSize: '1.3rem',
@@ -59,21 +66,27 @@ const useStyles = makeStyles({
 const FriendList = () => {
   const classes = useStyles();
 
+  const friends = useSelector((state) => state.friends);
+
   return (
     <div className={classes.container}>
-      <div className={classes.heading}>
-        <div className={classes.headingText}>Start a conversation</div>
+      <div className={classes.subContainer}>
+        <div className={classes.heading}>
+          <div className={classes.headingText}>Start a conversation</div>
+        </div>
+        <div className={classes.titleContainer}>
+          <EmojiPeopleIcon className={classes.friendsIcon} />
+          <div className={classes.friendsText}>Friends</div>
+          <EmojiPeopleIcon className={classes.friendsIcon} style={{ visibility: 'hidden' }} />
+        </div>
+        <div className={classes.friendList}>
+          <div className={classes.directMessages}>Direct messages</div>
+          {friends.map((friend, key) => (
+            <Friend key={key} friendName={friend.name} />
+          ))}
+        </div>
       </div>
-      <div className={classes.titleContainer}>
-        <EmojiPeopleIcon className={classes.friendsIcon} />
-        <div className={classes.friendsText}>Friends</div>
-      </div>
-      <div className={classes.friendList}>
-        <div className={classes.directMessages}>Direct messages</div>
-        <ActiveUser name='Onur' />
-        <ActiveUser name='Mahmut' />
-        <ActiveUser name='Komeneyare' />
-      </div>
+      <Footer />
     </div>
   );
 };

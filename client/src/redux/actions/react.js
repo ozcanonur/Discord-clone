@@ -11,3 +11,24 @@ export const selectChannel = (channel) => {
     payload: channel,
   };
 };
+
+export const selectTabInPrivate = (tabName) => {
+  return {
+    type: 'SELECT_TAB_IN_PRIVATE',
+    payload: tabName,
+  };
+};
+
+export const selectFriendChannel = (friendName) => {
+  return {
+    type: 'SELECT_FRIEND_CHANNEL',
+    payload: friendName,
+  };
+};
+
+export const selectFriend = (friendName) => {
+  return {
+    type: 'SELECT_FRIEND',
+    payload: friendName,
+  };
+};

@@ -56,6 +56,7 @@ const useStyles = makeStyles({
     fontWeight: 500,
     color: 'white',
     opacity: 0.9,
+    fontFamily: 'Lato, sans-serif',
   },
   modalFooter: {
     display: 'flex',

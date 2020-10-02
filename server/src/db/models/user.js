@@ -20,6 +20,12 @@ const UserSchema = new Schema({
   },
   online: Boolean,
   lastActiveAt: Date,
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 const User = mongoose.model('User', UserSchema);

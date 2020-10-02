@@ -1,10 +1,12 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import CustomButton from 'components/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import Inbox from '@material-ui/icons/Inbox';
 import Help from '@material-ui/icons/Help';
+import { selectTabInPrivate } from 'redux/actions/react';
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -31,7 +33,7 @@ const useStyles = makeStyles({
     fontSize: '1.5rem',
     fontWeight: 1000,
     color: 'rgb(220,221,222)',
-    marginLeft: '1rem',
+    marginLeft: '2rem',
   },
   friendButtonContainer: {
     marginLeft: '3rem',
@@ -44,6 +46,7 @@ const useStyles = makeStyles({
     fontFamily: 'Lato, sans-serif',
     textTransform: 'capitalize',
     marginLeft: '2rem',
+    boxShadow: 'none',
 
     '&:hover': {
       color: '#36393f',
@@ -55,8 +58,8 @@ const useStyles = makeStyles({
     fontFamily: 'Lato, sans-serif',
     textTransform: 'capitalize',
     marginLeft: '2rem',
-    backgroundColor: 'rgb(67,181,129)',
     color: 'white',
+    boxShadow: 'none',
 
     '&:hover': {
       backgroundColor: '#2c8a5f',
@@ -70,19 +73,41 @@ const useStyles = makeStyles({
 const Header = () => {
   const classes = useStyles();
 
+  const selectedTabInPrivateName = useSelector((state) => state.selectedTabInPrivate);
+
+  const dispatch = useDispatch();
+  const selectTabInPrivateOnClick = (tabName) => {
+    dispatch(selectTabInPrivate(tabName));
+  };
+
   return (
     <div className={classes.headerContainer}>
       <div className={classes.statusContainer}>
         <EmojiPeopleIcon className={classes.friendsIcon} />
         <div className={classes.friendsText}>Friends</div>
         <div className={classes.friendButtonContainer}>
-          <Button variant='contained' className={classes.friendButton}>
-            Online
+          <Button
+            variant='contained'
+            className={classes.friendButton}
+            onClick={() => selectTabInPrivateOnClick('Chat')}
+            style={{
+              backgroundColor:
+                selectedTabInPrivateName === 'Chat' ? 'rgb(220,221,222)' : 'transparent',
+              color: selectedTabInPrivateName === 'Chat' ? '#36393f' : 'rgb(220,221,222)',
+            }}
+          >
+            Chat
           </Button>
-          <Button variant='contained' className={classes.friendButton}>
-            Pending
-          </Button>
-          <Button variant='contained' className={classes.friendButtonAdd}>
+          <Button
+            variant='contained'
+            className={classes.friendButton}
+            onClick={() => selectTabInPrivateOnClick('AddFriend')}
+            style={{
+              backgroundColor:
+                selectedTabInPrivateName === 'AddFriend' ? 'rgb(220,221,222)' : 'transparent',
+              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : 'rgb(220,221,222)',
+            }}
+          >
             Add Friend
           </Button>
         </div>

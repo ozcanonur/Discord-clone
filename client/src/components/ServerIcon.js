@@ -40,6 +40,10 @@ const useStyles = makeStyles({
         color: 'white',
       },
     },
+
+    '&:active': {
+      transform: 'translateY(2px)',
+    },
   },
 });
 
