@@ -5,7 +5,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import qs from 'qs';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import { selectServerName } from 'redux/actions/react';
+import { selectServerName, selectFriend } from 'redux/actions/react';
 import ServerIcon from 'components/ServerIcon';
 import ServerModal from './ServerModal';
 
@@ -29,6 +29,7 @@ const ServerList = () => {
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName) => {
     dispatch(selectServerName(serverName));
+    dispatch(selectFriend(''));
   };
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });

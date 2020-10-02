@@ -1,5 +1,5 @@
-const Server = require('./db/models/server');
-const Channel = require('./db/models/channel');
+const Server = require('../db/models/server');
+const Channel = require('../db/models/channel');
 
 const defaultChannel = async (name, voice) => {
   const channel = new Channel({

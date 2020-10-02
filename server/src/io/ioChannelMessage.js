@@ -1,6 +1,6 @@
-const User = require('./db/models/user');
-const Channel = require('./db/models/channel');
-const Message = require('./db/models/message');
+const User = require('../db/models/user');
+const Channel = require('../db/models/channel');
+const Message = require('../db/models/message');
 
 const onUserSelectedChannel = async (socket, action) => {
   const { name, channel } = action.payload;

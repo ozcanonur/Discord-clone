@@ -9,7 +9,7 @@ const server = http.createServer(app);
 module.exports = server;
 
 require('./db/mongoose');
-require('./io');
+require('./io/io');
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {

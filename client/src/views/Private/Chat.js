@@ -32,13 +32,16 @@ const Chat = () => {
   const classes = useStyles();
 
   const messages = useSelector((state) => state.messages);
+  const selectedFriend = useSelector((state) => state.selectedFriend);
 
   return (
     <div className={classes.chat}>
       <div className={classes.messages}>
-        {messages.map((message, key) => (
-          <Message key={key} message={message} />
-        ))}
+        {selectedFriend !== '' ? (
+          messages.map((message, key) => <Message key={key} message={message} />)
+        ) : (
+          <div className={classes.warning}>Select a friend to chat!</div>
+        )}
       </div>
       <Input />
     </div>

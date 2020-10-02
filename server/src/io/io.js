@@ -1,5 +1,5 @@
 const socketIo = require('socket.io');
-const server = require('./index');
+const server = require('../index');
 
 const { setupDefaultServer } = require('./util');
 

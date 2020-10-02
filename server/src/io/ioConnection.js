@@ -1,5 +1,5 @@
-const User = require('./db/models/user');
-const Server = require('./db/models/server');
+const User = require('../db/models/user');
+const Server = require('../db/models/server');
 
 const onUserConnected = async (io, socket, action) => {
   const name = action.payload;

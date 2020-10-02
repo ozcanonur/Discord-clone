@@ -1,5 +1,5 @@
-const User = require('./db/models/user');
-const Channel = require('./db/models/channel');
+const User = require('../db/models/user');
+const Channel = require('../db/models/channel');
 
 const onUserSentFriendRequest = async (io, action) => {
   const { name, friendName } = action.payload;

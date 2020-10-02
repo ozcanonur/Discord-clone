@@ -1,6 +1,6 @@
-const User = require('./db/models/user');
-const Server = require('./db/models/server');
-const Channel = require('./db/models/channel');
+const User = require('../db/models/user');
+const Server = require('../db/models/server');
+const Channel = require('../db/models/channel');
 
 const onUserCreatedServer = async (socket, action) => {
   const { name, server } = action.payload;
