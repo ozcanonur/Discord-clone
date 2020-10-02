@@ -81,6 +81,17 @@ const activeUsersOpen = (state = true, action) => {
   }
 };
 
+const userNotification = (state = { hasNotification: false, from: '' }, action) => {
+  switch (action.type) {
+    case 'io/notification':
+      return { hasNotification: true, from: action.payload };
+    case 'CLEAR_NOTIFICATION':
+      return { hasNotification: false, from: '' };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   activeUsers,
@@ -91,4 +102,5 @@ export default combineReducers({
   friends,
   selectedFriend,
   activeUsersOpen,
+  userNotification,
 });

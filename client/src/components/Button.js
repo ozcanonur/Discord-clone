@@ -15,7 +15,7 @@ const Button = ({ children, onClick, style }) => {
   const classes = useStyles();
 
   return (
-    <IconButton disableRipple className={classes.button} onClick={onClick} style={style}>
+    <IconButton className={classes.button} onClick={onClick} style={style}>
       {children}
     </IconButton>
   );

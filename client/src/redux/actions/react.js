@@ -38,3 +38,9 @@ export const toggleActiveUsers = () => {
     type: 'TOGGLE_ACTIVE_USERS',
   };
 };
+
+export const clearNotification = () => {
+  return {
+    type: 'CLEAR_NOTIFICATION',
+  };
+};

@@ -5,7 +5,7 @@ const Message = require('../db/models/message');
 const onUserMessaged = async (io, action) => {
   const { name, message } = action.payload;
   // Find the user
-  const user = await User.findOne({ name });
+  const user = await User.findOne({ name }).populate('currentChannel');
   // Find the channel
   const channel = await Channel.findOne({ _id: user.currentChannel });
   // Create and save the message
@@ -34,6 +34,16 @@ const onUserMessaged = async (io, action) => {
     type: 'io/messages',
     payload: currChannel.messages,
   });
+
+  // Send a notification if it's a private message
+  const channelName = user.currentChannel.name;
+  if (channelName.includes('private')) {
+    const recipientName = channelName.replace(name, '').replace('_private', '');
+    // Find the recipient's socketId
+    const recipient = await User.findOne({ name: recipientName });
+    // Emit to the recipient that a message is received
+    io.to(recipient.socketId).emit('action', { type: 'io/notification', payload: name });
+  }
 };
 
 const onUserSelectedChannel = async (socket, action) => {

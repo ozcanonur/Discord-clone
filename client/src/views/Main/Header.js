@@ -8,7 +8,8 @@ import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import Inbox from '@material-ui/icons/Inbox';
 import Help from '@material-ui/icons/Help';
-import { toggleActiveUsers } from 'redux/actions/react';
+import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const useStyles = makeStyles({
   headerContainer: {
@@ -39,18 +40,38 @@ const useStyles = makeStyles({
   optionsContainer: {
     display: 'flex',
   },
+  notificationAlert: {
+    position: 'absolute',
+    backgroundColor: 'red',
+    bottom: '20%',
+    right: '20%',
+    borderRadius: '50%',
+    height: '1rem',
+    width: '1rem',
+  },
+  notificationTooltip: {
+    backgroundColor: 'rgb(32,34,37)',
+    color: 'rgb(220,221,222)',
+    fontSize: '1.5rem',
+    fontWeight: 500,
+    textAlign: 'center',
+  },
 });
 
 const Header = () => {
   const classes = useStyles();
   const selectedChannel = useSelector((state) => state.selectedChannel);
+  const userNotification = useSelector((state) => state.userNotification);
+  const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 
   const dispatch = useDispatch();
   const toggleActiveUsersOnClick = () => {
     dispatch(toggleActiveUsers());
   };
 
-  const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
+  const handleNotificationClick = () => {
+    dispatch(clearNotification());
+  };
 
   return (
     <div className={classes.headerContainer}>
@@ -59,9 +80,23 @@ const Header = () => {
         <div className={classes.titleText}>{selectedChannel.name}</div>
       </div>
       <div className={classes.optionsContainer}>
-        <Button>
-          <Notifications />
-        </Button>
+        <Tooltip
+          title={
+            userNotification.hasNotification
+              ? `You have a new message from ${userNotification.from}!`
+              : undefined
+          }
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <div>
+            <Button onClick={handleNotificationClick}>
+              <Notifications style={{ position: 'relative' }} />
+              {userNotification.hasNotification ? (
+                <div className={classes.notificationAlert} />
+              ) : null}
+            </Button>
+          </div>
+        </Tooltip>
         <Button>
           <Room />
         </Button>
