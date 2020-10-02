@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userJoinedServer') await onUserJoinedServer(socket, action);
     else if (action.type === 'io/userSentFriendRequest') await onUserSentFriendRequest(io, action);
     else if (action.type === 'io/userSelectedFriendChannel')
-      await onUserSelectedFriendChannel(io, socket, action);
+      await onUserSelectedFriendChannel(socket, action);
   });
 
   socket.on('disconnect', async () => {
