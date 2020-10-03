@@ -1,11 +1,11 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import qs from 'qs';
-
 import Button from 'components/Button';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
 import Settings from '@material-ui/icons/Settings';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import footerStyles from './styles/footer';
 
 const useStyles = makeStyles(footerStyles);
@@ -17,7 +17,9 @@ const Footer = () => {
 
   return (
     <div className={classes.footer}>
-      <div className={classes.icon} />
+      <div className={classes.iconContainer}>
+        <AccountCircleRoundedIcon className={classes.icon} />
+      </div>
       <div className={classes.user}>
         <div className={classes.userName}>{name}</div>
         <div className={classes.userId}>#5421</div>

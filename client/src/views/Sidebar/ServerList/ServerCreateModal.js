@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { createServer } from 'redux/actions/socket';
-import ServerIcon from 'components/ServerIcon';
 import qs from 'qs';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -51,7 +50,9 @@ const ServerCreateModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
             You can always change it later.
           </div>
           <div className={classes.modalIconUpload}>
-            <ServerIcon style={{ height: '10rem', width: '10rem' }}>Icon</ServerIcon>
+            <div className={classes.serverContainer}>
+              <div className={classes.server}>Icon</div>
+            </div>
           </div>
           <div className={classes.modalInputContainer}>
             <div className={classes.inputLabel}>Server name</div>

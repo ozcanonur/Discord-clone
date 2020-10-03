@@ -35,7 +35,7 @@ const ServerList = () => {
             title='Friends / Private Messages'
             arrow
             placement='right'
-            enterDelay={50}
+            enterDelay={0}
             classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
           >
             <div>
@@ -49,7 +49,7 @@ const ServerList = () => {
           title='Add / Join Server'
           arrow
           placement='right'
-          enterDelay={50}
+          enterDelay={0}
           classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
         >
           <div>
@@ -64,7 +64,7 @@ const ServerList = () => {
               title={server.name}
               arrow
               placement='right'
-              enterDelay={50}
+              enterDelay={0}
               classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
             >
               <div>

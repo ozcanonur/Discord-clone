@@ -37,7 +37,7 @@ const inputStyles = {
   buttonIcon: {
     fontSize: '3rem',
     cursor: 'pointer',
-    transition: 'scale .2s',
+    transition: 'all .2s',
     '&:hover': {
       transform: 'scale(1.2)',
       color: '#3CB371',
@@ -47,7 +47,7 @@ const inputStyles = {
     fontSize: '3rem',
     marginRight: '1rem',
     cursor: 'pointer',
-    transition: 'scale .2s',
+    transition: 'all .2s',
 
     '&:hover': {
       transform: 'scale(1.2)',

@@ -1,5 +1,6 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import messageStyles from './styles/message';
 
 const useStyles = makeStyles(messageStyles);
@@ -22,7 +23,9 @@ const Message = ({ message }) => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.avatar} />
+      <div className={classes.iconContainer}>
+        <AccountCircleRoundedIcon className={classes.icon} />
+      </div>
       <div className={classes.message}>
         <div className={classes.header}>
           <div className={classes.username}>{user.name}</div>

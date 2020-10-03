@@ -14,6 +14,7 @@ const indexStyles = {
     fontWeight: 700,
     textAlign: 'center',
     letterSpacing: 0,
+    padding: '1rem 2rem',
   },
   arrow: {
     color: 'rgb(32,34,37)',

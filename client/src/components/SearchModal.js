@@ -25,7 +25,6 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import _ from 'lodash';
 import searchModalStyles from './styles/searchModal';
 
 const useStyles = makeStyles(searchModalStyles);
@@ -38,37 +37,38 @@ const SearchModal = ({ modalOpen, setModalOpen }) => {
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
-  const searchAndSetResults = (text) => {
-    if (text.length === 0) {
-      setSearchResults([]);
-      return;
-    }
-
-    const hasPrefix = ['#', '@', '*'].some((e) => text.includes(e));
-    let params;
-    if (hasPrefix) {
-      const type = text.charAt(0);
-      text = text.slice(1);
-      params = { name, type, text };
-    } else params = { name, type: '*', text };
-
-    axios
-      .get('/search', {
-        params,
-      })
-      .then((res) => {
-        setSearchResults(res.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  // Throttle the search
-  const debounceHandleUpdate = _.debounce((input) => searchAndSetResults(input), 250, {
-    maxWait: 250,
-  });
-
   useEffect(() => {
-    debounceHandleUpdate(inputText);
+    const search = async () => {
+      if (inputText.length === 0) {
+        setSearchResults([]);
+        return;
+      }
+
+      const hasPrefix = ['#', '@', '*'].some((e) => inputText.includes(e));
+      let params;
+      if (hasPrefix) {
+        const type = inputText.charAt(0);
+        params = { name, type, text: inputText.slice(1) };
+      } else params = { name, type: '*', text: inputText };
+
+      axios
+        .get('/search', {
+          params,
+        })
+        .then((res) => {
+          setSearchResults(res.data);
+        })
+        .catch((error) => console.log(error));
+    };
+
+    // Throttle Api requests
+    const timeoutId = setTimeout(() => {
+      if (inputText) search();
+    }, 200);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText]);
 

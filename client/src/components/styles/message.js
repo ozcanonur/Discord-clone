@@ -32,6 +32,21 @@ const messageStyles = {
     marginTop: '0.5rem',
     color: 'rgb(220,221,222)',
   },
+  iconContainer: {
+    backgroundColor: '#3CB371',
+    borderRadius: '50%',
+    padding: '2rem',
+    width: '1.5rem',
+    height: '1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    width: '3.2rem',
+    height: '3.2rem',
+    color: 'white',
+  },
 };
 
 export default messageStyles;

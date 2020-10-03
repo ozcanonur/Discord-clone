@@ -10,7 +10,7 @@ const Button = ({ children, onClick, style, tooltipText = '', marginRight }) => 
   const classes = useStyles();
 
   return (
-    <Tooltip enterDelay={50} title={tooltipText} classes={{ tooltip: classes.notificationTooltip }}>
+    <Tooltip enterDelay={0} title={tooltipText} classes={{ tooltip: classes.notificationTooltip }}>
       <div style={{ marginRight: marginRight ? '2.4rem' : 'inherit' }}>
         <IconButton className={classes.button} onClick={onClick} style={{ ...style }}>
           {children}
