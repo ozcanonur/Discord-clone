@@ -49,6 +49,7 @@ const Input = () => {
   return (
     <div className={classes.inputContainer}>
       <TextField
+        multiline
         placeholder={`Message # ${selectedChannel.name}`}
         variant='outlined'
         fullWidth

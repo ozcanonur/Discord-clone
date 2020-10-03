@@ -14,7 +14,7 @@ const channelCreateModalStyles = {
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
-    width: '60vh',
+    width: '50vw',
   },
   modalHeading: {
     fontSize: '1.8rem',
@@ -40,6 +40,10 @@ const channelCreateModalStyles = {
   },
   input: {
     marginTop: '1rem',
+
+    '& .Mui-focused': {
+      color: 'rgb(220,221,222)',
+    },
   },
   inputProps: {
     fontSize: '1.3rem',

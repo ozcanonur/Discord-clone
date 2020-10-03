@@ -43,15 +43,17 @@ const onUserMessaged = async (io, action) => {
     const recipient = await User.findOne({ name: recipientName });
     // Emit to the recipient that a message is received
     io.to(recipient.socketId).emit('action', { type: 'io/notification', payload: name });
-
-    console.log(recipient.socketId, typeof recipient.socketId);
   }
 };
 
 const onUserSelectedChannel = async (socket, action) => {
   const { name, channel } = action.payload;
   // Leave all the channels first
+  const rooms = socket.rooms;
+
   await socket.leaveAll();
+  if (Object.values(rooms).length > 0) await socket.join(Object.values(rooms)[0]);
+
   // Join the new channel
   await socket.join(channel._id.toString());
   // Update the user's current channel
@@ -72,7 +74,7 @@ const onUserSelectedChannel = async (socket, action) => {
 const onUserSelectedFriendChannel = async (socket, action) => {
   const { name, friendName } = action.payload;
   // Leave all the channels first
-  await socket.leaveAll();
+  // await socket.leaveAll();
   // Find the channel, try both combinations since we don't know who added who
   // And we create the channel name via concat'ing the names above
   const populateFields = {

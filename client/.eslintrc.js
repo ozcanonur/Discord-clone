@@ -21,10 +21,11 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'no-shadow': 'off',
     'react/no-array-index-key': 'off',
-    camelcase: 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/jsx-indent': 'off',
     'import/prefer-default-export': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
   },
   settings: {
     'import/resolver': {
