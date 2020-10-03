@@ -7,7 +7,6 @@ import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import SearchModal from 'components/SearchModal';
 import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
-import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import headerStyles from './styles/header';
 
@@ -30,9 +29,9 @@ const Header = () => {
     dispatch(clearNotification());
   };
 
-  const gitHubOnClick = () => {
-    window.open('https://github.com/ozcanonur/Discord-clone', '_blank');
-  };
+  const notificationTooltipText = userNotification.hasNotification
+    ? `You have a new message from ${userNotification.from}!`
+    : 'No notifications';
 
   return (
     <>
@@ -45,37 +44,33 @@ const Header = () => {
           <div className={classes.searchText}>Search</div>
         </div>
         <div className={classes.optionsContainer}>
-          <Tooltip
-            enterDelay={50}
-            title={
-              userNotification.hasNotification
-                ? `You have a new message from ${userNotification.from}!`
-                : `You don't have any notifications`
-            }
-            classes={{ tooltip: classes.notificationTooltip }}
+          <Button
+            onClick={handleNotificationClick}
+            tooltipText={notificationTooltipText}
+            marginRight
           >
-            <div style={{ marginRight: '2.4rem' }}>
-              <Button onClick={handleNotificationClick}>
-                <Notifications style={{ position: 'relative' }} />
-                {userNotification.hasNotification ? (
-                  <div className={classes.notificationAlert} />
-                ) : null}
-              </Button>
-            </div>
-          </Tooltip>
-          <Button style={{ marginRight: '2.4rem' }}>
+            <Notifications style={{ position: 'relative' }} />
+            {userNotification.hasNotification ? (
+              <div className={classes.notificationAlert} />
+            ) : null}
+          </Button>
+          <Button tooltipText='Dunno' marginRight>
             <Room />
           </Button>
           <Button
             onClick={toggleActiveUsersOnClick}
             style={{
               backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
-              marginRight: '2.4rem',
             }}
+            tooltipText='Toggle Active Users'
+            marginRight
           >
             <PeopleAlt />
           </Button>
-          <Button onClick={gitHubOnClick}>
+          <Button
+            onClick={() => window.open('https://github.com/ozcanonur/Discord-clone', '_blank')}
+            tooltipText='GitHub'
+          >
             <GitHubIcon />
           </Button>
         </div>

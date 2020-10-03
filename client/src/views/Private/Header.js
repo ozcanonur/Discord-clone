@@ -67,12 +67,14 @@ const Header = () => {
           onClick={toggleActiveUsersOnClick}
           style={{
             backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
-            marginRight: '2.4rem',
           }}
+          tooltipText='Toggle Active Users'
+          marginRight
         >
           <PeopleAlt />
         </CustomButton>
-        <CustomButton onClick={gitHubOnClick}>
+
+        <CustomButton onClick={gitHubOnClick} tooltipText='GitHub'>
           <GitHubIcon />
         </CustomButton>
       </div>
