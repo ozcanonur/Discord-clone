@@ -28,6 +28,13 @@ const friendListStyles = {
     backgroundColor: 'rgb(32,34,37)',
     borderRadius: '1rem',
     width: '100%',
+    transition: 'all .2s ease-in-out',
+    '&:hover': {
+      backgroundColor: 'rgb(220,221,222)',
+      color: 'black',
+      opacity: '1 !important',
+      fontWeight: 1000,
+    },
   },
   titleContainer: {
     display: 'flex',
@@ -44,7 +51,6 @@ const friendListStyles = {
     fontSize: '1.5rem',
     fontWeight: 1000,
     color: 'rgb(220,221,222)',
-    marginLeft: '1rem',
   },
   friendList: {
     display: 'flex',

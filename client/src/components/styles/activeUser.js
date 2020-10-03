@@ -5,6 +5,7 @@ const activeUserStyles = {
     marginTop: '1rem',
     cursor: 'pointer',
     padding: '0.8rem',
+    transition: 'all .2s ease-in-out',
     '&:hover': {
       backgroundColor: 'rgb(64, 67, 74)',
     },

@@ -1,12 +1,9 @@
 const express = require('express');
 const http = require('http');
 const bodyParser = require('body-parser');
-const User = require('./db/models/user');
-const Channel = require('./db/models/channel');
-const Server = require('./db/models/server');
+const { searchUsers, searchChannels } = require('./utils');
 
 const app = express();
-// app.use(cors);
 const server = http.createServer(app);
 
 module.exports = server;
@@ -18,51 +15,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/search', async (req, res) => {
-  const { type, text } = req.query;
-
-  const searchUsers = async () => {
-    let regex;
-    // Search for all users if no text after @
-    if (text.length === 0) regex = new RegExp('.*');
-    else regex = new RegExp(`^${text}`);
-
-    const users = await User.find({ name: { $regex: regex } });
-
-    const results = [];
-    for (let user of users) {
-      results.push({ first: user.name, second: '', type: '@' });
-    }
-
-    return results;
-  };
-
-  const searchChannels = async () => {
-    let regex;
-    // Search for all channels if no text after #
-    if (text.length === 0) regex = new RegExp('.*');
-    else regex = new RegExp(`^${text}`);
-
-    const channels = await Channel.find({ name: { $regex: regex } });
-
-    const results = [];
-    for (let channel of channels) {
-      // Skip _private because it's reserved for private messaging channels
-      if (channel.name.includes('_private')) continue;
-      // Find the channel's server
-      const server = await Server.findOne({ channels: { $all: [channel._id] } });
-      results.push({ first: channel.name, second: server.name, type: '#' });
-    }
-
-    return results;
-  };
+  const { name, type, text } = req.query;
 
   let results = [];
   if (type === '*') {
-    const channelResults = await searchChannels();
-    const userResults = await searchUsers();
+    const channelResults = await searchChannels(text, name);
+    const userResults = await searchUsers(text, name);
     results = [...channelResults, ...userResults];
-  } else if (type === '#') results = await searchChannels();
-  else if (type === '@') results = await searchUsers();
+  } else if (type === '#') results = await searchChannels(text, name);
+  else if (type === '@') results = await searchUsers(text, name);
 
   res.send(results);
 });

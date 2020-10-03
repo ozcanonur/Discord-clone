@@ -61,6 +61,7 @@ const serverJoinModalStyles = {
     fontFamily: 'Lato, sans-serif',
     backgroundColor: '#7289da',
     padding: '1rem 3rem',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       backgroundColor: '#5869a8',

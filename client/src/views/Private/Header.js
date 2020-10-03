@@ -4,8 +4,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
 import CustomButton from 'components/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { selectTabInPrivate } from 'redux/actions/react';
+import { selectTabInPrivate, toggleActiveUsers } from 'redux/actions/react';
 import headerStyles from './styles/header';
 
 const useStyles = makeStyles(headerStyles);
@@ -14,10 +15,15 @@ const Header = () => {
   const classes = useStyles();
 
   const selectedTabInPrivateName = useSelector((state) => state.selectedTabInPrivate);
+  const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 
   const dispatch = useDispatch();
   const selectTabInPrivateOnClick = (tabName) => {
     dispatch(selectTabInPrivate(tabName));
+  };
+
+  const toggleActiveUsersOnClick = () => {
+    dispatch(toggleActiveUsers());
   };
 
   const gitHubOnClick = () => {
@@ -57,6 +63,15 @@ const Header = () => {
         </div>
       </div>
       <div className={classes.optionsContainer}>
+        <CustomButton
+          onClick={toggleActiveUsersOnClick}
+          style={{
+            backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
+            marginRight: '2.4rem',
+          }}
+        >
+          <PeopleAlt />
+        </CustomButton>
         <CustomButton onClick={gitHubOnClick}>
           <GitHubIcon />
         </CustomButton>

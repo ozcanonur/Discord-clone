@@ -65,6 +65,7 @@ const serverCreateModalStyles = {
     backgroundColor: '#7289da',
     color: 'white',
     padding: '1rem 3rem',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       backgroundColor: '#5869a8',

@@ -1,6 +1,23 @@
+/* eslint-disable no-console */
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+  selectChannel,
+  selectServerName,
+  selectFriendChannel,
+  selectFriend,
+  selectTabInPrivate,
+} from 'redux/actions/react';
+import {
+  selectChannel as selectChannelIo,
+  selectFriendChannel as selectFriendChannelIo,
+} from 'redux/actions/socket';
+import { store } from 'redux/store';
 import axios from 'axios';
+import qs from 'qs';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -9,107 +26,17 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import _ from 'lodash';
+import searchModalStyles from './styles/searchModal';
 
-const useStyles = makeStyles({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
-    padding: '2rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: '6px',
-    outline: 'none',
-    width: '50vw',
-  },
-  input: {
-    backgroundColor: 'rgb(114,118, 125)',
-    borderRadius: '1rem',
-    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
+const useStyles = makeStyles(searchModalStyles);
 
-    '& fieldset': {
-      border: 'none',
-    },
-
-    '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
-    },
-  },
-  inputProps: {
-    fontSize: '2rem',
-    color: 'rgb(220,221,222)',
-    fontFamily: 'Lato, sans-serif',
-  },
-  footer: {
-    paddingTop: '2rem',
-    color: 'rgb(220,221,222)',
-    borderTop: '1px solid rgba(220,221,222, 0.1)',
-    fontSize: '1.3rem',
-    fontWeight: 700,
-    textAlign: 'start',
-    width: '100%',
-  },
-  protip: {
-    color: 'rgb(67,181,129)',
-    textTransform: 'uppercase',
-    fontWeight: 1000,
-  },
-  footerText: {
-    marginLeft: '0.5rem',
-    letterSpacing: 0,
-  },
-  prefix: {
-    color: 'rgb(67,181,129)',
-    fontWeight: 1000,
-    opacity: 1,
-    marginLeft: '0.5rem',
-    marginRight: '0.5rem',
-  },
-  results: {
-    width: '100%',
-  },
-  result: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '1rem 1rem',
-    color: 'rgb(220,221,222)',
-    fontSize: '1.5rem',
-    fontFamily: 'Lato, sans-serif',
-    fontWeight: 700,
-    cursor: 'pointer',
-
-    '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74)',
-    },
-  },
-  resultText: {
-    opacity: 0.8,
-  },
-  resultSecondaryText: {
-    opacity: 0.5,
-  },
-  noResults: {
-    height: '6vh',
-    color: 'rgb(220,221,222)',
-    fontSize: '1.8rem',
-    fontWeight: 700,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-const DirectionsModal = ({ modalOpen, setModalOpen }) => {
+const SearchModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const searchAndSetResults = (text) => {
     if (text.length === 0) {
@@ -122,8 +49,8 @@ const DirectionsModal = ({ modalOpen, setModalOpen }) => {
     if (hasPrefix) {
       const type = text.charAt(0);
       text = text.slice(1);
-      params = { type, text };
-    } else params = { type: '*', text };
+      params = { name, type, text };
+    } else params = { name, type: '*', text };
 
     axios
       .get('/search', {
@@ -144,6 +71,54 @@ const DirectionsModal = ({ modalOpen, setModalOpen }) => {
     debounceHandleUpdate(inputText);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText]);
+
+  // To redirect to another page
+  const history = useHistory();
+  const location = useLocation();
+  const { servers } = store.getState();
+  const dispatch = useDispatch();
+
+  const redirectOnClick = (type, id, resultName) => {
+    if (type === '#') {
+      // Find the channel and server
+      // And dispatch to switch to them
+      let channel;
+      let server;
+      let found = false;
+      for (let i = 0; i < servers.length; i += 1) {
+        const s = servers[i];
+        for (let j = 0; j < s.channels.length; j += 1) {
+          const c = s.channels[j];
+          if (c._id === id) {
+            channel = c;
+            server = s;
+            found = true;
+            break;
+          }
+          if (found) break;
+        }
+      }
+
+      dispatch(selectServerName(server.name));
+      dispatch(selectChannel(channel));
+      dispatch(selectChannelIo(name, channel));
+      setModalOpen(false);
+
+      // Redirect to main route if not already
+      if (location.pathname !== '/main') history.push(`/main?name=${name}`);
+    } else if (type === '@') {
+      // resultName = friendName in this case
+      dispatch(selectFriendChannel(name, resultName));
+      dispatch(selectFriendChannel(resultName));
+      dispatch(selectFriendChannelIo(name, resultName));
+      dispatch(selectFriend(resultName));
+      dispatch(selectTabInPrivate('Chat'));
+      setModalOpen(false);
+
+      // Redirect to main route if not already
+      if (location.pathname !== '/private') history.push(`/private?name=${name}`);
+    }
+  };
 
   return (
     <Modal
@@ -176,9 +151,16 @@ const DirectionsModal = ({ modalOpen, setModalOpen }) => {
           ) : (
             <List className={classes.results}>
               {searchResults.map((res, key) => (
-                <ListItem key={key} disableGutters className={classes.result}>
-                  <div className={classes.resultText}>{`${res.type} ${res.first}`}</div>
-                  <div className={classes.resultSecondaryText}>{res.second}</div>
+                <ListItem
+                  key={key}
+                  disableGutters
+                  className={classes.result}
+                  onClick={() => redirectOnClick(res.type, res.id, res.name)}
+                >
+                  <div className={classes.resultText}>{`${res.type} ${res.name}`}</div>
+                  <div className={classes.resultSecondaryText}>
+                    {res.type === '@' ? 'Friend' : res.server}
+                  </div>
                 </ListItem>
               ))}
             </List>
@@ -201,4 +183,4 @@ const DirectionsModal = ({ modalOpen, setModalOpen }) => {
   );
 };
 
-export default DirectionsModal;
+export default SearchModal;

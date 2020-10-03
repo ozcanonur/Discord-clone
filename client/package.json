@@ -9,7 +9,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "awesome-debounce-promise": "^2.1.0",
     "axios": "^0.20.0",
     "emoji-mart": "^3.0.0",
     "history": "^5.0.0",
@@ -25,8 +24,7 @@
     "redux": "^4.0.5",
     "redux-socket.io": "^1.4.0",
     "redux-thunk": "^2.3.0",
-    "socket.io-client": "^2.3.0",
-    "use-constant": "^1.0.0"
+    "socket.io-client": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

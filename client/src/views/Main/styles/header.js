@@ -13,6 +13,7 @@ const headerStyles = {
   titleContainer: {
     display: 'flex',
     alignItems: 'center',
+    flexGrow: 1,
   },
   titleIcon: {
     fontSize: '2rem',
@@ -37,12 +38,37 @@ const headerStyles = {
     width: '1rem',
   },
   notificationTooltip: {
-    backgroundColor: 'black',
+    backgroundColor: 'rgb(32,34,37)',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
     fontWeight: 700,
     textAlign: 'center',
     letterSpacing: 0,
+  },
+  search: {
+    padding: '1rem',
+    height: '6rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    cursor: 'pointer',
+  },
+  searchText: {
+    fontSize: '1.4rem',
+    fontWeight: 700,
+    color: 'rgb(220,221,222)',
+    padding: '1rem 4rem',
+    backgroundColor: 'rgb(32,34,37)',
+    borderRadius: '1rem',
+    width: '100%',
+    transition: 'all .2s ease-in-out',
+    opacity: 0.7,
+
+    '&:hover': {
+      backgroundColor: 'rgb(220,221,222)',
+      color: 'black',
+      opacity: '1 !important',
+    },
   },
 };
 

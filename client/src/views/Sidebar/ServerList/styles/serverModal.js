@@ -38,6 +38,7 @@ const serverModal = {
     marginTop: '2rem',
     fontFamily: 'Lato, sans-serif',
     backgroundColor: 'rgb(79, 86, 96)',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       backgroundColor: 'rgb(54,57,63)',
@@ -65,6 +66,7 @@ const serverModal = {
     marginTop: '2rem',
     backgroundColor: '#7289da',
     fontFamily: 'Lato, sans-serif',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       backgroundColor: '#5869a8',

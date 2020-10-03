@@ -16,12 +16,12 @@ const serverIconStyles = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      transition: 'background-color .3s',
       fontSize: '1.6rem',
       fontWeight: 1000,
       textAlign: 'center',
       color: 'rgb(220,221,222)',
       letterSpacing: '1.5px',
+      transition: 'all .2s ease-in-out',
 
       '& > svg': {
         fontSize: '3rem',

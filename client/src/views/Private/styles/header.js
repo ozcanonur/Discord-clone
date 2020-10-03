@@ -37,6 +37,7 @@ const headerStyles = {
     textTransform: 'capitalize',
     marginLeft: '2rem',
     boxShadow: 'none',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       color: '#36393f',
@@ -50,6 +51,7 @@ const headerStyles = {
     marginLeft: '2rem',
     color: 'white',
     boxShadow: 'none',
+    transition: 'all .2s ease-in-out',
 
     '&:hover': {
       backgroundColor: '#2c8a5f',

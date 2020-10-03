@@ -15,7 +15,7 @@ const ActiveUsers = () => {
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 
   return (
-    <Fade in={activeUsersOpen}>
+    <Fade in={activeUsersOpen} mountOnEnter unmountOnExit>
       <div className={classes.activeUsers}>
         <div className={classes.usersStatus}>{`Online - ${users.length}`}</div>
         {usernames.map((username, key) => (

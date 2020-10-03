@@ -13,13 +13,14 @@ const Main = () => {
   const classes = useStyles();
 
   const selectedTabInPrivate = useSelector((state) => state.selectedTabInPrivate);
+  const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 
   return (
     <div className={classes.container}>
       <Header className={classes.header} />
       <div className={classes.chatContainer}>
         {selectedTabInPrivate === 'Chat' ? <Chat /> : <AddFriendBox />}
-        <ActiveUsers />
+        {activeUsersOpen ? <ActiveUsers /> : null}
       </div>
     </div>
   );

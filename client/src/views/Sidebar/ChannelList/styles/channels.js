@@ -29,6 +29,7 @@ const channelsStyles = {
     padding: 0,
   },
   channel: {
+    transition: 'all .2s ease-in-out',
     '&:hover': {
       backgroundColor: 'rgb(64, 67, 74)',
       borderRadius: '4px',

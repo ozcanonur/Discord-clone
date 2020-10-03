@@ -8,7 +8,7 @@ const indexStyles = {
     padding: '0.8rem',
   },
   tooltip: {
-    backgroundColor: 'black',
+    backgroundColor: 'rgb(32,34,37)',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
     fontWeight: 700,
@@ -16,7 +16,7 @@ const indexStyles = {
     letterSpacing: 0,
   },
   arrow: {
-    color: 'black',
+    color: 'rgb(32,34,37)',
   },
 };
 

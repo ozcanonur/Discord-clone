@@ -5,7 +5,7 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import Friend from './Friend';
 import Footer from '../Sidebar/ChannelList/Footer';
 import friendListStyles from './styles/friendList';
-import DirectionsModal from './DirectionsModal';
+import SearchModal from '../../components/SearchModal';
 
 const useStyles = makeStyles(friendListStyles);
 
@@ -13,17 +13,13 @@ const FriendList = () => {
   const classes = useStyles();
 
   const friends = useSelector((state) => state.friends);
-  const [directionsModalOpen, setDirectionsModalOpen] = useState(true);
-
-  const openDirectionRouteOnClick = () => {
-    setDirectionsModalOpen(!directionsModalOpen);
-  };
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
     <div className={classes.container}>
       <div className={classes.subContainer}>
-        <div className={classes.heading} onClick={openDirectionRouteOnClick}>
-          <div className={classes.headingText}>Start a conversation</div>
+        <div className={classes.heading} onClick={() => setSearchModalOpen(!searchModalOpen)}>
+          <div className={classes.headingText}>Search</div>
         </div>
         <div className={classes.titleContainer}>
           <EmojiPeopleIcon className={classes.friendsIcon} />
@@ -37,7 +33,7 @@ const FriendList = () => {
           ))}
         </div>
       </div>
-      <DirectionsModal modalOpen={directionsModalOpen} setModalOpen={setDirectionsModalOpen} />
+      <SearchModal modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
       <Footer />
     </div>
   );
