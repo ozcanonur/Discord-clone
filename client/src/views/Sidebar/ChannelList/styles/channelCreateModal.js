@@ -40,13 +40,9 @@ const channelCreateModalStyles = {
   },
   input: {
     marginTop: '1rem',
-
-    '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
-    },
   },
   inputProps: {
-    fontSize: '1.3rem',
+    fontSize: '1.5rem',
     fontWeight: 500,
     color: 'white',
     opacity: 0.9,
@@ -69,6 +65,21 @@ const channelCreateModalStyles = {
     '&:hover': {
       backgroundColor: '#677bc4',
     },
+  },
+  helperText: {
+    fontSize: '1.4rem',
+    fontWeight: 800,
+    fontFamily: 'Lato, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
+    color: '#3CB371',
+  },
+  helperErrorText: {
+    fontSize: '1.4rem',
+    fontWeight: 800,
+    fontFamily: 'Lato, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
   },
 };
 

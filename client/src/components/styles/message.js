@@ -42,6 +42,7 @@ const messageStyles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
   icon: {
     width: '3.2rem',

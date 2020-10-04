@@ -2,7 +2,7 @@ const User = require('../db/models/user');
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
 
-const getValidationError = async (server) => {
+const getCreateServerValidationError = async (server) => {
   if (server.split(' ').length > 3) return `Server name can't be longer than 4 words.`;
   else if (server.length === 0) return `Server name can't be empty.`;
   else if (await Server.exists({ name: server })) return `Server already exists.`;
@@ -11,7 +11,7 @@ const getValidationError = async (server) => {
 const onUserCreatedServer = async (socket, action) => {
   const { name, server } = action.payload;
   // Validate
-  const validationError = await getValidationError(server);
+  const validationError = await getCreateServerValidationError(server);
   if (validationError) {
     socket.emit('action', { type: 'io/response', payload: { error: validationError } });
     return;
@@ -37,8 +37,31 @@ const onUserCreatedServer = async (socket, action) => {
   socket.emit('action', { type: 'io/response' });
 };
 
-const onUserCreatedChannel = async (io, action) => {
+const getCreateChannelValidationError = async (server, channelName) => {
+  if (channelName.length > 10) return `Channel name can't be longer than 10 characters.`;
+  else if (channelName.length === 0) return `Channel name can't be empty.`;
+  else {
+    // Check if the server has the channel already
+    let found = false;
+    for (let i = 0; i < server.channels.length; i++) {
+      if (server.channels[i].name === channelName) {
+        found = true;
+        break;
+      }
+    }
+    if (found) return `Channel already exists in ${server.name}.`;
+  }
+};
+
+const onUserCreatedChannel = async (io, socket, action) => {
   const { server, channelName, isVoice } = action.payload;
+  // Validate
+  const validationError = await getCreateChannelValidationError(server, channelName);
+  if (validationError) {
+    socket.emit('action', { type: 'io/response', payload: { error: validationError } });
+    return;
+  }
+
   // Create and save channel
   const channel = new Channel({
     name: channelName,

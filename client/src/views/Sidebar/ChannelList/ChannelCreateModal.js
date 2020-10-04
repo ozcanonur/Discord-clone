@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { createChannel } from 'redux/actions/socket';
+import { clearIoResponse } from 'redux/actions/react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
@@ -15,16 +16,30 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }) => {
   const classes = useStyles();
 
   const [modalInputValue, setModalInputValue] = useState('');
-
-  const handleModalInputChange = (e) => {
-    setModalInputValue(e.target.value);
-  };
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('Perfect!');
+  const ioResponse = useSelector((state) => state.ioResponse);
 
   const dispatch = useDispatch();
+  const handleModalInputChange = (e) => {
+    setModalInputValue(e.target.value);
+    dispatch(clearIoResponse());
+    if (e.target.value.length > 10) {
+      setErrorText(`Channel name can't be longer than 10 characters.`);
+      setError(true);
+    } else if (e.target.value.length === 0) {
+      setErrorText(`Channel name can't be empty.`);
+      setError(true);
+    } else {
+      setErrorText('Perfect!');
+      setError(false);
+    }
+  };
+
   // eslint-disable-next-line no-unused-vars
   const createChannelOnClick = (channelName, isVoice) => {
+    setErrorText(`Success! ${modalInputValue} created in ${selectedServer.name}.`);
     dispatch(createChannel(selectedServer, channelName, false));
-    setModalOpen(false);
   };
 
   return (
@@ -52,6 +67,11 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }) => {
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
+              error={error || ioResponse.error}
+              helperText={ioResponse.error || errorText}
+              FormHelperTextProps={{
+                className: error ? classes.helperErrorText : classes.helperText,
+              }}
             />
           </div>
           <div className={classes.modalFooter}>
@@ -66,6 +86,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }) => {
               variant='contained'
               className={classes.modalButton}
               onClick={() => createChannelOnClick(modalInputValue)}
+              disabled={!!error}
             >
               Create Channel
             </Button>

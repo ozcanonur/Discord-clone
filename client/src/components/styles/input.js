@@ -24,6 +24,10 @@ const inputStyles = {
     '& .Mui-focused': {
       color: 'rgb(220,221,222)',
     },
+
+    '& textarea': {
+      color: 'rgb(220,221,222)',
+    },
   },
   inputLabel: {
     fontSize: '1.6rem',

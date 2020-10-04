@@ -1,18 +1,32 @@
 const User = require('../db/models/user');
 const Channel = require('../db/models/channel');
 
-const onUserSentFriendRequest = async (io, action) => {
-  const { name, friendName } = action.payload;
-  // Find the user
-  let user = await User.findOne({ name });
-  // Find the friend
-  const friend = await User.findOne({ name: friendName }).populate('friends');
-  // Return if user not found
-  if (!friend) return console.log('User not found');
-  // Return if they are already friends
-  const isAlreadyFriends = user.friends.includes(friend._id);
-  if (isAlreadyFriends) return console.log('Already friends');
+const getFriendRequestValidationError = async (name, friendName) => {
+  if (friendName.length === 0) return `Friend name can't be empty.`;
+  else {
+    const friendExists = await User.exists({ name: friendName });
+    if (!friendExists) return `User not found.`;
+    // Find the user
+    let user = await User.findOne({ name });
+    // Find the friend
+    const friend = await User.findOne({ name: friendName }).populate('friends');
+    // Return if they are already friends
+    const isAlreadyFriends = user.friends.includes(friend._id);
+    if (isAlreadyFriends) return `${friendName} is already your friend!`;
+  }
+};
 
+const onUserSentFriendRequest = async (io, socket, action) => {
+  const { name, friendName } = action.payload;
+  // Validate
+  const validationError = await getFriendRequestValidationError(name, friendName);
+  if (validationError) {
+    socket.emit('action', { type: 'io/response', payload: { error: validationError } });
+    return;
+  }
+
+  let user = await User.findOne({ name });
+  const friend = await User.findOne({ name: friendName }).populate('friends');
   // Add the friend to the user
   user.friends.push(friend);
   await user.save();

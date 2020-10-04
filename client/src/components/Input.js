@@ -38,6 +38,7 @@ const Input = () => {
       if (isEmptyMessage(e.target.value)) return;
       dispatch(message(name, e.target.value));
       setText('');
+      e.preventDefault();
     }
   };
 
@@ -49,6 +50,7 @@ const Input = () => {
   return (
     <div className={classes.inputContainer}>
       <TextField
+        multiline
         placeholder={`Message # ${selectedChannel.name}`}
         variant='outlined'
         fullWidth

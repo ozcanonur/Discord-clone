@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearIoResponse } from 'redux/actions/react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -12,18 +13,28 @@ const useStyles = makeStyles(addFriendBoxStyles);
 const AddFriendBox = () => {
   const classes = useStyles();
 
-  const [friendName, setFriendName] = useState('');
-
-  const handleChange = (e) => {
-    setFriendName(e.target.value);
-  };
-
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const [friendName, setFriendName] = useState('');
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('');
+  const ioResponse = useSelector((state) => state.ioResponse);
 
   const dispatch = useDispatch();
+  const handleChange = (e) => {
+    setFriendName(e.target.value);
+    dispatch(clearIoResponse());
+    if (e.target.value.length === 0) {
+      setErrorText(`Username can't be empty.`);
+      setError(true);
+    } else {
+      setErrorText(``);
+      setError(false);
+    }
+  };
+
   const sendFriendRequestOnClick = () => {
+    setErrorText('');
     dispatch(sendFriendRequest(name, friendName));
-    setFriendName('');
   };
 
   return (
@@ -52,6 +63,15 @@ const AddFriendBox = () => {
         }}
         value={friendName}
         onChange={(e) => handleChange(e)}
+        error={error || ioResponse.error}
+        helperText={ioResponse.error || errorText}
+        FormHelperTextProps={{
+          className: error ? classes.helperErrorText : classes.helperText,
+        }}
+        onBlur={() => {
+          setError(false);
+          setErrorText('');
+        }}
       />
       <hr className={classes.hr} />
     </div>

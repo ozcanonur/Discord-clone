@@ -32,9 +32,11 @@ io.on('connection', (socket) => {
 
     if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
-    else if (action.type === 'io/userCreatedChannel') await onUserCreatedChannel(io, action);
+    else if (action.type === 'io/userCreatedChannel')
+      await onUserCreatedChannel(io, socket, action);
     else if (action.type === 'io/userJoinedServer') await onUserJoinedServer(socket, action);
-    else if (action.type === 'io/userSentFriendRequest') await onUserSentFriendRequest(io, action);
+    else if (action.type === 'io/userSentFriendRequest')
+      await onUserSentFriendRequest(io, socket, action);
     else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
     else if (action.type === 'io/userSelectedFriendChannel')
       await onUserSelectedFriendChannel(socket, action);

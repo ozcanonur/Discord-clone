@@ -98,6 +98,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
               variant='contained'
               className={classes.modalButton}
               onClick={createServerOnClick}
+              disabled={!!error}
             >
               Create
             </Button>
