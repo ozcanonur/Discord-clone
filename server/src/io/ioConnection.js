@@ -24,7 +24,7 @@ const onUserConnected = async (io, socket, action) => {
   if (user)
     await User.updateOne({ name }, { socketId: socket.id, online: true, lastActiveAt: new Date() });
   else {
-    // Create the user, push the default server, save
+    // Create the user, push the default servers, save
     user = new User({
       name,
       socketId: socket.id,
@@ -34,6 +34,8 @@ const onUserConnected = async (io, socket, action) => {
     });
     const defaultServer = await Server.findOne({ name: 'Default' }).populate('channels');
     user.servers.push(defaultServer);
+    const secondaryServer = await Server.findOne({ name: 'Games' }).populate('channels');
+    user.servers.push(secondaryServer);
     await user.save();
 
     // Push the user into the default server, save

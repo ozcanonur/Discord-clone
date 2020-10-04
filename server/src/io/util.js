@@ -1,38 +1,38 @@
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
 
-const defaultChannel = async (name, voice) => {
+const setupChannel = async (name, isVoice) => {
   const channel = new Channel({
     name,
     messages: [],
-    voice,
+    voice: isVoice,
   });
 
   await channel.save();
   return channel;
 };
 
-const setupDefaultChannels = async () => {
-  const channels = await Promise.all([
-    defaultChannel('general'),
-    defaultChannel('games'),
-    defaultChannel('covid-19'),
-    defaultChannel('voice', true),
-  ]);
-  return channels;
-};
-
-const setupDefaultServer = async () => {
-  const defaultServerExists = await Server.exists({ name: 'Default' });
-  if (!defaultServerExists) {
-    const defaultChannels = await setupDefaultChannels();
-    const defaultServer = new Server({
-      name: 'Default',
-      channels: defaultChannels,
-      users: [],
-    });
-    await defaultServer.save();
+const setupChannels = async (channels) => {
+  const createdChannels = [];
+  for (const channel of channels) {
+    const createdChannel = await setupChannel(channel.name, channel.isVoice);
+    createdChannels.push(createdChannel);
   }
+
+  return createdChannels;
 };
 
-module.exports = { setupDefaultServer };
+const setupServer = async (name, channels) => {
+  const serverExists = await Server.exists({ name });
+  if (serverExists) return;
+
+  const createdChannels = (channels = await setupChannels(channels));
+  const server = new Server({
+    name,
+    channels: createdChannels,
+    users: [],
+  });
+  await server.save();
+};
+
+module.exports = { setupServer };

@@ -40,6 +40,11 @@ const Header = () => {
               backgroundColor:
                 selectedTabInPrivateName === 'Chat' ? 'rgb(220,221,222)' : 'transparent',
               color: selectedTabInPrivateName === 'Chat' ? '#36393f' : 'rgb(220,221,222)',
+              border:
+                selectedTabInPrivateName === 'Chat'
+                  ? '3px solid transparent'
+                  : '3px solid rgb(32,34,37)',
+              borderRadius: '4px',
             }}
           >
             Chat
@@ -51,7 +56,12 @@ const Header = () => {
             style={{
               backgroundColor:
                 selectedTabInPrivateName === 'AddFriend' ? 'rgb(220,221,222)' : 'transparent',
-              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : 'rgb(220,221,222)',
+              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : 'rgb(67,181,129)',
+              border:
+                selectedTabInPrivateName === 'AddFriend'
+                  ? '3px solid transparent'
+                  : '3px solid rgb(67,181,129)',
+              borderRadius: '4px',
             }}
           >
             Add Friend

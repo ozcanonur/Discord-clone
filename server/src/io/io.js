@@ -1,7 +1,7 @@
 const socketIo = require('socket.io');
 const server = require('../index');
 
-const { setupDefaultServer } = require('./util');
+const { setupServer } = require('./util');
 
 const io = socketIo(server);
 
@@ -16,8 +16,20 @@ const {
 
 io.on('connection', (socket) => {
   socket.on('action', async (action) => {
-    // Create default server if it doesn't exist
-    await setupDefaultServer();
+    // Create default servers if it doesn't exist
+    await setupServer('Default', [
+      { name: 'general', isVoice: false },
+      { name: 'world news', isVoice: false },
+      { name: 'covid-19', isVoice: false },
+      { name: 'voice', isVoice: true },
+    ]);
+    await setupServer('Games', [
+      { name: 'general', isVoice: false },
+      { name: 'World of Warcraft', isVoice: false },
+      { name: 'Path of Exile', isVoice: false },
+      { name: 'voice', isVoice: true },
+    ]);
+
     if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
     else if (action.type === 'io/userCreatedChannel') await onUserCreatedChannel(io, action);

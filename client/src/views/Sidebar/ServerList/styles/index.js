@@ -4,7 +4,8 @@ const indexStyles = {
     backgroundColor: 'rgb(32,34,37)',
     color: 'white',
     fontSize: '2rem',
-    overflow: 'hidden',
+    overflowX: 'hidden',
+    overflowY: 'auto',
     padding: '0.8rem',
   },
   tooltip: {
@@ -18,6 +19,12 @@ const indexStyles = {
   },
   arrow: {
     color: 'rgb(32,34,37)',
+  },
+  list: {
+    padding: 0,
+  },
+  listItem: {
+    padding: 0,
   },
 };
 

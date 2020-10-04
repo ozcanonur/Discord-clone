@@ -50,7 +50,7 @@ const onUserSelectedChannel = async (socket, action) => {
   const { name, channel } = action.payload;
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
-  await socket.leave(user.currentChannel._id.toString());
+  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
   // console.log(`${name} left: ${user.currentChannel._id.toString()}`);
 
   // Join the new channel
@@ -75,7 +75,7 @@ const onUserSelectedFriendChannel = async (socket, action) => {
   const { name, friendName } = action.payload;
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
-  await socket.leave(user.currentChannel._id.toString());
+  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
   // console.log(`${name} left: ${user.currentChannel._id.toString()}`);
 
   // Find the channel, try both combinations since we don't know who added who

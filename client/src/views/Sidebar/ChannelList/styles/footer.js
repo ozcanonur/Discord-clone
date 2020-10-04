@@ -27,6 +27,8 @@ const footerStyles = {
     flexDirection: 'column',
     justifyContent: 'center',
     marginLeft: '1.5rem',
+    overflowX: 'hidden',
+    flexGrow: 1,
   },
   userName: {
     fontSize: '1.5rem',
@@ -40,7 +42,6 @@ const footerStyles = {
   buttons: {
     display: 'flex',
     alignItems: 'center',
-    marginLeft: '2.5rem',
   },
 };
 

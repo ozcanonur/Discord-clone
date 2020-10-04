@@ -1,5 +1,6 @@
 const activeUserStyles = {
   user: {
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     marginTop: '1rem',
@@ -7,8 +8,9 @@ const activeUserStyles = {
     padding: '0.8rem',
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74)',
+      backgroundColor: 'rgb(64, 67, 74) !important',
     },
+    overflowX: 'hidden',
   },
   iconContainer: {
     backgroundColor: '#3CB371',
