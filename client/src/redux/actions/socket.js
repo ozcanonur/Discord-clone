@@ -56,3 +56,10 @@ export const selectFriendChannel = (name, friendName) => {
     payload: { name, friendName },
   };
 };
+
+export const createPin = (name, message, selectedChannel) => {
+  return {
+    type: 'io/userCreatedPin',
+    payload: { name, message, selectedChannel },
+  };
+};

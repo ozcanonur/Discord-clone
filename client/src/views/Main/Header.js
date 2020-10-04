@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from '@material-ui/core/Button';
 import CustomButton from 'components/Button';
 import Notifications from '@material-ui/icons/Notifications';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Fade from '@material-ui/core/Fade';
 import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import Message from 'components/Message';
 import SearchModal from 'components/SearchModal';
 import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import headerStyles from './styles/header';
+import PinnedMessages from './PinnedMessages';
 
 const useStyles = makeStyles(headerStyles);
 
@@ -24,7 +20,7 @@ const Header = () => {
   const userNotification = useSelector((state) => state.userNotification);
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [pinOpen, setPinOpen] = useState(true);
+  const [pinOpen, setPinOpen] = useState(false);
 
   const dispatch = useDispatch();
   const toggleActiveUsersOnClick = () => {
@@ -68,50 +64,7 @@ const Header = () => {
           >
             <Room />
           </CustomButton>
-          <Fade in={pinOpen}>
-            <div className={classes.pinContainer}>
-              <div className={classes.pinHeading}>Pinned Messages</div>
-              <div className={classes.pinBody}>
-                <List className={classes.pinnedMessagesList}>
-                  <ListItem disableGutters className={classes.pinnedMessage}>
-                    <Message
-                      message={{
-                        user: 'Onur',
-                        createdAt: '2020-10-04T11:08:15.863Z',
-                        message: `This channel doesn't have any pinned messages... yet.`,
-                      }}
-                      pinned
-                    />
-                  </ListItem>
-                  <ListItem disableGutters className={classes.pinnedMessage}>
-                    <Message
-                      message={{
-                        user: 'Onur',
-                        createdAt: '2020-10-04T11:08:15.863Z',
-                        message: `This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.`,
-                      }}
-                      pinned
-                    />
-                  </ListItem>
-                  <ListItem disableGutters className={classes.pinnedMessage}>
-                    <Message
-                      message={{
-                        user: 'Onur',
-                        createdAt: '2020-10-04T11:08:15.863Z',
-                        message: `This channel doesn't have any pinned messages... yet.`,
-                      }}
-                      pinned
-                    />
-                  </ListItem>
-                </List>
-              </div>
-              <div className={classes.pinFooter}>
-                <Button variant='contained' className={classes.pinFooterButton}>
-                  Create pin
-                </Button>
-              </div>
-            </div>
-          </Fade>
+          <PinnedMessages pinOpen={pinOpen} />
           <CustomButton
             onClick={toggleActiveUsersOnClick}
             style={{

@@ -59,16 +59,28 @@ const onUserSelectedChannel = async (socket, action) => {
   // Update the user's current channel
   await User.updateOne({ name }, { currentChannel: channel });
   // Find the older messages in the channel
-  const currChannel = await Channel.findOne({ _id: channel._id }).populate({
-    path: 'messages',
-    model: 'Message',
-    populate: {
-      path: 'user',
-      model: 'User',
+  const currChannel = await Channel.findOne({ _id: channel._id }).populate([
+    {
+      path: 'messages',
+      model: 'Message',
+      populate: {
+        path: 'user',
+        model: 'User',
+      },
     },
-  });
+    {
+      path: 'pinnedMessages',
+      model: 'Message',
+      populate: {
+        path: 'user',
+        model: 'User',
+      },
+    },
+  ]);
   // Emit the older messages to client
   socket.emit('action', { type: 'io/messages', payload: currChannel.messages });
+  // Emit the pins also
+  socket.emit('action', { type: 'io/pinnedMessages', payload: currChannel.pinnedMessages });
 };
 
 const onUserSelectedFriendChannel = async (socket, action) => {

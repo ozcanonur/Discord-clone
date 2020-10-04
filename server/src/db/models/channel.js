@@ -17,6 +17,12 @@ const ChannelSchema = new Schema({
     default: false,
   },
   category: String,
+  pinnedMessages: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Message',
+    },
+  ],
 });
 
 const Channel = mongoose.model('Channel', ChannelSchema);

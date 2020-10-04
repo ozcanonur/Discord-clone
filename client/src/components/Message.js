@@ -23,14 +23,11 @@ const Message = ({ message, pinned = false }) => {
 
   return (
     <div className={classes.container}>
-      {pinned ? (
-        <div className={classes.pinnedMessage}>Onur</div>
-      ) : (
+      {!pinned ? (
         <div className={classes.iconContainer}>
           <AccountCircleRoundedIcon className={classes.icon} />
         </div>
-      )}
-
+      ) : null}
       <div className={classes.message}>
         <div className={classes.header}>
           <div className={classes.username}>{user.name}</div>

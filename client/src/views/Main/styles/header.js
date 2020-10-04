@@ -71,55 +71,6 @@ const headerStyles = {
       opacity: '1 !important',
     },
   },
-  pinContainer: {
-    position: 'absolute',
-    zIndex: 9999,
-    display: 'flex',
-    flexDirection: 'column',
-    width: '35vw',
-    right: '15.5rem',
-    top: '5rem',
-  },
-  pinHeading: {
-    backgroundColor: 'rgb(32,34,37)',
-    fontSize: '1.4rem',
-    fontWeight: 1000,
-    color: 'white',
-    padding: '2rem',
-  },
-  pinBody: {
-    backgroundColor: '#2c2f33',
-    padding: '2rem',
-    fontSize: '1.5rem',
-    display: 'flex',
-  },
-  pinFooter: {
-    backgroundColor: 'rgb(32,34,37)',
-    padding: '2rem',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  pinFooterButton: {
-    fontSize: '1.4rem',
-    fontWeight: 700,
-    fontFamily: 'Lato, sans-serif',
-    backgroundColor: '#7289da',
-    color: 'white',
-    padding: '0.5rem 2.5rem',
-    transition: 'all .2s ease-in-out',
-
-    '&:hover': {
-      backgroundColor: '#5869a8',
-    },
-  },
-  pinnedMessagesList: {},
-  pinnedMessage: {
-    paddingTop: 0,
-    backgroundColor: 'rgb(64,68,75)',
-    marginTop: '1rem',
-    padding: '1rem 3rem',
-  },
 };
 
 export default headerStyles;

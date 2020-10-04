@@ -23,12 +23,6 @@ const ServerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User,',
   },
-  pinnedMessages: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Message',
-    },
-  ],
 });
 
 const Server = mongoose.model('Server', ServerSchema);

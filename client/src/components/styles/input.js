@@ -6,6 +6,12 @@ const inputStyles = {
     borderRadius: '1rem',
     alignItems: 'center',
     position: 'relative',
+    transition: 'all .2s ease-out',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
+
+    '& div': {
+      transition: 'all .2s ease-out',
+    },
 
     '& input': {
       color: 'rgb(220,221,222)',
@@ -62,6 +68,33 @@ const inputStyles = {
     position: 'absolute',
     bottom: '6rem',
     right: 0,
+  },
+  pinnedInputProps: {
+    width: '30vw',
+  },
+  pinFooter: {
+    backgroundColor: 'rgb(32,34,37)',
+    padding: '2rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  pinFooterButton: {
+    fontSize: '1.4rem',
+    fontWeight: 700,
+    fontFamily: 'Lato, sans-serif',
+    backgroundColor: '#7289da',
+    color: 'white',
+    padding: '0.5rem 2.5rem',
+    transition: 'all .2s ease-in-out',
+
+    '&:hover': {
+      backgroundColor: '#5869a8',
+    },
+
+    '& span': {
+      minWidth: '10rem',
+    },
   },
 };
 

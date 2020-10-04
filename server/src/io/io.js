@@ -13,6 +13,7 @@ const {
   onUserSelectedChannel,
   onUserSelectedFriendChannel,
 } = require('./ioChannelMessage');
+const { onUserCreatedPin } = require('./ioMisc');
 
 io.on('connection', (socket) => {
   socket.on('action', async (action) => {
@@ -41,6 +42,7 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userSelectedFriendChannel')
       await onUserSelectedFriendChannel(socket, action);
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
+    else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
   });
 
   socket.on('disconnect', async () => {

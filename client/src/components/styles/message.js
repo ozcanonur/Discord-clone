@@ -51,6 +51,7 @@ const messageStyles = {
   },
   pinnedMessage: {
     color: '#FFA200',
+    transform: 'translateY(-2px) translateX(-6px)',
   },
 };
 

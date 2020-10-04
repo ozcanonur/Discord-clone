@@ -103,6 +103,15 @@ const ioResponse = (state = {}, action) => {
   }
 };
 
+const pinnedMessages = (state = [], action) => {
+  switch (action.type) {
+    case 'io/pinnedMessages':
+      return [...action.payload];
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   activeUsers,
@@ -115,4 +124,5 @@ export default combineReducers({
   activeUsersOpen,
   userNotification,
   ioResponse,
+  pinnedMessages,
 });
