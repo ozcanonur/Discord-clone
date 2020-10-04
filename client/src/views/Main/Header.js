@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from 'components/Button';
+import Button from '@material-ui/core/Button';
+import CustomButton from 'components/Button';
 import Notifications from '@material-ui/icons/Notifications';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Fade from '@material-ui/core/Fade';
 import Room from '@material-ui/icons/Room';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
+import Message from 'components/Message';
 import SearchModal from 'components/SearchModal';
 import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -19,6 +24,7 @@ const Header = () => {
   const userNotification = useSelector((state) => state.userNotification);
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [pinOpen, setPinOpen] = useState(true);
 
   const dispatch = useDispatch();
   const toggleActiveUsersOnClick = () => {
@@ -44,7 +50,7 @@ const Header = () => {
           <div className={classes.searchText}>Search</div>
         </div>
         <div className={classes.optionsContainer}>
-          <Button
+          <CustomButton
             onClick={handleNotificationClick}
             tooltipText={notificationTooltipText}
             marginRight
@@ -53,11 +59,60 @@ const Header = () => {
             {userNotification.hasNotification ? (
               <div className={classes.notificationAlert} />
             ) : null}
-          </Button>
-          <Button tooltipText='Dunno' marginRight>
+          </CustomButton>
+          <CustomButton
+            tooltipText='Pinned Messages'
+            marginRight
+            onClick={() => setPinOpen(!pinOpen)}
+            style={{ backgroundColor: pinOpen ? 'rgba(220, 221, 222, 0.2)' : 'inherit' }}
+          >
             <Room />
-          </Button>
-          <Button
+          </CustomButton>
+          <Fade in={pinOpen}>
+            <div className={classes.pinContainer}>
+              <div className={classes.pinHeading}>Pinned Messages</div>
+              <div className={classes.pinBody}>
+                <List className={classes.pinnedMessagesList}>
+                  <ListItem disableGutters className={classes.pinnedMessage}>
+                    <Message
+                      message={{
+                        user: 'Onur',
+                        createdAt: '2020-10-04T11:08:15.863Z',
+                        message: `This channel doesn't have any pinned messages... yet.`,
+                      }}
+                      pinned
+                    />
+                  </ListItem>
+                  <ListItem disableGutters className={classes.pinnedMessage}>
+                    <Message
+                      message={{
+                        user: 'Onur',
+                        createdAt: '2020-10-04T11:08:15.863Z',
+                        message: `This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.`,
+                      }}
+                      pinned
+                    />
+                  </ListItem>
+                  <ListItem disableGutters className={classes.pinnedMessage}>
+                    <Message
+                      message={{
+                        user: 'Onur',
+                        createdAt: '2020-10-04T11:08:15.863Z',
+                        message: `This channel doesn't have any pinned messages... yet.`,
+                      }}
+                      pinned
+                    />
+                  </ListItem>
+                </List>
+              </div>
+              <div className={classes.pinFooter}>
+                <Button variant='contained' className={classes.pinFooterButton}>
+                  Create pin
+                </Button>
+              </div>
+            </div>
+          </Fade>
+          <CustomButton
             onClick={toggleActiveUsersOnClick}
             style={{
               backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
@@ -66,13 +121,13 @@ const Header = () => {
             marginRight
           >
             <PeopleAlt />
-          </Button>
-          <Button
+          </CustomButton>
+          <CustomButton
             onClick={() => window.open('https://github.com/ozcanonur/Discord-clone', '_blank')}
             tooltipText='GitHub'
           >
             <GitHubIcon />
-          </Button>
+          </CustomButton>
         </div>
       </div>
       <SearchModal modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />

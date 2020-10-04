@@ -16,16 +16,21 @@ const convertCreatedAt = (date) => {
   return `${yyyymmdd} at ${time}`;
 };
 
-const Message = ({ message }) => {
+const Message = ({ message, pinned = false }) => {
   const classes = useStyles();
   const { user, createdAt } = message;
   const messageText = message.message;
 
   return (
     <div className={classes.container}>
-      <div className={classes.iconContainer}>
-        <AccountCircleRoundedIcon className={classes.icon} />
-      </div>
+      {pinned ? (
+        <div className={classes.pinnedMessage}>Onur</div>
+      ) : (
+        <div className={classes.iconContainer}>
+          <AccountCircleRoundedIcon className={classes.icon} />
+        </div>
+      )}
+
       <div className={classes.message}>
         <div className={classes.header}>
           <div className={classes.username}>{user.name}</div>

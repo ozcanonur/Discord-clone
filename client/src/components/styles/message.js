@@ -49,6 +49,9 @@ const messageStyles = {
     height: '3.2rem',
     color: 'white',
   },
+  pinnedMessage: {
+    color: '#FFA200',
+  },
 };
 
 export default messageStyles;
