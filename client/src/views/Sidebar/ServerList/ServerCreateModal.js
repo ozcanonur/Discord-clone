@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { clearIoResponse } from 'redux/actions/react';
 import { createServer } from 'redux/actions/socket';
 import qs from 'qs';
 import Modal from '@material-ui/core/Modal';
@@ -12,21 +13,34 @@ import serverCreateModalStyles from './styles/serverCreateModal';
 
 const useStyles = makeStyles(serverCreateModalStyles);
 
-const ServerCreateModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
+const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalInputValue, setModalInputValue] = useState(`${name}'s server`);
-
-  const handleModalInputChange = (e) => {
-    setModalInputValue(e.target.value);
-  };
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('Perfect!');
+  const ioResponse = useSelector((state) => state.ioResponse);
 
   const dispatch = useDispatch();
+  const handleModalInputChange = (e) => {
+    setModalInputValue(e.target.value);
+    dispatch(clearIoResponse());
+    if (e.target.value.split(' ').length > 3) {
+      setErrorText(`Server name can't be longer than 4 words.`);
+      setError(true);
+    } else if (e.target.value.length === 0) {
+      setErrorText(`Server name can't be empty.`);
+      setError(true);
+    } else {
+      setErrorText('Perfect!');
+      setError(false);
+    }
+  };
+
   const createServerOnClick = () => {
+    setErrorText(`Success! ${modalInputValue} created.`);
     dispatch(createServer(name, modalInputValue));
-    setModalOpen(false);
-    setBaseOpen(false);
   };
 
   return (
@@ -65,6 +79,11 @@ const ServerCreateModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
+              error={error || ioResponse.error}
+              helperText={ioResponse.error || errorText}
+              FormHelperTextProps={{
+                className: error ? classes.helperErrorText : classes.helperText,
+              }}
             />
           </div>
           <div className={classes.modalFooter}>

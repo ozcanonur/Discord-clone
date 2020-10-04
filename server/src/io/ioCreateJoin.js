@@ -2,8 +2,21 @@ const User = require('../db/models/user');
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
 
+const getValidationError = async (server) => {
+  if (server.split(' ').length > 3) return `Server name can't be longer than 4 words.`;
+  else if (server.length === 0) return `Server name can't be empty.`;
+  else if (await Server.exists({ name: server })) return `Server already exists.`;
+};
+
 const onUserCreatedServer = async (socket, action) => {
   const { name, server } = action.payload;
+  // Validate
+  const validationError = await getValidationError(server);
+  if (validationError) {
+    socket.emit('action', { type: 'io/response', payload: { error: validationError } });
+    return;
+  }
+
   let user = await User.findOne({ name });
   // Create the server, register the user, save
   const newServer = new Server({
@@ -20,6 +33,8 @@ const onUserCreatedServer = async (socket, action) => {
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
   socket.emit('action', { type: 'io/servers', payload: userServers });
+  // Emit success
+  socket.emit('action', { type: 'io/response' });
 };
 
 const onUserCreatedChannel = async (io, action) => {

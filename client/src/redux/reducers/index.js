@@ -92,6 +92,17 @@ const userNotification = (state = { hasNotification: false, from: '' }, action) 
   }
 };
 
+const ioResponse = (state = {}, action) => {
+  switch (action.type) {
+    case 'io/response':
+      return { ...action.payload };
+    case 'CLEAR_IO_RESPONSE':
+      return {};
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   messages,
   activeUsers,
@@ -103,4 +114,5 @@ export default combineReducers({
   selectedFriend,
   activeUsersOpen,
   userNotification,
+  ioResponse,
 });

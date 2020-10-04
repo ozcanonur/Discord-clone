@@ -31,6 +31,7 @@ const messageStyles = {
     fontWeight: 500,
     marginTop: '0.5rem',
     color: 'rgb(220,221,222)',
+    overflowWrap: 'anywhere',
   },
   iconContainer: {
     backgroundColor: '#3CB371',

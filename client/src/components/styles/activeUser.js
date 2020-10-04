@@ -1,6 +1,7 @@
 const activeUserStyles = {
   user: {
     width: '100%',
+    maxWidth: '20rem',
     display: 'flex',
     alignItems: 'center',
     marginTop: '1rem',

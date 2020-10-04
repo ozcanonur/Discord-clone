@@ -38,3 +38,7 @@ html {
   border-radius: 6px;
   border: 3px solid var(--scrollbarBG);
 }
+
+body {
+  min-width: 900px;
+}

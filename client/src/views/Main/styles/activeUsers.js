@@ -1,6 +1,6 @@
 const activeUsersStyles = {
   activeUsers: {
-    width: '23rem',
+    minWidth: '23rem',
     backgroundColor: 'rgb(47,49,54)',
     padding: '2rem',
     overflowY: 'auto',

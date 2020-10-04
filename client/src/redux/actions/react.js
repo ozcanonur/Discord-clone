@@ -44,3 +44,9 @@ export const clearNotification = () => {
     type: 'CLEAR_NOTIFICATION',
   };
 };
+
+export const clearIoResponse = () => {
+  return {
+    type: 'CLEAR_IO_RESPONSE',
+  };
+};

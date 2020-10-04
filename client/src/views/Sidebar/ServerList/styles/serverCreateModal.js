@@ -112,6 +112,21 @@ const serverCreateModalStyles = {
       transform: 'translateY(2px)',
     },
   },
+  helperText: {
+    fontSize: '1.4rem',
+    fontWeight: 800,
+    fontFamily: 'Lato, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
+    color: '#3CB371',
+  },
+  helperErrorText: {
+    fontSize: '1.4rem',
+    fontWeight: 800,
+    fontFamily: 'Lato, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
+  },
 };
 
 export default serverCreateModalStyles;
