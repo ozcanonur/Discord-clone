@@ -1,14 +1,26 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'redux/actions/socket';
 import qs from 'qs';
 import FriendList from './FriendList';
 import ServerList from '../Sidebar/ServerList/index';
-import Main from './Body';
+import indexStyles from './styles/index';
+import Header from './Header';
+import ActiveUsers from '../Main/ActiveUsers';
+import Chat from './Chat';
+import AddFriendBox from './AddFriendBox';
+
+const useStyles = makeStyles(indexStyles);
 
 const Private = () => {
+  const classes = useStyles();
+
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+
+  const selectedTabInPrivate = useSelector((state) => state.selectedTabInPrivate);
+  const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -28,7 +40,13 @@ const Private = () => {
         </Grid>
       </Grid>
       <Grid item xs>
-        <Main />
+        <div className={classes.container}>
+          <Header className={classes.header} />
+          <div className={classes.chatContainer}>
+            {selectedTabInPrivate === 'Chat' ? <Chat /> : <AddFriendBox />}
+            {activeUsersOpen ? <ActiveUsers /> : null}
+          </div>
+        </div>
       </Grid>
     </Grid>
   );

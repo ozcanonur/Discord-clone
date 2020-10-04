@@ -1,4 +1,12 @@
-const bodyStyles = {
+const indexStyles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  header: {
+    flexGrow: 1,
+  },
   chatContainer: {
     backgroundColor: '#36393f',
     color: 'white',
@@ -9,4 +17,4 @@ const bodyStyles = {
   },
 };
 
-export default bodyStyles;
+export default indexStyles;
