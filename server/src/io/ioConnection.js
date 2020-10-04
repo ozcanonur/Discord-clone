@@ -46,7 +46,7 @@ const onUserConnected = async (io, socket, action) => {
   io.emit('action', { type: 'io/activeUsers', payload: users });
   // Send the current user's servers (with channels populated) and send to client
   socket.emit('action', { type: 'io/servers', payload: user.servers });
-  // Also send its friends
+  // Also send friends
   socket.emit('action', { type: 'io/friends', payload: user.friends });
 };
 

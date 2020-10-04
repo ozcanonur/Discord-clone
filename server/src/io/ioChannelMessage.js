@@ -48,10 +48,14 @@ const onUserMessaged = async (io, action) => {
 
 const onUserSelectedChannel = async (socket, action) => {
   const { name, channel } = action.payload;
-  // Leave all the channels first
-  await socket.leaveAll();
+  // Leave the current channel first
+  const user = await User.findOne({ name }).populate('currentChannel');
+  await socket.leave(user.currentChannel._id.toString());
+  // console.log(`${name} left: ${user.currentChannel._id.toString()}`);
+
   // Join the new channel
   await socket.join(channel._id.toString());
+  // console.log(`${name} joined: ${channel._id.toString()}`);
   // Update the user's current channel
   await User.updateOne({ name }, { currentChannel: channel });
   // Find the older messages in the channel
@@ -69,8 +73,11 @@ const onUserSelectedChannel = async (socket, action) => {
 
 const onUserSelectedFriendChannel = async (socket, action) => {
   const { name, friendName } = action.payload;
-  // Leave all the channels first
-  await socket.leaveAll();
+  // Leave the current channel first
+  const user = await User.findOne({ name }).populate('currentChannel');
+  await socket.leave(user.currentChannel._id.toString());
+  // console.log(`${name} left: ${user.currentChannel._id.toString()}`);
+
   // Find the channel, try both combinations since we don't know who added who
   // And we create the channel name via concat'ing the names above
   const populateFields = {
@@ -86,6 +93,7 @@ const onUserSelectedFriendChannel = async (socket, action) => {
     (await Channel.findOne({ name: `${friendName}${name}_private` }).populate(populateFields));
   // Join the new channel
   await socket.join(channel._id.toString());
+  // console.log(`${name} joined: ${channel._id.toString()}`);
   // Update user's channel
   await User.updateOne({ name }, { currentChannel: channel });
   // Emit the older messages to the user
