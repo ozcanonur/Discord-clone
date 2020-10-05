@@ -9,10 +9,10 @@ import qs from 'qs';
 
 const App = () => {
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-
   const servers = useSelector((state) => state.servers);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     // Connect to socket io, gets servers
     dispatch(connect(name));

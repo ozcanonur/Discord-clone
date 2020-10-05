@@ -29,11 +29,13 @@ const ServerList = () => {
     // Select the server
     dispatch(selectServerName(serverName));
     dispatch(selectFriend(''));
-    // Select the first channel
-    const server = servers.find((server) => server.name === serverName);
-    const firstChannel = server.channels[0];
-    dispatch(selectChannel(firstChannel));
-    dispatch(selectChannelIo(name, firstChannel));
+    // Select the first channel if at main route
+    if (serverName !== 'private') {
+      const server = servers.find((server) => server.name === serverName);
+      const firstChannel = server.channels[0];
+      dispatch(selectChannel(firstChannel));
+      dispatch(selectChannelIo(name, firstChannel));
+    }
   };
 
   return (

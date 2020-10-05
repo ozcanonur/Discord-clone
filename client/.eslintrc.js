@@ -26,6 +26,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
+    'no-underscore-dangle': 'off',
   },
   settings: {
     'import/resolver': {

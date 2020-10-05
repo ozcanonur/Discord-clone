@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { combineReducers } from 'redux';
 
 const activeUsers = (state = [], action) => {
@@ -85,8 +86,14 @@ const notifications = (state = [], action) => {
   switch (action.type) {
     case 'io/notification':
       return [...state, action.payload];
-    case 'CLEAR_NOTIFICATION_BY_TYPE':
-      return state.filter((notification) => notification.type !== action.payload);
+    case 'CLEAR_PRIVATE_NOTIFICATION':
+      return state.filter((notification) => notification.type !== 'private');
+    // Clear channel pin notification
+    case 'CLEAR_PIN_NOTIFICATION':
+      return state.filter(
+        (notification) =>
+          notification.type === 'pin' && notification.channel._id !== action.payload._id
+      );
     default:
       return state;
   }

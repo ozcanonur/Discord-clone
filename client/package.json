@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@simbathesailor/use-what-changed": "^0.1.25",
     "eslint": "^6.8",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.12.0",
