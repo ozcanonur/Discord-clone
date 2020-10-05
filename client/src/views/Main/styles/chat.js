@@ -14,7 +14,7 @@ const chatStyles = {
   },
   messages: {
     marginBottom: '1rem',
-    overflow: 'auto',
+    // overflow: 'auto',
   },
   listItem: {
     paddingTop: 0,

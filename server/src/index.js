@@ -3,6 +3,7 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { searchUsers, searchChannels } = require('./utils');
+const User = require('./db/models/user');
 
 const app = express();
 const server = http.createServer(app);
@@ -28,6 +29,14 @@ app.get('/search', async (req, res) => {
   else if (type === '@') results = await searchUsers(text, name);
 
   res.send(results);
+});
+
+app.get('/userServers', async (req, res) => {
+  const { name } = req.query;
+
+  const user = await User.findOne({ name }).populate('servers');
+  const serverNames = user.servers.map((server) => server.name);
+  if (user) res.send(serverNames);
 });
 
 // Catch all for deploy

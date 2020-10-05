@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -12,21 +12,35 @@ import serverJoinModalStyles from './styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);
 
-const ServerJoinModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
+const ServerJoinModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
   const [modalInputValue, setModalInputValue] = useState('');
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('Perfect!');
+  const ioResponse = useSelector((state) => state.ioResponse);
 
   const handleModalInputChange = (e) => {
     setModalInputValue(e.target.value);
+    if (e.target.value.trim().length === 0) {
+      setErrorText(`Server name can't be empty.`);
+      setError(true);
+    } else {
+      setErrorText(`Perfect!`);
+      setError(false);
+    }
   };
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const dispatch = useDispatch();
   const joinServerOnClick = () => {
+    if (modalInputValue.trim().length === 0) {
+      setErrorText(`Server name can't be empty.`);
+      setError(true);
+      return;
+    }
+    setErrorText(`Success! ${modalInputValue} created.`);
     dispatch(joinServer(name, modalInputValue));
-    setModalOpen(false);
-    setBaseOpen(false);
   };
 
   return (
@@ -57,6 +71,11 @@ const ServerJoinModal = ({ modalOpen, setModalOpen, setBaseOpen }) => {
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
+              error={error || ioResponse.error !== undefined}
+              helperText={ioResponse.error || errorText}
+              FormHelperTextProps={{
+                className: error ? classes.helperErrorText : classes.helperText,
+              }}
             />
             <div className={classes.modalFooter}>
               <Button

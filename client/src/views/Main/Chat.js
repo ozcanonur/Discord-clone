@@ -28,7 +28,7 @@ const Chat = () => {
       <List className={classes.messages}>
         {messages.map((message, key) => (
           <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
-            <Message key={key} message={message} />
+            <Message message={message} />
           </ListItem>
         ))}
       </List>

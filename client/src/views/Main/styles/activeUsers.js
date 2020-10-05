@@ -8,6 +8,7 @@ const activeUsersStyles = {
   usersStatus: {
     color: 'rgb(142,146,151)',
     fontSize: '1.3rem',
+    paddingTop: 0,
   },
   listItem: {
     padding: 0,

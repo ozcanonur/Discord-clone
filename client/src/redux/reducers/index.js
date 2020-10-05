@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { combineReducers } from 'redux';
+import uniqBy from 'lodash/uniqBy';
 
 const activeUsers = (state = [], action) => {
   switch (action.type) {
@@ -85,12 +86,11 @@ const activeUsersOpen = (state = true, action) => {
 const notifications = (state = [], action) => {
   switch (action.type) {
     case 'io/notification':
-      return [...state, action.payload];
+      return uniqBy([...state, action.payload], (e) => e.from);
     case 'CLEAR_PRIVATE_NOTIFICATION':
       return action.payload
         ? state.filter((notification) => notification.from && notification.from !== action.payload)
         : state.filter((notification) => notification.type !== 'private');
-
     // Clear channel pin notification
     case 'CLEAR_PIN_NOTIFICATION':
       return state.filter(

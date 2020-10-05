@@ -43,11 +43,14 @@ const messageStyles = {
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
+
+    position: 'relative',
   },
   icon: {
     width: '3.2rem',
     height: '3.2rem',
     color: 'white',
+    cursor: 'pointer',
   },
   pinnedMessage: {
     color: '#FFA200',

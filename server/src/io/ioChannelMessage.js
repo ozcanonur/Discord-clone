@@ -80,8 +80,7 @@ const onUserSelectedChannel = async (socket, action) => {
   ]);
   // Emit the older messages to client
   socket.emit('action', { type: 'io/messages', payload: currChannel.messages });
-  // Emit the pins also
-  // Sort by date first
+  // Emit the pins also, Sort by date first
   const sortedPinnedMessaages = currChannel.pinnedMessages.sort(
     (x, y) => y.createdAt - x.createdAt
   );
@@ -95,7 +94,7 @@ const onUserSelectedFriendChannel = async (socket, action) => {
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
 
   // Find the channel, try both combinations since we don't know who added who
-  // And we create the channel name via concat'ing the names above
+  // And we created the channel name via concat'ing the names above
   const populateFields = {
     path: 'messages',
     model: 'Message',

@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import Fade from '@material-ui/core/Fade';
+import UserTooltip from 'components/UserTooltip';
 import messageStyles from './styles/message';
 
 const useStyles = makeStyles(messageStyles);
@@ -18,6 +20,9 @@ const convertCreatedAt = (date) => {
 
 const Message = ({ message, pinned = false }) => {
   const classes = useStyles();
+
+  const [userTooltipOpen, setUserTooltipOpen] = useState(true);
+
   const { user, createdAt } = message;
   const messageText = message.message;
 
@@ -25,7 +30,15 @@ const Message = ({ message, pinned = false }) => {
     <div className={classes.container}>
       {!pinned ? (
         <div className={classes.iconContainer}>
-          <AccountCircleRoundedIcon className={classes.icon} />
+          <AccountCircleRoundedIcon
+            className={classes.icon}
+            onClick={() => setUserTooltipOpen(!userTooltipOpen)}
+          />
+          <Fade in={userTooltipOpen}>
+            <div>
+              <UserTooltip name={user.name} />
+            </div>
+          </Fade>
         </div>
       ) : null}
       <div className={classes.message}>

@@ -82,7 +82,7 @@ const Channels = ({ channels, voice }) => {
                     )}
                   </ListItemIcon>
                   <ListItemText primary={channel.name} className={classes.text} />
-                  {pinNotification ? <Room /> : null}
+                  {pinNotification ? <Room style={{ color: 'rgba(255, 0,0, 0.3)' }} /> : null}
                 </ListItem>
               );
             })}

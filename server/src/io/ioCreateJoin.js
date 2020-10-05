@@ -90,8 +90,22 @@ const onUserCreatedChannel = async (io, socket, action) => {
   });
 };
 
+const getJoinChannelValidationError = async (serverName) => {
+  if (serverName.trim().length === 0) return `Server name can't be empty.`;
+  else {
+    const serverExists = await Server.exists({ name: serverName });
+    if (!serverExists) return `Server doesn't exist.`;
+  }
+};
+
 const onUserJoinedServer = async (socket, action) => {
   const { name, serverName } = action.payload;
+  // Validate
+  const validationError = await getJoinChannelValidationError(serverName);
+  if (validationError) {
+    socket.emit('action', { type: 'io/response', payload: { error: validationError } });
+    return;
+  }
   // Find server and user
   let user = await User.findOne({ name });
   const server = await Server.findOne({ name: serverName }).populate('users');
@@ -105,6 +119,7 @@ const onUserJoinedServer = async (socket, action) => {
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
   socket.emit('action', { type: 'io/servers', payload: userServers });
+  console.log(userServers);
 };
 
 module.exports = { onUserCreatedChannel, onUserCreatedServer, onUserJoinedServer };

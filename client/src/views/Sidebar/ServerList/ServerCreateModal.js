@@ -29,7 +29,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
     if (e.target.value.split(' ').length > 3) {
       setErrorText(`Server name can't be longer than 4 words.`);
       setError(true);
-    } else if (e.target.value.length === 0) {
+    } else if (e.target.value.trim().length === 0) {
       setErrorText(`Server name can't be empty.`);
       setError(true);
     } else {
@@ -79,7 +79,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
-              error={error || ioResponse.error}
+              error={error || ioResponse.error !== undefined}
               helperText={ioResponse.error || errorText}
               FormHelperTextProps={{
                 className: error ? classes.helperErrorText : classes.helperText,
