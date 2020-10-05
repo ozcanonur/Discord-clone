@@ -39,9 +39,10 @@ export const toggleActiveUsers = () => {
   };
 };
 
-export const clearPrivateNotification = () => {
+export const clearPrivateNotification = (friendName) => {
   return {
     type: 'CLEAR_PRIVATE_NOTIFICATION',
+    payload: friendName,
   };
 };
 

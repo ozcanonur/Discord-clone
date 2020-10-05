@@ -1,7 +1,7 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import Header from './Header';
+import Header from './Header/index';
 import Chat from './Chat';
 import indexStyles from './styles/index';
 import ActiveUsers from './ActiveUsers';

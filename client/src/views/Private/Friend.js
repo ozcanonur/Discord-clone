@@ -1,6 +1,11 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFriendChannel, selectFriend, selectTabInPrivate } from 'redux/actions/react';
+import {
+  selectFriendChannel,
+  selectFriend,
+  selectTabInPrivate,
+  clearPrivateNotification,
+} from 'redux/actions/react';
 import { selectFriendChannel as selectFriendChannelIo } from 'redux/actions/socket';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -22,6 +27,7 @@ const Friend = ({ friendName }) => {
     dispatch(selectFriendChannelIo(name, friendName));
     dispatch(selectFriend(friendName));
     dispatch(selectTabInPrivate('Chat'));
+    dispatch(clearPrivateNotification(friendName));
   };
 
   return (

@@ -13,8 +13,6 @@ const useStyles = makeStyles(chatStyles);
 const Chat = () => {
   const classes = useStyles();
 
-  const selectedServerName = useSelector((state) => state.selectedServerName);
-  const selectedChannel = useSelector((state) => state.selectedChannel);
   const messages = useSelector((state) => state.messages);
 
   // Scroll messages to bottom on change
@@ -27,22 +25,14 @@ const Chat = () => {
 
   return (
     <div className={classes.chat}>
-      {selectedServerName === '' ? (
-        <div className={classes.warning}>Select a server</div>
-      ) : !selectedChannel.name ? (
-        <div className={classes.warning}>Select a channel</div>
-      ) : !selectedChannel.voice ? (
-        <>
-          <List className={classes.messages}>
-            {messages.map((message, key) => (
-              <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
-                <Message key={key} message={message} />
-              </ListItem>
-            ))}
-          </List>
-          <Input />
-        </>
-      ) : null}
+      <List className={classes.messages}>
+        {messages.map((message, key) => (
+          <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
+            <Message key={key} message={message} />
+          </ListItem>
+        ))}
+      </List>
+      <Input />
     </div>
   );
 };

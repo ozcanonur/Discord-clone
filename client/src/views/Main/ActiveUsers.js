@@ -33,6 +33,3 @@ const ActiveUsers = () => {
 };
 
 export default ActiveUsers;
-
-//  <div className={classes.usersStatus}>{`Online - ${users.length}`}</div>
-// <div className={classes.activeUsers}></div>

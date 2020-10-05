@@ -5,7 +5,6 @@ import CustomButton from 'components/Button';
 import Notifications from '@material-ui/icons/Notifications';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
 import { clearPrivateNotification } from 'redux/actions/react';
 import headerStyles from '../styles/header';
 

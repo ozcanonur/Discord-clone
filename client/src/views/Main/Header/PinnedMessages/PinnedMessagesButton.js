@@ -4,8 +4,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import CustomButton from 'components/Button';
 import Room from '@material-ui/icons/Room';
 import { clearPinNotification } from 'redux/actions/react';
-import headerStyles from '../styles/header';
-import PinnedMessages from '../PinnedMessages';
+import headerStyles from '../../styles/header';
+import PinnedMessages from './PinnedMessages';
 
 const useStyles = makeStyles(headerStyles);
 

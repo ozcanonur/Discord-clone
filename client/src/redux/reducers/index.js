@@ -87,12 +87,14 @@ const notifications = (state = [], action) => {
     case 'io/notification':
       return [...state, action.payload];
     case 'CLEAR_PRIVATE_NOTIFICATION':
-      return state.filter((notification) => notification.type !== 'private');
+      return action.payload
+        ? state.filter((notification) => notification.from && notification.from !== action.payload)
+        : state.filter((notification) => notification.type !== 'private');
+
     // Clear channel pin notification
     case 'CLEAR_PIN_NOTIFICATION':
       return state.filter(
-        (notification) =>
-          notification.type === 'pin' && notification.channel._id !== action.payload._id
+        (notification) => notification.channel && notification.channel._id !== action.payload._id
       );
     default:
       return state;
