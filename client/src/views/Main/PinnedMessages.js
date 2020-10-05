@@ -35,36 +35,3 @@ const PinnedMessages = ({ pinOpen }) => {
 };
 
 export default PinnedMessages;
-
-// const messages = [
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.`,
-//   },
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.`,
-//   },
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.`,
-//   },
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.`,
-//   },
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.`,
-//   },
-//   {
-//     user: 'Onur',
-//     createdAt: '2020-10-04T11:08:15.863Z',
-//     message: `This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.This channel doesn't have any pinned messages... yet.`,
-//   },
-// ];

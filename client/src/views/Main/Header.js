@@ -1,12 +1,15 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CustomButton from 'components/Button';
 import Notifications from '@material-ui/icons/Notifications';
 import Room from '@material-ui/icons/Room';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import SearchModal from 'components/SearchModal';
-import { toggleActiveUsers, clearNotification } from 'redux/actions/react';
+import { toggleActiveUsers, clearNotificationByType } from 'redux/actions/react';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import headerStyles from './styles/header';
 import PinnedMessages from './PinnedMessages';
@@ -17,7 +20,7 @@ const Header = () => {
   const classes = useStyles();
 
   const selectedChannel = useSelector((state) => state.selectedChannel);
-  const userNotification = useSelector((state) => state.userNotification);
+  const notifications = useSelector((state) => state.notifications);
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
   const [pinOpen, setPinOpen] = useState(false);
@@ -27,13 +30,18 @@ const Header = () => {
     dispatch(toggleActiveUsers());
   };
 
-  const handleNotificationClick = () => {
-    dispatch(clearNotification());
+  const privateMessageNotificationOnClick = () => {
+    dispatch(clearNotificationByType('private'));
   };
 
-  const notificationTooltipText = userNotification.hasNotification
-    ? `You have a new message from ${userNotification.from}!`
-    : 'No notifications';
+  const privateMessageNotifications = notifications
+    .filter((notification) => notification.type === 'private')
+    .map((notification) => `You have a new message from ${notification.from}!\n`);
+
+  const pinNotification = notifications.find(
+    (notification) =>
+      notification.type === 'pin' && notification.channel._id === selectedChannel._id
+  );
 
   return (
     <>
@@ -47,22 +55,38 @@ const Header = () => {
         </div>
         <div className={classes.optionsContainer}>
           <CustomButton
-            onClick={handleNotificationClick}
-            tooltipText={notificationTooltipText}
+            onClick={privateMessageNotificationOnClick}
+            tooltipText={
+              privateMessageNotifications.length > 0 ? (
+                <List>
+                  {privateMessageNotifications.map((e, key) => (
+                    <ListItem key={key} disableGutters>
+                      {e}
+                    </ListItem>
+                  ))}
+                </List>
+              ) : (
+                'No notifications'
+              )
+            }
             marginRight
           >
             <Notifications style={{ position: 'relative' }} />
-            {userNotification.hasNotification ? (
+            {privateMessageNotifications.length > 0 ? (
               <div className={classes.notificationAlert} />
             ) : null}
           </CustomButton>
           <CustomButton
             tooltipText='Pinned Messages'
             marginRight
-            onClick={() => setPinOpen(!pinOpen)}
+            onClick={() => {
+              setPinOpen(!pinOpen);
+              dispatch(clearNotificationByType('pin'));
+            }}
             style={{ backgroundColor: pinOpen ? 'rgba(220, 221, 222, 0.2)' : 'inherit' }}
           >
             <Room />
+            {pinNotification ? <div className={classes.notificationAlert} /> : null}
           </CustomButton>
           <PinnedMessages pinOpen={pinOpen} />
           <CustomButton

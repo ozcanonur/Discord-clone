@@ -10,6 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import { selectServerName, selectFriend, selectChannel } from 'redux/actions/react';
+import { selectChannel as selectChannelIo } from 'redux/actions/socket';
 import ServerIcon from 'components/ServerIcon';
 import ServerModal from './ServerModal';
 import indexStyles from './styles/index';
@@ -19,17 +20,21 @@ const useStyles = makeStyles(indexStyles);
 const ServerList = () => {
   const classes = useStyles();
 
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalOpen, setModalOpen] = useState(false);
   const servers = useSelector((state) => state.servers);
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName) => {
+    // Select the server
     dispatch(selectServerName(serverName));
     dispatch(selectFriend(''));
-    dispatch(selectChannel({ messages: [] }));
+    // Select the first channel
+    const server = servers.find((server) => server.name === serverName);
+    const firstChannel = server.channels[0];
+    dispatch(selectChannel(firstChannel));
+    dispatch(selectChannelIo(name, firstChannel));
   };
-
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   return (
     <>

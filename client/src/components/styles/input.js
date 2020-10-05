@@ -6,12 +6,7 @@ const inputStyles = {
     borderRadius: '1rem',
     alignItems: 'center',
     position: 'relative',
-    transition: 'all .2s ease-out',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
-
-    '& div': {
-      transition: 'all .2s ease-out',
-    },
 
     '& input': {
       color: 'rgb(220,221,222)',

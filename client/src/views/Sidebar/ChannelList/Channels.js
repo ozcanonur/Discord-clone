@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -12,6 +13,7 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Forum from '@material-ui/icons/Forum';
 import Add from '@material-ui/icons/Add';
+import Room from '@material-ui/icons/Room';
 import IconButton from '@material-ui/core/IconButton';
 import ChannelCreateModal from './ChannelCreateModal';
 import channelsStyles from './styles/channels';
@@ -24,6 +26,7 @@ const Channels = ({ channels, voice }) => {
   const servers = useSelector((state) => state.servers);
   const selectedServerName = useSelector((state) => state.selectedServerName);
   const selectedChannel = useSelector((state) => state.selectedChannel);
+  const notifications = useSelector((state) => state.notifications);
   const [modalOpen, setModalOpen] = useState(false);
 
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -57,25 +60,32 @@ const Channels = ({ channels, voice }) => {
         />
         {channels.length > 0 ? (
           <List className={classes.channelList}>
-            {channels.map((channel, key) => (
-              <ListItem
-                key={key}
-                button
-                onClick={() => selectChannelOnClick(channel)}
-                selected={selectedChannel.name === channel.name}
-                classes={{ selected: classes.channelSelected, root: classes.channel }}
-                disableGutters
-              >
-                <ListItemIcon>
-                  {channel.voice ? (
-                    <VolumeUp className={classes.icon} />
-                  ) : (
-                    <Forum className={classes.icon} />
-                  )}
-                </ListItemIcon>
-                <ListItemText primary={channel.name} className={classes.text} />
-              </ListItem>
-            ))}
+            {channels.map((channel, key) => {
+              const pinNotification = notifications.find(
+                (notification) =>
+                  notification.type === 'pin' && notification.channel._id === channel._id
+              );
+              return (
+                <ListItem
+                  key={key}
+                  button
+                  onClick={() => selectChannelOnClick(channel)}
+                  selected={selectedChannel.name === channel.name}
+                  classes={{ selected: classes.channelSelected, root: classes.channel }}
+                  disableGutters
+                >
+                  <ListItemIcon>
+                    {channel.voice ? (
+                      <VolumeUp className={classes.icon} />
+                    ) : (
+                      <Forum className={classes.icon} />
+                    )}
+                  </ListItemIcon>
+                  <ListItemText primary={channel.name} className={classes.text} />
+                  {pinNotification ? <Room /> : null}
+                </ListItem>
+              );
+            })}
           </List>
         ) : null}
       </div>

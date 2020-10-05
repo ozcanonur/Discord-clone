@@ -41,6 +41,8 @@ const onUserConnected = async (io, socket, action) => {
     // Push the user into the default server, save
     defaultServer.users.push(user);
     await defaultServer.save();
+    secondaryServer.users.push(user);
+    await secondaryServer.save();
   }
 
   // Let other users know

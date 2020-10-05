@@ -81,12 +81,12 @@ const activeUsersOpen = (state = true, action) => {
   }
 };
 
-const userNotification = (state = { hasNotification: false, from: '' }, action) => {
+const notifications = (state = [], action) => {
   switch (action.type) {
     case 'io/notification':
-      return { hasNotification: true, from: action.payload };
-    case 'CLEAR_NOTIFICATION':
-      return { hasNotification: false, from: '' };
+      return [...state, action.payload];
+    case 'CLEAR_NOTIFICATION_BY_TYPE':
+      return state.filter((notification) => notification.type !== action.payload);
     default:
       return state;
   }
@@ -122,7 +122,7 @@ export default combineReducers({
   friends,
   selectedFriend,
   activeUsersOpen,
-  userNotification,
+  notifications,
   ioResponse,
   pinnedMessages,
 });
