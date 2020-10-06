@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import { joinServer } from 'redux/actions/socket';
@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import qs from 'qs';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);
@@ -17,7 +16,7 @@ const useStyles = makeStyles(userTooltipStyles);
 const UserTooltip = ({ name, positionTop }) => {
   const classes = useStyles();
 
-  const user = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const user = useStore().name;
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState([]);
 
@@ -35,7 +34,7 @@ const UserTooltip = ({ name, positionTop }) => {
 
   const dispatch = useDispatch();
   const joinServerOnClick = (server) => {
-    dispatch(joinServer(user.name, server));
+    dispatch(joinServer(user, server));
   };
 
   const handleSubmit = (e) => {

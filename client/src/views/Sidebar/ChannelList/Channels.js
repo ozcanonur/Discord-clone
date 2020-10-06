@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,7 +8,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { selectChannel } from 'redux/actions/react';
 import { selectChannel as selectChannelIo } from 'redux/actions/socket';
-import qs from 'qs';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Forum from '@material-ui/icons/Forum';
@@ -23,13 +22,12 @@ const useStyles = makeStyles(channelsStyles);
 const Channels = ({ channels, voice }) => {
   const classes = useStyles();
 
+  const { name } = useStore();
   const servers = useSelector((state) => state.servers);
   const selectedServerName = useSelector((state) => state.selectedServerName);
   const selectedChannel = useSelector((state) => state.selectedChannel);
   const notifications = useSelector((state) => state.notifications);
   const [modalOpen, setModalOpen] = useState(false);
-
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel) => {

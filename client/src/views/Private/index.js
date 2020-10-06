@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'redux/actions/socket';
-import qs from 'qs';
 import FriendList from './FriendList';
 import ServerList from '../Sidebar/ServerList/index';
 import indexStyles from './styles/index';
@@ -17,8 +16,7 @@ const useStyles = makeStyles(indexStyles);
 const Private = () => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-
+  const { name } = useStore();
   const selectedTabInPrivate = useSelector((state) => state.selectedTabInPrivate);
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);
 

@@ -31,6 +31,10 @@ const chatStyles = {
 
     '&:hover': {
       backgroundColor: 'rgb(47,49,54)',
+
+      '& $messageOptions': {
+        display: 'inherit',
+      },
     },
   },
   messageOptions: {
@@ -38,6 +42,7 @@ const chatStyles = {
     top: 0,
     right: 0,
     padding: '1rem',
+    display: 'none',
   },
   optionIcon: {
     fontSize: '2.3rem',
@@ -45,7 +50,7 @@ const chatStyles = {
     transition: 'all .2s',
 
     '&:hover': {
-      transform: 'scale(1.2) translateY(-2px)',
+      transform: 'scale(1.2)',
     },
   },
   notificationTooltip: {

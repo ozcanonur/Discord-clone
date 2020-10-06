@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { createPin } from 'redux/actions/socket';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import qs from 'qs';
 import inputStyles from 'components/styles/input';
 
 const useStyles = makeStyles(inputStyles);
@@ -16,7 +15,7 @@ const useStyles = makeStyles(inputStyles);
 const PinnedMessageInput = () => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useStore();
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state) => state.selectedChannel);

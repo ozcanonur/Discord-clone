@@ -4,8 +4,8 @@ import { store } from 'redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Private from 'views/Private/index';
-import Login from 'views/Login/index';
+import Private from 'views/Private';
+import Login from 'views/Login';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';

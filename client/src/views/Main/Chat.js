@@ -1,13 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { deleteMessage } from 'redux/actions/socket';
+import { useSelector, useDispatch, useStore } from 'react-redux';
+import { deleteMessage, createPin } from 'redux/actions/socket';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
-import qs from 'qs';
-import Zoom from '@material-ui/core/Zoom';
 import ListItem from '@material-ui/core/ListItem';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import RoomIcon from '@material-ui/icons/Room';
+import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
 import Message from 'components/Message';
 import Tooltip from '@material-ui/core/Tooltip';
 import Input from 'components/Input';
@@ -18,8 +16,9 @@ const useStyles = makeStyles(chatStyles);
 const Chat = () => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useStore();
   const messages = useSelector((state) => state.messages);
+  const selectedChannel = useSelector((state) => state.selectedChannel);
 
   // Scroll messages to bottom on change
   const scrollRef = useRef(null);
@@ -30,6 +29,10 @@ const Chat = () => {
   const dispatch = useDispatch();
   const deleteMessageOnClick = (message) => {
     dispatch(deleteMessage(name, message));
+  };
+
+  const pinMessageOnClick = (message) => {
+    dispatch(createPin(name, message.message, selectedChannel));
   };
 
   return (
@@ -44,19 +47,21 @@ const Chat = () => {
                   enterDelay={0}
                   placement='top'
                   title='Pin message'
-                  TransitionComponent={Zoom}
                   classes={{ tooltip: classes.notificationTooltip }}
                 >
-                  <RoomIcon className={classes.optionIcon} style={{ marginRight: '0.5rem' }} />
+                  <RoomRoundedIcon
+                    className={classes.optionIcon}
+                    style={{ marginRight: '0.5rem' }}
+                    onClick={() => pinMessageOnClick(message)}
+                  />
                 </Tooltip>
                 <Tooltip
                   enterDelay={0}
                   placement='top'
                   title='Delete message'
-                  TransitionComponent={Zoom}
                   classes={{ tooltip: classes.notificationTooltip }}
                 >
-                  <DeleteForeverIcon
+                  <DeleteForeverRoundedIcon
                     className={classes.optionIcon}
                     onClick={() => deleteMessageOnClick(message)}
                   />

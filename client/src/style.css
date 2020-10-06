@@ -22,6 +22,7 @@ html {
   border-collapse: collapse;
   --scrollbarBG: rgb(32, 34, 37);
   --thumbBG: rgb(99, 102, 105);
+  height: 100%;
 }
 
 *::-webkit-scrollbar {
@@ -41,4 +42,9 @@ html {
 
 body {
   min-width: 900px;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
 }

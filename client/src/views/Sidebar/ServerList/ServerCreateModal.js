@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { clearIoResponse } from 'redux/actions/react';
 import { createServer } from 'redux/actions/socket';
-import qs from 'qs';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
@@ -16,7 +15,7 @@ const useStyles = makeStyles(serverCreateModalStyles);
 const ServerCreateModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useStore();
   const [modalInputValue, setModalInputValue] = useState(`${name}'s server`);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import qs from 'qs';
 // import Fade from '@material-ui/core/Fade';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import activeUserStyles from './styles/activeUser';
@@ -11,13 +11,13 @@ const useStyles = makeStyles(activeUserStyles);
 const ActiveUser = ({ name }) => {
   const classes = useStyles();
 
-  const user = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const user = useStore().name;
   // const [userTooltipOpen, setUserTooltipOpen] = useState(false);
 
   return (
     <div
       className={classes.user}
-      style={{ backgroundColor: user.name === name ? 'rgb(64, 67, 74)' : 'inherit' }}
+      style={{ backgroundColor: user === name ? 'rgb(64, 67, 74)' : 'inherit' }}
     >
       <div className={classes.iconContainer}>
         <AccountCircleRoundedIcon

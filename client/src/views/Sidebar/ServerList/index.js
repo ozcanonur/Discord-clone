@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-import qs from 'qs';
 import Zoom from '@material-ui/core/Zoom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,7 +19,7 @@ const useStyles = makeStyles(indexStyles);
 const ServerList = () => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useStore();
   const [modalOpen, setModalOpen] = useState(false);
   const servers = useSelector((state) => state.servers);
 

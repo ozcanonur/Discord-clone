@@ -8,7 +8,7 @@ const io = socketIo(server);
 const { onUserConnected, onUserDisconnected } = require('./ioConnection');
 const { onUserCreatedChannel, onUserCreatedServer, onUserJoinedServer } = require('./ioCreateJoin');
 const { onUserSentFriendRequest } = require('./ioFriend');
-const { onUserMessaged, onUserDeletedMessage } = require('./ioChannelMessage');
+const { onUserMessaged, onUserDeletedMessage } = require('./ioMessage');
 const { onUserSelectedChannel, onUserSelectedFriendChannel } = require('./ioSelectChannel');
 const { onUserCreatedPin } = require('./ioMisc');
 

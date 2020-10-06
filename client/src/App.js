@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Main from 'views/Main/index';
 import Sidebar from 'views/Sidebar/index';
 import Grid from '@material-ui/core/Grid';
 import { connect, selectChannel as selectChannelIo } from 'redux/actions/socket';
-import { selectServerName, selectChannel } from 'redux/actions/react';
+import { selectServerName, selectChannel, setName } from 'redux/actions/react';
 import qs from 'qs';
 
 const App = () => {
@@ -18,7 +19,9 @@ const App = () => {
     dispatch(connect(name));
     // Select the default server on entry
     dispatch(selectServerName('Default'));
-  }, [dispatch, name]);
+    // Set name for the rest of the app to use
+    dispatch(setName(name));
+  }, []);
 
   useEffect(() => {
     // Select the first channel on entry
@@ -27,7 +30,7 @@ const App = () => {
     const firstChannel = server.channels[0];
     dispatch(selectChannel(firstChannel));
     dispatch(selectChannelIo(name, firstChannel));
-  }, [dispatch, name, servers]);
+  }, [servers]);
 
   return (
     <Grid container direction='row'>

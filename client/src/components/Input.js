@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -8,7 +8,6 @@ import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import { message } from 'redux/actions/socket';
-import qs from 'qs';
 import inputStyles from './styles/input';
 
 const useStyles = makeStyles(inputStyles);
@@ -16,6 +15,7 @@ const useStyles = makeStyles(inputStyles);
 const Input = () => {
   const classes = useStyles();
 
+  const { name } = useStore();
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state) => state.selectedChannel);
@@ -23,8 +23,6 @@ const Input = () => {
   const handleChange = (e) => {
     setText(e.target.value);
   };
-
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   // Check if message is empty
   const isEmptyMessage = (message) => {
@@ -62,6 +60,7 @@ const Input = () => {
               <AddCircle className={classes.buttonIcon} />
             </InputAdornment>
           ),
+          autoFocus: true,
         }}
         onKeyPress={(e) => handleSubmit(e)}
         value={text}

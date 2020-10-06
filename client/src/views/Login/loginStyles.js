@@ -1,6 +1,7 @@
 const loginStyles = (theme) => {
   return {
     container: {
+      height: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignContent: 'center',

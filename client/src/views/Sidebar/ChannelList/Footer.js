@@ -1,6 +1,6 @@
 import React from 'react';
+import { useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import qs from 'qs';
 import Button from 'components/Button';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
@@ -13,7 +13,7 @@ const useStyles = makeStyles(footerStyles);
 const Footer = () => {
   const classes = useStyles();
 
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useStore();
 
   return (
     <div className={classes.footer}>
