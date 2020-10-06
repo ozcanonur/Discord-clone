@@ -49,69 +49,31 @@ const onUserMessaged = async (io, action) => {
   }
 };
 
-const onUserSelectedChannel = async (socket, action) => {
-  const { name, channel } = action.payload;
-  // Leave the current channel first
-  const user = await User.findOne({ name }).populate('currentChannel');
-  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
-
-  // Join the new channel
-  await socket.join(channel._id.toString());
-  // Update the user's current channel
-  await User.updateOne({ name }, { currentChannel: channel });
-  // Find the older messages in the channel
-  const currChannel = await Channel.findOne({ _id: channel._id }).populate([
-    {
-      path: 'messages',
-      model: 'Message',
-      populate: {
-        path: 'user',
-        model: 'User',
-      },
-    },
-    {
-      path: 'pinnedMessages',
-      model: 'Message',
-      populate: {
-        path: 'user',
-        model: 'User',
-      },
-    },
-  ]);
-  // Emit the older messages to client
-  socket.emit('action', { type: 'io/messages', payload: currChannel.messages });
-  // Emit the pins also, Sort by date first
-  const sortedPinnedMessaages = currChannel.pinnedMessages.sort(
-    (x, y) => y.createdAt - x.createdAt
-  );
-  socket.emit('action', { type: 'io/pinnedMessages', payload: sortedPinnedMessaages });
-};
-
-const onUserSelectedFriendChannel = async (socket, action) => {
-  const { name, friendName } = action.payload;
-  // Leave the current channel first
-  const user = await User.findOne({ name }).populate('currentChannel');
-  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
-
-  // Find the channel, try both combinations since we don't know who added who
-  // And we created the channel name via concat'ing the names above
-  const populateFields = {
+const onUserDeletedMessage = async (io, action) => {
+  const { name, message } = action.payload;
+  // Only delete if the message is the user's
+  const user = await User.findOne({ name });
+  // Delete the message from Messages, Maybe need to delete reference in channel too?
+  await Message.deleteOne({ _id: message._id, user });
+  // Send the messages back to users that are in this channel
+  // Find channel first
+  const channel = await Channel.findOne({ messages: { $all: [message._id] } }).populate({
     path: 'messages',
     model: 'Message',
     populate: {
       path: 'user',
       model: 'User',
     },
-  };
-  let channel =
-    (await Channel.findOne({ name: `${name}${friendName}_private` }).populate(populateFields)) ||
-    (await Channel.findOne({ name: `${friendName}${name}_private` }).populate(populateFields));
-  // Join the new channel
-  await socket.join(channel._id.toString());
-  // Update user's channel
-  await User.updateOne({ name }, { currentChannel: channel });
-  // Emit the older messages to the user
-  socket.emit('action', { type: 'io/messages', payload: channel.messages });
+  });
+  // Find the users that are in this channel
+  const users = await User.find({ currentChannel: channel._id });
+  // Send to each of them
+  users.forEach((user) => {
+    io.to(user.socketId).emit('action', { type: 'io/messages', payload: channel.messages });
+  });
 };
 
-module.exports = { onUserMessaged, onUserSelectedChannel, onUserSelectedFriendChannel };
+module.exports = {
+  onUserMessaged,
+  onUserDeletedMessage,
+};

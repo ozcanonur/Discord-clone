@@ -90,18 +90,21 @@ const onUserCreatedChannel = async (io, socket, action) => {
   });
 };
 
-const getJoinChannelValidationError = async (serverName) => {
+const getJoinServerValidationError = async (name, serverName) => {
   if (serverName.trim().length === 0) return `Server name can't be empty.`;
+  else if (!(await Server.exists({ name: serverName }))) return `Server doesn't exist.`;
   else {
-    const serverExists = await Server.exists({ name: serverName });
-    if (!serverExists) return `Server doesn't exist.`;
+    // User already in server
+    const user = await User.findOne({ name }).populate('servers');
+    const userServers = user.servers.map((server) => server.name);
+    if (userServers.includes(serverName)) return `You are already in this server.`;
   }
 };
 
 const onUserJoinedServer = async (socket, action) => {
   const { name, serverName } = action.payload;
   // Validate
-  const validationError = await getJoinChannelValidationError(serverName);
+  const validationError = await getJoinServerValidationError(name, serverName);
   if (validationError) {
     socket.emit('action', { type: 'io/response', payload: { error: validationError } });
     return;
@@ -119,7 +122,6 @@ const onUserJoinedServer = async (socket, action) => {
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
   socket.emit('action', { type: 'io/servers', payload: userServers });
-  console.log(userServers);
 };
 
 module.exports = { onUserCreatedChannel, onUserCreatedServer, onUserJoinedServer };

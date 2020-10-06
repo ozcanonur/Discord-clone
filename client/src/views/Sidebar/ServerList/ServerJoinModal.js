@@ -39,7 +39,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }) => {
       setError(true);
       return;
     }
-    setErrorText(`Success! ${modalInputValue} created.`);
+    setErrorText(`Success! Joined ${modalInputValue}.`);
     dispatch(joinServer(name, modalInputValue));
   };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -13,7 +14,7 @@ import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);
 
-const UserTooltip = ({ name }) => {
+const UserTooltip = ({ name, positionTop }) => {
   const classes = useStyles();
 
   const user = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -30,7 +31,7 @@ const UserTooltip = ({ name }) => {
         setUserServers(res.data);
       })
       .catch((error) => console.log(error));
-  });
+  }, [name]);
 
   const dispatch = useDispatch();
   const joinServerOnClick = (server) => {
@@ -48,7 +49,7 @@ const UserTooltip = ({ name }) => {
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0 }}>
       <div className={classes.header}>
         <div className={classes.headerImg}>
           <AccountCircleRoundedIcon className={classes.img} />

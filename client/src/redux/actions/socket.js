@@ -63,3 +63,10 @@ export const createPin = (name, message, selectedChannel) => {
     payload: { name, message, selectedChannel },
   };
 };
+
+export const deleteMessage = (name, message) => {
+  return {
+    type: 'io/userDeletedMessage',
+    payload: { name, message },
+  };
+};

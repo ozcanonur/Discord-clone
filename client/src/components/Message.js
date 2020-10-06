@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import OutsideClickHandler from 'react-outside-click-handler';
 import Fade from '@material-ui/core/Fade';
 import UserTooltip from 'components/UserTooltip';
 import messageStyles from './styles/message';
@@ -21,25 +22,36 @@ const convertCreatedAt = (date) => {
 const Message = ({ message, pinned = false }) => {
   const classes = useStyles();
 
-  const [userTooltipOpen, setUserTooltipOpen] = useState(true);
+  const [userTooltipOpen, setUserTooltipOpen] = useState(false);
+  const [tooltipPositionTop, setTooltipPositionTop] = useState(false);
 
   const { user, createdAt } = message;
   const messageText = message.message;
 
+  const handleUserIconClick = (e) => {
+    // Display tooltip facing top or bottom depending on the view height
+    if (e.clientY < window.innerHeight / 2) setTooltipPositionTop(true);
+    else setTooltipPositionTop(false);
+
+    setUserTooltipOpen(!userTooltipOpen);
+  };
+
   return (
     <div className={classes.container}>
       {!pinned ? (
-        <div className={classes.iconContainer}>
-          <AccountCircleRoundedIcon
-            className={classes.icon}
-            onClick={() => setUserTooltipOpen(!userTooltipOpen)}
-          />
-          <Fade in={userTooltipOpen}>
-            <div>
-              <UserTooltip name={user.name} />
-            </div>
-          </Fade>
-        </div>
+        <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
+          <div className={classes.iconContainer}>
+            <AccountCircleRoundedIcon
+              className={classes.icon}
+              onClick={(e) => handleUserIconClick(e)}
+            />
+            <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
+              <div>
+                <UserTooltip name={user.name} positionTop={tooltipPositionTop} />
+              </div>
+            </Fade>
+          </div>
+        </OutsideClickHandler>
       ) : null}
       <div className={classes.message}>
         <div className={classes.header}>

@@ -1,10 +1,17 @@
 const chatStyles = {
+  container: {
+    display: 'flex',
+    flexGrow: 2,
+    flexDirection: 'column',
+    overflow: 'auto',
+  },
   chat: {
     flexGrow: 1,
     padding: '2rem',
     fontSize: '1.5rem',
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'flex-end',
   },
   warning: {
     margin: 'auto auto',
@@ -14,12 +21,13 @@ const chatStyles = {
   messages: {
     marginBottom: '1rem',
     overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
   listItem: {
     paddingTop: 0,
-  },
-  stretch: {
-    flexGrow: 1,
   },
 };
 

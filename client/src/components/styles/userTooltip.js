@@ -5,12 +5,12 @@ const userTooltipStyles = {
     width: '25rem',
     backgroundColor: 'rgb(32,34,37)',
     left: '5rem',
-    bottom: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     color: 'rgb(220,221,222)',
+    zIndex: 9999,
   },
   header: {
     width: '100%',
@@ -79,6 +79,7 @@ const userTooltipStyles = {
   },
   noteTitle: {
     marginBottom: '1rem',
+    fontSize: '1.4rem',
   },
   inputLabel: {
     color: 'rgb(220,221,222)',

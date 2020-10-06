@@ -1,4 +1,10 @@
 const chatStyles = {
+  container: {
+    display: 'flex',
+    flexGrow: 1,
+    flexDirection: 'column',
+    overflow: 'auto',
+  },
   chat: {
     flexGrow: 1,
     padding: '2rem',
@@ -14,10 +20,42 @@ const chatStyles = {
   },
   messages: {
     marginBottom: '1rem',
-    // overflow: 'auto',
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
+    justifyContent: 'flex-end',
   },
   listItem: {
-    paddingTop: 0,
+    padding: '0 1rem',
+
+    '&:hover': {
+      backgroundColor: 'rgb(47,49,54)',
+    },
+  },
+  messageOptions: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: '1rem',
+  },
+  optionIcon: {
+    fontSize: '2.3rem',
+    cursor: 'pointer',
+    transition: 'all .2s',
+
+    '&:hover': {
+      transform: 'scale(1.2) translateY(-2px)',
+    },
+  },
+  notificationTooltip: {
+    backgroundColor: 'rgb(32,34,37)',
+    color: 'rgb(220,221,222)',
+    fontSize: '1.2rem',
+    fontWeight: 700,
+    textAlign: 'center',
+    letterSpacing: 0,
+    padding: '1rem',
   },
 };
 
