@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
@@ -8,9 +8,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import { selectServerName, selectFriend, selectChannel } from 'redux/actions/react';
-import { selectChannel as selectChannelIo } from 'redux/actions/socket';
-import ServerIcon from 'components/ServerIcon';
+import qs from 'qs';
+
+import { selectServerName, selectFriend, selectChannel } from '../../../redux/actions/react';
+import { selectChannel as selectChannelIo } from '../../../redux/actions/socket';
+import ServerIcon from '../../../components/ServerIcon';
 import ServerModal from './ServerModal';
 import indexStyles from './styles/index';
 
@@ -19,7 +21,7 @@ const useStyles = makeStyles(indexStyles);
 const ServerList = () => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalOpen, setModalOpen] = useState(false);
   const servers = useSelector((state) => state.servers);
 

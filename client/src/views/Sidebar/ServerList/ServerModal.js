@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
+
 import ServerCreateModal from './ServerCreateModal';
 import ServerJoinModal from './ServerJoinModal';
 import serverModalStyles from './styles/serverModal';

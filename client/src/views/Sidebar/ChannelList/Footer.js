@@ -1,11 +1,12 @@
 import React from 'react';
-import { useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Button from 'components/Button';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
 import Settings from '@material-ui/icons/Settings';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import qs from 'qs';
+
+import Button from '../../../components/Button';
 import footerStyles from './styles/footer';
 
 const useStyles = makeStyles(footerStyles);
@@ -13,7 +14,7 @@ const useStyles = makeStyles(footerStyles);
 const Footer = () => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   return (
     <div className={classes.footer}>

@@ -1,14 +1,16 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useStore } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import { joinServer } from 'redux/actions/socket';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import qs from 'qs';
+
+import { joinServer } from '../redux/actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);
@@ -16,7 +18,7 @@ const useStyles = makeStyles(userTooltipStyles);
 const UserTooltip = ({ name, positionTop }) => {
   const classes = useStyles();
 
-  const user = useStore().name;
+  const user = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState([]);
 
@@ -34,7 +36,7 @@ const UserTooltip = ({ name, positionTop }) => {
 
   const dispatch = useDispatch();
   const joinServerOnClick = (server) => {
-    dispatch(joinServer(user, server));
+    dispatch(joinServer(user.name, server));
   };
 
   const handleSubmit = (e) => {

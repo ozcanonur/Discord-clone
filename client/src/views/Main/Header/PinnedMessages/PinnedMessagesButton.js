@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import CustomButton from 'components/Button';
 import Room from '@material-ui/icons/Room';
-import { clearPinNotification } from 'redux/actions/react';
-import headerStyles from '../../styles/header';
+
 import PinnedMessages from './PinnedMessages';
+import CustomButton from '../../../../components/Button';
+import { clearPinNotification } from '../../../../redux/actions/react';
+import headerStyles from '../../styles/header';
 
 const useStyles = makeStyles(headerStyles);
 

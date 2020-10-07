@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Button from '@material-ui/core/Button';
-import CustomButton from 'components/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { selectTabInPrivate, toggleActiveUsers } from 'redux/actions/react';
+
+import { selectTabInPrivate, toggleActiveUsers } from '../../redux/actions/react';
+import CustomButton from '../../components/Button';
 import headerStyles from './styles/header';
 
 const useStyles = makeStyles(headerStyles);

@@ -1,10 +1,3 @@
-export const setName = (name) => {
-  return {
-    type: 'SET_NAME',
-    payload: name,
-  };
-};
-
 export const selectServerName = (serverName) => {
   return {
     type: 'SELECT_SERVER_NAME',

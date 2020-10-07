@@ -1,12 +1,3 @@
-export const name = (state = '', action) => {
-  switch (action.type) {
-    case 'SET_NAME':
-      return action.payload;
-    default:
-      return state;
-  }
-};
-
 export const selectedServerName = (state = '', action) => {
   switch (action.type) {
     case 'SELECT_SERVER_NAME':

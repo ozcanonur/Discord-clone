@@ -1,8 +1,9 @@
 import React from 'react';
-import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import { toggleActiveUsers } from 'redux/actions/react';
 import { useSelector, useDispatch } from 'react-redux';
-import CustomButton from 'components/Button';
+import PeopleAlt from '@material-ui/icons/PeopleAlt';
+
+import { toggleActiveUsers } from '../../../redux/actions/react';
+import CustomButton from '../../../components/Button';
 
 const ActiveUsersButton = () => {
   const activeUsersOpen = useSelector((state) => state.activeUsersOpen);

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { createChannel } from 'redux/actions/socket';
-import { clearIoResponse } from 'redux/actions/react';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import { createChannel } from '../../../redux/actions/socket';
+import { clearIoResponse } from '../../../redux/actions/react';
 import channelCreateModalStyles from './styles/channelCreateModal';
 
 const useStyles = makeStyles(channelCreateModalStyles);

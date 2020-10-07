@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { joinServer } from 'redux/actions/socket';
+import qs from 'qs';
+
+import { joinServer } from '../../../redux/actions/socket';
 import serverJoinModalStyles from './styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);
@@ -14,7 +16,7 @@ const useStyles = makeStyles(serverJoinModalStyles);
 const ServerJoinModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');

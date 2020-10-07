@@ -3,19 +3,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useStore } from 'react-redux';
-import {
-  selectChannel,
-  selectServerName,
-  selectFriendChannel,
-  selectFriend,
-  selectTabInPrivate,
-} from 'redux/actions/react';
-import {
-  selectChannel as selectChannelIo,
-  selectFriendChannel as selectFriendChannelIo,
-} from 'redux/actions/socket';
-import { store } from 'redux/store';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
@@ -24,14 +12,28 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import qs from 'qs';
+
 import searchModalStyles from './styles/searchModal';
+import { store } from '../redux/store';
+import {
+  selectChannel,
+  selectServerName,
+  selectFriendChannel,
+  selectFriend,
+  selectTabInPrivate,
+} from '../redux/actions/react';
+import {
+  selectChannel as selectChannelIo,
+  selectFriendChannel as selectFriendChannelIo,
+} from '../redux/actions/socket';
 
 const useStyles = makeStyles(searchModalStyles);
 
 const SearchModal = ({ modalOpen, setModalOpen }) => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 

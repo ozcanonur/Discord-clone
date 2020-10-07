@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import Message from 'components/Message';
-import Input from 'components/Input';
+
+import Message from '../../components/Message';
+import Input from '../../components/Input';
 import chatStyles from './styles/chat';
 
 const useStyles = makeStyles(chatStyles);

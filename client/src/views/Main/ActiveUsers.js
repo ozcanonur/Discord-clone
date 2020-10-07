@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import ActiveUser from 'components/ActiveUser';
 import Fade from '@material-ui/core/Fade';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+
 import activeUsersStyles from './styles/activeUsers';
+import ActiveUser from '../../components/ActiveUser';
 
 const useStyles = makeStyles(activeUsersStyles);
 

@@ -1,19 +1,21 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { selectChannel } from 'redux/actions/react';
-import { selectChannel as selectChannelIo } from 'redux/actions/socket';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Forum from '@material-ui/icons/Forum';
 import Add from '@material-ui/icons/Add';
 import Room from '@material-ui/icons/Room';
 import IconButton from '@material-ui/core/IconButton';
+import qs from 'qs';
+
+import { selectChannel } from '../../../redux/actions/react';
+import { selectChannel as selectChannelIo } from '../../../redux/actions/socket';
 import ChannelCreateModal from './ChannelCreateModal';
 import channelsStyles from './styles/channels';
 
@@ -22,7 +24,7 @@ const useStyles = makeStyles(channelsStyles);
 const Channels = ({ channels, voice }) => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const servers = useSelector((state) => state.servers);
   const selectedServerName = useSelector((state) => state.selectedServerName);
   const selectedChannel = useSelector((state) => state.selectedChannel);

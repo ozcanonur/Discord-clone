@@ -1,14 +1,16 @@
 import React from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import qs from 'qs';
+
+import { selectFriendChannel as selectFriendChannelIo } from '../../redux/actions/socket';
 import {
   selectFriendChannel,
   selectFriend,
   selectTabInPrivate,
   clearPrivateNotification,
-} from 'redux/actions/react';
-import { selectFriendChannel as selectFriendChannelIo } from 'redux/actions/socket';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import makeStyles from '@material-ui/core/styles/makeStyles';
+} from '../../redux/actions/react';
 import friendStyles from './styles/friend';
 
 const useStyles = makeStyles(friendStyles);
@@ -16,7 +18,7 @@ const useStyles = makeStyles(friendStyles);
 const Friend = ({ friendName }) => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const selectedFriend = useSelector((state) => state.selectedFriend);
 
   const dispatch = useDispatch();

@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { clearIoResponse } from 'redux/actions/react';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { sendFriendRequest } from 'redux/actions/socket';
+import qs from 'qs';
+
+import { sendFriendRequest } from '../../redux/actions/socket';
+import { clearIoResponse } from '../../redux/actions/react';
 import addFriendBoxStyles from './styles/addFriendBox';
 
 const useStyles = makeStyles(addFriendBoxStyles);
@@ -12,7 +14,7 @@ const useStyles = makeStyles(addFriendBoxStyles);
 const AddFriendBox = () => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [friendName, setFriendName] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');

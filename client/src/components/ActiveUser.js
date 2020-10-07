@@ -1,8 +1,8 @@
 import React from 'react';
 import { useStore } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-// import Fade from '@material-ui/core/Fade';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+// import Fade from '@material-ui/core/Fade';
 import activeUserStyles from './styles/activeUser';
 // import UserTooltip from './UserTooltip';
 

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-import OutsideClickHandler from 'react-outside-click-handler';
 import Fade from '@material-ui/core/Fade';
-import UserTooltip from 'components/UserTooltip';
+import OutsideClickHandler from 'react-outside-click-handler';
+
+import UserTooltip from './UserTooltip';
 import messageStyles from './styles/message';
 
 const useStyles = makeStyles(messageStyles);

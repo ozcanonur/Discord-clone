@@ -1,22 +1,24 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch, useStore } from 'react-redux';
-import { deleteMessage, createPin } from 'redux/actions/socket';
+import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
-import Message from 'components/Message';
-import Tooltip from '@material-ui/core/Tooltip';
-import Input from 'components/Input';
+import qs from 'qs';
+
+import Message from '../../components/Message';
+import Input from '../../components/Input';
 import chatStyles from './styles/chat';
+import { deleteMessage, createPin } from '../../redux/actions/socket';
 
 const useStyles = makeStyles(chatStyles);
 
 const Chat = () => {
   const classes = useStyles();
 
-  const { name } = useStore();
+  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const messages = useSelector((state) => state.messages);
   const selectedChannel = useSelector((state) => state.selectedChannel);
 

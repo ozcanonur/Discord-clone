@@ -11,18 +11,16 @@ import {
   notifications,
   ioResponse,
   pinnedMessages,
-} from 'redux/reducers/socket';
+} from './reducers/socket';
 import {
-  name,
   selectedServerName,
   selectedChannel,
   selectedTabInPrivate,
   selectedFriend,
   activeUsersOpen,
-} from 'redux/reducers/react';
+} from './reducers/react';
 
 const reducers = combineReducers({
-  name,
   selectedServerName,
   selectedChannel,
   selectedTabInPrivate,
