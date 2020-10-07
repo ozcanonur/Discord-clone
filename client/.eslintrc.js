@@ -27,11 +27,13 @@ module.exports = {
     'jsx-a11y/no-static-element-interactions': 'off',
     'jsx-a11y/click-events-have-key-events': 'off',
     'no-underscore-dangle': 'off',
+    'import/extensions': 'off',
   },
   settings: {
     'import/resolver': {
       node: {
         paths: ['src'],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },

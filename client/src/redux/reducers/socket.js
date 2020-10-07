@@ -1,4 +1,4 @@
-import uniqBy from 'lodash/uniqBy';
+import { uniqBy } from 'lodash';
 
 export const friends = (state = [], action) => {
   switch (action.type) {
