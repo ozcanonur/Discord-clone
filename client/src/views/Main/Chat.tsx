@@ -21,6 +21,7 @@ const Chat = () => {
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const messages = useSelector((state: RootState) => state.messages);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
+  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
 
   // Scroll messages to bottom on change
   const scrollRef = useRef<any>(null);
@@ -39,43 +40,49 @@ const Chat = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.chat}>
-        <List className={classes.messages}>
-          {messages.map((message, key) => (
-            <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
-              <Message message={message} />
-              <div className={classes.messageOptions}>
-                <Tooltip
-                  enterDelay={0}
-                  placement='top'
-                  title='Pin message'
-                  classes={{ tooltip: classes.notificationTooltip }}
-                >
-                  <RoomRoundedIcon
-                    className={classes.optionIcon}
-                    style={{ marginRight: '0.5rem' }}
-                    onClick={() => pinMessageOnClick(message)}
-                  />
-                </Tooltip>
-                {message.username === name ? (
+      {selectedServerName === '' ? (
+        <div className={classes.warning}>Select a server!</div>
+      ) : selectedChannel.name === '' ? (
+        <div className={classes.warning}>Select a channel!</div>
+      ) : (
+        <div className={classes.chat}>
+          <List className={classes.messages}>
+            {messages.map((message, key) => (
+              <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
+                <Message message={message} />
+                <div className={classes.messageOptions}>
                   <Tooltip
                     enterDelay={0}
                     placement='top'
-                    title='Delete message'
+                    title='Pin message'
                     classes={{ tooltip: classes.notificationTooltip }}
                   >
-                    <DeleteForeverRoundedIcon
+                    <RoomRoundedIcon
                       className={classes.optionIcon}
-                      onClick={() => deleteMessageOnClick(message)}
+                      style={{ marginRight: '0.5rem' }}
+                      onClick={() => pinMessageOnClick(message)}
                     />
                   </Tooltip>
-                ) : null}
-              </div>
-            </ListItem>
-          ))}
-        </List>
-        <Input />
-      </div>
+                  {message.username === name ? (
+                    <Tooltip
+                      enterDelay={0}
+                      placement='top'
+                      title='Delete message'
+                      classes={{ tooltip: classes.notificationTooltip }}
+                    >
+                      <DeleteForeverRoundedIcon
+                        className={classes.optionIcon}
+                        onClick={() => deleteMessageOnClick(message)}
+                      />
+                    </Tooltip>
+                  ) : null}
+                </div>
+              </ListItem>
+            ))}
+          </List>
+          <Input />
+        </div>
+      )}
     </div>
   );
 };

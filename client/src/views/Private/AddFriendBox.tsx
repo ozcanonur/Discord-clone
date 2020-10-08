@@ -58,7 +58,7 @@ const AddFriendBox = () => {
               className={classes.button}
               onClick={sendFriendRequestOnClick}
             >
-              Send Friend Request
+              Add Friend
             </Button>
           ),
         }}

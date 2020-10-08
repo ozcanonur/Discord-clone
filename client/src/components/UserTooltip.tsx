@@ -26,15 +26,26 @@ const UserTooltip = ({ name, positionTop }: Props) => {
   const user: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState<string[]>([]);
+  const [userNote, setUserNote] = useState('');
 
   useEffect(() => {
-    const params = { name };
+    const serverParams = { name };
     axios
       .get('/userServers', {
-        params,
+        params: serverParams,
       })
       .then((res) => {
         setUserServers(res.data);
+      })
+      .catch((error) => console.log(error));
+
+    const noteParams = { name: user.name, otherUserName: name };
+    axios
+      .get('/note', {
+        params: noteParams,
+      })
+      .then((res) => {
+        setUserNote(res.data);
       })
       .catch((error) => console.log(error));
   }, [name]);
@@ -45,12 +56,19 @@ const UserTooltip = ({ name, positionTop }: Props) => {
   };
 
   const handleSubmit = (e: any) => {
-    if (e.target.value.trim() === '') return;
+    if (inputValue.trim() === '') return;
 
     if (e.which === 13 && !e.shiftKey) {
-      // dispatch(message(name, e.target.value));
       setInputValue('');
       e.preventDefault();
+
+      const params = { name: user.name, otherUserName: name, note: inputValue };
+      axios
+        .post('/note', params)
+        .then((_res) => {
+          setUserNote(inputValue);
+        })
+        .catch((error) => console.log(error));
     }
   };
 
@@ -77,10 +95,10 @@ const UserTooltip = ({ name, positionTop }: Props) => {
         ))}
       </List>
       <div className={classes.noteContainer}>
-        <div className={classes.noteTitle}>Note</div>
+        <div className={classes.noteTitle}>Note: {userNote}</div>
         <TextField
           multiline
-          placeholder='Click to add a note'
+          placeholder='Click to set a note'
           variant='outlined'
           fullWidth
           InputLabelProps={{ className: classes.inputLabel }}

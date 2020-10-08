@@ -31,7 +31,7 @@ const Friend = ({ friendName }: Props) => {
     dispatch(selectFriendChannelIo(name, friendName));
     dispatch(selectFriend(friendName));
     dispatch(selectTabInPrivate('Chat'));
-    dispatch(clearPrivateNotification(friendName));
+    dispatch(clearPrivateNotification());
   };
 
   return (

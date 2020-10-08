@@ -26,6 +26,12 @@ const UserSchema = new Schema({
       ref: 'User',
     },
   ],
+  notes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Note',
+    },
+  ],
 });
 
 const User = mongoose.model('User', UserSchema);

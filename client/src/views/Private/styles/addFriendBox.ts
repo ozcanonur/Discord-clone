@@ -36,7 +36,7 @@ const addFriendBoxStyles = createStyles({
     backgroundColor: '#7289da',
     color: 'white',
     fontFamily: 'Lato, sans-serif',
-    width: '35rem',
+    width: '20rem',
     transition: 'all .2s ease-in-out',
 
     '&:hover': {

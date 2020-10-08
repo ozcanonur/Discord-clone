@@ -43,6 +43,8 @@ const Channels = ({ channels, voice }: Props) => {
   };
 
   const selectedServer = servers.find((server) => server.name === selectedServerName) || {
+    _id: '',
+    name: '',
     channels: [],
   };
 

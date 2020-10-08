@@ -1,5 +1,5 @@
 import uniqBy from 'lodash/uniqBy';
-import { ServerIOActions, InternalActions } from '../actions/types';
+import { ServerIOActions } from '../actions/types';
 
 export const activeUsers = (
   state: string[] = [],
