@@ -2,6 +2,8 @@ const User = require('../db/models/user');
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
 
+const { reduceServers } = require('./util');
+
 const getCreateServerValidationError = async (server) => {
   if (server.split(' ').length > 3) return `Server name can't be longer than 4 words.`;
   else if (server.length === 0) return `Server name can't be empty.`;
@@ -32,7 +34,7 @@ const onUserCreatedServer = async (socket, action) => {
   // Find the user's servers and send them back
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
-  socket.emit('action', { type: 'io/servers', payload: userServers });
+  socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
   // Emit success
   socket.emit('action', { type: 'io/response' });
 };
@@ -86,7 +88,7 @@ const onUserCreatedChannel = async (io, socket, action) => {
   // Send the updated servers to each of them
   users.forEach((user) => {
     const { socketId, servers } = user;
-    io.to(socketId).emit('action', { type: 'io/servers', payload: servers });
+    io.to(socketId).emit('action', { type: 'io/servers', payload: reduceServers(servers) });
   });
 };
 
@@ -121,7 +123,7 @@ const onUserJoinedServer = async (socket, action) => {
   // Find the user's servers and send them back
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
-  socket.emit('action', { type: 'io/servers', payload: userServers });
+  socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
 };
 
 module.exports = { onUserCreatedChannel, onUserCreatedServer, onUserJoinedServer };

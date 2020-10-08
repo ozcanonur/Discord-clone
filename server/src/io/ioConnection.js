@@ -1,6 +1,8 @@
 const User = require('../db/models/user');
 const Server = require('../db/models/server');
 
+const { reduceUsers, reduceServers, reduceFriends } = require('./util');
+
 const onUserConnected = async (io, socket, action) => {
   const name = action.payload;
   // If user is already in DB, update its socketId and online status
@@ -47,11 +49,11 @@ const onUserConnected = async (io, socket, action) => {
 
   // Let other users know
   const users = await User.find({ online: true });
-  io.emit('action', { type: 'io/activeUsers', payload: users });
+  io.emit('action', { type: 'io/activeUsers', payload: reduceUsers(users) });
   // Send the current user's servers (with channels populated) and send to client
-  socket.emit('action', { type: 'io/servers', payload: user.servers });
+  socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });
   // Also send friends
-  socket.emit('action', { type: 'io/friends', payload: user.friends });
+  socket.emit('action', { type: 'io/friends', payload: reduceFriends(user.friends) });
 };
 
 const onUserDisconnected = async (io, socket) => {
@@ -59,7 +61,7 @@ const onUserDisconnected = async (io, socket) => {
   await User.updateOne({ socketId: socket.id }, { online: false });
   // Let other users know
   const users = await User.find({ online: true });
-  io.emit('action', { type: 'io/activeUsers', payload: users });
+  io.emit('action', { type: 'io/activeUsers', payload: reduceUsers(users) });
 };
 
 module.exports = { onUserConnected, onUserDisconnected };

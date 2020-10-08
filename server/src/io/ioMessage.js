@@ -2,6 +2,8 @@ const User = require('../db/models/user');
 const Channel = require('../db/models/channel');
 const Message = require('../db/models/message');
 
+const { reduceMessages } = require('./util');
+
 const onUserMessaged = async (io, action) => {
   const { name, message } = action.payload;
   // Find the user
@@ -32,7 +34,7 @@ const onUserMessaged = async (io, action) => {
   // Send the messages in the channel back
   io.to(user.currentChannel._id.toString()).emit('action', {
     type: 'io/messages',
-    payload: currChannel.messages,
+    payload: reduceMessages(currChannel.messages),
   });
 
   // Send a notification if it's a private message
@@ -69,7 +71,10 @@ const onUserDeletedMessage = async (io, action) => {
   const users = await User.find({ currentChannel: channel._id });
   // Send to each of them
   users.forEach((user) => {
-    io.to(user.socketId).emit('action', { type: 'io/messages', payload: channel.messages });
+    io.to(user.socketId).emit('action', {
+      type: 'io/messages',
+      payload: reduceMessages(channel.messages),
+    });
   });
 };
 

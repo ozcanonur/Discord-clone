@@ -1,6 +1,8 @@
 const User = require('../db/models/user');
 const Channel = require('../db/models/channel');
 
+const { reduceFriends } = require('./util');
+
 const getFriendRequestValidationError = async (name, friendName) => {
   if (friendName.length === 0) return `Friend name can't be empty.`;
   else {
@@ -44,8 +46,11 @@ const onUserSentFriendRequest = async (io, socket, action) => {
   });
   await channel.save();
   // Send the new friends list to both users
-  io.to(user.socketId).emit('action', { type: 'io/friends', payload: user.friends });
-  io.to(friend.socketId).emit('action', { type: 'io/friends', payload: friend.friends });
+  io.to(user.socketId).emit('action', { type: 'io/friends', payload: reduceFriends(user.friends) });
+  io.to(friend.socketId).emit('action', {
+    type: 'io/friends',
+    payload: reduceFriends(friend.friends),
+  });
 };
 
 module.exports = { onUserSentFriendRequest };

@@ -1,6 +1,8 @@
 const User = require('../db/models/user');
 const Channel = require('../db/models/channel');
 
+const { reduceMessages } = require('./util');
+
 const onUserSelectedChannel = async (socket, action) => {
   const { name, channel } = action.payload;
   // Leave the current channel first
@@ -31,12 +33,15 @@ const onUserSelectedChannel = async (socket, action) => {
     },
   ]);
   // Emit the older messages to client
-  socket.emit('action', { type: 'io/messages', payload: currChannel.messages });
+  socket.emit('action', { type: 'io/messages', payload: reduceMessages(currChannel.messages) });
   // Emit the pins also, Sort by date first
   const sortedPinnedMessaages = currChannel.pinnedMessages.sort(
     (x, y) => y.createdAt - x.createdAt
   );
-  socket.emit('action', { type: 'io/pinnedMessages', payload: sortedPinnedMessaages });
+  socket.emit('action', {
+    type: 'io/pinnedMessages',
+    payload: reduceMessages(sortedPinnedMessaages),
+  });
 };
 
 const onUserSelectedFriendChannel = async (socket, action) => {
@@ -63,7 +68,7 @@ const onUserSelectedFriendChannel = async (socket, action) => {
   // Update user's channel
   await User.updateOne({ name }, { currentChannel: channel });
   // Emit the older messages to the user
-  socket.emit('action', { type: 'io/messages', payload: channel.messages });
+  socket.emit('action', { type: 'io/messages', payload: reduceMessages(channel.messages) });
 };
 
 module.exports = { onUserSelectedChannel, onUserSelectedFriendChannel };

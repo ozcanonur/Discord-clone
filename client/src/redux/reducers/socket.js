@@ -1,5 +1,23 @@
 import { uniqBy } from 'lodash';
 
+export const activeUsers = (state = [], action) => {
+  switch (action.type) {
+    case 'io/activeUsers':
+      return [...action.payload];
+    default:
+      return state;
+  }
+};
+
+export const servers = (state = [], action) => {
+  switch (action.type) {
+    case 'io/servers':
+      return [...action.payload];
+    default:
+      return state;
+  }
+};
+
 export const friends = (state = [], action) => {
   switch (action.type) {
     case 'io/friends':
@@ -41,24 +59,6 @@ export const ioResponse = (state = {}, action) => {
 export const pinnedMessages = (state = [], action) => {
   switch (action.type) {
     case 'io/pinnedMessages':
-      return [...action.payload];
-    default:
-      return state;
-  }
-};
-
-export const activeUsers = (state = [], action) => {
-  switch (action.type) {
-    case 'io/activeUsers':
-      return [...action.payload];
-    default:
-      return state;
-  }
-};
-
-export const servers = (state = [], action) => {
-  switch (action.type) {
-    case 'io/servers':
       return [...action.payload];
     default:
       return state;

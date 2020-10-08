@@ -3,6 +3,8 @@ const Channel = require('../db/models/channel');
 const Message = require('../db/models/message');
 const Server = require('../db/models/server');
 
+const { reduceMessages } = require('./util');
+
 const onUserCreatedPin = async (io, action) => {
   const { name, message, selectedChannel } = action.payload;
   // Find which user
@@ -35,7 +37,7 @@ const onUserCreatedPin = async (io, action) => {
   users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/pinnedMessages',
-      payload: sortedPinnedMessages,
+      payload: reduceMessages(sortedPinnedMessages),
     });
   });
   // Find the channel's server, send notification to all users subscribed to that server

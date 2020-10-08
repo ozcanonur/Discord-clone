@@ -30,7 +30,7 @@ const FriendList = () => {
         <div className={classes.friendList}>
           <div className={classes.directMessages}>Direct messages</div>
           {friends.map((friend, key) => (
-            <Friend key={key} friendName={friend.name} />
+            <Friend key={key} friendName={friend} />
           ))}
         </div>
       </div>

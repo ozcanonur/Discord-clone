@@ -26,7 +26,7 @@ const Message = ({ message, pinned = false }) => {
   const [userTooltipOpen, setUserTooltipOpen] = useState(false);
   const [tooltipPositionTop, setTooltipPositionTop] = useState(false);
 
-  const { user, createdAt } = message;
+  const { username, createdAt } = message;
   const messageText = message.message;
 
   const handleUserIconClick = (e) => {
@@ -48,7 +48,7 @@ const Message = ({ message, pinned = false }) => {
             />
             <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
               <div>
-                <UserTooltip name={user.name} positionTop={tooltipPositionTop} />
+                <UserTooltip name={username} positionTop={tooltipPositionTop} />
               </div>
             </Fade>
           </div>
@@ -56,7 +56,7 @@ const Message = ({ message, pinned = false }) => {
       ) : null}
       <div className={classes.message}>
         <div className={classes.header}>
-          <div className={classes.username}>{user.name}</div>
+          <div className={classes.username}>{username}</div>
           <div className={classes.date}>{convertCreatedAt(createdAt)}</div>
         </div>
         <div className={classes.messageText}>{messageText}</div>
