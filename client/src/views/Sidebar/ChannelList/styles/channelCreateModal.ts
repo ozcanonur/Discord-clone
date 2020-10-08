@@ -58,11 +58,12 @@ const channelCreateModalStyles = createStyles({
   },
   modalButton: {
     fontSize: '1.2rem',
-    fontWeight: 500,
+    fontWeight: 700,
     backgroundColor: '#7289da',
     color: 'white',
     padding: '1rem 3rem',
     transition: 'all .2s ease-in-out',
+    fontFamily: 'Lato, sans-serif',
     '&:hover': {
       backgroundColor: '#677bc4',
     },

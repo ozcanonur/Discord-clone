@@ -1,5 +1,5 @@
 import uniqBy from 'lodash/uniqBy';
-import { ServerIOActions } from '../actions/types';
+import { ServerIOActions, InternalActions } from '../actions/types';
 
 export const activeUsers = (
   state: string[] = [],
@@ -59,49 +59,29 @@ export const pinnedMessages = (
 
 export const messages = (
   state: Message[] = [],
-  action: ServerIOActions.IOResponseMessagesAction
+  action: ServerIOActions.IOResponseMessagesAction | any
 ) => {
   switch (action.type) {
     case 'io/messages':
       return [...action.payload];
+    case 'CLEAR_MESSAGES':
+      return [];
     default:
       return state;
   }
 };
 
-const clearPrivateNotifications = (
-  state: Notification[],
-  action: ServerIOActions.IOResponseNotificationsAction
-) => {
-  return action.payload
-    ? state.filter(
-        (notification: Notification) =>
-          notification.from && notification.from !== action.payload.from
-      )
-    : state.filter((notification: Notification) => notification.type !== 'private');
-};
-
-const clearPinNotification = (
-  state: Notification[],
-  action: ServerIOActions.IOResponseNotificationsAction
-) => {
-  return state.filter(
-    (notification: Notification) =>
-      notification.channelId && notification.channelId !== action.payload.channelId
-  );
-};
-
 export const notifications = (
   state: Notification[] = [],
-  action: ServerIOActions.IOResponseNotificationsAction
+  action: ServerIOActions.IOResponseNotificationsAction | any
 ) => {
   switch (action.type) {
     case 'io/notification':
       return uniqBy([...state, action.payload], (e) => e.from);
     case 'CLEAR_PRIVATE_NOTIFICATION':
-      return clearPrivateNotifications(state, action);
+      return state.map((notification) => notification.type !== 'private');
     case 'CLEAR_PIN_NOTIFICATION':
-      return clearPinNotification(state, action);
+      return state.filter((notification) => notification.channelId !== action.payload._id);
     default:
       return state;
   }

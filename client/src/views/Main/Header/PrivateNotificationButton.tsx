@@ -18,7 +18,7 @@ const PrivateNotificationButton = () => {
 
   const dispatch = useDispatch();
   const privateMessageNotificationOnClick = () => {
-    dispatch(clearPrivateNotification('Rachel'));
+    dispatch(clearPrivateNotification());
   };
 
   const privateMessageNotifications = notifications

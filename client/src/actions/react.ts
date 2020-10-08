@@ -43,12 +43,9 @@ export const toggleActiveUsers = (): InternalActions.ToggleActiveUsersAction => 
   };
 };
 
-export const clearPrivateNotification = (
-  friendName: string
-): InternalActions.ClearPrivateNotificationAction => {
+export const clearPrivateNotification = (): InternalActions.ClearPrivateNotificationAction => {
   return {
     type: 'CLEAR_PRIVATE_NOTIFICATION',
-    payload: friendName,
   };
 };
 
@@ -64,5 +61,11 @@ export const clearPinNotification = (
 export const clearIoResponse = (): InternalActions.ClearIoResponseAction => {
   return {
     type: 'CLEAR_IO_RESPONSE',
+  };
+};
+
+export const clearMessages = (): InternalActions.ClearMessages => {
+  return {
+    type: 'CLEAR_MESSAGES',
   };
 };

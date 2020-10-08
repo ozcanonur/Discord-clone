@@ -30,7 +30,6 @@ export namespace InternalActions {
 
   export interface ClearPrivateNotificationAction {
     type: string;
-    payload: string;
   }
 
   export interface ClearPinNotificationAction {
@@ -39,6 +38,10 @@ export namespace InternalActions {
   }
 
   export interface ClearIoResponseAction {
+    type: string;
+  }
+
+  export interface ClearMessages {
     type: string;
   }
 }

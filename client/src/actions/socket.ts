@@ -7,16 +7,14 @@ export const connect = (name: string): ClientIOActions.ConnectIOAction => {
   };
 };
 
-export const createServer = (
-  name: string,
-  serverName: string
-): ClientIOActions.CreateServerIOAction => {
+export const createChannel = (
+  server: Server,
+  channelName: string,
+  isVoice: boolean
+): ClientIOActions.CreateChannelIOAction => {
   return {
-    type: 'io/userCreatedServer',
-    payload: {
-      name,
-      server: serverName,
-    },
+    type: 'io/userCreatedChannel',
+    payload: { server, channelName, isVoice },
   };
 };
 
@@ -30,21 +28,16 @@ export const selectChannel = (
   };
 };
 
-export const message = (name: string, message: string): ClientIOActions.MessageIOAction => {
+export const createServer = (
+  name: string,
+  serverName: string
+): ClientIOActions.CreateServerIOAction => {
   return {
-    type: 'io/userMessaged',
-    payload: { name, message },
-  };
-};
-
-export const createChannel = (
-  server: Server,
-  channelName: string,
-  isVoice: boolean
-): ClientIOActions.CreateChannelIOAction => {
-  return {
-    type: 'io/userCreatedChannel',
-    payload: { server, channelName, isVoice },
+    type: 'io/userCreatedServer',
+    payload: {
+      name,
+      server: serverName,
+    },
   };
 };
 
@@ -86,6 +79,13 @@ export const createPin = (
   return {
     type: 'io/userCreatedPin',
     payload: { name, message, selectedChannel },
+  };
+};
+
+export const message = (name: string, message: string): ClientIOActions.MessageIOAction => {
+  return {
+    type: 'io/userMessaged',
+    payload: { name, message },
   };
 };
 

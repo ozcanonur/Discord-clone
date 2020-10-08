@@ -29,7 +29,38 @@ const chatStyles = createStyles({
     justifyContent: 'flex-end',
   },
   listItem: {
-    paddingTop: 0,
+    padding: '0 1rem',
+    '&:hover': {
+      backgroundColor: 'rgb(47,49,54)',
+      '& $messageOptions': {
+        display: 'inherit',
+      },
+    },
+  },
+  messageOptions: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: '1rem',
+    display: 'none',
+  },
+  optionIcon: {
+    fontSize: '2.3rem',
+    cursor: 'pointer',
+    transition: 'all .2s',
+
+    '&:hover': {
+      transform: 'scale(1.2)',
+    },
+  },
+  notificationTooltip: {
+    backgroundColor: 'rgb(32,34,37)',
+    color: 'rgb(220,221,222)',
+    fontSize: '1.2rem',
+    fontWeight: 700,
+    textAlign: 'center',
+    letterSpacing: 0,
+    padding: '1rem',
   },
 });
 

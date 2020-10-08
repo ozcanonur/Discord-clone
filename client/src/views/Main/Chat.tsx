@@ -57,17 +57,19 @@ const Chat = () => {
                     onClick={() => pinMessageOnClick(message)}
                   />
                 </Tooltip>
-                <Tooltip
-                  enterDelay={0}
-                  placement='top'
-                  title='Delete message'
-                  classes={{ tooltip: classes.notificationTooltip }}
-                >
-                  <DeleteForeverRoundedIcon
-                    className={classes.optionIcon}
-                    onClick={() => deleteMessageOnClick(message)}
-                  />
-                </Tooltip>
+                {message.username === name ? (
+                  <Tooltip
+                    enterDelay={0}
+                    placement='top'
+                    title='Delete message'
+                    classes={{ tooltip: classes.notificationTooltip }}
+                  >
+                    <DeleteForeverRoundedIcon
+                      className={classes.optionIcon}
+                      onClick={() => deleteMessageOnClick(message)}
+                    />
+                  </Tooltip>
+                ) : null}
               </div>
             </ListItem>
           ))}

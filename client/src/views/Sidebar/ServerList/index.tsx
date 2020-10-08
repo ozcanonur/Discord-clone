@@ -10,7 +10,7 @@ import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import qs from 'qs';
 
-import { selectServerName, selectFriend, selectChannel } from '../../../actions/react';
+import { selectServerName, selectChannel, clearMessages } from '../../../actions/react';
 import { selectChannel as selectChannelIo } from '../../../actions/socket';
 import ServerIcon from '../../../components/ServerIcon';
 import ServerModal from './ServerModal';
@@ -27,13 +27,14 @@ const ServerList = () => {
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName: string) => {
+    // Clear the messages first
+    dispatch(clearMessages());
     // Select the server
     dispatch(selectServerName(serverName));
-    dispatch(selectFriend(''));
     // Select the first channel if at main route
     if (serverName !== 'private') {
       const server = servers.find((server: Server) => server.name === serverName);
-      if (server) {
+      if (server && server.channels.length > 0) {
         const firstChannel = server.channels[0];
         dispatch(selectChannel(firstChannel));
         dispatch(selectChannelIo(name, firstChannel));
