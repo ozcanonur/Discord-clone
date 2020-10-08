@@ -1,4 +1,4 @@
-import { uniqBy } from 'lodash';
+import uniqBy from 'lodash/uniqBy';
 import { ServerIOActions } from '../actions/types';
 
 export const activeUsers = (

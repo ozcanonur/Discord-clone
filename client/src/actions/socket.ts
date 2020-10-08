@@ -30,7 +30,7 @@ export const selectChannel = (
   };
 };
 
-export const message = (name: string, message: Message): ClientIOActions.MessageIOAction => {
+export const message = (name: string, message: string): ClientIOActions.MessageIOAction => {
   return {
     type: 'io/userMessaged',
     payload: { name, message },
@@ -80,7 +80,7 @@ export const selectFriendChannel = (
 
 export const createPin = (
   name: string,
-  message: Message,
+  message: string,
   selectedChannel: Channel
 ): ClientIOActions.CreatePinIOAction => {
   return {

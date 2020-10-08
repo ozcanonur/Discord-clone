@@ -15,7 +15,7 @@ const Login = () => {
 
   const [name, setName] = useState('Onur');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 

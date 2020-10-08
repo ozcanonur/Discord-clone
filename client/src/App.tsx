@@ -10,29 +10,24 @@ import { connect, selectChannel as selectChannelIo } from './actions/socket';
 import { selectServerName, selectChannel } from './actions/react';
 
 const App = () => {
-  const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const servers = useSelector((state: RootState) => state.servers);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Connect to socket io, gets servers
-    if (typeof name === 'string') {
-      dispatch(connect(name));
-      // Select the default server on entry
-      dispatch(selectServerName('Default'));
-    }
+    dispatch(connect(name));
+    // Select the default server on entry
+    dispatch(selectServerName('Default'));
   }, []);
 
   useEffect(() => {
-    if (typeof name === 'string') {
-      // Select the first channel on entry
-      const server = servers.find((server: Server) => server.name === 'Default');
-      if (!server) return;
-      const firstChannel = server.channels[0];
-      dispatch(selectChannel(firstChannel));
-      dispatch(selectChannelIo(name, firstChannel));
-    }
+    // Select the first channel on entry
+    const server = servers.find((server: Server) => server.name === 'Default');
+    if (!server) return;
+    const firstChannel = server.channels[0];
+    dispatch(selectChannel(firstChannel));
+    dispatch(selectChannelIo(name, firstChannel));
   }, [servers]);
 
   return (

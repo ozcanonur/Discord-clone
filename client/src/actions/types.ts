@@ -77,7 +77,7 @@ export namespace ClientIOActions {
     type: string;
     payload: {
       name: string;
-      message: Message;
+      message: string;
     };
   }
 
@@ -110,7 +110,7 @@ export namespace ClientIOActions {
     type: string;
     payload: {
       name: string;
-      message: Message;
+      message: string;
       selectedChannel: Channel;
     };
   }
