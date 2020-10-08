@@ -14,8 +14,8 @@ import Room from '@material-ui/icons/Room';
 import IconButton from '@material-ui/core/IconButton';
 import qs from 'qs';
 
-import { selectChannel } from '../../../redux/actions/react';
-import { selectChannel as selectChannelIo } from '../../../redux/actions/socket';
+import { selectChannel } from '../../../actions/react';
+import { selectChannel as selectChannelIo } from '../../../actions/socket';
 import ChannelCreateModal from './ChannelCreateModal';
 import channelsStyles from './styles/channels';
 
@@ -63,7 +63,7 @@ const Channels = ({ channels, voice }) => {
             {channels.map((channel, key) => {
               const pinNotification = notifications.find(
                 (notification) =>
-                  notification.type === 'pin' && notification.channel._id === channel._id
+                  notification.type === 'pin' && notification.channelId === channel._id
               );
               return (
                 <ListItem

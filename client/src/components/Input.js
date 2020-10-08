@@ -9,7 +9,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import qs from 'qs';
 
-import { message } from '../redux/actions/socket';
+import { message } from '../actions/socket';
 import inputStyles from './styles/input';
 
 const useStyles = makeStyles(inputStyles);

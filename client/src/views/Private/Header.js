@@ -6,7 +6,7 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-import { selectTabInPrivate, toggleActiveUsers } from '../../redux/actions/react';
+import { selectTabInPrivate, toggleActiveUsers } from '../../actions/react';
 import CustomButton from '../../components/Button';
 import headerStyles from './styles/header';
 

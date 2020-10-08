@@ -8,8 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import qs from 'qs';
 
-import { clearIoResponse } from '../../../redux/actions/react';
-import { createServer } from '../../../redux/actions/socket';
+import { clearIoResponse } from '../../../actions/react';
+import { createServer } from '../../../actions/socket';
 import serverCreateModalStyles from './styles/serverCreateModal';
 
 const useStyles = makeStyles(serverCreateModalStyles);

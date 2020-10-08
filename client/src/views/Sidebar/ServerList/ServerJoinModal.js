@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import qs from 'qs';
 
-import { joinServer } from '../../../redux/actions/socket';
+import { joinServer } from '../../../actions/socket';
 import serverJoinModalStyles from './styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);

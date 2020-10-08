@@ -6,29 +6,33 @@ import qs from 'qs';
 
 import Main from './views/Main/index';
 import Sidebar from './views/Sidebar/index';
-import { connect, selectChannel as selectChannelIo } from './redux/actions/socket';
-import { selectServerName, selectChannel } from './redux/actions/react';
+import { connect, selectChannel as selectChannelIo } from './actions/socket';
+import { selectServerName, selectChannel } from './actions/react';
 
 const App = () => {
   const { name } = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-  const servers = useSelector((state) => state.servers);
+  const servers = useSelector((state: RootState) => state.servers);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     // Connect to socket io, gets servers
-    dispatch(connect(name));
-    // Select the default server on entr y
-    dispatch(selectServerName('Default'));
+    if (typeof name === 'string') {
+      dispatch(connect(name));
+      // Select the default server on entry
+      dispatch(selectServerName('Default'));
+    }
   }, []);
 
   useEffect(() => {
-    // Select the first channel on entry
-    const server = servers.find((server) => server.name === 'Default');
-    if (!server) return;
-    const firstChannel = server.channels[0];
-    dispatch(selectChannel(firstChannel));
-    dispatch(selectChannelIo(name, firstChannel));
+    if (typeof name === 'string') {
+      // Select the first channel on entry
+      const server = servers.find((server: Server) => server.name === 'Default');
+      if (!server) return;
+      const firstChannel = server.channels[0];
+      dispatch(selectChannel(firstChannel));
+      dispatch(selectChannelIo(name, firstChannel));
+    }
   }, [servers]);
 
   return (

@@ -45,7 +45,7 @@ const onUserCreatedPin = async (io, action) => {
   server.users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/notification',
-      payload: { type: 'pin', channel },
+      payload: { type: 'pin', channelId: channel._id },
     });
   });
 };

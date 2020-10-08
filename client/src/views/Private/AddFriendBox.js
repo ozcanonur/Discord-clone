@@ -5,8 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import qs from 'qs';
 
-import { sendFriendRequest } from '../../redux/actions/socket';
-import { clearIoResponse } from '../../redux/actions/react';
+import { sendFriendRequest } from '../../actions/socket';
+import { clearIoResponse } from '../../actions/react';
 import addFriendBoxStyles from './styles/addFriendBox';
 
 const useStyles = makeStyles(addFriendBoxStyles);

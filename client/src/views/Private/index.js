@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 import qs from 'qs';
 
-import { connect } from '../../redux/actions/socket';
+import { connect } from '../../actions/socket';
 import FriendList from './FriendList';
 import ServerList from '../Sidebar/ServerList/index';
 import indexStyles from './styles/index';

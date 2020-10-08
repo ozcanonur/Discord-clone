@@ -11,7 +11,7 @@ import qs from 'qs';
 import Message from '../../components/Message';
 import Input from '../../components/Input';
 import chatStyles from './styles/chat';
-import { deleteMessage, createPin } from '../../redux/actions/socket';
+import { deleteMessage, createPin } from '../../actions/socket';
 
 const useStyles = makeStyles(chatStyles);
 

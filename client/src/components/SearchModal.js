@@ -15,18 +15,18 @@ import ListItem from '@material-ui/core/ListItem';
 import qs from 'qs';
 
 import searchModalStyles from './styles/searchModal';
-import { store } from '../redux/store';
+import { store } from '../store';
 import {
   selectChannel,
   selectServerName,
   selectFriendChannel,
   selectFriend,
   selectTabInPrivate,
-} from '../redux/actions/react';
+} from '../actions/react';
 import {
   selectChannel as selectChannelIo,
   selectFriendChannel as selectFriendChannelIo,
-} from '../redux/actions/socket';
+} from '../actions/socket';
 
 const useStyles = makeStyles(searchModalStyles);
 

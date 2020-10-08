@@ -4,13 +4,13 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import qs from 'qs';
 
-import { selectFriendChannel as selectFriendChannelIo } from '../../redux/actions/socket';
+import { selectFriendChannel as selectFriendChannelIo } from '../../actions/socket';
 import {
   selectFriendChannel,
   selectFriend,
   selectTabInPrivate,
   clearPrivateNotification,
-} from '../../redux/actions/react';
+} from '../../actions/react';
 import friendStyles from './styles/friend';
 
 const useStyles = makeStyles(friendStyles);

@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import qs from 'qs';
 
-import { joinServer } from '../redux/actions/socket';
+import { joinServer } from '../actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);

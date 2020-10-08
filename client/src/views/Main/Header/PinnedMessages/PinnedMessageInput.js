@@ -10,7 +10,7 @@ import 'emoji-mart/css/emoji-mart.css';
 import qs from 'qs';
 
 import inputStyles from '../../../../components/styles/input';
-import { createPin } from '../../../../redux/actions/socket';
+import { createPin } from '../../../../actions/socket';
 
 const useStyles = makeStyles(inputStyles);
 

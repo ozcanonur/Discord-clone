@@ -5,7 +5,7 @@ import Room from '@material-ui/icons/Room';
 
 import PinnedMessages from './PinnedMessages';
 import CustomButton from '../../../../components/Button';
-import { clearPinNotification } from '../../../../redux/actions/react';
+import { clearPinNotification } from '../../../../actions/react';
 import headerStyles from '../../styles/header';
 
 const useStyles = makeStyles(headerStyles);
@@ -20,8 +20,7 @@ const PinnedMessagesButton = () => {
 
   const dispatch = useDispatch();
   const pinNotification = notifications.find(
-    (notification) =>
-      notification.type === 'pin' && notification.channel._id === selectedChannel._id
+    (notification) => notification.type === 'pin' && notification.channelId === selectedChannel._id
   );
 
   return (

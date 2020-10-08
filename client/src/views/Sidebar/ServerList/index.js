@@ -10,8 +10,8 @@ import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import qs from 'qs';
 
-import { selectServerName, selectFriend, selectChannel } from '../../../redux/actions/react';
-import { selectChannel as selectChannelIo } from '../../../redux/actions/socket';
+import { selectServerName, selectFriend, selectChannel } from '../../../actions/react';
+import { selectChannel as selectChannelIo } from '../../../actions/socket';
 import ServerIcon from '../../../components/ServerIcon';
 import ServerModal from './ServerModal';
 import indexStyles from './styles/index';
