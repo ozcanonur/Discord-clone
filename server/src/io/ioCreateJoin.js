@@ -126,4 +126,37 @@ const onUserJoinedServer = async (socket, action) => {
   socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
 };
 
-module.exports = { onUserCreatedChannel, onUserCreatedServer, onUserJoinedServer };
+const onUserDeletedServer = async (io, action) => {
+  const { name, serverName } = action.payload;
+  // Check if the user is admin in this server, also if they are default servers
+  const server = await Server.findOne({ name: serverName }).populate([
+    { path: 'admin', model: 'User' },
+    { path: 'users', model: 'User' },
+  ]);
+  const isDefaultServers = serverName === 'Default' || serverName === 'Games';
+  if (isDefaultServers || server.admin.name !== name) return;
+  // Find everyone subscribed to this server
+  const users = await User.find({ _id: { $in: server.users } }).populate('servers');
+  // Delete the server from them
+  for (let user of users) {
+    const newServers = user.servers.filter((s) => s._id.toString() !== server._id.toString());
+    user.servers = newServers;
+    await user.save();
+  }
+  // Delete the server
+  await Server.deleteOne({ name: serverName });
+  // Emit the new server list to everyone that was subscribed to this server
+  users.forEach((user) =>
+    io.to(user.socketId).emit('action', {
+      type: 'io/servers',
+      payload: reduceServers(user.servers),
+    })
+  );
+};
+
+module.exports = {
+  onUserCreatedChannel,
+  onUserCreatedServer,
+  onUserJoinedServer,
+  onUserDeletedServer,
+};

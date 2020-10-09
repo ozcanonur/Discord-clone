@@ -49,10 +49,6 @@ const messageStyles = createStyles({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     position: 'relative',
-    transition: 'all .1s',
-    '&:active': {
-      transform: 'translateY(2px)',
-    },
   },
   icon: {
     width: '3.2rem',

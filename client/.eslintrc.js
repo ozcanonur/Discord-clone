@@ -3,20 +3,11 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'airbnb',
-    'airbnb/hooks',
-    'prettier',
-    'eslint:recommended',
-    'plugin:react/recommended',
-  ],
+  extends: ['airbnb', 'airbnb/hooks', 'prettier', 'eslint:recommended', 'plugin:react/recommended'],
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
-  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -24,9 +15,8 @@ module.exports = {
     ecmaVersion: 2020,
     sourceType: 'module',
   },
-  plugins: ['react', 'prettier', '@typescript-eslint'],
+  plugins: ['react', 'prettier'],
   rules: {
-    '@typescript-eslint/rule-name': 'error',
     'react/prop-types': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'no-shadow': 'off',

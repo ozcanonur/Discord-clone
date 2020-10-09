@@ -125,6 +125,14 @@ export namespace ClientIOActions {
       message: Message;
     };
   }
+
+  export interface DeleteServerIOAction {
+    type: string;
+    payload: {
+      name: string;
+      serverName: string;
+    };
+  }
 }
 
 export namespace ServerIOActions {

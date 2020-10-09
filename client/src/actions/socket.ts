@@ -98,3 +98,13 @@ export const deleteMessage = (
     payload: { name, message },
   };
 };
+
+export const deleteServer = (
+  name: string,
+  serverName: string
+): ClientIOActions.DeleteServerIOAction => {
+  return {
+    type: 'io/userDeletedServer',
+    payload: { name, serverName },
+  };
+};

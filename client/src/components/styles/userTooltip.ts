@@ -82,6 +82,7 @@ const userTooltipStyles = createStyles({
   noteTitle: {
     marginBottom: '1rem',
     fontSize: '1.4rem',
+    overflow: 'auto',
   },
   inputLabel: {
     color: 'rgb(220,221,222)',
