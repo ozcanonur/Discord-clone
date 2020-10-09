@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import RoomRoundedIcon from '@material-ui/icons/RoomRounded';
+import { ReactComponent as PinLogo } from '../../office.svg';
 import qs from 'qs';
 
 import Message from '../../components/Message';
@@ -35,7 +35,7 @@ const Chat = () => {
   };
 
   const pinMessageOnClick = (message: Message) => {
-    dispatch(createPin(name, message.message, selectedChannel));
+    dispatch(createPin(message.username, message.message, selectedChannel));
   };
 
   return (
@@ -57,9 +57,9 @@ const Chat = () => {
                     title='Pin message'
                     classes={{ tooltip: classes.notificationTooltip }}
                   >
-                    <RoomRoundedIcon
+                    <PinLogo
                       className={classes.optionIcon}
-                      style={{ marginRight: '0.5rem' }}
+                      style={{ marginRight: '0.5rem', height: '2rem', fill: 'rgb(220,221,222)' }}
                       onClick={() => pinMessageOnClick(message)}
                     />
                   </Tooltip>

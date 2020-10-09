@@ -75,6 +75,7 @@ app.post('/note', async (req, res) => {
 app.get('/note', async (req, res) => {
   const { name, otherUserName } = req.query;
 
+  // Find the user
   const user = await User.findOne({ name }).populate({
     path: 'notes',
     model: 'Note',
@@ -83,6 +84,8 @@ app.get('/note', async (req, res) => {
       model: 'User',
     },
   });
+
+  // Find the note
   const note = user.notes.find((note) => note.about.name === otherUserName);
 
   if (note) res.send(note.note);

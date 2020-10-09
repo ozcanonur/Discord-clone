@@ -43,6 +43,7 @@ html {
 body {
   min-width: 900px;
   height: 100%;
+  font-family: Lato, sans-serif;
 }
 
 #root {

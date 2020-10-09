@@ -50,6 +50,8 @@ const channelsStyles = createStyles({
     color: 'rgb(163, 168, 173)',
     '& span': {
       fontSize: '1.5rem',
+      fontFamily: 'Lato, sans-serif',
+      fontWeight: 600,
     },
   },
   icon: { fontSize: '2rem', color: 'rgb(163, 168, 173)' },

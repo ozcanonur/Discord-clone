@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -10,7 +9,7 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import Forum from '@material-ui/icons/Forum';
 import Add from '@material-ui/icons/Add';
-import Room from '@material-ui/icons/Room';
+import { ReactComponent as PinLogo } from '../../../office.svg';
 import IconButton from '@material-ui/core/IconButton';
 import qs from 'qs';
 
@@ -89,7 +88,14 @@ const Channels = ({ channels, voice }: Props) => {
                     )}
                   </ListItemIcon>
                   <ListItemText primary={channel.name} className={classes.text} />
-                  {pinNotification ? <Room style={{ color: 'rgba(255, 0,0, 0.3)' }} /> : null}
+                  {pinNotification ? (
+                    <PinLogo
+                      style={{
+                        height: '1.5rem',
+                        fill: 'rgba(255, 0,0, 0.3)',
+                      }}
+                    />
+                  ) : null}
                 </ListItem>
               );
             })}

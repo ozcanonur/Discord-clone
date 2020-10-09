@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Room from '@material-ui/icons/Room';
+import { ReactComponent as PinLogo } from '../../../../office.svg';
 
 import PinnedMessages from './PinnedMessages';
 import CustomButton from '../../../../components/Button';
@@ -35,7 +35,7 @@ const PinnedMessagesButton = () => {
         }}
         style={{ backgroundColor: pinOpen ? 'rgba(220, 221, 222, 0.2)' : 'inherit' }}
       >
-        <Room />
+        <PinLogo style={{ fill: 'rgb(220,221,222)', height: '2rem' }} />
         {pinNotification ? <div className={classes.notificationAlert} /> : null}
       </CustomButton>
       <PinnedMessages pinOpen={pinOpen} />
