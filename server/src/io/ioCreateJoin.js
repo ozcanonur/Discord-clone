@@ -1,6 +1,7 @@
 const User = require('../db/models/user');
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
+const Message = require('../db/models/message');
 
 const { reduceServers } = require('./util');
 
@@ -150,8 +151,19 @@ const onUserDeletedServer = async (io, action) => {
     user.servers = newServers;
     await user.save();
   }
+  // Delete the remnants of the server
+  // Delete messages
+  const channels = await Channel.find({ _id: { $in: server.channels } }).populate('messages');
+  const messageIds = channels
+    .map((ch) => ch.messages)
+    .flat()
+    .map((m) => m._id);
+  await Message.deleteMany({ _id: { $in: messageIds } });
+  // Delete channels
+  await Channel.deleteMany({ _id: { $in: server.channels } });
   // Delete the server
   await Server.deleteOne({ name: serverName });
+
   // Emit the new server list to everyone that was subscribed to this server
   users.forEach((user) =>
     io.to(user.socketId).emit('action', {

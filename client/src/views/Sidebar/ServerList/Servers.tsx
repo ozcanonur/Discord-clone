@@ -55,6 +55,8 @@ const ServerItem = ({ server }: Props) => {
 
   const deleteServerOnClick = (serverName: string) => {
     dispatch(deleteServer(name, serverName));
+    dispatch(clearMessages());
+    dispatch(selectServerName('Default'));
     setAnchorEl(null);
   };
 
