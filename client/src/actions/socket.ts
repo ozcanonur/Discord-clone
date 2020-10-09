@@ -108,3 +108,13 @@ export const deleteServer = (
     payload: { name, serverName },
   };
 };
+
+export const deleteChannel = (
+  name: string,
+  channelId: string
+): ClientIOActions.DeleteChannelIOAction => {
+  return {
+    type: 'io/userDeletedChannel',
+    payload: { name, channelId },
+  };
+};

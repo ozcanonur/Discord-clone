@@ -93,7 +93,7 @@ const ServerItem = ({ server }: Props) => {
             getContentAnchorEl={null}
           >
             <MenuItem classes={{ root: classes.menuItem }} disableGutters>
-              Create Channel
+              Create Channel Here
             </MenuItem>
             <MenuItem
               classes={{ root: classes.menuItem }}
@@ -123,7 +123,7 @@ const Servers = () => {
 
   return (
     <List className={classes.list}>
-      {servers.map((server, key) => (
+      {servers.map((server: Server, key) => (
         <ServerItem key={key} server={server} />
       ))}
     </List>

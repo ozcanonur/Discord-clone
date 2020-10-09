@@ -133,6 +133,14 @@ export namespace ClientIOActions {
       serverName: string;
     };
   }
+
+  export interface DeleteChannelIOAction {
+    type: string;
+    payload: {
+      name: string;
+      channelId: string;
+    };
+  }
 }
 
 export namespace ServerIOActions {

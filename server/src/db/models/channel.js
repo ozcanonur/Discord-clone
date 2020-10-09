@@ -1,3 +1,5 @@
+const Message = require('./message');
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -23,6 +25,15 @@ const ChannelSchema = new Schema({
       ref: 'Message',
     },
   ],
+});
+
+ChannelSchema.pre('remove', async function (next) {
+  const channel = this;
+  // Remove the messages in this channel
+  const messageIds = channel.messages;
+  await Message.deleteMany({ _id: { $in: messageIds } });
+
+  next();
 });
 
 const Channel = mongoose.model('Channel', ChannelSchema);

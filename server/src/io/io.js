@@ -11,6 +11,7 @@ const {
   onUserCreatedServer,
   onUserJoinedServer,
   onUserDeletedServer,
+  onUserDeletedChannel,
 } = require('./ioCreateJoin');
 const { onUserSentFriendRequest } = require('./ioFriend');
 const { onUserMessaged, onUserDeletedMessage } = require('./ioMessage');
@@ -47,6 +48,8 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     else if (action.type === 'io/userDeletedMessage') await onUserDeletedMessage(io, action);
     else if (action.type === 'io/userDeletedServer') await onUserDeletedServer(io, action);
+    else if (action.type === 'io/userDeletedChannel')
+      await onUserDeletedChannel(io, socket, action);
   });
 
   socket.on('disconnect', async () => {

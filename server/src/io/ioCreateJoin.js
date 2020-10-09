@@ -1,7 +1,6 @@
 const User = require('../db/models/user');
 const Server = require('../db/models/server');
 const Channel = require('../db/models/channel');
-const Message = require('../db/models/message');
 
 const { reduceServers } = require('./util');
 
@@ -136,7 +135,10 @@ const onUserDeletedServer = async (io, action) => {
   ]);
   const isDefaultServers = serverName === 'Default' || serverName === 'Games';
   if (isDefaultServers || server.admin.name !== name) return;
-  // Find everyone subscribed to this server
+
+  // Remove the server, remnants will be taken care of by middleware
+  await server.remove();
+
   const users = await User.find({ _id: { $in: server.users } }).populate({
     path: 'servers',
     model: 'Server',
@@ -145,25 +147,39 @@ const onUserDeletedServer = async (io, action) => {
       model: 'Channel',
     },
   });
-  // Delete the server from them
-  for (let user of users) {
-    const newServers = user.servers.filter((s) => s._id.toString() !== server._id.toString());
-    user.servers = newServers;
-    await user.save();
-  }
-  // Delete the remnants of the server
-  // Delete messages
-  const channels = await Channel.find({ _id: { $in: server.channels } }).populate('messages');
-  const messageIds = channels
-    .map((ch) => ch.messages)
-    .flat()
-    .map((m) => m._id);
-  await Message.deleteMany({ _id: { $in: messageIds } });
-  // Delete channels
-  await Channel.deleteMany({ _id: { $in: server.channels } });
-  // Delete the server
-  await Server.deleteOne({ name: serverName });
+  // Emit the new server list to everyone that was subscribed to this server
+  users.forEach((user) =>
+    io.to(user.socketId).emit('action', {
+      type: 'io/servers',
+      payload: reduceServers(user.servers),
+    })
+  );
+};
 
+const onUserDeletedChannel = async (io, socket, action) => {
+  const { name, channelId } = action.payload;
+  // Check if the user is admin in this server, also if they are default servers
+  const server = await Server.findOne({ channels: { $all: channelId } }).populate('admin');
+  console.log(server);
+  const isDefaultServers = server.name === 'Default' || server.name === 'Games';
+  if (isDefaultServers || server.admin.name !== name) return;
+
+  // Remove the channel from the server
+  server.channels = server.channels.filter((ch) => ch._id.toString() !== channelId);
+  await server.save();
+  // Remove the channel, remnants will be taken care of by middleware
+  const channel = await Channel.findOne({ _id: channelId });
+  await channel.remove();
+
+  const users = await User.find({ _id: { $in: server.users } }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+    },
+  });
+  // Emit the new server list containing new channels to everyone that was subscribed to this server
   // Emit the new server list to everyone that was subscribed to this server
   users.forEach((user) =>
     io.to(user.socketId).emit('action', {
@@ -178,4 +194,5 @@ module.exports = {
   onUserCreatedServer,
   onUserJoinedServer,
   onUserDeletedServer,
+  onUserDeletedChannel,
 };
