@@ -136,7 +136,14 @@ const onUserDeletedServer = async (io, action) => {
   const isDefaultServers = serverName === 'Default' || serverName === 'Games';
   if (isDefaultServers || server.admin.name !== name) return;
   // Find everyone subscribed to this server
-  const users = await User.find({ _id: { $in: server.users } }).populate('servers');
+  const users = await User.find({ _id: { $in: server.users } }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+    },
+  });
   // Delete the server from them
   for (let user of users) {
     const newServers = user.servers.filter((s) => s._id.toString() !== server._id.toString());
