@@ -42,6 +42,7 @@ const userTooltipStyles = createStyles({
     fontWeight: 1000,
     marginTop: '1rem',
     color: 'rgb(220,221,222)',
+    fontSize: '1.5rem',
   },
   servers: {
     flexGrow: 1,

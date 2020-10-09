@@ -10,11 +10,11 @@ import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import qs from 'qs';
 
-import { selectServerName, selectChannel, clearMessages } from '../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../actions/socket';
-import ServerIcon from '../../../components/ServerIcon';
-import indexStyles from './styles/index';
-import ServerModal from './ServerModal';
+import { selectServerName, selectChannel, clearMessages } from '../../../../actions/react';
+import { selectChannel as selectChannelIo } from '../../../../actions/socket';
+import ServerIcon from '../../../../components/ServerIcon';
+import indexStyles from '../styles/index';
+import ServerModal from './Modals/ServerModal';
 
 const useStyles = makeStyles(indexStyles);
 
@@ -27,11 +27,8 @@ const SecondaryButtons = () => {
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName: string) => {
-    // Clear the messages first
     dispatch(clearMessages());
-    // Select the server
     dispatch(selectServerName(serverName));
-    // Select the first channel if at main route
     if (serverName !== 'private') {
       const server = servers.find((server: Server) => server.name === serverName);
       if (server && server.channels.length > 0) {

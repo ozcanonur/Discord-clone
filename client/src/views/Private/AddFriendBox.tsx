@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
@@ -19,6 +19,10 @@ const AddFriendBox = () => {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
+
+  useEffect(() => {
+    dispatch(clearIoResponse());
+  }, []);
 
   const dispatch = useDispatch();
   const handleChange = (e: any) => {

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 
 import ServerCreateModal from './ServerCreateModal';
 import ServerJoinModal from './ServerJoinModal';
-import serverModalStyles from './styles/serverModal';
+import serverModalStyles from '../../styles/serverModal';
 
 const useStyles = makeStyles(serverModalStyles);
 

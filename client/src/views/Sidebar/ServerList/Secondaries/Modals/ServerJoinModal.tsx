@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
@@ -8,8 +8,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import qs from 'qs';
 
-import { joinServer } from '../../../actions/socket';
-import serverJoinModalStyles from './styles/serverJoinModal';
+import { clearIoResponse } from '../../../../../actions/react';
+import { joinServer } from '../../../../../actions/socket';
+import serverJoinModalStyles from '../../styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);
 
@@ -20,6 +21,10 @@ interface Props {
 
 const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(clearIoResponse());
+  }, []);
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalInputValue, setModalInputValue] = useState('');

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
-// import Fade from '@material-ui/core/Fade';
+import Fade from '@material-ui/core/Fade';
+import OutsideClickHandler from 'react-outside-click-handler';
 import activeUserStyles from './styles/activeUser';
-// import UserTooltip from './UserTooltip';
+import UserTooltip from './UserTooltip';
 import qs from 'qs';
 
 const useStyles = makeStyles(activeUserStyles);
@@ -16,7 +17,7 @@ const ActiveUser = ({ name }: Props) => {
   const classes = useStyles();
 
   const user: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-  // const [userTooltipOpen, setUserTooltipOpen] = useState(false);
+  const [userTooltipOpen, setUserTooltipOpen] = useState(false);
 
   return (
     <div
@@ -26,13 +27,19 @@ const ActiveUser = ({ name }: Props) => {
       <div className={classes.iconContainer}>
         <AccountCircleRoundedIcon
           className={classes.icon}
-          // onClick={() => setUserTooltipOpen(!userTooltipOpen)}
+          onClick={() => setUserTooltipOpen(!userTooltipOpen)}
         />
-        {/* <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
+        <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
           <div>
-            <UserTooltip name={user.name} />
+            <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
+              <UserTooltip
+                name={user.name}
+                positionTop={false}
+                style={{ top: '3rem', right: '18.5rem', left: 'inherit' }}
+              />
+            </OutsideClickHandler>
           </div>
-        </Fade> */}
+        </Fade>
       </div>
       <div className={classes.username}>{name}</div>
     </div>

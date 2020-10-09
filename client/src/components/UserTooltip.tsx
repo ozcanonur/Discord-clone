@@ -18,9 +18,10 @@ const useStyles = makeStyles(userTooltipStyles);
 interface Props {
   name: string;
   positionTop: boolean;
+  style?: any;
 }
 
-const UserTooltip = ({ name, positionTop }: Props) => {
+const UserTooltip = ({ name, positionTop, style }: Props) => {
   const classes = useStyles();
 
   const user: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -78,7 +79,7 @@ const UserTooltip = ({ name, positionTop }: Props) => {
   };
 
   return (
-    <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0 }}>
+    <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
       <div className={classes.header}>
         <div className={classes.headerImg}>
           <AccountCircleRoundedIcon className={classes.img} />
