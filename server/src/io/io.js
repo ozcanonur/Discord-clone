@@ -48,8 +48,7 @@ io.on('connection', (socket) => {
     else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     else if (action.type === 'io/userDeletedMessage') await onUserDeletedMessage(io, action);
     else if (action.type === 'io/userDeletedServer') await onUserDeletedServer(io, action);
-    else if (action.type === 'io/userDeletedChannel')
-      await onUserDeletedChannel(io, socket, action);
+    else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
   });
 
   socket.on('disconnect', async () => {

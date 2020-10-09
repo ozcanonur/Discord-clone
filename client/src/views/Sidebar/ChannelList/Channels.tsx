@@ -32,6 +32,7 @@ const Channel = ({ channel }: ChannelProps) => {
   const classes = useStyles();
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const notifications = useSelector((state: RootState) => state.notifications);
   const [modalOpen, setModalOpen] = useState(false);
@@ -104,6 +105,7 @@ const Channel = ({ channel }: ChannelProps) => {
               classes={{ root: classes.menuItem }}
               disableGutters
               onClick={() => setModalOpen(true)}
+              disabled={selectedServerName === 'Default' || selectedServerName === 'Games'}
             >
               Delete Channel
             </MenuItem>

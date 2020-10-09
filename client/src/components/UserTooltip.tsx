@@ -29,13 +29,14 @@ const UserTooltip = ({ name, positionTop }: Props) => {
   const [userNote, setUserNote] = useState('');
 
   useEffect(() => {
+    let mounted = true;
     const serverParams = { name };
     axios
       .get('/userServers', {
         params: serverParams,
       })
       .then((res) => {
-        setUserServers(res.data);
+        if (mounted) setUserServers(res.data);
       })
       .catch((error) => console.log(error));
 
@@ -45,9 +46,13 @@ const UserTooltip = ({ name, positionTop }: Props) => {
         params: noteParams,
       })
       .then((res) => {
-        setUserNote(res.data);
+        if (mounted) setUserNote(res.data);
       })
       .catch((error) => console.log(error));
+
+    return function cleanUp() {
+      mounted = false;
+    };
   }, [name]);
 
   const dispatch = useDispatch();

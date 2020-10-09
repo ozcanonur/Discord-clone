@@ -87,7 +87,6 @@ app.get('/note', async (req, res) => {
 
   // Find the note
   const note = user.notes.find((note) => note.about.name === otherUserName);
-
   if (note) res.send(note.note);
 });
 

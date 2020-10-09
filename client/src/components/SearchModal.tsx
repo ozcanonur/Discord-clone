@@ -50,36 +50,36 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
-    const search = async () => {
-      if (inputText.length === 0) {
-        setSearchResults([]);
-        return;
-      }
-
-      const hasPrefix = ['#', '@', '*'].some((e: string) => inputText.includes(e));
-      let params;
-      if (hasPrefix) {
-        const type = inputText.charAt(0);
-        params = { name, type, text: inputText.slice(1) };
-      } else params = { name, type: '*', text: inputText };
-
-      axios
-        .get('/search', {
-          params,
-        })
-        .then((res) => {
-          setSearchResults(res.data);
-        })
-        .catch((error) => console.log(error));
-    };
-
+    let mounted = true;
     // Throttle Api requests
     const timeoutId = setTimeout(() => {
-      if (inputText) search();
+      if (inputText) {
+        if (inputText.length === 0) {
+          if (mounted) setSearchResults([]);
+          return;
+        }
+
+        const hasPrefix = ['#', '@', '*'].some((e: string) => inputText.includes(e));
+        let params;
+        if (hasPrefix) {
+          const type = inputText.charAt(0);
+          params = { name, type, text: inputText.slice(1) };
+        } else params = { name, type: '*', text: inputText };
+
+        axios
+          .get('/search', {
+            params,
+          })
+          .then((res) => {
+            if (mounted) setSearchResults(res.data);
+          })
+          .catch((error) => console.log(error));
+      }
     }, 200);
 
-    return () => {
+    return function cleanUp() {
       clearTimeout(timeoutId);
+      mounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputText]);

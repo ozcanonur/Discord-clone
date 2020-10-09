@@ -156,11 +156,10 @@ const onUserDeletedServer = async (io, action) => {
   );
 };
 
-const onUserDeletedChannel = async (io, socket, action) => {
+const onUserDeletedChannel = async (io, action) => {
   const { name, channelId } = action.payload;
   // Check if the user is admin in this server, also if they are default servers
   const server = await Server.findOne({ channels: { $all: channelId } }).populate('admin');
-  console.log(server);
   const isDefaultServers = server.name === 'Default' || server.name === 'Games';
   if (isDefaultServers || server.admin.name !== name) return;
 
