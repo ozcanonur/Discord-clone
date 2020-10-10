@@ -1,11 +1,24 @@
-const User = require('../db/models/user');
-const Channel = require('../db/models/channel');
-const Message = require('../db/models/message');
-const Server = require('../db/models/server');
+import User, { IUser } from '../db/models/user';
+import Channel from '../db/models/channel';
+import Message, { IMessage } from '../db/models/message';
+import Server from '../db/models/server';
+import { reduceMessages } from './util';
 
-const { reduceMessages } = require('./util');
-
-const onUserCreatedPin = async (io, action) => {
+export const onUserCreatedPin = async (
+  io: SocketIO.Server,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      message: string;
+      selectedChannel: {
+        _id: string;
+        name: string;
+        voice: boolean;
+      };
+    };
+  }
+) => {
   const { name, message, selectedChannel } = action.payload;
   // Find which user
   const user = await User.findOne({ name });
@@ -33,7 +46,9 @@ const onUserCreatedPin = async (io, action) => {
   const users = await User.find({ currentChannel: channel._id });
   // Send all the pins to each of them
   // Sort by date first
-  const sortedPinnedMessages = channel.pinnedMessages.sort((x, y) => y.createdAt - x.createdAt);
+  const sortedPinnedMessages: IMessage[] = channel.pinnedMessages.sort(
+    (x: any, y: any) => y.createdAt - x.createdAt
+  );
   users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/pinnedMessages',
@@ -42,12 +57,10 @@ const onUserCreatedPin = async (io, action) => {
   });
   // Find the channel's server, send notification to all users subscribed to that server
   const server = await Server.findOne({ channels: { $all: [channel.id] } }).populate('users');
-  server.users.forEach((user) => {
+  server.users.forEach((user: IUser) => {
     io.to(user.socketId).emit('action', {
       type: 'io/notification',
       payload: { type: 'pin', channelId: channel._id },
     });
   });
 };
-
-module.exports = { onUserCreatedPin };

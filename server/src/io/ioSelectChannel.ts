@@ -1,9 +1,23 @@
-const User = require('../db/models/user');
-const Channel = require('../db/models/channel');
+import { Socket } from 'socket.io';
+import User from '../db/models/user';
+import Channel from '../db/models/channel';
+import { IMessage } from '../db/models/message';
+import { reduceMessages } from './util';
 
-const { reduceMessages } = require('./util');
-
-const onUserSelectedChannel = async (socket, action) => {
+export const onUserSelectedChannel = async (
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      channel: {
+        _id: string;
+        name: string;
+        voice: boolean;
+      };
+    };
+  }
+) => {
   const { name, channel } = action.payload;
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
@@ -35,16 +49,25 @@ const onUserSelectedChannel = async (socket, action) => {
   // Emit the older messages to client
   socket.emit('action', { type: 'io/messages', payload: reduceMessages(currChannel.messages) });
   // Emit the pins also, Sort by date first
-  const sortedPinnedMessaages = currChannel.pinnedMessages.sort(
-    (x, y) => y.createdAt - x.createdAt
+  const sortedPinnedMessages: IMessage[] = currChannel.pinnedMessages.sort(
+    (x: any, y: any) => y.createdAt - x.createdAt
   );
   socket.emit('action', {
     type: 'io/pinnedMessages',
-    payload: reduceMessages(sortedPinnedMessaages),
+    payload: reduceMessages(sortedPinnedMessages),
   });
 };
 
-const onUserSelectedFriendChannel = async (socket, action) => {
+export const onUserSelectedFriendChannel = async (
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      friendName: string;
+    };
+  }
+) => {
   const { name, friendName } = action.payload;
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
@@ -70,5 +93,3 @@ const onUserSelectedFriendChannel = async (socket, action) => {
   // Emit the older messages to the user
   socket.emit('action', { type: 'io/messages', payload: reduceMessages(channel.messages) });
 };
-
-module.exports = { onUserSelectedChannel, onUserSelectedFriendChannel };

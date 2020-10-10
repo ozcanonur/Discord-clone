@@ -1,9 +1,9 @@
-const User = require('../db/models/user');
-const Channel = require('../db/models/channel');
+import { Socket } from 'socket.io';
+import User from '../db/models/user';
+import Channel from '../db/models/channel';
+import { reduceFriends } from './util';
 
-const { reduceFriends } = require('./util');
-
-const getFriendRequestValidationError = async (name, friendName) => {
+const getFriendRequestValidationError = async (name: string, friendName: string) => {
   if (friendName.length === 0) return `Friend name can't be empty.`;
   else {
     const friendExists = await User.exists({ name: friendName });
@@ -13,15 +13,22 @@ const getFriendRequestValidationError = async (name, friendName) => {
     // Find the friend
     const friend = await User.findOne({ name: friendName }).populate('friends');
     // Return if they are already friends
-    const isAlreadyFriends = user.friends.includes(friend._id);
+    const isAlreadyFriends: boolean = user.friends.includes(friend._id);
     if (isAlreadyFriends) return `${friendName} is already your friend!`;
   }
 };
 
-const onUserSentFriendRequest = async (io, socket, action) => {
+export const onUserSentFriendRequest = async (
+  io: SocketIO.Server,
+  socket: Socket,
+  action: { type: string; payload: { name: string; friendName: string } }
+) => {
   const { name, friendName } = action.payload;
   // Validate
-  const validationError = await getFriendRequestValidationError(name, friendName);
+  const validationError: string | undefined = await getFriendRequestValidationError(
+    name,
+    friendName
+  );
   if (validationError) {
     socket.emit('action', { type: 'io/response', payload: { error: validationError } });
     return;
@@ -52,5 +59,3 @@ const onUserSentFriendRequest = async (io, socket, action) => {
     payload: reduceFriends(friend.friends),
   });
 };
-
-module.exports = { onUserSentFriendRequest };

@@ -1,25 +1,28 @@
-const socketIo = require('socket.io');
-const server = require('../index');
-
-const { setupServer } = require('./util');
-
-const io = socketIo(server);
-
-const { onUserConnected, onUserDisconnected } = require('./ioConnection');
-const {
+import socketIo, { Socket } from 'socket.io';
+import server from '../index';
+import { setupServer } from './util';
+import { onUserConnected, onUserDisconnected } from './ioConnection';
+import {
   onUserCreatedChannel,
   onUserCreatedServer,
   onUserJoinedServer,
   onUserDeletedServer,
   onUserDeletedChannel,
-} = require('./ioCreateJoin');
-const { onUserSentFriendRequest } = require('./ioFriend');
-const { onUserMessaged, onUserDeletedMessage } = require('./ioMessage');
-const { onUserSelectedChannel, onUserSelectedFriendChannel } = require('./ioSelectChannel');
-const { onUserCreatedPin } = require('./ioMisc');
+} from './ioCreateJoin';
+import { onUserSentFriendRequest } from './ioFriend';
+import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
+import { onUserSelectedChannel, onUserSelectedFriendChannel } from './ioSelectChannel';
+import { onUserCreatedPin } from './ioMisc';
 
-io.on('connection', (socket) => {
-  socket.on('action', async (action) => {
+export interface Action {
+  type: string;
+  payload: any;
+}
+
+const io: SocketIO.Server = socketIo(server);
+
+io.on('connection', (socket: Socket) => {
+  socket.on('action', async (action: Action) => {
     // Create default servers if it doesn't exist
     await setupServer('Default', [
       { name: 'general', isVoice: false },

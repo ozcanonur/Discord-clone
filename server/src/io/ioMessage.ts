@@ -1,10 +1,18 @@
-const User = require('../db/models/user');
-const Channel = require('../db/models/channel');
-const Message = require('../db/models/message');
+import User from '../db/models/user';
+import Channel from '../db/models/channel';
+import Message from '../db/models/message';
+import { reduceMessages } from './util';
 
-const { reduceMessages } = require('./util');
-
-const onUserMessaged = async (io, action) => {
+export const onUserMessaged = async (
+  io: SocketIO.Server,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      message: string;
+    };
+  }
+) => {
   const { name, message } = action.payload;
   // Find the user
   const user = await User.findOne({ name }).populate('currentChannel');
@@ -38,7 +46,7 @@ const onUserMessaged = async (io, action) => {
   });
 
   // Send a notification if it's a private message
-  const channelName = user.currentChannel.name;
+  const channelName: string = user.currentChannel.name;
   if (channelName.includes('private')) {
     const recipientName = channelName.replace(name, '').replace('_private', '');
     // Find the recipient's socketId
@@ -51,7 +59,21 @@ const onUserMessaged = async (io, action) => {
   }
 };
 
-const onUserDeletedMessage = async (io, action) => {
+export const onUserDeletedMessage = async (
+  io: SocketIO.Server,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      message: {
+        _id: string;
+        username: string;
+        message: string;
+        createdAt: string;
+      };
+    };
+  }
+) => {
   const { name, message } = action.payload;
   // Only delete if the message is the user's
   const user = await User.findOne({ name });
@@ -76,9 +98,4 @@ const onUserDeletedMessage = async (io, action) => {
       payload: reduceMessages(channel.messages),
     });
   });
-};
-
-module.exports = {
-  onUserMessaged,
-  onUserDeletedMessage,
 };

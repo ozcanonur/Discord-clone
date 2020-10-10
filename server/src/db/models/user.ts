@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import { Document, Model, Schema, model } from 'mongoose';
 
 const UserSchema = new Schema({
   name: {
@@ -34,5 +33,16 @@ const UserSchema = new Schema({
   ],
 });
 
-const User = mongoose.model('User', UserSchema);
-module.exports = User;
+export interface IUser extends Document {
+  name: string;
+  socketId: string;
+  servers?: any; // WOOP
+  currentChannel?: any; // WOOP
+  online: boolean;
+  lastActiveAt: Date;
+  friends?: any; // WOOP
+  notes?: any; // WOOP
+}
+
+const User: Model<IUser> = model<IUser>('User', UserSchema);
+export default User;

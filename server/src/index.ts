@@ -1,16 +1,19 @@
-const express = require('express');
-const http = require('http');
-const bodyParser = require('body-parser');
-const path = require('path');
-const { searchUsers, searchChannels } = require('./utils');
-const User = require('./db/models/user');
-const Note = require('./db/models/note');
+import express, { Request, Response } from 'express';
+import http from 'http';
+import bodyParser from 'body-parser';
+import path from 'path';
+
+import { searchUsers, searchChannels, SearchResult } from './utils';
+import { IServer } from './db/models/server';
+import User, { IUser } from './db/models/user';
+import Note, { INote } from './db/models/note';
 
 const app = express();
 const server = http.createServer(app);
 
-module.exports = server;
+export default server;
 
+// WOOP change to import try
 require('./db/mongoose');
 require('./io/io');
 
@@ -18,13 +21,17 @@ app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/search', async (req, res) => {
+interface ExtendedRequest extends Request {
+  query: { [key: string]: string | undefined };
+}
+
+app.get('/search', async (req: ExtendedRequest, res: Response) => {
   const { name, type, text } = req.query;
 
-  let results = [];
+  let results: SearchResult[] = [];
   if (type === '*') {
-    const channelResults = await searchChannels(text, name);
-    const userResults = await searchUsers(text, name);
+    const channelResults: SearchResult[] = await searchChannels(text, name);
+    const userResults: SearchResult[] = await searchUsers(text, name);
     results = [...channelResults, ...userResults];
   } else if (type === '#') results = await searchChannels(text, name);
   else if (type === '@') results = await searchUsers(text, name);
@@ -32,19 +39,19 @@ app.get('/search', async (req, res) => {
   res.send(results);
 });
 
-app.get('/userServers', async (req, res) => {
+app.get('/userServers', async (req: ExtendedRequest, res: Response) => {
   const { name } = req.query;
 
-  const user = await User.findOne({ name }).populate('servers');
-  const serverNames = user.servers.map((server) => server.name);
+  const user: IUser = await User.findOne({ name }).populate('servers');
+  const serverNames: string[] = user.servers.map((server: IServer) => server.name);
   if (user) res.send(serverNames);
 });
 
-app.post('/note', async (req, res) => {
+app.post('/note', async (req: ExtendedRequest, res: Response) => {
   const { name, otherUserName, note } = req.body;
 
   // Find the user
-  const user = await User.findOne({ name }).populate({
+  const user: IUser = await User.findOne({ name }).populate({
     path: 'notes',
     model: 'Note',
     populate: {
@@ -53,11 +60,11 @@ app.post('/note', async (req, res) => {
     },
   });
   // Find if it exists first
-  const otherUsersNote = user.notes.find((note) => note.about.name === otherUserName);
+  const otherUsersNote: INote = user.notes.find((note: INote) => note.about.name === otherUserName);
   if (otherUsersNote) await Note.updateOne({ _id: otherUsersNote._id }, { note });
   else {
     // Find the other user, and create the note
-    const otherUser = await User.findOne({ name: otherUserName });
+    const otherUser: IUser = await User.findOne({ name: otherUserName });
     const newNote = new Note({
       about: otherUser,
       note: note,
@@ -72,11 +79,11 @@ app.post('/note', async (req, res) => {
   res.send();
 });
 
-app.get('/note', async (req, res) => {
+app.get('/note', async (req: ExtendedRequest, res: Response) => {
   const { name, otherUserName } = req.query;
 
   // Find the user
-  const user = await User.findOne({ name }).populate({
+  const user: IUser = await User.findOne({ name }).populate({
     path: 'notes',
     model: 'Note',
     populate: {
@@ -86,12 +93,12 @@ app.get('/note', async (req, res) => {
   });
 
   // Find the note
-  const note = user.notes.find((note) => note.about.name === otherUserName);
+  const note = user.notes.find((note: INote) => note.about.name === otherUserName);
   if (note) res.send(note.note);
 });
 
 // Catch all for deploy
-app.get('/*', function (req, res) {
+app.get('/*', function (req, res: Response) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
     if (err) res.status(500).send(err);
   });
