@@ -15,8 +15,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(connect(name));
-    // Select the default server on entry
-    // dispatch(selectServerName('Default'));
   }, []);
 
   // useEffect(() => {

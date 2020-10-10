@@ -2,8 +2,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Message from '../../components/Message';
 import MessageOptions from './MessageOptions';
@@ -13,8 +13,6 @@ import { ReactComponent as Loading } from '../../spinner.svg';
 
 const useStyles = makeStyles(chatStyles);
 
-let scrollPosition;
-
 const Chat = () => {
   const classes = useStyles();
 
@@ -22,57 +20,53 @@ const Chat = () => {
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [shownMessagesCount, setShownMessagesCount] = useState(15);
-  const [loading, setLoading] = useState(false);
-
-  const anotherRef = useRef<any>(null);
 
   // Scroll messages to bottom on change
   const scrollRef = useRef<any>(null);
   useEffect(() => {
     // Cleanup, reset count to 15
-    // setShownMessagesCount(15);
+    setShownMessagesCount(15);
     if (scrollRef.current) scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
   }, [messages]);
 
-  const handleScrollTop = (e: any) => {
-    scrollPosition = e.target.scrollTop;
-    // console.log(scrollPosition);
-    // console.log(messages.length, shownMessagesCount);
-    if (scrollPosition === 0 && messages.length > shownMessagesCount) {
-      setLoading(true);
+  const fetchMoreData = () => {
+    if (messages.length > shownMessagesCount) {
       setTimeout(() => {
         const additionalCount = Math.min(15, messages.length - shownMessagesCount);
         setShownMessagesCount(shownMessagesCount + additionalCount);
-        if (anotherRef.current) {
-          console.log(anotherRef.current);
-          anotherRef.current.scrollIntoView({ behaviour: 'smooth' });
-        }
-        setLoading(false);
-      }, 200);
+      }, 1000);
     }
   };
 
   return (
-    <div className={classes.container} onScroll={(e) => handleScrollTop(e)}>
+    <div className={classes.container}>
       {selectedServerName === '' ? (
-        <div className={classes.warning}>Select a server!</div>
+        <div className={classes.warning}>Select a server</div>
       ) : selectedChannel.name === '' ? (
-        <div className={classes.warning}>Select a channel!</div>
+        <div className={classes.warning}>Select a channel</div>
       ) : (
         <div className={classes.chat}>
-          {loading ? (
-            <div className={classes.loading}>
-              <Loading style={{ height: '10rem' }} />
-            </div>
-          ) : null}
-          <List className={classes.messages}>
+          <InfiniteScroll
+            dataLength={shownMessagesCount}
+            next={fetchMoreData}
+            className={classes.infiniteScroll}
+            height={window.innerHeight > 850 ? '80vh' : '75vh'}
+            inverse={true}
+            hasMore={messages.length > shownMessagesCount}
+            endMessage={<h4 className={classes.endMessage}>End</h4>}
+            loader={
+              <div className={classes.loading}>
+                <Loading style={{ height: '10rem' }} />
+              </div>
+            }
+          >
             {messages.slice(0, shownMessagesCount).map((message, key) => (
               <ListItem key={key} disableGutters className={classes.listItem}>
                 <Message message={message} />
                 <MessageOptions message={message} />
               </ListItem>
             ))}
-          </List>
+          </InfiniteScroll>
           <Input />
           <div ref={scrollRef} />
         </div>

@@ -63,8 +63,23 @@ const chatStyles = createStyles({
     letterSpacing: 0,
     padding: '1rem',
   },
+  infiniteScroll: {
+    display: 'flex',
+    flexDirection: 'column-reverse',
+    marginBottom: '1rem',
+  },
   loading: {
     alignSelf: 'center',
+    position: 'absolute',
+    top: 0,
+  },
+  endMessage: {
+    textAlign: 'center',
+    color: 'rgb(220,221,222)',
+    fontSize: '2rem',
+    paddingBottom: '1rem',
+    borderBottom: '2px solid rgba(220,221,222,0.5)',
+    marginBottom: '1rem',
   },
 });
 
