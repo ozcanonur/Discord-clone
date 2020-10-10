@@ -1,4 +1,5 @@
 import { Document, Model, Schema, model } from 'mongoose';
+import Message from './message'
 
 const ChannelSchema = new Schema({
   name: {
@@ -32,14 +33,14 @@ export interface IChannel extends Document {
   pinnedMessages?: any; // WOOP
 }
 
-// ChannelSchema.pre('remove', async function (next) {
-//   const channel: ChannelI = this;
-//   // Remove the messages in this channel
-//   const messageIds = channel.messages;
-//   await Message.deleteMany({ _id: { $in: messageIds } });
+ChannelSchema.pre('remove', async function (next) {
+  const channel: any = this;
+  // Remove the messages in this channel
+  const messageIds = channel.messages;
+  await Message.deleteMany({ _id: { $in: messageIds } });
 
-//   next();
-// });
+  next();
+});
 
 const Channel: Model<IChannel> = model<IChannel>('Channel', ChannelSchema);
 export default Channel;

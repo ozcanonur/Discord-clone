@@ -32,7 +32,7 @@ const chatStyles = createStyles({
     padding: '0 1rem',
     '&:hover': {
       backgroundColor: 'rgb(47,49,54)',
-      '& $messageOptions': {
+      '& div': {
         display: 'inherit',
       },
     },
