@@ -1,7 +1,7 @@
 import { InternalActions } from '../actions/types';
 
 export const selectedServerName = (
-  state: string = '',
+  state: string = 'Default',
   action: InternalActions.SelectServerNameAction
 ) => {
   switch (action.type) {

@@ -1,87 +1,80 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Tooltip from '@material-ui/core/Tooltip';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import { ReactComponent as PinLogo } from '../../office.svg';
-import qs from 'qs';
 
 import Message from '../../components/Message';
+import MessageOptions from './MessageOptions';
 import Input from '../../components/Input';
 import chatStyles from './styles/chat';
-import { deleteMessage, createPin } from '../../actions/socket';
+import { ReactComponent as Loading } from '../../spinner.svg';
 
 const useStyles = makeStyles(chatStyles);
+
+let scrollPosition;
 
 const Chat = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const messages = useSelector((state: RootState) => state.messages);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const [shownMessagesCount, setShownMessagesCount] = useState(15);
+  const [loading, setLoading] = useState(false);
+
+  const anotherRef = useRef<any>(null);
 
   // Scroll messages to bottom on change
   const scrollRef = useRef<any>(null);
   useEffect(() => {
+    // Cleanup, reset count to 15
+    // setShownMessagesCount(15);
     if (scrollRef.current) scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
   }, [messages]);
 
-  const dispatch = useDispatch();
-  const deleteMessageOnClick = (message: Message) => {
-    dispatch(deleteMessage(name, message));
-  };
-
-  const pinMessageOnClick = (message: Message) => {
-    dispatch(createPin(message.username, message.message, selectedChannel));
+  const handleScrollTop = (e: any) => {
+    scrollPosition = e.target.scrollTop;
+    // console.log(scrollPosition);
+    // console.log(messages.length, shownMessagesCount);
+    if (scrollPosition === 0 && messages.length > shownMessagesCount) {
+      setLoading(true);
+      setTimeout(() => {
+        const additionalCount = Math.min(15, messages.length - shownMessagesCount);
+        setShownMessagesCount(shownMessagesCount + additionalCount);
+        if (anotherRef.current) {
+          console.log(anotherRef.current);
+          anotherRef.current.scrollIntoView({ behaviour: 'smooth' });
+        }
+        setLoading(false);
+      }, 200);
+    }
   };
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container} onScroll={(e) => handleScrollTop(e)}>
       {selectedServerName === '' ? (
         <div className={classes.warning}>Select a server!</div>
       ) : selectedChannel.name === '' ? (
         <div className={classes.warning}>Select a channel!</div>
       ) : (
         <div className={classes.chat}>
+          {loading ? (
+            <div className={classes.loading}>
+              <Loading style={{ height: '10rem' }} />
+            </div>
+          ) : null}
           <List className={classes.messages}>
-            {messages.map((message, key) => (
-              <ListItem key={key} ref={scrollRef} disableGutters className={classes.listItem}>
+            {messages.slice(0, shownMessagesCount).map((message, key) => (
+              <ListItem key={key} disableGutters className={classes.listItem}>
                 <Message message={message} />
-                <div className={classes.messageOptions}>
-                  <Tooltip
-                    enterDelay={0}
-                    placement='top'
-                    title='Pin message'
-                    classes={{ tooltip: classes.notificationTooltip }}
-                  >
-                    <PinLogo
-                      className={classes.optionIcon}
-                      style={{ marginRight: '0.5rem', height: '2rem', fill: 'rgb(220,221,222)' }}
-                      onClick={() => pinMessageOnClick(message)}
-                    />
-                  </Tooltip>
-                  {message.username === name ? (
-                    <Tooltip
-                      enterDelay={0}
-                      placement='top'
-                      title='Delete message'
-                      classes={{ tooltip: classes.notificationTooltip }}
-                    >
-                      <DeleteForeverRoundedIcon
-                        className={classes.optionIcon}
-                        onClick={() => deleteMessageOnClick(message)}
-                      />
-                    </Tooltip>
-                  ) : null}
-                </div>
+                <MessageOptions message={message} />
               </ListItem>
             ))}
           </List>
           <Input />
+          <div ref={scrollRef} />
         </div>
       )}
     </div>

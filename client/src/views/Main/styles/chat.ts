@@ -14,6 +14,7 @@ const chatStyles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
+    position: 'relative',
   },
   warning: {
     margin: 'auto auto',
@@ -24,16 +25,16 @@ const chatStyles = createStyles({
     marginBottom: '1rem',
     overflow: 'auto',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'column-reverse',
     flexGrow: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   listItem: {
     padding: '0 1rem',
     '&:hover': {
       backgroundColor: 'rgb(47,49,54)',
       '& div': {
-        display: 'inherit',
+        visibility: 'visible',
       },
     },
   },
@@ -42,12 +43,12 @@ const chatStyles = createStyles({
     top: 0,
     right: 0,
     padding: '1rem',
-    display: 'none',
+    visibility: 'hidden',
   },
   optionIcon: {
     fontSize: '2.3rem',
     cursor: 'pointer',
-    transition: 'all .2s',
+    transition: 'transform .2s',
 
     '&:hover': {
       transform: 'scale(1.2)',
@@ -61,6 +62,9 @@ const chatStyles = createStyles({
     textAlign: 'center',
     letterSpacing: 0,
     padding: '1rem',
+  },
+  loading: {
+    alignSelf: 'center',
   },
 });
 

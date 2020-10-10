@@ -10,7 +10,7 @@ import { ReactComponent as PinLogo } from '../../../../office.svg';
 import qs from 'qs';
 
 import { selectChannel } from '../../../../actions/react';
-import { selectChannel as selectChannelIo, deleteChannel } from '../../../../actions/socket';
+import { selectChannel as selectChannelIo } from '../../../../actions/socket';
 import channelsStyles from '../styles/channels';
 import ContextMenu from './ContextMenu';
 

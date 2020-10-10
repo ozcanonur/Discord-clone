@@ -63,7 +63,8 @@ export const messages = (
 ) => {
   switch (action.type) {
     case 'io/messages':
-      return [...action.payload];
+      // Sort it in creation date
+      return [...action.payload].reverse();
     case 'CLEAR_MESSAGES':
       return [];
     default:
