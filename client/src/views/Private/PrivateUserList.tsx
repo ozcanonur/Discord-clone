@@ -17,6 +17,9 @@ const PrivateUserList = () => {
   const privateUsers = useSelector((state: RootState) => state.privateUsers);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
+  const friends = privateUsers.filter((user) => user.isFriend);
+  const otherUsers = privateUsers.filter((user) => !user.isFriend);
+
   return (
     <div className={classes.container}>
       <div className={classes.subContainer} style={{ maxHeight: '50vh' }}>
@@ -30,8 +33,8 @@ const PrivateUserList = () => {
         </div>
         <div className={classes.userList}>
           <div className={classes.directMessages}>Direct messages</div>
-          {privateUsers.map((username: string, key: number) => (
-            <PrivateUser key={key} username={username} />
+          {friends.map(({ name }, key: number) => (
+            <PrivateUser key={key} username={name} />
           ))}
         </div>
       </div>
@@ -43,8 +46,8 @@ const PrivateUserList = () => {
         </div>
         <div className={classes.userList}>
           <div className={classes.directMessages}>Direct messages</div>
-          {privateUsers.map((username: string, key: number) => (
-            <PrivateUser key={key} username={username} />
+          {otherUsers.map(({ name }, key: number) => (
+            <PrivateUser key={key} username={name} />
           ))}
         </div>
       </div>

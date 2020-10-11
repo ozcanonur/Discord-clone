@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Server, { IServer } from '../db/models/server';
-import { reduceUsers, reduceServers, reduceFriends } from './util';
+import { reduceUsers, reduceServers, reducePrivateUsers } from './util';
 
 export const onUserConnected = async (
   io: SocketIO.Server,
@@ -23,6 +23,10 @@ export const onUserConnected = async (
     },
     {
       path: 'friends',
+      model: 'User',
+    },
+    {
+      path: 'usersMessagedBefore',
       model: 'User',
     },
   ]);
@@ -57,7 +61,10 @@ export const onUserConnected = async (
   // Send the current user's servers (with channels populated) and send to client
   socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });
   // Also send friends
-  socket.emit('action', { type: 'io/users', payload: reduceFriends(user.friends) });
+  socket.emit('action', {
+    type: 'io/privateUsers',
+    payload: reducePrivateUsers(user),
+  });
 };
 
 export const onUserDisconnected = async (io: SocketIO.Server, socket: Socket) => {

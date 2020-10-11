@@ -141,6 +141,14 @@ export namespace ClientIOActions {
       username: string;
     };
   }
+
+  export interface ConnectNewPrivateUserIOAction {
+    type: string;
+    payload: {
+      name: string;
+      username: string;
+    };
+  }
 }
 
 export namespace ServerIOActions {

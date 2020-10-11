@@ -9,7 +9,7 @@ import {
   onUserDeletedServer,
   onUserDeletedChannel,
 } from './ioCreateJoin';
-import { onUserSentFriendRequest } from './ioFriend';
+import { onUserSentFriendRequest, onUserConnectedNewPrivateUser } from './ioPrivate';
 import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
 import { onUserSelectedChannel, onUserSelectedPrivateChannel } from './ioSelectChannel';
 import { onUserCreatedPin } from './ioMisc';
@@ -52,6 +52,8 @@ io.on('connection', (socket: Socket) => {
     else if (action.type === 'io/userDeletedMessage') await onUserDeletedMessage(io, action);
     else if (action.type === 'io/userDeletedServer') await onUserDeletedServer(io, action);
     else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
+    else if (action.type === 'io/userConnectedNewPrivateUser')
+      await onUserConnectedNewPrivateUser(io, action);
   });
 
   socket.on('disconnect', async () => {

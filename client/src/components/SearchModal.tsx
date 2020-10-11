@@ -25,7 +25,7 @@ import {
 } from '../actions/react';
 import {
   selectChannel as selectChannelIo,
-  selectUserChannel as selectUserChannelIo,
+  selectPrivateChannel as selectPrivateChannelIo,
 } from '../actions/socket';
 
 const useStyles = makeStyles(searchModalStyles);
@@ -121,7 +121,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
     } else if (type === '@') {
       // resultName = username in this case
       dispatch(selectPrivateChannel(resultName));
-      dispatch(selectUserChannelIo(name, resultName));
+      dispatch(selectPrivateChannelIo(name, resultName));
       dispatch(selectPrivateUser(resultName));
       dispatch(selectTabInPrivate('Chat'));
       setModalOpen(false);

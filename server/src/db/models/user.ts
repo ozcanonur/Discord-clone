@@ -25,6 +25,12 @@ const UserSchema = new Schema({
       ref: 'User',
     },
   ],
+  usersMessagedBefore: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
   notes: [
     {
       type: Schema.Types.ObjectId,
@@ -41,6 +47,7 @@ export interface IUser extends Document {
   online: boolean;
   lastActiveAt: Date;
   friends?: any; // WOOP
+  usersMessagedBefore?: any; // WOOP
   notes?: any; // WOOP
 }
 

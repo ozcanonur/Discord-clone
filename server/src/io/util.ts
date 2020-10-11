@@ -73,8 +73,6 @@ export const reduceServers = (servers: IServer[]) => {
   return reducedServers;
 };
 
-export const reduceFriends = (friends: IUser[]) => friends.map((friend) => friend.name);
-
 export const reduceMessages = (messages: IMessage[]) => {
   const reducedMessages = messages.map((message) => {
     const username = message.user.name;
@@ -89,4 +87,15 @@ export const reduceMessages = (messages: IMessage[]) => {
   return reducedMessages;
 };
 
-module.exports = { setupServer, reduceUsers, reduceServers, reduceFriends, reduceMessages };
+export const reducePrivateUsers = (user: IUser) => {
+  const friendIds = user.friends.map((friend: IUser) => friend._id);
+  return user.usersMessagedBefore.map((u: IUser) => {
+    const isFriend = friendIds.includes(u._id);
+    return {
+      name: u.name,
+      isFriend,
+    };
+  });
+};
+
+module.exports = { setupServer, reduceUsers, reduceServers, reduceMessages, reducePrivateUsers };

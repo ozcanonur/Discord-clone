@@ -22,18 +22,6 @@ export const servers = (state: Server[] = [], action: ServerIOActions.IOResponse
   }
 };
 
-export const privateUsers = (
-  state: string[] = [],
-  action: ServerIOActions.IOResponsePrivateUsersAction
-) => {
-  switch (action.type) {
-    case 'io/privateUsers':
-      return [...action.payload];
-    default:
-      return state;
-  }
-};
-
 export const ioResponse = (
   state: { error?: string } = {},
   action: ServerIOActions.IOResponseIOResponseAction
@@ -86,6 +74,18 @@ export const notifications = (
       return state.map((notification) => notification.type !== 'private');
     case 'CLEAR_PIN_NOTIFICATION':
       return state.filter((notification) => notification.channelId !== action.payload._id);
+    default:
+      return state;
+  }
+};
+
+export const privateUsers = (
+  state: { name: string; isFriend: boolean }[] = [],
+  action: ServerIOActions.IOResponsePrivateUsersAction
+) => {
+  switch (action.type) {
+    case 'io/privateUsers':
+      return [...action.payload];
     default:
       return state;
   }

@@ -12,7 +12,11 @@ import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import qs from 'qs';
 
 import { selectPrivateChannel, selectPrivateUser, selectTabInPrivate } from '../actions/react';
-import { joinServer, selectUserChannel as selectUserChannelIo } from '../actions/socket';
+import {
+  joinServer,
+  selectPrivateChannel as selectPrivateChannelIo,
+  connectNewPrivateUser,
+} from '../actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);
@@ -81,10 +85,11 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   };
 
   const privateMessageOnClick = () => {
+    dispatch(connectNewPrivateUser(user.name, name));
+    dispatch(selectTabInPrivate('Chat'));
     dispatch(selectPrivateUser(name));
     dispatch(selectPrivateChannel(name));
-    dispatch(selectUserChannelIo(user.name, name));
-    dispatch(selectTabInPrivate('Chat'));
+    dispatch(selectPrivateChannelIo(user.name, name));
   };
 
   return (

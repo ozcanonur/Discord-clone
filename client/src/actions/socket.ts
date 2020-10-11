@@ -109,12 +109,22 @@ export const deleteChannel = (
   };
 };
 
-export const selectUserChannel = (
+export const selectPrivateChannel = (
   name: string,
   username: string
 ): ClientIOActions.SelectPrivateChannelIOAction => {
   return {
     type: 'io/userSelectedPrivateChannel',
+    payload: { name, username },
+  };
+};
+
+export const connectNewPrivateUser = (
+  name: string,
+  username: string
+): ClientIOActions.ConnectNewPrivateUserIOAction => {
+  return {
+    type: 'io/userConnectedNewPrivateUser',
     payload: { name, username },
   };
 };

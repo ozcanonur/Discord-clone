@@ -69,6 +69,7 @@ export const onUserSelectedPrivateChannel = async (
   }
 ) => {
   const { name, username } = action.payload;
+
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
@@ -87,7 +88,9 @@ export const onUserSelectedPrivateChannel = async (
     (await Channel.findOne({ name: `${name}${username}_private` }).populate(populateFields)) ||
     (await Channel.findOne({ name: `${username}${name}_private` }).populate(populateFields));
   // Join the new channel
+
   await socket.join(channel._id.toString());
+
   // Update user's channel
   await User.updateOne({ name }, { currentChannel: channel });
   // Emit the older messages to the user

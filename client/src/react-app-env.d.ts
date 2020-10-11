@@ -32,7 +32,7 @@ interface RootState {
   activeUsersOpen: boolean;
   activeUsers: string[];
   selectedPrivateUser: string;
-  privateUsers: string[];
+  privateUsers: { name: string; isFriend: boolean }[];
   messages: Message[];
   servers: Server[];
   pinnedMessages: Message[];
