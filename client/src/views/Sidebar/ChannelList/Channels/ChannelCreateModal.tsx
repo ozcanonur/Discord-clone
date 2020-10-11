@@ -22,16 +22,16 @@ interface Props {
 const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    dispatch(clearIoResponse());
-  }, []);
-
+  const dispatch = useDispatch();
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(clearIoResponse());
+  }, [dispatch]);
+
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);
     dispatch(clearIoResponse());

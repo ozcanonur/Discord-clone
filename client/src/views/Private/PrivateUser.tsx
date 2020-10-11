@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
+import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import Button from '../../components/Button';
 import qs from 'qs';
 
-import { selectPrivateChannel as selectPrivateChannelIo } from '../../actions/socket';
+import {
+  selectPrivateChannel as selectPrivateChannelIo,
+  sendFriendRequest,
+} from '../../actions/socket';
 import {
   selectPrivateChannel,
   selectPrivateUser,
@@ -18,9 +23,10 @@ const useStyles = makeStyles(privateUserStyles);
 
 interface Props {
   username: string;
+  isNotFriend?: boolean;
 }
 
-const PrivateUser = ({ username }: Props) => {
+const PrivateUser = ({ username, isNotFriend }: Props) => {
   const classes = useStyles();
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
@@ -43,6 +49,10 @@ const PrivateUser = ({ username }: Props) => {
       selectedPrivateUser !== username
   );
 
+  const addFriendOnClick = () => {
+    dispatch(sendFriendRequest(name, username));
+  };
+
   return (
     <div
       className={classes.user}
@@ -55,6 +65,11 @@ const PrivateUser = ({ username }: Props) => {
         <AccountCircleRoundedIcon className={classes.icon} />
       </div>
       <div className={classes.username}>{username}</div>
+      {isNotFriend ? (
+        <Button onClick={addFriendOnClick} tooltipText='Add as friend'>
+          <AddRoundedIcon />
+        </Button>
+      ) : null}
       {messageNotification ? (
         <AnnouncementRoundedIcon
           style={{

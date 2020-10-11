@@ -47,7 +47,7 @@ const PrivateUserList = () => {
         <div className={classes.userList}>
           <div className={classes.directMessages}>Direct messages</div>
           {otherUsers.map(({ name }, key: number) => (
-            <PrivateUser key={key} username={name} />
+            <PrivateUser key={key} username={name} isNotFriend />
           ))}
         </div>
       </div>

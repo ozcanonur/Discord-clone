@@ -95,6 +95,7 @@ app.get('/note', async (req: ExtendedRequest, res: Response) => {
   // Find the note
   const note = user.notes.find((note: INote) => note.about.name === otherUserName);
   if (note) res.send(note.note);
+  else res.send('');
 });
 
 // Catch all for deploy

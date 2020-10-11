@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,6 +10,7 @@ import { selectServerName, clearMessages } from '../../../../actions/react';
 import { deleteServer } from '../../../../actions/socket';
 import indexStyles from '../styles/index';
 import ConfirmationModal from '../../../../components/ConfirmationModal';
+import ChannelCreateModal from '../../ChannelList/Channels/ChannelCreateModal';
 
 const useStyles = makeStyles(indexStyles);
 
@@ -23,7 +24,16 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-  const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [createChannelModalOpen, setCreateChannelModalOpen] = useState(false);
+  const servers = useSelector((state: RootState) => state.servers);
+  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+
+  const selectedServer = servers.find((server) => server.name === selectedServerName) || {
+    _id: '',
+    name: '',
+    channels: [],
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -50,24 +60,33 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
           transformOrigin={{ vertical: 'top', horizontal: 'right' }}
           getContentAnchorEl={null}
         >
-          <MenuItem classes={{ root: classes.menuItem }} disableGutters>
+          <MenuItem
+            classes={{ root: classes.menuItem }}
+            disableGutters
+            onClick={() => setCreateChannelModalOpen(true)}
+          >
             Create Channel Here
           </MenuItem>
           <MenuItem
             classes={{ root: classes.menuItem }}
             disableGutters
             disabled={server.name === 'Default' || server.name === 'Games'}
-            onClick={() => setModalOpen(true)}
+            onClick={() => setDeleteModalOpen(true)}
           >
             Delete Server
           </MenuItem>
         </Menu>
       </OutsideClickHandler>
       <ConfirmationModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
+        modalOpen={deleteModalOpen}
+        setModalOpen={setDeleteModalOpen}
         itemName={server.name}
         confirmAction={() => deleteServerOnClick(server.name)}
+      />
+      <ChannelCreateModal
+        modalOpen={createChannelModalOpen}
+        setModalOpen={setCreateChannelModalOpen}
+        selectedServer={selectedServer}
       />
     </>
   );

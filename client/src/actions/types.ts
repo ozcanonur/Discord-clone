@@ -186,6 +186,6 @@ export namespace ServerIOActions {
 
   export interface IOResponsePrivateUsersAction {
     type: string;
-    payload: string[];
+    payload: PrivateUser[];
   }
 }

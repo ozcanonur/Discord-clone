@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -37,30 +37,29 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
 
   useEffect(() => {
     let mounted = true;
-    const serverParams = { name };
-    axios
-      .get('/userServers', {
-        params: serverParams,
-      })
-      .then((res) => {
-        if (mounted) setUserServers(res.data);
-      })
-      .catch((error) => console.log(error));
 
-    const noteParams = { name: user.name, otherUserName: name };
-    axios
-      .get('/note', {
-        params: noteParams,
-      })
-      .then((res) => {
-        if (mounted) setUserNote(res.data);
-      })
-      .catch((error) => console.log(error));
+    const fetchServersAndNote = async () => {
+      const [serverResults, noteResult]: any = await Promise.all([
+        axios.get('/userServers', {
+          params: { name },
+        }),
+        axios.get('/note', {
+          params: { name: user.name, otherUserName: name },
+        }),
+      ]).catch((error) => console.log(error));
+
+      if (mounted) {
+        setUserServers(serverResults.data);
+        setUserNote(noteResult.data);
+      }
+    };
+
+    fetchServersAndNote();
 
     return function cleanUp() {
       mounted = false;
     };
-  }, [name]);
+  }, [user.name, name]);
 
   const dispatch = useDispatch();
   const joinServerOnClick = (serverName: string) => {

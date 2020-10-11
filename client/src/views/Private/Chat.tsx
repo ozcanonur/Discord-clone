@@ -43,7 +43,10 @@ const Chat = () => {
     }, 1000);
   };
 
-  const endMessage = messages.length === 0 ? 'This channel has no messages so far' : 'End';
+  const endMessage =
+    messages.length === 0
+      ? `This is the start of the conversation with @${selectedPrivateUser}.`
+      : `End of the conversation with @${selectedPrivateUser}`;
 
   return (
     <div className={classes.container}>

@@ -25,6 +25,11 @@ interface Notification {
   from?: string;
 }
 
+interface PrivateUser {
+  name: string;
+  isFriend: boolean;
+}
+
 interface RootState {
   selectedServerName: string;
   selectedChannel: Channel;
@@ -32,7 +37,7 @@ interface RootState {
   activeUsersOpen: boolean;
   activeUsers: string[];
   selectedPrivateUser: string;
-  privateUsers: { name: string; isFriend: boolean }[];
+  privateUsers: PrivateUser[];
   messages: Message[];
   servers: Server[];
   pinnedMessages: Message[];

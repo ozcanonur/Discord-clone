@@ -35,7 +35,7 @@ export const onUserSentFriendRequest = async (
     return;
   }
 
-  let user = await User.findOne({ name }).populate('usersMessagedBefore');
+  let user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
   const friend = await User.findOne({ name: friendName })
     .populate('friends')
     .populate('usersMessagedBefore');

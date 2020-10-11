@@ -18,6 +18,7 @@ const channelsStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: '0 5px',
   },
   categoryIcon: {
     fontSize: '2rem',

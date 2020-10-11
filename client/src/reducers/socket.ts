@@ -80,7 +80,7 @@ export const notifications = (
 };
 
 export const privateUsers = (
-  state: { name: string; isFriend: boolean }[] = [],
+  state: PrivateUser[] = [],
   action: ServerIOActions.IOResponsePrivateUsersAction
 ) => {
   switch (action.type) {

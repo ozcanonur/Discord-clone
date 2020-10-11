@@ -22,10 +22,6 @@ interface Props {
 const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    dispatch(clearIoResponse());
-  }, []);
-
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [modalInputValue, setModalInputValue] = useState(`${name}'s server`);
   const [error, setError] = useState(false);
@@ -33,6 +29,10 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(clearIoResponse());
+  }, [dispatch]);
+
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);
     dispatch(clearIoResponse());

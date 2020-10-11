@@ -20,11 +20,11 @@ const AddFriendBox = () => {
   const [errorText, setErrorText] = useState('');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearIoResponse());
-  }, []);
+  }, [dispatch]);
 
-  const dispatch = useDispatch();
   const handleChange = (e: any) => {
     setFriendName(e.target.value);
     dispatch(clearIoResponse());
