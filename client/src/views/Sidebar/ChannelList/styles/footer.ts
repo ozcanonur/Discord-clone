@@ -10,7 +10,7 @@ const footerStyles = createStyles({
     alignItems: 'center',
   },
   iconContainer: {
-    backgroundColor: '#3CB371',
+    backgroundColor: 'rgb(114, 137, 218)',
     borderRadius: '50%',
     padding: '1.5rem',
     width: '1.5rem',
@@ -23,6 +23,15 @@ const footerStyles = createStyles({
     width: '2.5rem',
     height: '2.5rem',
     color: 'white',
+  },
+  onlineCircle: {
+    height: '1rem',
+    width: '1rem',
+    borderRadius: '50%',
+    position: 'absolute',
+    bottom: '-3px',
+    right: '0.9rem',
+    backgroundColor: '#3CB371',
   },
   user: {
     display: 'flex',

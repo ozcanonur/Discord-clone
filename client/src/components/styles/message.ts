@@ -39,7 +39,7 @@ const messageStyles = createStyles({
     lineHeight: '2.3rem',
   },
   iconContainer: {
-    backgroundColor: '#3CB371',
+    backgroundColor: 'rgb(114, 137, 218)',
     borderRadius: '50%',
     padding: '2rem',
     width: '1.5rem',

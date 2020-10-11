@@ -13,7 +13,7 @@ const privateUserStyles = createStyles({
     },
   },
   iconContainer: {
-    backgroundColor: '#3CB371',
+    backgroundColor: 'rgb(114, 137, 218)',
     borderRadius: '50%',
     padding: '1.5rem',
     width: '1.5rem',

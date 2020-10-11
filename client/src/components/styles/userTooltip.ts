@@ -23,7 +23,7 @@ const userTooltipStyles = createStyles({
     padding: '1rem',
   },
   headerImg: {
-    backgroundColor: '#3CB371',
+    backgroundColor: 'rgb(114, 137, 218)',
     borderRadius: '50%',
     padding: '2rem',
     width: '5rem',

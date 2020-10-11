@@ -8,7 +8,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import { ReactComponent as DiscordIcon } from '../assets/discordIcon.svg';
 import qs from 'qs';
 
 import { selectPrivateChannel, selectPrivateUser, selectTabInPrivate } from '../actions/react';
@@ -95,7 +95,9 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
       <div className={classes.header}>
         <div className={classes.headerImg}>
-          <AccountCircleRoundedIcon className={classes.img} />
+          <div style={{ display: 'flex', position: 'relative' }}>
+            <DiscordIcon style={{ height: '4rem' }} />
+          </div>
         </div>
         <div className={classes.headerText}>{`${name} #4313`}</div>
       </div>

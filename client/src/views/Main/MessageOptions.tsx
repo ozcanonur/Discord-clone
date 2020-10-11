@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import { ReactComponent as PinLogo } from '../../office.svg';
+import { ReactComponent as PinLogo } from '../../assets/office.svg';
 import qs from 'qs';
 import chatStyles from './styles/chat';
 import { deleteMessage, createPin } from '../../actions/socket';

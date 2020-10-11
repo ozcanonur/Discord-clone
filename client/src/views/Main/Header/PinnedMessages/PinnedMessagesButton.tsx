@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { ReactComponent as PinLogo } from '../../../../office.svg';
+import { ReactComponent as PinLogo } from '../../../../assets/office.svg';
 
 import PinnedMessages from './PinnedMessages';
 import CustomButton from '../../../../components/Button';

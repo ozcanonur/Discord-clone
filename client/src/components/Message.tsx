@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import { ReactComponent as DiscordIcon } from '../assets/discordIcon.svg';
 import Fade from '@material-ui/core/Fade';
 import OutsideClickHandler from 'react-outside-click-handler';
 
@@ -47,10 +47,9 @@ const Message = ({ message, pinned = false }: Props) => {
       {!pinned ? (
         <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
           <div className={classes.iconContainer}>
-            <AccountCircleRoundedIcon
-              className={classes.icon}
-              onClick={(e) => handleUserIconClick(e)}
-            />
+            <div style={{ display: 'flex' }} onClick={(e) => handleUserIconClick(e)}>
+              <DiscordIcon style={{ height: '3.3rem' }} />
+            </div>
             <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
               <div>
                 <UserTooltip name={username} positionTop={tooltipPositionTop} />

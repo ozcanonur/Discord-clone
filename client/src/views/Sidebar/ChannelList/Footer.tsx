@@ -3,7 +3,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
 import Settings from '@material-ui/icons/Settings';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import { ReactComponent as DiscordIcon } from '../../../assets/discordIcon.svg';
 import qs from 'qs';
 
 import Button from '../../../components/Button';
@@ -19,7 +19,10 @@ const Footer = () => {
   return (
     <div className={classes.footer}>
       <div className={classes.iconContainer}>
-        <AccountCircleRoundedIcon className={classes.icon} />
+        <div style={{ display: 'flex', position: 'relative' }}>
+          <DiscordIcon style={{ height: '2.4rem' }} />
+          <div className={classes.onlineCircle} />
+        </div>
       </div>
       <div className={classes.user}>
         <div className={classes.userName}>{name}</div>

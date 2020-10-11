@@ -6,7 +6,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import Forum from '@material-ui/icons/Forum';
-import { ReactComponent as PinLogo } from '../../../../office.svg';
+import { ReactComponent as PinLogo } from '../../../../assets/office.svg';
 import qs from 'qs';
 
 import { selectChannel } from '../../../../actions/react';

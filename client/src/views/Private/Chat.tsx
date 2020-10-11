@@ -11,7 +11,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Message from '../../components/Message';
 import Input from '../../components/Input';
 import chatStyles from './styles/chat';
-import { ReactComponent as Loading } from '../../spinner.svg';
+import { ReactComponent as Loading } from '../../assets/spinner.svg';
 
 const useStyles = makeStyles(chatStyles);
 

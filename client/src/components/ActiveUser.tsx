@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import Fade from '@material-ui/core/Fade';
 import OutsideClickHandler from 'react-outside-click-handler';
 import activeUserStyles from './styles/activeUser';
 import UserTooltip from './UserTooltip';
+import { ReactComponent as DiscordIcon } from '../assets/discordIcon.svg';
 import qs from 'qs';
 
 const useStyles = makeStyles(activeUserStyles);
@@ -25,10 +25,13 @@ const ActiveUser = ({ name }: Props) => {
       style={{ backgroundColor: user.name === name ? 'rgb(64, 67, 74)' : 'inherit' }}
     >
       <div className={classes.iconContainer}>
-        <AccountCircleRoundedIcon
-          className={classes.icon}
+        <div
+          style={{ display: 'flex', position: 'relative' }}
           onClick={() => setUserTooltipOpen(!userTooltipOpen)}
-        />
+        >
+          <DiscordIcon style={{ height: '2.4rem' }} />
+          <div className={classes.onlineCircle} />
+        </div>
         <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
           <div>
             <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>

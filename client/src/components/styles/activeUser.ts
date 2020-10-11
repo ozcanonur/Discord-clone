@@ -16,7 +16,7 @@ const activeUserStyles = createStyles({
     overflowX: 'hidden',
   },
   iconContainer: {
-    backgroundColor: '#3CB371',
+    backgroundColor: 'rgb(114, 137, 218)',
     borderRadius: '50%',
     padding: '1.5rem',
     width: '1.5rem',
@@ -34,6 +34,15 @@ const activeUserStyles = createStyles({
     fontSize: '1.5rem',
     marginLeft: '1rem',
     color: 'rgb(220,221,222)',
+  },
+  onlineCircle: {
+    height: '1rem',
+    width: '1rem',
+    borderRadius: '50%',
+    position: 'absolute',
+    bottom: '-3px',
+    right: '0.9rem',
+    backgroundColor: '#3CB371',
   },
 });
 

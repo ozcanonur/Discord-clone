@@ -9,7 +9,7 @@ import Message from '../../components/Message';
 import MessageOptions from './MessageOptions';
 import Input from '../../components/Input';
 import chatStyles from './styles/chat';
-import { ReactComponent as Loading } from '../../spinner.svg';
+import { ReactComponent as Loading } from '../../assets/spinner.svg';
 
 const useStyles = makeStyles(chatStyles);
 

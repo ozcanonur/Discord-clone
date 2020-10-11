@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import Button from '../../components/Button';
@@ -62,7 +62,9 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
       }}
     >
       <div className={classes.iconContainer}>
-        <AccountCircleRoundedIcon className={classes.icon} />
+        <div style={{ display: 'flex', position: 'relative' }}>
+          <DiscordIcon style={{ height: '2.4rem' }} />
+        </div>
       </div>
       <div className={classes.username}>{username}</div>
       {isNotFriend ? (
