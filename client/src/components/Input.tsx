@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import AddCircle from '@material-ui/icons/AddCircle';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
@@ -59,7 +60,7 @@ const Input = () => {
           className: classes.inputProps,
           startAdornment: (
             <InputAdornment position='start' className={classes.button}>
-              <AddCircle className={classes.buttonIcon} />
+              <ArrowForwardIosRoundedIcon className={classes.buttonIcon} />
             </InputAdornment>
           ),
           autoFocus: true,

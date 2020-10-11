@@ -49,3 +49,37 @@ body {
 #root {
   height: 100%;
 }
+@font-face {
+  font-family: 'Whitney Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Whitney Medium'), url('./assets/fonts/whitneymedium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Whitney Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Whitney Bold'), url('./assets/fonts/whitneybold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Whitney Semibold Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Whitney Semibold Regular'), url('./assets/fonts/whitneysemibold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Whitney Book Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Whitney Book Regular'), url('./assets/fonts/whitneybook.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Whitney Light Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Whitney Light Regular'), url('./assets/fonts/whitneylight.woff') format('woff');
+}

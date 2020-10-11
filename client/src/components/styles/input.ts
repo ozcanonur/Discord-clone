@@ -42,13 +42,7 @@ const inputStyles = createStyles({
     color: 'rgb(220,221,222)',
   },
   buttonIcon: {
-    fontSize: '3rem',
-    cursor: 'pointer',
-    transition: 'all .2s',
-    '&:hover': {
-      transform: 'scale(1.2)',
-      color: '#3CB371',
-    },
+    fontSize: '2rem',
   },
   emojiMenuIcon: {
     fontSize: '3rem',
