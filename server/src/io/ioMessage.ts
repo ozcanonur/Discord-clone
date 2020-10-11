@@ -1,7 +1,7 @@
 import User from '../db/models/user';
 import Channel from '../db/models/channel';
 import Message from '../db/models/message';
-import { reduceMessages } from './util';
+import { reduceMessages, reducePrivateUsers } from './util';
 
 export const onUserMessaged = async (
   io: SocketIO.Server,
@@ -50,11 +50,16 @@ export const onUserMessaged = async (
   if (channelName.includes('private')) {
     const recipientName = channelName.replace(name, '').replace('_private', '');
     // Find the recipient's socketId
-    const recipient = await User.findOne({ name: recipientName });
+    const recipient = await User.findOne({ name: recipientName }).populate('usersMessagedBefore');
     // Emit to the recipient that a message is received
     io.to(recipient.socketId).emit('action', {
       type: 'io/notification',
       payload: { type: 'private', from: name },
+    });
+    // Also emit the new private user list
+    io.to(recipient.socketId).emit('action', {
+      type: 'io/privateUsers',
+      payload: reducePrivateUsers(recipient),
     });
   }
 };

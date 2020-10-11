@@ -1,10 +1,11 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Channel from '../db/models/channel';
-import { reduceUsers, reducePrivateUsers } from './util';
+import { reducePrivateUsers } from './util';
 
 const getFriendRequestValidationError = async (name: string, friendName: string) => {
   if (friendName.length === 0) return `Friend name can't be empty.`;
+  else if (name === friendName) return `You can't add yourself to the friend list!`;
   else {
     const friendExists = await User.exists({ name: friendName });
     if (!friendExists) return `User not found.`;
@@ -35,7 +36,9 @@ export const onUserSentFriendRequest = async (
   }
 
   let user = await User.findOne({ name }).populate('usersMessagedBefore');
-  const friend = await User.findOne({ name: friendName }).populate('friends');
+  const friend = await User.findOne({ name: friendName })
+    .populate('friends')
+    .populate('usersMessagedBefore');
   // Check if they messaged before, if not, create a new channel for them
   const messagedBefore = user.usersMessagedBefore.some(
     (otherUser: IUser) => otherUser.name === friendName
@@ -48,16 +51,16 @@ export const onUserSentFriendRequest = async (
       voice: false,
     });
     await channel.save();
+    user.usersMessagedBefore.push(friend);
+    friend.usersMessagedBefore.push(user);
   }
   // Add the friend to the user, also to messagedBefore
   user.friends.push(friend);
-  user.usersMessagedBefore.push(friend);
   await user.save();
   // Find the user again
   user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
   // Add user to the friend, also to messaged before
   friend.friends.push(user);
-  friend.usersMessagedBefore.push(user);
   await friend.save();
 
   // Send the new private user list to both users
@@ -105,13 +108,8 @@ export const onUserConnectedNewPrivateUser = async (
   }
   // Emit updated privateUser list
   user = await User.findOne({ name }).populate('usersMessagedBefore');
-  otherUser = await User.findOne({ name: username }).populate('usersMessagedBefore');
   io.to(user.socketId).emit('action', {
     type: 'io/privateUsers',
     payload: reducePrivateUsers(user),
-  });
-  io.to(otherUser.socketId).emit('action', {
-    type: 'io/privateUsers',
-    payload: reducePrivateUsers(otherUser),
   });
 };

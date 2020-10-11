@@ -29,7 +29,6 @@ const PrivateUser = ({ username }: Props) => {
 
   const dispatch = useDispatch();
   const selectPrivateChannelOnClick = (username: string) => {
-    console.log(username);
     dispatch(selectPrivateChannel(username));
     dispatch(selectPrivateChannelIo(name, username));
     dispatch(selectPrivateUser(username));
