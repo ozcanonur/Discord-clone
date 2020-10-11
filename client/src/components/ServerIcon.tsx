@@ -21,6 +21,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     fontSize: '1.6rem',
     fontWeight: 1000,
+    fontFamily: 'Whitney Medium, sans-serif',
     textAlign: 'center',
     color: 'rgb(220,221,222)',
     letterSpacing: '1.5px',

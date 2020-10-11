@@ -79,6 +79,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
               fullWidth
               InputProps={{
                 className: classes.inputProps,
+                autoFocus: true,
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
@@ -100,6 +101,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
                 variant='contained'
                 className={classes.modalButton}
                 onClick={joinServerOnClick}
+                disabled={!!error}
               >
                 Join
               </Button>

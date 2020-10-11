@@ -28,14 +28,14 @@ const addFriendBoxStyles = createStyles({
     fontWeight: 500,
     color: 'white',
     opacity: 0.9,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
   },
   button: {
     fontSize: '1.2rem',
     fontWeight: 700,
     backgroundColor: '#7289da',
     color: 'white',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     width: '20rem',
     transition: 'all .2s ease-in-out',
 
@@ -51,7 +51,7 @@ const addFriendBoxStyles = createStyles({
   helperText: {
     fontSize: '1.4rem',
     fontWeight: 700,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     marginLeft: 0,
     marginTop: '0.7rem',
     color: '#3CB371',
@@ -59,7 +59,7 @@ const addFriendBoxStyles = createStyles({
   helperErrorText: {
     fontSize: '1.4rem',
     fontWeight: 700,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     marginLeft: 0,
     marginTop: '0.7rem',
   },

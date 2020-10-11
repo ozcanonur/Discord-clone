@@ -17,6 +17,7 @@ const searchModalStyles = createStyles({
     borderRadius: '6px',
     outline: 'none',
     width: '50vw',
+    maxHeight: '50vh',
   },
   input: {
     backgroundColor: 'rgb(114,118, 125)',
@@ -34,7 +35,7 @@ const searchModalStyles = createStyles({
   inputProps: {
     fontSize: '2rem',
     color: 'rgb(220,221,222)',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
   },
   footer: {
     paddingTop: '2rem',
@@ -63,6 +64,7 @@ const searchModalStyles = createStyles({
   },
   results: {
     width: '100%',
+    overflow: 'auto',
   },
   result: {
     display: 'flex',
@@ -70,7 +72,7 @@ const searchModalStyles = createStyles({
     padding: '1rem 1rem',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     fontWeight: 700,
     cursor: 'pointer',
     transition: 'all .2s ease-in-out',

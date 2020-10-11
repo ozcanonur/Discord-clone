@@ -40,8 +40,7 @@ const confirmationModalStyles = createStyles({
   },
   cancelButton: {
     fontSize: '1.3rem',
-    fontWeight: 1000,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     backgroundColor: '#7289da',
     color: 'white',
     padding: '1rem 3rem',
@@ -52,8 +51,7 @@ const confirmationModalStyles = createStyles({
   },
   confirmButton: {
     fontSize: '1.3rem',
-    fontWeight: 1000,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     backgroundColor: 'rgba(210,77,87,0.5)',
     color: 'white',
     padding: '1rem 3rem',

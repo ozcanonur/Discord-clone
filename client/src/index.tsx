@@ -12,7 +12,7 @@ import './style.css';
 
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
   },
 });
 

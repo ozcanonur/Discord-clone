@@ -35,7 +35,7 @@ const headerStyles = createStyles({
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
     fontWeight: 1000,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     textTransform: 'capitalize',
     marginLeft: '2rem',
     boxShadow: 'none',
@@ -47,7 +47,7 @@ const headerStyles = createStyles({
   friendButtonAdd: {
     fontSize: '1.5rem',
     fontWeight: 1000,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     textTransform: 'capitalize',
     marginLeft: '2rem',
     color: 'white',

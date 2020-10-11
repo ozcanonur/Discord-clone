@@ -22,7 +22,7 @@ const serverModal = createStyles({
     fontSize: '2.5rem',
     fontWeight: 1000,
     color: 'rgb(54,57,63)',
-    marginBottom: '1rem',
+    marginBottom: '2rem',
   },
   modalSubHeading: {
     fontSize: '1.6rem',
@@ -35,10 +35,10 @@ const serverModal = createStyles({
   modalButton: {
     width: '100%',
     fontSize: '1.5rem',
-    fontWeight: 700,
     color: 'white',
     marginTop: '2rem',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
     backgroundColor: 'rgb(79, 86, 96)',
     transition: 'all .2s ease-in-out',
 
@@ -67,8 +67,9 @@ const serverModal = createStyles({
     color: 'white',
     marginTop: '2rem',
     backgroundColor: '#7289da',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     transition: 'all .2s ease-in-out',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
 
     '&:hover': {
       backgroundColor: '#5869a8',

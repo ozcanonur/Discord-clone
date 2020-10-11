@@ -30,7 +30,7 @@ const messageStyles = createStyles({
     color: 'rgb(114,118,125)',
   },
   messageText: {
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Book Regular, sans-serif',
     fontWeight: 500,
     marginTop: '0.5rem',
     color: 'rgb(220,221,222)',

@@ -16,7 +16,7 @@
 }
 
 html {
-  font-family: Lato, sans-serif;
+  font-family: Whitney Medium, sans-serif;
   font-size: 62.5%;
   box-sizing: border-box;
   border-collapse: collapse;
@@ -43,12 +43,13 @@ html {
 body {
   min-width: 900px;
   height: 100%;
-  font-family: Lato, sans-serif;
+  font-family: Whitney Medium, sans-serif;
 }
 
 #root {
   height: 100%;
 }
+
 @font-face {
   font-family: 'Whitney Medium';
   font-style: normal;
@@ -57,29 +58,8 @@ body {
 }
 
 @font-face {
-  font-family: 'Whitney Bold';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Whitney Bold'), url('./assets/fonts/whitneybold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Whitney Semibold Regular';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Whitney Semibold Regular'), url('./assets/fonts/whitneysemibold.woff') format('woff');
-}
-
-@font-face {
   font-family: 'Whitney Book Regular';
   font-style: normal;
   font-weight: normal;
   src: local('Whitney Book Regular'), url('./assets/fonts/whitneybook.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Whitney Light Regular';
-  font-style: normal;
-  font-weight: normal;
-  src: local('Whitney Light Regular'), url('./assets/fonts/whitneylight.woff') format('woff');
 }

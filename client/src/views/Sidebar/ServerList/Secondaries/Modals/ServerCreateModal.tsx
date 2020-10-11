@@ -73,11 +73,6 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
           <div className={classes.modalSubHeading} style={{ marginBottom: '0.2rem' }}>
             You can always change it later.
           </div>
-          <div className={classes.modalIconUpload}>
-            <div className={classes.serverContainer}>
-              <div className={classes.server}>Icon</div>
-            </div>
-          </div>
           <div className={classes.modalInputContainer}>
             <div className={classes.inputLabel}>Server name</div>
             <TextField

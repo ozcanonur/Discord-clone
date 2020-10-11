@@ -35,7 +35,10 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);
     dispatch(clearIoResponse());
-    if (e.target.value.length > 10) {
+    if (selectedServer.name === 'Default' || selectedServer.name === 'Games') {
+      setErrorText(`Channels can't be created on default servers. Try creating a new server.`);
+      setError(true);
+    } else if (e.target.value.length > 10) {
       setErrorText(`Channel name can't be longer than 10 characters.`);
       setError(true);
     } else if (e.target.value.length === 0) {
@@ -49,8 +52,10 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
 
   // eslint-disable-next-line no-unused-vars
   const createChannelOnClick = (channelName: string, isVoice: boolean) => {
-    setErrorText(`Success! ${modalInputValue} created in ${selectedServer.name}.`);
-    dispatch(createChannel(selectedServer, channelName, false));
+    if (selectedServer.name !== 'Default' && selectedServer.name !== 'Games') {
+      setErrorText(`Success! ${modalInputValue} created in ${selectedServer.name}.`);
+      dispatch(createChannel(selectedServer, channelName, false));
+    }
   };
 
   return (
@@ -75,6 +80,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
               fullWidth
               InputProps={{
                 className: classes.inputProps,
+                autoFocus: true,
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}

@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-import Forum from '@material-ui/icons/Forum';
 import { ReactComponent as PinLogo } from '../../../../assets/office.svg';
 import qs from 'qs';
 
@@ -57,7 +56,7 @@ const Channel = ({ channel }: ChannelProps) => {
           {channel.voice ? (
             <VolumeUp className={classes.icon} />
           ) : (
-            <Forum className={classes.icon} />
+            <div className={classes.icon}>#</div>
           )}
         </ListItemIcon>
         <ListItemText primary={channel.name} className={classes.text} />

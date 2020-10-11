@@ -36,7 +36,7 @@ app.get('/search', async (req: ExtendedRequest, res: Response) => {
   } else if (type === '#') results = await searchChannels(text, name);
   else if (type === '@') results = await searchUsers(text, name);
 
-  res.send(results);
+  res.send(results.slice(0, 20));
 });
 
 app.get('/userServers', async (req: ExtendedRequest, res: Response) => {

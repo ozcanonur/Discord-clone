@@ -20,8 +20,8 @@ const serverCreateModalStyles = createStyles({
   modalHeading: {
     fontSize: '2.5rem',
     fontWeight: 1000,
-    color: 'rgb(6,6,7)',
-    marginBottom: '1rem',
+    color: 'rgb(32,34,37)',
+    marginBottom: '2rem',
   },
   modalSubHeading: {
     fontSize: '1.6rem',
@@ -37,9 +37,10 @@ const serverCreateModalStyles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    marginTop: '2rem',
   },
   inputLabel: {
-    fontSize: '1.3rem',
+    fontSize: '1.5rem',
     color: 'rgb(79, 86, 96)',
     fontWeight: 900,
     textTransform: 'uppercase',
@@ -49,9 +50,8 @@ const serverCreateModalStyles = createStyles({
     marginTop: '1rem',
   },
   inputProps: {
-    fontSize: '1.3rem',
-    fontWeight: 500,
-    fontFamily: 'Lato, sans-serif',
+    fontSize: '1.5rem',
+    fontFamily: 'Whitney Medium, sans-serif',
     color: 'rgb(79, 86, 96)',
   },
   modalFooter: {
@@ -61,12 +61,13 @@ const serverCreateModalStyles = createStyles({
     marginTop: '2rem',
   },
   modalButton: {
+    width: '12rem',
     fontSize: '1.5rem',
-    fontWeight: 700,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
     backgroundColor: '#7289da',
     color: 'white',
-    padding: '1rem 3rem',
+    padding: '0.6rem 3rem',
     transition: 'all .2s ease-in-out',
     '&:hover': {
       backgroundColor: '#5869a8',
@@ -112,16 +113,14 @@ const serverCreateModalStyles = createStyles({
   },
   helperText: {
     fontSize: '1.4rem',
-    fontWeight: 800,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     marginLeft: 0,
     marginTop: '0.7rem',
     color: '#3CB371',
   },
   helperErrorText: {
     fontSize: '1.4rem',
-    fontWeight: 800,
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     marginLeft: 0,
     marginTop: '0.7rem',
   },

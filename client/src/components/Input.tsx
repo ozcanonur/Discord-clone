@@ -4,7 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
-import AddCircle from '@material-ui/icons/AddCircle';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
@@ -27,16 +26,10 @@ const Input = () => {
     setText(e.target.value);
   };
 
-  // Check if message is empty
-  const isEmptyMessage = (message: string) => {
-    if (message.trim() === '') return true;
-    return false;
-  };
-
   const dispatch = useDispatch();
   const handleSubmit = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
-      if (isEmptyMessage(text)) return;
+      if (text.trim() === '') return;
       dispatch(message(name, text));
       setText('');
       e.preventDefault();

@@ -50,9 +50,8 @@ const channelsStyles = createStyles({
   text: {
     color: 'rgb(163, 168, 173)',
     '& span': {
-      fontSize: '1.5rem',
-      fontFamily: 'Lato, sans-serif',
-      fontWeight: 600,
+      fontSize: '1.6rem',
+      fontFamily: 'Whitney Book Regular, sans-serif',
     },
   },
   icon: { fontSize: '2rem', color: 'rgb(163, 168, 173)' },
@@ -69,9 +68,8 @@ const channelsStyles = createStyles({
     padding: '1rem',
   },
   menuItem: {
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     fontSize: '1.5rem',
-    fontWeight: 600,
     padding: '1rem 2rem',
     borderRadius: '1rem',
 

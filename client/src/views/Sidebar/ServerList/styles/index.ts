@@ -11,16 +11,15 @@ const indexStyles = createStyles({
     padding: '0.8rem',
   },
   tooltip: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: 'black',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
-    fontWeight: 700,
     textAlign: 'center',
     letterSpacing: 0,
     padding: '1rem 2rem',
   },
   arrow: {
-    color: 'rgb(32,34,37)',
+    color: 'black',
   },
   list: {
     padding: 0,
@@ -37,7 +36,7 @@ const indexStyles = createStyles({
     padding: '1rem',
   },
   menuItem: {
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     fontSize: '1.5rem',
     fontWeight: 600,
     padding: '1rem 2rem',

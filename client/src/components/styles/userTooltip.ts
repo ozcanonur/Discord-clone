@@ -40,7 +40,7 @@ const userTooltipStyles = createStyles({
   },
   headerText: {
     fontWeight: 1000,
-    marginTop: '1rem',
+    marginTop: '1.5rem',
     color: 'rgb(220,221,222)',
     fontSize: '1.5rem',
   },
@@ -65,10 +65,9 @@ const userTooltipStyles = createStyles({
   },
   button: {
     fontSize: '1rem',
-    fontWeight: 700,
     backgroundColor: '#7289da',
     color: 'white',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     transition: 'all .2s ease-in-out',
 
     '&:hover': {
@@ -89,10 +88,10 @@ const userTooltipStyles = createStyles({
   },
   inputLabel: {
     color: 'rgb(220,221,222)',
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
   },
   inputProps: {
-    fontFamily: 'Lato, sans-serif',
+    fontFamily: 'Whitney Medium, sans-serif',
     fontSize: '1.2rem',
     color: 'rgb(220,221,222)',
     backgroundColor: 'rgb(64,68,75)',
@@ -102,7 +101,6 @@ const userTooltipStyles = createStyles({
   },
   buttonPrivate: {
     fontSize: '1rem',
-    fontWeight: 700,
     backgroundColor: '#7289da',
     color: 'white',
     transition: 'all .2s ease-in-out',

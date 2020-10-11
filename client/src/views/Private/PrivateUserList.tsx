@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import GroupRoundedIcon from '@material-ui/icons/GroupRounded';
 
 import PrivateUser from './PrivateUser';
 import Footer from '../Sidebar/ChannelList/Footer';
@@ -40,9 +40,9 @@ const PrivateUserList = () => {
       </div>
       <div className={classes.subContainer} style={{ borderTop: '4px solid rgb(32,34,37)' }}>
         <div className={classes.titleContainer}>
-          <PeopleOutlineIcon className={classes.usersIcon} />
+          <GroupRoundedIcon className={classes.usersIcon} />
           <div className={classes.usersText}>Other users</div>
-          <PeopleOutlineIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
+          <GroupRoundedIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
         </div>
         <div className={classes.userList}>
           <div className={classes.directMessages}>Direct messages</div>
