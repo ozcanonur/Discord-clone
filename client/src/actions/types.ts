@@ -14,16 +14,6 @@ export namespace InternalActions {
     payload: string;
   }
 
-  export interface SelectFriendChannelAction {
-    type: string;
-    payload: string;
-  }
-
-  export interface SelectFriendAction {
-    type: string;
-    payload: string;
-  }
-
   export interface ToggleActiveUsersAction {
     type: string;
   }
@@ -43,6 +33,16 @@ export namespace InternalActions {
 
   export interface ClearMessages {
     type: string;
+  }
+
+  export interface SelectPrivateChannelAction {
+    type: string;
+    payload: string;
+  }
+
+  export interface SelectPrivateUserAction {
+    type: string;
+    payload: string;
   }
 }
 
@@ -65,14 +65,6 @@ export namespace ClientIOActions {
     payload: {
       name: string;
       channel: Channel;
-    };
-  }
-
-  export interface SelectFriendChannelIOAction {
-    type: string;
-    payload: {
-      name: string;
-      friendName: string;
     };
   }
 
@@ -141,6 +133,14 @@ export namespace ClientIOActions {
       channelId: string;
     };
   }
+
+  export interface SelectPrivateChannelIOAction {
+    type: string;
+    payload: {
+      name: string;
+      username: string;
+    };
+  }
 }
 
 export namespace ServerIOActions {
@@ -152,11 +152,6 @@ export namespace ServerIOActions {
   export interface IOResponseServersAction {
     type: string;
     payload: Server[];
-  }
-
-  export interface IOResponseFriendsAction {
-    type: string;
-    payload: string[];
   }
 
   export interface IOResponseIOResponseAction {
@@ -179,5 +174,10 @@ export namespace ServerIOActions {
   export interface IOResponseNotificationsAction {
     type: string;
     payload: Notification;
+  }
+
+  export interface IOResponsePrivateUsersAction {
+    type: string;
+    payload: string[];
   }
 }

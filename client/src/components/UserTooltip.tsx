@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
@@ -10,7 +11,8 @@ import Button from '@material-ui/core/Button';
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
 import qs from 'qs';
 
-import { joinServer } from '../actions/socket';
+import { selectPrivateChannel, selectPrivateUser, selectTabInPrivate } from '../actions/react';
+import { joinServer, selectUserChannel as selectUserChannelIo } from '../actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);
@@ -78,6 +80,13 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     }
   };
 
+  const privateMessageOnClick = () => {
+    dispatch(selectPrivateUser(name));
+    dispatch(selectPrivateChannel(name));
+    dispatch(selectUserChannelIo(user.name, name));
+    dispatch(selectTabInPrivate('Chat'));
+  };
+
   return (
     <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
       <div className={classes.header}>
@@ -101,6 +110,17 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
         ))}
       </List>
       <div className={classes.noteContainer}>
+        {name !== user.name ? (
+          <NavLink to={`/private?name=${user.name}`} style={{ textDecoration: 'none' }}>
+            <Button
+              variant='contained'
+              className={classes.buttonPrivate}
+              onClick={privateMessageOnClick}
+            >
+              Private Message
+            </Button>
+          </NavLink>
+        ) : null}
         <div className={classes.noteTitle}>Note: {userNote}</div>
         <TextField
           multiline

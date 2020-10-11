@@ -4,7 +4,7 @@ import {
   messages,
   activeUsers,
   servers,
-  friends,
+  privateUsers,
   notifications,
   ioResponse,
   pinnedMessages,
@@ -13,7 +13,7 @@ import {
   selectedServerName,
   selectedChannel,
   selectedTabInPrivate,
-  selectedFriend,
+  selectedPrivateUser,
   activeUsersOpen,
 } from './react';
 
@@ -23,8 +23,8 @@ export const reducers = combineReducers<RootState>({
   selectedTabInPrivate,
   activeUsersOpen,
   activeUsers,
-  selectedFriend,
-  friends,
+  selectedPrivateUser,
+  privateUsers,
   messages,
   servers,
   pinnedMessages,

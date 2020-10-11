@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import makeStyles from '@material-ui/core/styles/makeStyles';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+
+import PrivateUser from './PrivateUser';
+import Footer from '../Sidebar/ChannelList/Footer';
+import privateUserListStyles from './styles/privateUserList';
+import SearchModal from '../../components/SearchModal';
+
+const useStyles = makeStyles(privateUserListStyles);
+
+const PrivateUserList = () => {
+  const classes = useStyles();
+
+  const privateUsers = useSelector((state: RootState) => state.privateUsers);
+  const [searchModalOpen, setSearchModalOpen] = useState(false);
+
+  return (
+    <div className={classes.container}>
+      <div className={classes.subContainer} style={{ maxHeight: '50vh' }}>
+        <div className={classes.heading} onClick={() => setSearchModalOpen(!searchModalOpen)}>
+          <div className={classes.headingText}>Search</div>
+        </div>
+        <div className={classes.titleContainer}>
+          <EmojiPeopleIcon className={classes.usersIcon} />
+          <div className={classes.usersText}>Friends</div>
+          <EmojiPeopleIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
+        </div>
+        <div className={classes.userList}>
+          <div className={classes.directMessages}>Direct messages</div>
+          {privateUsers.map((username: string, key: number) => (
+            <PrivateUser key={key} username={username} />
+          ))}
+        </div>
+      </div>
+      <div className={classes.subContainer} style={{ borderTop: '4px solid rgb(32,34,37)' }}>
+        <div className={classes.titleContainer}>
+          <PeopleOutlineIcon className={classes.usersIcon} />
+          <div className={classes.usersText}>Other users</div>
+          <PeopleOutlineIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
+        </div>
+        <div className={classes.userList}>
+          <div className={classes.directMessages}>Direct messages</div>
+          {privateUsers.map((username: string, key: number) => (
+            <PrivateUser key={key} username={username} />
+          ))}
+        </div>
+      </div>
+      <SearchModal modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
+      <Footer />
+    </div>
+  );
+};
+
+export default PrivateUserList;

@@ -1,6 +1,6 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const friendListStyles = createStyles({
+const privateUserListStyles = createStyles({
   container: {
     height: '100vh',
     backgroundColor: 'rgb(47,49,54)',
@@ -44,22 +44,24 @@ const friendListStyles = createStyles({
     justifyContent: 'space-between',
     padding: '2rem',
   },
-  friendsIcon: {
+  usersIcon: {
     fontSize: '3rem',
     color: 'rgb(220,221,222)',
     opacity: 0.7,
   },
-  friendsText: {
+  usersText: {
     fontSize: '1.5rem',
     fontWeight: 1000,
     color: 'rgb(220,221,222)',
   },
-  friendList: {
+  userList: {
     display: 'flex',
     flexDirection: 'column',
     padding: '2rem',
     paddingTop: 0,
     fontWeight: 1000,
+    maxHeight: '32vh',
+    overflow: 'auto',
   },
   directMessages: {
     fontSize: '1.3rem',
@@ -69,4 +71,4 @@ const friendListStyles = createStyles({
   },
 });
 
-export default friendListStyles;
+export default privateUserListStyles;

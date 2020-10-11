@@ -19,8 +19,8 @@ const Chat = () => {
   const classes = useStyles();
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
   const messages = useSelector((state: RootState) => state.messages);
-  const selectedFriend = useSelector((state: RootState) => state.selectedFriend);
   const [shownMessagesCount, setShownMessagesCount] = useState(15);
 
   // Scroll messages to bottom on change
@@ -37,18 +37,18 @@ const Chat = () => {
   };
 
   const fetchMoreData = () => {
-    if (messages.length > shownMessagesCount) {
-      setTimeout(() => {
-        const additionalCount = Math.min(15, messages.length - shownMessagesCount);
-        setShownMessagesCount(shownMessagesCount + additionalCount);
-      }, 1000);
-    }
+    setTimeout(() => {
+      const additionalCount = Math.min(15, messages.length - shownMessagesCount);
+      setShownMessagesCount(shownMessagesCount + additionalCount);
+    }, 1000);
   };
+
+  const endMessage = messages.length === 0 ? 'This channel has no messages so far' : 'End';
 
   return (
     <div className={classes.container}>
-      {selectedFriend === '' ? (
-        <div className={classes.warning}>Select a friend to chat!</div>
+      {selectedPrivateUser === '' ? (
+        <div className={classes.warning}>Select a user to chat!</div>
       ) : (
         <div className={classes.chat}>
           <InfiniteScroll
@@ -58,7 +58,7 @@ const Chat = () => {
             height={window.innerHeight > 850 ? '80vh' : '75vh'}
             inverse={true}
             hasMore={messages.length > shownMessagesCount}
-            endMessage={<h4 className={classes.endMessage}>End</h4>}
+            endMessage={<h4 className={classes.endMessage}>{endMessage}</h4>}
             loader={
               <div className={classes.loading}>
                 <Loading style={{ height: '10rem' }} />

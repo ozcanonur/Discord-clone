@@ -1,7 +1,10 @@
 import { InternalActions } from '../actions/types';
 
+// WOOP TEMP
+const tempSelectedServer = window.location.pathname === '/private' ? 'private' : 'Default';
+
 export const selectedServerName = (
-  state: string = 'Default',
+  state: string = tempSelectedServer,
   action: InternalActions.SelectServerNameAction
 ) => {
   switch (action.type) {
@@ -36,9 +39,12 @@ export const selectedTabInPrivate = (
   }
 };
 
-export const selectedFriend = (state: string = '', action: InternalActions.SelectFriendAction) => {
+export const selectedPrivateUser = (
+  state: string = '',
+  action: InternalActions.SelectPrivateUserAction
+) => {
   switch (action.type) {
-    case 'SELECT_FRIEND':
+    case 'SELECT_PRIVATE_USER':
       return action.payload;
     default:
       return state;

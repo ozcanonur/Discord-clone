@@ -61,16 +61,6 @@ export const sendFriendRequest = (
   };
 };
 
-export const selectFriendChannel = (
-  name: string,
-  friendName: string
-): ClientIOActions.SelectFriendChannelIOAction => {
-  return {
-    type: 'io/userSelectedFriendChannel',
-    payload: { name, friendName },
-  };
-};
-
 export const createPin = (
   name: string,
   message: string,
@@ -116,5 +106,15 @@ export const deleteChannel = (
   return {
     type: 'io/userDeletedChannel',
     payload: { name, channelId },
+  };
+};
+
+export const selectUserChannel = (
+  name: string,
+  username: string
+): ClientIOActions.SelectPrivateChannelIOAction => {
+  return {
+    type: 'io/userSelectedPrivateChannel',
+    payload: { name, username },
   };
 };

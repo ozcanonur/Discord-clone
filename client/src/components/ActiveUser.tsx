@@ -33,7 +33,7 @@ const ActiveUser = ({ name }: Props) => {
           <div>
             <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
               <UserTooltip
-                name={user.name}
+                name={name}
                 positionTop={false}
                 style={{ top: '3rem', right: '18.5rem', left: 'inherit' }}
               />

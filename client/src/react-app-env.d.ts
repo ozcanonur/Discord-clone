@@ -31,8 +31,8 @@ interface RootState {
   selectedTabInPrivate: string;
   activeUsersOpen: boolean;
   activeUsers: string[];
-  selectedFriend: string;
-  friends: string[];
+  selectedPrivateUser: string;
+  privateUsers: string[];
   messages: Message[];
   servers: Server[];
   pinnedMessages: Message[];

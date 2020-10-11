@@ -22,9 +22,12 @@ export const servers = (state: Server[] = [], action: ServerIOActions.IOResponse
   }
 };
 
-export const friends = (state: string[] = [], action: ServerIOActions.IOResponseFriendsAction) => {
+export const privateUsers = (
+  state: string[] = [],
+  action: ServerIOActions.IOResponsePrivateUsersAction
+) => {
   switch (action.type) {
-    case 'io/friends':
+    case 'io/privateUsers':
       return [...action.payload];
     default:
       return state;

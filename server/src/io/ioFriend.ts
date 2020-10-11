@@ -53,9 +53,12 @@ export const onUserSentFriendRequest = async (
   });
   await channel.save();
   // Send the new friends list to both users
-  io.to(user.socketId).emit('action', { type: 'io/friends', payload: reduceFriends(user.friends) });
+  io.to(user.socketId).emit('action', {
+    type: 'io/privateUsers',
+    payload: reduceFriends(user.friends),
+  });
   io.to(friend.socketId).emit('action', {
-    type: 'io/friends',
+    type: 'io/privateUsers',
     payload: reduceFriends(friend.friends),
   });
 };

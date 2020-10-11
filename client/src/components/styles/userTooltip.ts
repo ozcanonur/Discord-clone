@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 const userTooltipStyles = createStyles({
   container: {
     position: 'absolute',
-    height: '38rem',
+    height: '40rem',
     width: '25rem',
     backgroundColor: 'rgb(32,34,37)',
     left: '5rem',
@@ -79,6 +79,8 @@ const userTooltipStyles = createStyles({
     width: '100%',
     padding: '1rem 2rem',
     paddingBottom: '1.5rem',
+    display: 'flex',
+    flexDirection: 'column',
   },
   noteTitle: {
     marginBottom: '1rem',
@@ -97,6 +99,20 @@ const userTooltipStyles = createStyles({
     borderRadius: '1rem',
     boxShadow: '0 0.2rem 0.2rem rgba(0, 0, 0, 0.2)',
     padding: '1.5rem',
+  },
+  buttonPrivate: {
+    fontSize: '1rem',
+    fontWeight: 700,
+    backgroundColor: '#7289da',
+    color: 'white',
+    transition: 'all .2s ease-in-out',
+
+    '&:hover': {
+      backgroundColor: '#677bc4',
+    },
+    marginTop: '0.5rem',
+    marginBottom: '1.5rem',
+    width: '100%',
   },
 });
 

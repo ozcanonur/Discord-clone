@@ -80,6 +80,7 @@ const chatStyles = createStyles({
     paddingBottom: '1rem',
     borderBottom: '2px solid rgba(220,221,222,0.5)',
     marginBottom: '1rem',
+    fontWeight: 700,
   },
 });
 

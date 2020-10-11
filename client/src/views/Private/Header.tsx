@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import GitHubIcon from '@material-ui/icons/GitHub';
+import QuestionAnswerRoundedIcon from '@material-ui/icons/QuestionAnswerRounded';
 
 import { selectTabInPrivate, toggleActiveUsers } from '../../actions/react';
 import CustomButton from '../../components/Button';
@@ -30,8 +31,8 @@ const Header = () => {
   return (
     <div className={classes.headerContainer}>
       <div className={classes.statusContainer}>
-        <EmojiPeopleIcon className={classes.friendsIcon} />
-        <div className={classes.friendsText}>Friends</div>
+        <QuestionAnswerRoundedIcon className={classes.friendsIcon} />
+        <div className={classes.friendsText}>Private Messages</div>
         <div className={classes.friendButtonContainer}>
           <Button
             variant='contained'

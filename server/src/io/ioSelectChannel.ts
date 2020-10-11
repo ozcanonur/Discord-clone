@@ -58,17 +58,17 @@ export const onUserSelectedChannel = async (
   });
 };
 
-export const onUserSelectedFriendChannel = async (
+export const onUserSelectedPrivateChannel = async (
   socket: Socket,
   action: {
     type: string;
     payload: {
       name: string;
-      friendName: string;
+      username: string;
     };
   }
 ) => {
-  const { name, friendName } = action.payload;
+  const { name, username } = action.payload;
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
@@ -84,8 +84,8 @@ export const onUserSelectedFriendChannel = async (
     },
   };
   let channel =
-    (await Channel.findOne({ name: `${name}${friendName}_private` }).populate(populateFields)) ||
-    (await Channel.findOne({ name: `${friendName}${name}_private` }).populate(populateFields));
+    (await Channel.findOne({ name: `${name}${username}_private` }).populate(populateFields)) ||
+    (await Channel.findOne({ name: `${username}${name}_private` }).populate(populateFields));
   // Join the new channel
   await socket.join(channel._id.toString());
   // Update user's channel

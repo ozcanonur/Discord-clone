@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import qs from 'qs';
 
 import { connect } from '../../actions/socket';
-import FriendList from './FriendList';
+import PrivateUserList from './PrivateUserList';
 import ServerList from '../Sidebar/ServerList/index';
 import indexStyles from './styles/index';
 import Header from './Header';
@@ -35,7 +35,7 @@ const Private = () => {
             <ServerList />
           </Grid>
           <Grid item xs={9}>
-            <FriendList />
+            <PrivateUserList />
           </Grid>
         </Grid>
       </Grid>

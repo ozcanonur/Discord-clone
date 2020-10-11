@@ -57,7 +57,7 @@ export const onUserConnected = async (
   // Send the current user's servers (with channels populated) and send to client
   socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });
   // Also send friends
-  socket.emit('action', { type: 'io/friends', payload: reduceFriends(user.friends) });
+  socket.emit('action', { type: 'io/users', payload: reduceFriends(user.friends) });
 };
 
 export const onUserDisconnected = async (io: SocketIO.Server, socket: Socket) => {

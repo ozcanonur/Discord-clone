@@ -21,28 +21,6 @@ export const selectTabInPrivate = (tabName: string): InternalActions.SelectTabIn
   };
 };
 
-export const selectFriendChannel = (
-  friendName: string
-): InternalActions.SelectFriendChannelAction => {
-  return {
-    type: 'SELECT_FRIEND_CHANNEL',
-    payload: friendName,
-  };
-};
-
-export const selectFriend = (friendName: string): InternalActions.SelectFriendAction => {
-  return {
-    type: 'SELECT_FRIEND',
-    payload: friendName,
-  };
-};
-
-export const toggleActiveUsers = (): InternalActions.ToggleActiveUsersAction => {
-  return {
-    type: 'TOGGLE_ACTIVE_USERS',
-  };
-};
-
 export const clearPrivateNotification = (): InternalActions.ClearPrivateNotificationAction => {
   return {
     type: 'CLEAR_PRIVATE_NOTIFICATION',
@@ -67,5 +45,27 @@ export const clearIoResponse = (): InternalActions.ClearIoResponseAction => {
 export const clearMessages = (): InternalActions.ClearMessages => {
   return {
     type: 'CLEAR_MESSAGES',
+  };
+};
+
+export const toggleActiveUsers = (): InternalActions.ToggleActiveUsersAction => {
+  return {
+    type: 'TOGGLE_ACTIVE_USERS',
+  };
+};
+
+export const selectPrivateChannel = (
+  username: string
+): InternalActions.SelectPrivateChannelAction => {
+  return {
+    type: 'SELECT_PRIVATE_CHANNEL',
+    payload: username,
+  };
+};
+
+export const selectPrivateUser = (username: string): InternalActions.SelectPrivateUserAction => {
+  return {
+    type: 'SELECT_PRIVATE_USER',
+    payload: username,
   };
 };

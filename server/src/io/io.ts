@@ -11,7 +11,7 @@ import {
 } from './ioCreateJoin';
 import { onUserSentFriendRequest } from './ioFriend';
 import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
-import { onUserSelectedChannel, onUserSelectedFriendChannel } from './ioSelectChannel';
+import { onUserSelectedChannel, onUserSelectedPrivateChannel } from './ioSelectChannel';
 import { onUserCreatedPin } from './ioMisc';
 
 export interface Action {
@@ -45,8 +45,8 @@ io.on('connection', (socket: Socket) => {
     else if (action.type === 'io/userSentFriendRequest')
       await onUserSentFriendRequest(io, socket, action);
     else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
-    else if (action.type === 'io/userSelectedFriendChannel')
-      await onUserSelectedFriendChannel(socket, action);
+    else if (action.type === 'io/userSelectedPrivateChannel')
+      await onUserSelectedPrivateChannel(socket, action);
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
     else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     else if (action.type === 'io/userDeletedMessage') await onUserDeletedMessage(io, action);

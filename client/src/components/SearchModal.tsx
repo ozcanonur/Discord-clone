@@ -19,13 +19,13 @@ import { store } from '../store';
 import {
   selectChannel,
   selectServerName,
-  selectFriendChannel,
-  selectFriend,
+  selectPrivateChannel,
+  selectPrivateUser,
   selectTabInPrivate,
 } from '../actions/react';
 import {
   selectChannel as selectChannelIo,
-  selectFriendChannel as selectFriendChannelIo,
+  selectUserChannel as selectUserChannelIo,
 } from '../actions/socket';
 
 const useStyles = makeStyles(searchModalStyles);
@@ -119,14 +119,14 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
       // Redirect to main route if not already
       if (location.pathname !== '/main') history.push(`/main?name=${name}`);
     } else if (type === '@') {
-      // resultName = friendName in this case
-      dispatch(selectFriendChannel(resultName));
-      dispatch(selectFriendChannelIo(name, resultName));
-      dispatch(selectFriend(resultName));
+      // resultName = username in this case
+      dispatch(selectPrivateChannel(resultName));
+      dispatch(selectUserChannelIo(name, resultName));
+      dispatch(selectPrivateUser(resultName));
       dispatch(selectTabInPrivate('Chat'));
       setModalOpen(false);
 
-      // Redirect to main route if not already
+      // Redirect to private route if not already
       if (location.pathname !== '/private') history.push(`/private?name=${name}`);
     }
   };
@@ -170,7 +170,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
                 >
                   <div className={classes.resultText}>{`${res.type} ${res.name}`}</div>
                   <div className={classes.resultSecondaryText}>
-                    {res.type === '@' ? 'Friend' : res.server}
+                    {res.type === '@' ? 'User' : res.server}
                   </div>
                 </ListItem>
               ))}
@@ -180,7 +180,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
             <span className={classes.protip}>Protip:</span>
             <span className={classes.footerText}>
               Start searches with
-              <span className={classes.prefix}>@ (for friends)</span>
+              <span className={classes.prefix}>@ (for users)</span>
               or
               <span className={classes.prefix}># (for channels)</span>
               or

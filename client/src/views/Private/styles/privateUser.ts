@@ -1,6 +1,6 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const friendStyles = createStyles({
+const privateUserStyles = createStyles({
   user: {
     display: 'flex',
     alignItems: 'center',
@@ -35,4 +35,4 @@ const friendStyles = createStyles({
   },
 });
 
-export default friendStyles;
+export default privateUserStyles;
