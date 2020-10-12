@@ -22,7 +22,7 @@ const ActiveUser = ({ name }: Props) => {
   return (
     <div
       className={classes.user}
-      style={{ backgroundColor: user.name === name ? 'rgb(64, 67, 74)' : 'inherit' }}
+      style={{ backgroundColor: user.name === name ? '#40434a' : 'inherit' }}
     >
       <div className={classes.iconContainer}>
         <div

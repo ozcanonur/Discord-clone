@@ -7,8 +7,8 @@ const channelCreateModalStyles = createStyles({
     justifyContent: 'center',
   },
   modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    backgroundColor: '#36393f',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',

@@ -38,7 +38,7 @@ const PrivateUserList = () => {
           ))}
         </div>
       </div>
-      <div className={classes.subContainer} style={{ borderTop: '4px solid rgb(32,34,37)' }}>
+      <div className={classes.subContainer} style={{ borderTop: '4px solid #202225' }}>
         <div className={classes.titleContainer}>
           <GroupRoundedIcon className={classes.usersIcon} />
           <div className={classes.usersText}>{`Other users (${otherUsers.length})`}</div>

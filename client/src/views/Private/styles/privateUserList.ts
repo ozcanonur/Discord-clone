@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 const privateUserListStyles = createStyles({
   container: {
     height: '100vh',
-    backgroundColor: 'rgb(47,49,54)',
+    backgroundColor: '#2f3136',
     color: 'white',
     fontSize: '2rem',
     position: 'relative',
@@ -14,7 +14,7 @@ const privateUserListStyles = createStyles({
     flexGrow: 1,
   },
   heading: {
-    backgroundColor: 'rgb(41,43,47)',
+    backgroundColor: '#292b2f',
     padding: '1rem',
     height: '6rem',
     display: 'flex',
@@ -24,15 +24,15 @@ const privateUserListStyles = createStyles({
   },
   headingText: {
     fontSize: '1.4rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     opacity: 0.7,
     padding: '1rem 2rem',
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     borderRadius: '1rem',
     width: '100%',
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgb(220,221,222)',
+      backgroundColor: '#dcddde',
       color: 'black',
       opacity: '1 !important',
       fontWeight: 1000,
@@ -46,13 +46,13 @@ const privateUserListStyles = createStyles({
   },
   usersIcon: {
     fontSize: '3rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     opacity: 0.7,
   },
   usersText: {
     fontSize: '1.5rem',
     fontWeight: 1000,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   userList: {
     display: 'flex',
@@ -65,7 +65,7 @@ const privateUserListStyles = createStyles({
   },
   directMessages: {
     fontSize: '1.3rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     opacity: 0.7,
     textTransform: 'uppercase',
   },

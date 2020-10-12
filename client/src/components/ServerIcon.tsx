@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     borderLeft: (isSelected) => (isSelected ? '3px solid white' : 'none'),
   },
   server: {
-    backgroundColor: (isSelected) => (isSelected ? 'rgb(114,137,218)' : 'rgb(54,57,63)'),
+    backgroundColor: (isSelected) => (isSelected ? '#7289da' : '#36393f'),
     borderRadius: '50%',
     width: '5rem',
     height: '5rem',
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     fontWeight: 1000,
     fontFamily: 'Whitney Medium, sans-serif',
     textAlign: 'center',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     letterSpacing: '1.5px',
 
     '& > svg': {
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     },
 
     '&:hover': {
-      backgroundColor: 'rgb(114,137,218)',
+      backgroundColor: '#7289da',
       borderRadius: '40%',
 
       '& > *': {

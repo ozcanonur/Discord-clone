@@ -7,7 +7,7 @@ const headerStyles = createStyles({
     color: 'white',
     fontSize: '2rem',
     padding: '1rem  2rem',
-    borderBottom: '2px solid rgb(32,34,37)',
+    borderBottom: '2px solid #202225',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -18,13 +18,13 @@ const headerStyles = createStyles({
   },
   friendsIcon: {
     fontSize: '3rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     opacity: 0.7,
   },
   friendsText: {
     fontSize: '1.5rem',
     fontWeight: 1000,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     marginLeft: '2rem',
   },
   friendButtonContainer: {
@@ -32,7 +32,7 @@ const headerStyles = createStyles({
   },
   friendButton: {
     backgroundColor: 'transparent',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '1.5rem',
     fontWeight: 1000,
     fontFamily: 'Whitney Medium, sans-serif',
@@ -62,8 +62,8 @@ const headerStyles = createStyles({
     display: 'flex',
   },
   notificationTooltip: {
-    backgroundColor: 'rgb(32,34,37)',
-    color: 'rgb(220,221,222)',
+    backgroundColor: '#202225',
+    color: '#dcddde',
     fontSize: '1.5rem',
     fontWeight: 700,
     textAlign: 'center',

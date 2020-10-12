@@ -8,7 +8,7 @@ const serverModal = createStyles({
   },
   modalContainer: {
     backgroundColor: 'white',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -21,13 +21,13 @@ const serverModal = createStyles({
   modalHeading: {
     fontSize: '2.5rem',
     fontWeight: 1000,
-    color: 'rgb(54,57,63)',
+    color: '#36393f',
     marginBottom: '2rem',
   },
   modalSubHeading: {
     fontSize: '1.6rem',
     fontWeight: 400,
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     opacity: 0.8,
     marginBottom: '1rem',
     textAlign: 'center',
@@ -39,16 +39,16 @@ const serverModal = createStyles({
     marginTop: '2rem',
     fontFamily: 'Whitney Medium, sans-serif',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
-    backgroundColor: 'rgb(79, 86, 96)',
+    backgroundColor: '#4f5660',
     transition: 'all .2s ease-in-out',
 
     '&:hover': {
-      backgroundColor: 'rgb(54,57,63)',
+      backgroundColor: '#36393f',
     },
   },
   hr: {
     height: '1px',
-    backgroundColor: 'rgb(54,57,63)',
+    backgroundColor: '#36393f',
     width: '100%',
     marginTop: '2rem',
     opacity: 0.5,
@@ -56,7 +56,7 @@ const serverModal = createStyles({
   modalSecondaryHeading: {
     fontSize: '1.6rem',
     fontWeight: 400,
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     opacity: 0.8,
     marginTop: '2rem',
   },

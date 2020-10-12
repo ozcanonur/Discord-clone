@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Mic from '@material-ui/icons/Mic';
-import Headset from '@material-ui/icons/Headset';
+import MicRoundedIcon from '@material-ui/icons/MicRounded';
+import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
+import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
+import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import { ReactComponent as DiscordIcon } from '../../../assets/discordIcon.svg';
 import qs from 'qs';
 
@@ -14,6 +16,8 @@ const Footer = () => {
   const classes = useStyles();
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const [micOpen, setMicOpen] = useState(true);
+  const [soundOpen, setSoundOpen] = useState(true);
 
   return (
     <div className={classes.footer}>
@@ -28,11 +32,11 @@ const Footer = () => {
         <div className={classes.userId}>#5421</div>
       </div>
       <div className={classes.buttons}>
-        <Button>
-          <Mic />
+        <Button onClick={() => setMicOpen(!micOpen)}>
+          {micOpen ? <MicRoundedIcon /> : <MicOffRoundedIcon />}
         </Button>
-        <Button>
-          <Headset />
+        <Button onClick={() => setSoundOpen(!soundOpen)}>
+          {soundOpen ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
         </Button>
       </div>
     </div>

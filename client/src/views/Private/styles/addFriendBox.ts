@@ -8,12 +8,12 @@ const addFriendBoxStyles = createStyles({
   heading: {
     fontSize: '1.6rem',
     fontWeight: 1000,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     textTransform: 'uppercase',
   },
   subHeading: {
     fontSize: '1.3rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     opacity: 0.8,
     marginTop: '1.5rem',
   },
@@ -45,7 +45,7 @@ const addFriendBoxStyles = createStyles({
   },
   hr: {
     height: '1px',
-    backgroundColor: 'rgb(41,43,47)',
+    backgroundColor: '#292b2f',
     marginTop: '3rem',
   },
   helperText: {

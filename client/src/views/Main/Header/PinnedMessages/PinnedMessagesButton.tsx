@@ -35,7 +35,7 @@ const PinnedMessagesButton = () => {
         }}
         style={{ backgroundColor: pinOpen ? 'rgba(220, 221, 222, 0.2)' : 'inherit' }}
       >
-        <PinLogo style={{ fill: 'rgb(220,221,222)', height: '2rem' }} />
+        <PinLogo style={{ fill: '#dcddde', height: '2rem' }} />
         {pinNotification ? <div className={classes.notificationAlert} /> : null}
       </CustomButton>
       <PinnedMessages pinOpen={pinOpen} />

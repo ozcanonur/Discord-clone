@@ -12,7 +12,7 @@ const channelsStyles = createStyles({
   },
   categoryDescription: {
     fontSize: '1.3rem',
-    color: 'rgb(163, 168, 173)',
+    color: '#a3a8ad',
     textTransform: 'uppercase',
     letterSpacing: '2',
     display: 'flex',
@@ -34,34 +34,34 @@ const channelsStyles = createStyles({
   channel: {
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74)',
+      backgroundColor: '#40434a',
       borderRadius: '4px',
     },
     marginBottom: '4px',
     padding: '0.5rem',
   },
   channelSelected: {
-    backgroundColor: 'rgb(64, 67, 74) !important',
+    backgroundColor: '#40434a !important',
     borderRadius: '4px',
     '& *': {
       color: 'white',
     },
   },
   text: {
-    color: 'rgb(163, 168, 173)',
+    color: '#a3a8ad',
     '& span': {
       fontSize: '1.6rem',
       fontFamily: 'Whitney Book Regular, sans-serif',
     },
   },
-  icon: { fontSize: '2rem', color: 'rgb(163, 168, 173)' },
+  icon: { fontSize: '2rem', color: '#a3a8ad' },
   iconButton: {
-    color: 'rgb(163, 168, 173)',
+    color: '#a3a8ad',
     padding: '1rem 0',
   },
   menuPaper: {
-    backgroundColor: 'rgb(32,34,37)',
-    color: 'rgb(220,221,222)',
+    backgroundColor: '#202225',
+    color: '#dcddde',
     borderRadius: '1rem',
   },
   menuList: {
@@ -74,7 +74,7 @@ const channelsStyles = createStyles({
     borderRadius: '1rem',
 
     '&:hover': {
-      backgroundColor: 'rgb(220,221,222)',
+      backgroundColor: '#dcddde',
       color: 'black',
     },
   },

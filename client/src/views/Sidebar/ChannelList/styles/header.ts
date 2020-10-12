@@ -10,14 +10,14 @@ const headerStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottom: '2px solid rgb(32,34,37)',
+    borderBottom: '2px solid #202225',
   },
   serverName: {
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center',
     textAlign: 'center',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   iconButton: {
     display: 'inline-block',

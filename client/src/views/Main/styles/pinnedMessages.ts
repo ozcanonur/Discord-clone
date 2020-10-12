@@ -6,7 +6,7 @@ const pinnedMessagesStyles = createStyles({
   },
   pinnedMessage: {
     paddingTop: 0,
-    backgroundColor: 'rgb(64,68,75)',
+    backgroundColor: '#40444b',
     marginTop: '1rem',
     padding: '1rem 3rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
@@ -26,7 +26,7 @@ const pinnedMessagesStyles = createStyles({
     top: '5rem',
   },
   pinHeading: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     fontSize: '1.7rem',
     fontWeight: 1000,
     color: 'white',

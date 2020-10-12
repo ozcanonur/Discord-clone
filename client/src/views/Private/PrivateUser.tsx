@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
-import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import Button from '../../components/Button';
 import qs from 'qs';
 
@@ -58,7 +58,7 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
       className={classes.user}
       onClick={() => selectPrivateChannelOnClick(username)}
       style={{
-        backgroundColor: selectedPrivateUser === username ? 'rgb(64, 67, 74)' : 'inherit',
+        backgroundColor: selectedPrivateUser === username ? '#40434a' : 'inherit',
       }}
     >
       <div className={classes.iconContainer}>
@@ -68,8 +68,8 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
       </div>
       <div className={classes.username}>{username}</div>
       {isNotFriend ? (
-        <Button onClick={addFriendOnClick} tooltipText='Add as friend'>
-          <AddRoundedIcon />
+        <Button onClick={addFriendOnClick} tooltipText='Add as friend' style={{ padding: 0 }}>
+          <AddCircleRoundedIcon style={{ fontSize: '2rem' }} />
         </Button>
       ) : null}
       {messageNotification ? (

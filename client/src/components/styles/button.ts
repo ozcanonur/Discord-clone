@@ -2,7 +2,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 const buttonStyles = createStyles({
   button: {
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     '& > span > svg': {
       fontSize: '2rem',
     },
@@ -12,7 +12,7 @@ const buttonStyles = createStyles({
   },
   notificationTooltip: {
     backgroundColor: 'black',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '1.5rem',
     textAlign: 'center',
     letterSpacing: 0,

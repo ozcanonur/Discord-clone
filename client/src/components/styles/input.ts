@@ -2,7 +2,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 const inputStyles = createStyles({
   inputContainer: {
-    backgroundColor: 'rgb(64,68,75)',
+    backgroundColor: '#40444b',
     display: 'flex',
     fontSize: '1.5rem',
     borderRadius: '1rem',
@@ -12,11 +12,11 @@ const inputStyles = createStyles({
     fontFamily: 'Whitney Book Regular, sans-serif',
 
     '& input': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
     },
 
     '& > label': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
       fontSize: '1.5rem',
       opacity: 0.5,
     },
@@ -26,11 +26,11 @@ const inputStyles = createStyles({
     },
 
     '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
     },
 
     '& textarea': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
     },
   },
   inputLabel: {
@@ -40,7 +40,7 @@ const inputStyles = createStyles({
     fontSize: '1.6rem',
   },
   button: {
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   buttonIcon: {
     fontSize: '2rem',
@@ -65,7 +65,7 @@ const inputStyles = createStyles({
     width: '30vw',
   },
   pinFooter: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     padding: '2rem',
     display: 'flex',
     justifyContent: 'space-between',

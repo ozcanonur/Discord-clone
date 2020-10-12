@@ -7,8 +7,8 @@ const confirmationModalStyles = createStyles({
     justifyContent: 'center',
   },
   modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    backgroundColor: '#36393f',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +20,7 @@ const confirmationModalStyles = createStyles({
   warningTextContainer: {
     width: '100%',
     fontSize: '1.8rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontWeight: 600,
     display: 'flex',
     alignItems: 'center',

@@ -8,7 +8,7 @@ const serverJoinModalStyles = createStyles({
   },
   modalContainer: {
     backgroundColor: 'white',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -21,13 +21,13 @@ const serverJoinModalStyles = createStyles({
   modalHeading: {
     fontSize: '2.5rem',
     fontWeight: 1000,
-    color: 'rgb(54,57,63)',
+    color: '#36393f',
     marginBottom: '2rem',
   },
   modalSubHeading: {
     fontSize: '1.6rem',
     fontWeight: 400,
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     opacity: 0.8,
     marginBottom: '2rem',
     textAlign: 'center',
@@ -35,8 +35,10 @@ const serverJoinModalStyles = createStyles({
   inputLabel: {
     alignSelf: 'flex-start',
     fontSize: '1.5rem',
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     opacity: 0.8,
+    textTransform: 'uppercase',
+    fontWeight: 900,
   },
   input: {
     marginTop: '1rem',
@@ -44,7 +46,7 @@ const serverJoinModalStyles = createStyles({
   inputProps: {
     fontSize: '1.5rem',
     fontFamily: 'Whitney Medium, sans-serif',
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
   },
   modalFooter: {
     marginTop: '1rem',

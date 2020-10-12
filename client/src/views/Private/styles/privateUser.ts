@@ -9,11 +9,11 @@ const privateUserStyles = createStyles({
     padding: '0.8rem',
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74) !important',
+      backgroundColor: '#40434a !important',
     },
   },
   iconContainer: {
-    backgroundColor: 'rgb(114, 137, 218)',
+    backgroundColor: '#7289da',
     borderRadius: '50%',
     padding: '1.5rem',
     width: '1.5rem',
@@ -30,7 +30,7 @@ const privateUserStyles = createStyles({
   username: {
     fontSize: '1.5rem',
     marginLeft: '1rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     flexGrow: 1,
   },
 });

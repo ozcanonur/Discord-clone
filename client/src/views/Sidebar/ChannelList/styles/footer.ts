@@ -6,11 +6,11 @@ const footerStyles = createStyles({
     color: 'white',
     padding: '1rem',
     display: 'flex',
-    backgroundColor: 'rgb(41,43,47)',
+    backgroundColor: '#292b2f',
     alignItems: 'center',
   },
   iconContainer: {
-    backgroundColor: 'rgb(114, 137, 218)',
+    backgroundColor: '#7289da',
     borderRadius: '50%',
     padding: '1.5rem',
     width: '1.5rem',
@@ -44,7 +44,7 @@ const footerStyles = createStyles({
   userName: {
     fontSize: '1.5rem',
     fontWeight: 1000,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   userId: {
     fontSize: '1.1rem',

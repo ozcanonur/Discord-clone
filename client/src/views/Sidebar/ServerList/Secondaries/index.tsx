@@ -57,7 +57,7 @@ const SecondaryButtons = () => {
             >
               <div>
                 <ServerIcon onClick={() => selectServerOnClick('private')} privateRoute>
-                  <PeopleAlt style={{ color: 'rgb(220,221,222)' }} />
+                  <PeopleAlt style={{ color: '#dcddde' }} />
                 </ServerIcon>
               </div>
             </Tooltip>

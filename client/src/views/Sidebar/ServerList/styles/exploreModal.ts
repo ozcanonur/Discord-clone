@@ -7,8 +7,8 @@ const exploreModalStyles = createStyles({
     justifyContent: 'center',
   },
   modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    backgroundColor: '#36393f',
+    boxShadow: '0 1rem 1rem #000000',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -22,7 +22,7 @@ const exploreModalStyles = createStyles({
     width: '100%',
   },
   input: {
-    backgroundColor: 'rgb(114,118, 125)',
+    backgroundColor: '#72767d',
     borderRadius: '1rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
 
@@ -31,12 +31,12 @@ const exploreModalStyles = createStyles({
     },
 
     '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
     },
   },
   inputProps: {
     fontSize: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontFamily: 'Whitney Medium, sans-serif',
   },
   serversContainer: {

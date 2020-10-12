@@ -2,7 +2,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 const serverCardStyles = createStyles({
   container: {
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     color: 'white',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
     cursor: 'pointer',
@@ -26,7 +26,7 @@ const serverCardStyles = createStyles({
   },
   bodyContainer: {
     padding: '1rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     flexGrow: 1,
   },
   title: {
@@ -56,7 +56,7 @@ const serverCardStyles = createStyles({
     marginRight: '0.5rem',
   },
   smallIcon2: {
-    backgroundColor: 'rgb(220,221,222)',
+    backgroundColor: '#dcddde',
     borderRadius: '50%',
     height: '1rem',
     width: '1rem',

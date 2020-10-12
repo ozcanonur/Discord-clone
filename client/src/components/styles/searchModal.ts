@@ -7,8 +7,8 @@ const searchModalStyles = createStyles({
     justifyContent: 'center',
   },
   modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    backgroundColor: '#36393f',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -20,7 +20,7 @@ const searchModalStyles = createStyles({
     maxHeight: '50vh',
   },
   input: {
-    backgroundColor: 'rgb(114,118, 125)',
+    backgroundColor: '#72767d',
     borderRadius: '1rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
 
@@ -29,17 +29,17 @@ const searchModalStyles = createStyles({
     },
 
     '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
+      color: '#dcddde',
     },
   },
   inputProps: {
     fontSize: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontFamily: 'Whitney Medium, sans-serif',
   },
   footer: {
     paddingTop: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     borderTop: '1px solid rgba(220,221,222, 0.1)',
     fontSize: '1.3rem',
     fontWeight: 700,
@@ -47,7 +47,7 @@ const searchModalStyles = createStyles({
     width: '100%',
   },
   protip: {
-    color: 'rgb(67,181,129)',
+    color: '#43b581',
     textTransform: 'uppercase',
     fontWeight: 1000,
   },
@@ -56,7 +56,7 @@ const searchModalStyles = createStyles({
     letterSpacing: 0,
   },
   prefix: {
-    color: 'rgb(67,181,129)',
+    color: '#43b581',
     fontWeight: 1000,
     opacity: 1,
     marginLeft: '0.5rem',
@@ -70,7 +70,7 @@ const searchModalStyles = createStyles({
     display: 'flex',
     justifyContent: 'space-between',
     padding: '1rem 1rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '1.5rem',
     fontFamily: 'Whitney Medium, sans-serif',
     fontWeight: 700,
@@ -78,7 +78,7 @@ const searchModalStyles = createStyles({
     transition: 'all .2s ease-in-out',
 
     '&:hover': {
-      backgroundColor: 'rgb(64, 67, 74)',
+      backgroundColor: '#40434a',
     },
   },
   resultText: {},
@@ -87,7 +87,7 @@ const searchModalStyles = createStyles({
   },
   noResults: {
     height: '6vh',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '1.8rem',
     fontWeight: 700,
     display: 'flex',

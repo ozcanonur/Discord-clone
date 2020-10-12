@@ -3,7 +3,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 const indexStyles = createStyles({
   serverList: {
     height: '100vh',
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     color: 'white',
     fontSize: '2rem',
     overflowX: 'hidden',
@@ -12,7 +12,7 @@ const indexStyles = createStyles({
   },
   tooltip: {
     backgroundColor: 'black',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '1.5rem',
     textAlign: 'center',
     letterSpacing: 0,
@@ -28,8 +28,8 @@ const indexStyles = createStyles({
     padding: 0,
   },
   menuPaper: {
-    backgroundColor: 'rgb(32,34,37)',
-    color: 'rgb(220,221,222)',
+    backgroundColor: '#202225',
+    color: '#dcddde',
     borderRadius: '1rem',
   },
   menuList: {
@@ -43,7 +43,7 @@ const indexStyles = createStyles({
     borderRadius: '1rem',
 
     '&:hover': {
-      backgroundColor: 'rgb(220,221,222)',
+      backgroundColor: '#dcddde',
       color: 'black',
     },
   },

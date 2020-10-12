@@ -3,11 +3,11 @@ import createStyles from '@material-ui/core/styles/createStyles';
 const activeUsersStyles = createStyles({
   activeUsers: {
     minWidth: '23rem',
-    backgroundColor: 'rgb(47,49,54)',
+    backgroundColor: '#2f3136',
     padding: '2rem',
   },
   usersStatus: {
-    color: 'rgb(142,146,151)',
+    color: '#8e9297',
     fontSize: '1.5rem',
     paddingTop: 0,
   },

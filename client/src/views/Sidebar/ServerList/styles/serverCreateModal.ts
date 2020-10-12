@@ -8,7 +8,7 @@ const serverCreateModalStyles = createStyles({
   },
   modalContainer: {
     backgroundColor: 'white',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
+    boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
     display: 'flex',
     flexDirection: 'column',
@@ -20,13 +20,13 @@ const serverCreateModalStyles = createStyles({
   modalHeading: {
     fontSize: '2.5rem',
     fontWeight: 1000,
-    color: 'rgb(32,34,37)',
+    color: '#202225',
     marginBottom: '2rem',
   },
   modalSubHeading: {
     fontSize: '1.6rem',
     fontWeight: 400,
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     opacity: 0.8,
   },
   modalIconUpload: {
@@ -41,7 +41,7 @@ const serverCreateModalStyles = createStyles({
   },
   inputLabel: {
     fontSize: '1.5rem',
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
     fontWeight: 900,
     textTransform: 'uppercase',
     opacity: 0.8,
@@ -52,7 +52,7 @@ const serverCreateModalStyles = createStyles({
   inputProps: {
     fontSize: '1.5rem',
     fontFamily: 'Whitney Medium, sans-serif',
-    color: 'rgb(79, 86, 96)',
+    color: '#4f5660',
   },
   modalFooter: {
     display: 'flex',
@@ -82,7 +82,7 @@ const serverCreateModalStyles = createStyles({
     borderLeft: (isSelected) => (isSelected ? '3px solid white' : 'none'),
   },
   server: {
-    backgroundColor: (isSelected) => (isSelected ? 'rgb(114,137,218)' : 'rgb(54,57,63)'),
+    backgroundColor: (isSelected) => (isSelected ? '#7289da' : '#36393f'),
     borderRadius: '50%',
     width: '10rem',
     height: '10rem',
@@ -92,7 +92,7 @@ const serverCreateModalStyles = createStyles({
     fontSize: '1.6rem',
     fontWeight: 1000,
     textAlign: 'center',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     letterSpacing: '1.5px',
     transition: 'all .2s ease-in-out',
     '& > svg': {
@@ -100,7 +100,7 @@ const serverCreateModalStyles = createStyles({
       color: '#3CB371',
     },
     '&:hover': {
-      backgroundColor: 'rgb(114,137,218)',
+      backgroundColor: '#7289da',
       borderRadius: '40%',
       '& > *': {
         color: 'white',

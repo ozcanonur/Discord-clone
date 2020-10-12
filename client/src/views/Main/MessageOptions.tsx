@@ -40,7 +40,7 @@ const MessageOptions = ({ message }: Props) => {
       >
         <PinLogo
           className={classes.optionIcon}
-          style={{ marginRight: '0.5rem', height: '2rem', fill: 'rgb(220,221,222)' }}
+          style={{ marginRight: '0.5rem', height: '2rem', fill: '#dcddde' }}
           onClick={() => pinMessageOnClick(message)}
         />
       </Tooltip>

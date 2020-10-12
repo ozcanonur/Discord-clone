@@ -19,7 +19,7 @@ const chatStyles = createStyles({
   warning: {
     margin: 'auto auto',
     fontSize: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   messages: {
     marginBottom: '1rem',
@@ -32,7 +32,7 @@ const chatStyles = createStyles({
   listItem: {
     padding: '0 1rem',
     '&:hover': {
-      backgroundColor: 'rgb(47,49,54)',
+      backgroundColor: '#2f3136',
       '& div': {
         visibility: 'visible',
       },
@@ -55,8 +55,8 @@ const chatStyles = createStyles({
     },
   },
   notificationTooltip: {
-    backgroundColor: 'rgb(32,34,37)',
-    color: 'rgb(220,221,222)',
+    backgroundColor: '#202225',
+    color: '#dcddde',
     fontSize: '1.2rem',
     fontWeight: 700,
     textAlign: 'center',
@@ -75,7 +75,7 @@ const chatStyles = createStyles({
   },
   endMessage: {
     textAlign: 'center',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '2rem',
     paddingBottom: '1rem',
     borderBottom: '2px solid rgba(220,221,222,0.5)',

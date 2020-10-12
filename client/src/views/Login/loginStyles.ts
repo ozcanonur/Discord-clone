@@ -7,24 +7,24 @@ const loginStyles = createStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    backgroundColor: 'rgb(47,49,54)',
+    backgroundColor: '#2f3136',
   },
   avatar: {
     backgroundColor: '#3CB371',
     marginBottom: '1rem',
   },
-  form: { color: 'rgb(220,221,222)' },
+  form: { color: '#dcddde' },
   submit: {
     backgroundColor: '#3CB371',
     color: 'black',
   },
   InputProps: {
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     fontSize: '2rem',
   },
   title: {
     fontSize: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
 });
 

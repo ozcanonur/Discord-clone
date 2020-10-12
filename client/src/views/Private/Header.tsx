@@ -38,13 +38,10 @@ const Header = () => {
             className={classes.friendButton}
             onClick={() => selectTabInPrivateOnClick('Chat')}
             style={{
-              backgroundColor:
-                selectedTabInPrivateName === 'Chat' ? 'rgb(220,221,222)' : 'transparent',
-              color: selectedTabInPrivateName === 'Chat' ? '#36393f' : 'rgb(220,221,222)',
+              backgroundColor: selectedTabInPrivateName === 'Chat' ? '#dcddde' : 'transparent',
+              color: selectedTabInPrivateName === 'Chat' ? '#36393f' : '#dcddde',
               border:
-                selectedTabInPrivateName === 'Chat'
-                  ? '3px solid transparent'
-                  : '3px solid rgb(32,34,37)',
+                selectedTabInPrivateName === 'Chat' ? '3px solid transparent' : '3px solid #202225',
               borderRadius: '4px',
             }}
           >
@@ -55,13 +52,12 @@ const Header = () => {
             className={classes.friendButton}
             onClick={() => selectTabInPrivateOnClick('AddFriend')}
             style={{
-              backgroundColor:
-                selectedTabInPrivateName === 'AddFriend' ? 'rgb(220,221,222)' : 'transparent',
-              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : 'rgb(67,181,129)',
+              backgroundColor: selectedTabInPrivateName === 'AddFriend' ? '#dcddde' : 'transparent',
+              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : '#43b581',
               border:
                 selectedTabInPrivateName === 'AddFriend'
                   ? '3px solid transparent'
-                  : '3px solid rgb(67,181,129)',
+                  : '3px solid #43b581',
               borderRadius: '4px',
             }}
           >

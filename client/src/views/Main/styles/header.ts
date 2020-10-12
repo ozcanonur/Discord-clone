@@ -7,7 +7,7 @@ const headerStyles = createStyles({
     color: 'white',
     fontSize: '2rem',
     padding: '1rem  2rem',
-    borderBottom: '2px solid rgb(32,34,37)',
+    borderBottom: '2px solid #202225',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -19,13 +19,13 @@ const headerStyles = createStyles({
   },
   titleIcon: {
     fontSize: '2rem',
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   titleText: {
     marginLeft: '1rem',
     fontSize: '1.5rem',
     fontWeight: 1000,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
   },
   optionsContainer: {
     display: 'flex',
@@ -41,8 +41,8 @@ const headerStyles = createStyles({
     width: '1rem',
   },
   notificationTooltip: {
-    backgroundColor: 'rgb(32,34,37)',
-    color: 'rgb(220,221,222)',
+    backgroundColor: '#202225',
+    color: '#dcddde',
     fontSize: '1.5rem',
     fontWeight: 700,
     textAlign: 'center',
@@ -59,16 +59,16 @@ const headerStyles = createStyles({
   searchText: {
     fontSize: '1.4rem',
     fontWeight: 700,
-    color: 'rgb(220,221,222)',
+    color: '#dcddde',
     padding: '1rem 4rem',
-    backgroundColor: 'rgb(32,34,37)',
+    backgroundColor: '#202225',
     borderRadius: '1rem',
     width: '100%',
     transition: 'all .2s ease-in-out',
     opacity: 0.7,
 
     '&:hover': {
-      backgroundColor: 'rgb(220,221,222)',
+      backgroundColor: '#dcddde',
       color: 'black',
       opacity: '1 !important',
     },
