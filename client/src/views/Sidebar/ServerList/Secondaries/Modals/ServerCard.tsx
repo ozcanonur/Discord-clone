@@ -1,11 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import serverCardStyles from '../../styles/serverCard';
+import axios from 'axios';
 import qs from 'qs';
 
-import { joinServer, selectChannel as selectChannelIo } from '../../../../../actions/socket';
-import { selectServerName, selectChannel } from '../../../../../actions/react';
+import { joinServer } from '../../../../../actions/socket';
+import { selectServerName, selectChannel, addPinNotification } from '../../../../../actions/react';
 
 const useStyles = makeStyles(serverCardStyles);
 
@@ -39,11 +40,19 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
-  const joinServerOnClick = () => {
+  const joinServerOnClick = async () => {
     dispatch(joinServer(name, serverName));
     dispatch(selectServerName(serverName));
     dispatch(selectChannel({ _id: '', name: '', voice: false }));
     setModalOpen(false);
+
+    const response = await axios.get('/channelIds', {
+      params: { serverName },
+    });
+
+    response.data.forEach((id: string) => {
+      dispatch(addPinNotification('pin', id));
+    });
   };
 
   return (
@@ -56,7 +65,12 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
         <img src={img} className={classes.img} />
       </div>
       <div className={classes.bodyContainer}>
-        <div className={classes.title}>{serverName}</div>
+        <div className={classes.title}>
+          <span>{serverName}</span>
+          {subscribed ? (
+            <span className={classes.subscribedText}>(Already in this server)</span>
+          ) : null}
+        </div>
         <div className={classes.description}>{description}</div>
         <div className={classes.footer}>
           <div className={classes.online}>

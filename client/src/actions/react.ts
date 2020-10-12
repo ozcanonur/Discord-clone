@@ -69,3 +69,13 @@ export const selectPrivateUser = (username: string): InternalActions.SelectPriva
     payload: username,
   };
 };
+
+export const addPinNotification = (
+  type: string,
+  channelId?: string
+): InternalActions.AddNotification => {
+  return {
+    type: 'ADD_PIN_NOTIFICATION',
+    payload: { type, channelId },
+  };
+};

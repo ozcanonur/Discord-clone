@@ -38,6 +38,7 @@ const inputStyles = createStyles({
   },
   inputProps: {
     fontSize: '1.6rem',
+    fontFamily: 'Whitney Book Regular, sans-serif',
   },
   button: {
     color: '#dcddde',

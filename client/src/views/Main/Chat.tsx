@@ -36,11 +36,6 @@ const Chat = () => {
     }, 1000);
   };
 
-  const endMessage =
-    messages.length === 0
-      ? `This is the start of the # ${selectedChannel.name} channel.`
-      : `End of the # ${selectedChannel.name} channel.`;
-
   return (
     <div className={classes.container}>
       {selectedServerName === '' ? (
@@ -56,7 +51,11 @@ const Chat = () => {
             height={window.innerHeight > 850 ? '80vh' : '75vh'}
             inverse={true}
             hasMore={messages.length > shownMessagesCount}
-            endMessage={<h4 className={classes.endMessage}>{endMessage}</h4>}
+            endMessage={
+              <h4
+                className={classes.endMessage}
+              >{`This is the start of the # ${selectedChannel.name} channel.`}</h4>
+            }
             loader={
               <div className={classes.loading}>
                 <Loading style={{ height: '10rem' }} />

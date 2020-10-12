@@ -43,11 +43,6 @@ const Chat = () => {
     }, 1000);
   };
 
-  const endMessage =
-    messages.length === 0
-      ? `This is the start of the conversation with @${selectedPrivateUser}.`
-      : `End of the conversation with @${selectedPrivateUser}`;
-
   return (
     <div className={classes.container}>
       {selectedPrivateUser === '' ? (
@@ -61,7 +56,11 @@ const Chat = () => {
             height={window.innerHeight > 850 ? '80vh' : '75vh'}
             inverse={true}
             hasMore={messages.length > shownMessagesCount}
-            endMessage={<h4 className={classes.endMessage}>{endMessage}</h4>}
+            endMessage={
+              <h4
+                className={classes.endMessage}
+              >{`This is the start of the conversation with @${selectedPrivateUser}.`}</h4>
+            }
             loader={
               <div className={classes.loading}>
                 <Loading style={{ height: '10rem' }} />

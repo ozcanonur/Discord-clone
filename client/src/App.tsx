@@ -17,15 +17,6 @@ const App = () => {
     dispatch(connect(name));
   }, []);
 
-  // useEffect(() => {
-  //   // Select the first channel on entry
-  //   const server = servers.find((server: Server) => server.name === 'Default');
-  //   if (!server) return;
-  //   const firstChannel = server.channels[0];
-  //   dispatch(selectChannel(firstChannel));
-  //   dispatch(selectChannelIo(name, firstChannel));
-  // }, [servers]);
-
   return (
     <Grid container direction='row'>
       <Grid item style={{ width: '35rem' }}>

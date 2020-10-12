@@ -66,6 +66,10 @@ const serverCardStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  subscribedText: {
+    color: 'green',
+    marginLeft: '1rem',
+  },
 });
 
 export default serverCardStyles;

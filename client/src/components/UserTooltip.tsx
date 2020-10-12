@@ -11,7 +11,12 @@ import Button from '@material-ui/core/Button';
 import { ReactComponent as DiscordIcon } from '../assets/discordIcon.svg';
 import qs from 'qs';
 
-import { selectPrivateChannel, selectPrivateUser, selectTabInPrivate } from '../actions/react';
+import {
+  selectPrivateChannel,
+  selectPrivateUser,
+  selectTabInPrivate,
+  addPinNotification,
+} from '../actions/react';
 import {
   joinServer,
   selectPrivateChannel as selectPrivateChannelIo,
@@ -61,8 +66,16 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   }, [user.name, name]);
 
   const dispatch = useDispatch();
-  const joinServerOnClick = (serverName: string) => {
+  const joinServerOnClick = async (serverName: string) => {
     dispatch(joinServer(user.name, serverName));
+
+    const response = await axios.get('/channelIds', {
+      params: { serverName },
+    });
+
+    response.data.forEach((id: string) => {
+      dispatch(addPinNotification('pin', id));
+    });
   };
 
   const handleSubmit = (e: any) => {

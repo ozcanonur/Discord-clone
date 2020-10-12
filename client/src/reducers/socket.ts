@@ -74,6 +74,8 @@ export const notifications = (
       return state.map((notification) => notification.type !== 'private');
     case 'CLEAR_PIN_NOTIFICATION':
       return state.filter((notification) => notification.channelId !== action.payload._id);
+    case 'ADD_PIN_NOTIFICATION':
+      return uniqBy([...state, action.payload], (e) => e.channelId);
     default:
       return state;
   }

@@ -6,9 +6,10 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 import qs from 'qs';
 
-import { clearIoResponse } from '../../../../../actions/react';
+import { clearIoResponse, addPinNotification } from '../../../../../actions/react';
 import { joinServer } from '../../../../../actions/socket';
 import serverJoinModalStyles from '../../styles/serverJoinModal';
 
@@ -44,7 +45,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
     }
   };
 
-  const joinServerOnClick = () => {
+  const joinServerOnClick = async () => {
     if (modalInputValue.trim().length === 0) {
       setErrorText(`Server name can't be empty.`);
       setError(true);
@@ -52,6 +53,14 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
     }
     setErrorText(`Success! Joined ${modalInputValue}.`);
     dispatch(joinServer(name, modalInputValue));
+
+    const response = await axios.get('/channelIds', {
+      params: { serverName: modalInputValue },
+    });
+
+    response.data.forEach((id: string) => {
+      dispatch(addPinNotification('pin', id));
+    });
   };
 
   return (

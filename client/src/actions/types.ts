@@ -44,6 +44,15 @@ export namespace InternalActions {
     type: string;
     payload: string;
   }
+
+  export interface AddNotification {
+    type: string;
+    payload: {
+      type: string;
+      from?: string;
+      channelId?: string;
+    };
+  }
 }
 
 export namespace ClientIOActions {

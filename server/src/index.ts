@@ -7,6 +7,7 @@ import { searchUsers, searchChannels, SearchResult } from './utils';
 import Server, { IServer } from './db/models/server';
 import User, { IUser } from './db/models/user';
 import Note, { INote } from './db/models/note';
+import { IChannel } from './db/models/channel';
 
 const app = express();
 const server = http.createServer(app);
@@ -125,6 +126,15 @@ app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
   response.sort((x, y) => y.totalUsers - x.totalUsers);
 
   res.send(response);
+});
+
+app.get('/channelIds', async (req: ExtendedRequest, res: Response) => {
+  const { serverName } = req.query;
+
+  const server = await Server.findOne({ name: serverName }).populate('channels');
+  const channelIds = server.channels.map((channel: IChannel) => channel._id);
+
+  res.send(channelIds);
 });
 
 // Catch all for deploy
