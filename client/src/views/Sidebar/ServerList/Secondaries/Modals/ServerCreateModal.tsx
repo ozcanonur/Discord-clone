@@ -31,7 +31,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearIoResponse());
-  }, [dispatch]);
+  }, [dispatch, modalOpen]);
 
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);

@@ -25,7 +25,6 @@ const useStyles = makeStyles({
     textAlign: 'center',
     color: 'rgb(220,221,222)',
     letterSpacing: '1.5px',
-    transition: 'all .2s ease-in-out',
 
     '& > svg': {
       fontSize: '3rem',

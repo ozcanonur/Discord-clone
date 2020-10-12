@@ -6,61 +6,15 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 
-import ExploreServer from './ExploreServer';
+import ExploreServer from './ServerCard';
+import exploreModalStyle from '../../styles/exploreModal';
 import globalImg from '../../../../../assets/global.jpg';
 import gamesImg from '../../../../../assets/wow.jpg';
 import landscape1 from '../../../../../assets/landscape1.jpg';
 import landscape2 from '../../../../../assets/landscape2.jpg';
 import landscape3 from '../../../../../assets/landscape3.jpg';
 
-const useStyles = makeStyles({
-  modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  modalContainer: {
-    backgroundColor: 'rgb(54,57,63)',
-    boxShadow: '0 1rem 1rem rgb(0, 0, 0)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderRadius: '6px',
-    outline: 'none',
-    height: '90vh',
-    width: '70vw',
-  },
-  inputContainer: {
-    padding: '2rem',
-    width: '100%',
-  },
-  input: {
-    backgroundColor: 'rgb(114,118, 125)',
-    borderRadius: '1rem',
-    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
-
-    '& fieldset': {
-      border: 'none',
-    },
-
-    '& .Mui-focused': {
-      color: 'rgb(220,221,222)',
-    },
-  },
-  inputProps: {
-    fontSize: '2rem',
-    color: 'rgb(220,221,222)',
-    fontFamily: 'Whitney Medium, sans-serif',
-  },
-  serversContainer: {
-    width: '100%',
-    padding: '2rem',
-    display: 'grid',
-    gridGap: '2rem',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(248px, 1fr))',
-    overflow: 'auto',
-  },
-});
+const useStyles = makeStyles(exploreModalStyle);
 
 interface SearchResult {
   serverName: string;
@@ -82,7 +36,7 @@ const defaultDescription =
 const gamesDescription =
   'Games eh? Discuss your favorite games and nerd out here. Any user that launches the app will automatically subscribe to Games server.';
 const otherDescription =
-  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni veritatis soluta eveniet obcaecati porro explicabo deleniti cumque quisquam aliquam nobis.';
+  'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni veritatis soluta eveniet obcaecati porro explicabo.';
 
 const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
@@ -92,34 +46,45 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
 
   useEffect(() => {
     let mounted = true;
+
     if (!modalOpen) return;
 
     const getServers = async () => {
       const serversResponse: any = await axios
-        .get('/exploreServers')
+        .get('/exploreServers', {
+          params: { text: inputText },
+        })
         .catch((error) => console.log(error));
 
       // Set images/desc for the servers, kind of randomly.
-      serversResponse.data[0].img = globalImg;
-      serversResponse.data[0].description = defaultDescription;
-      serversResponse.data[1].img = gamesImg;
-      serversResponse.data[1].description = gamesDescription;
-      for (let i = 2; i < serversResponse.data.length; i++) {
+      for (let i = 0; i < serversResponse.data.length; i++) {
         const server = serversResponse.data[i];
-        const random = Math.floor(Math.random() * Math.floor(2));
-        server.img = [landscape1, landscape2, landscape3][random];
-        server.description = otherDescription;
+        if (server.serverName === 'Default') {
+          server.img = globalImg;
+          server.description = defaultDescription;
+        } else if (server.serverName === 'Games') {
+          server.img = gamesImg;
+          server.description = gamesDescription;
+        } else {
+          const random = Math.floor(Math.random() * Math.floor(3));
+          server.img = [landscape1, landscape2, landscape3][random];
+          server.description = otherDescription;
+        }
       }
 
       if (mounted) setSearchResults(serversResponse.data);
     };
 
-    getServers();
+    // Throttle requests
+    const timeoutId = setTimeout(() => {
+      getServers();
+    }, 200);
 
     return function cleanUp() {
+      clearTimeout(timeoutId);
       mounted = false;
     };
-  }, [modalOpen]);
+  }, [modalOpen, inputText]);
 
   return (
     <Modal
@@ -149,7 +114,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
           </div>
           <div className={classes.serversContainer}>
             {searchResults.map((res, key) => (
-              <ExploreServer key={key} res={res} />
+              <ExploreServer key={key} res={res} setModalOpen={setModalOpen} />
             ))}
           </div>
         </div>

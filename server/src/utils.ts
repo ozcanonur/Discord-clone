@@ -15,7 +15,7 @@ export const searchUsers = async (text: string, name: string) => {
   let regex;
   // Search for all users if no text after @
   if (text.length === 0) regex = new RegExp('.*');
-  else regex = new RegExp(`^${text}`);
+  else regex = new RegExp(`^${text}`, 'i');
 
   const users: IUser[] = await User.find({ name: { $regex: regex } }).limit(20);
   const results: SearchResult[] = [];
@@ -31,7 +31,7 @@ export const searchChannels = async (text: string, name: string) => {
   let regex;
   // Search for all channels if no text after #
   if (text.length === 0) regex = new RegExp('.*');
-  else regex = new RegExp(`^${text}`);
+  else regex = new RegExp(`^${text}`, 'i');
 
   const channels: IChannel[] = await Channel.find({ name: { $regex: regex } }).limit(20);
 

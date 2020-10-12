@@ -14,6 +14,11 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'Whitney Medium, sans-serif',
   },
+  props: {
+    MuiButtonBase: {
+      disableRipple: true,
+    },
+  },
 });
 
 ReactDOM.render(

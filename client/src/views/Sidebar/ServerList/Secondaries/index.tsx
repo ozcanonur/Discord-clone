@@ -26,7 +26,7 @@ const SecondaryButtons = () => {
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const servers = useSelector((state: RootState) => state.servers);
   const [addServerModalOpen, setAddServerModalOpen] = useState(false);
-  const [exploreModalOpen, setExploreModalOpen] = useState(true);
+  const [exploreModalOpen, setExploreModalOpen] = useState(false);
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName: string) => {

@@ -99,7 +99,14 @@ app.get('/note', async (req: ExtendedRequest, res: Response) => {
 });
 
 app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
-  const servers = await Server.find().populate('users').populate('channels').limit(20);
+  const { text } = req.query;
+  let servers;
+  if (text === '') servers = await Server.find().populate('users').populate('channels').limit(20);
+  else
+    servers = await Server.find({ name: new RegExp(`^${text}`, 'i') })
+      .populate('users')
+      .populate('channels')
+      .limit(20);
 
   const response = [];
   for (let server of servers) {

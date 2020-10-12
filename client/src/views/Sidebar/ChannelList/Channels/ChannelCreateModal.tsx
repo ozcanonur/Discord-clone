@@ -30,7 +30,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
 
   useEffect(() => {
     dispatch(clearIoResponse());
-  }, [dispatch]);
+  }, [dispatch, modalOpen]);
 
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);
