@@ -39,6 +39,8 @@ export const setupServer = async (
   const serverExists: boolean = await Server.exists({ name });
   if (serverExists) return;
 
+  console.log(`Setting up ${name}`);
+
   const createdChannels: IChannel[] = await setupChannels(channels);
   const server = new Server({
     name,

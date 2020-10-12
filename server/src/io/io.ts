@@ -8,6 +8,7 @@ import {
   onUserJoinedServer,
   onUserDeletedServer,
   onUserDeletedChannel,
+  onUserLeftServer,
 } from './ioCreateJoin';
 import { onUserSentFriendRequest, onUserConnectedNewPrivateUser } from './ioPrivate';
 import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
@@ -21,22 +22,21 @@ export interface Action {
 
 const io: SocketIO.Server = socketIo(server);
 
-io.on('connection', (socket: Socket) => {
+io.on('connection', async (socket: Socket) => {
+  // Create default servers if they don't exist
+  await setupServer('Default', [
+    { name: 'general', isVoice: false },
+    { name: 'world news', isVoice: false },
+    { name: 'covid-19', isVoice: false },
+    { name: 'voice', isVoice: true },
+  ]);
+  await setupServer('Games', [
+    { name: 'general', isVoice: false },
+    { name: 'World of Warcraft', isVoice: false },
+    { name: 'Path of Exile', isVoice: false },
+    { name: 'voice', isVoice: true },
+  ]);
   socket.on('action', async (action: Action) => {
-    // Create default servers if it doesn't exist
-    await setupServer('Default', [
-      { name: 'general', isVoice: false },
-      { name: 'world news', isVoice: false },
-      { name: 'covid-19', isVoice: false },
-      { name: 'voice', isVoice: true },
-    ]);
-    await setupServer('Games', [
-      { name: 'general', isVoice: false },
-      { name: 'World of Warcraft', isVoice: false },
-      { name: 'Path of Exile', isVoice: false },
-      { name: 'voice', isVoice: true },
-    ]);
-
     if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);
     else if (action.type === 'io/userCreatedChannel')
@@ -54,6 +54,7 @@ io.on('connection', (socket: Socket) => {
     else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
     else if (action.type === 'io/userConnectedNewPrivateUser')
       await onUserConnectedNewPrivateUser(io, action);
+    else if (action.type === 'io/userLeftServer') await onUserLeftServer(socket, action);
   });
 
   socket.on('disconnect', async () => {

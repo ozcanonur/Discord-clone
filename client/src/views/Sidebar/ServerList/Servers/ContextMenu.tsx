@@ -6,8 +6,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 import qs from 'qs';
 
-import { selectServerName, clearMessages } from '../../../../actions/react';
-import { deleteServer } from '../../../../actions/socket';
+import { selectServerName, clearMessages, selectChannel } from '../../../../actions/react';
+import {
+  deleteServer,
+  leaveServer,
+  selectChannel as selectChannelIo,
+} from '../../../../actions/socket';
 import indexStyles from '../styles/index';
 import ConfirmationModal from '../../../../components/ConfirmationModal';
 import ChannelCreateModal from '../../ChannelList/Channels/ChannelCreateModal';
@@ -29,7 +33,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const servers = useSelector((state: RootState) => state.servers);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
 
-  const selectedServer = servers.find((server) => server.name === selectedServerName) || {
+  const selectedServer = servers.find((server) => server.name === server.name) || {
     _id: '',
     name: '',
     channels: [],
@@ -45,6 +49,22 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
     dispatch(clearMessages());
     dispatch(selectServerName('Default'));
     setAnchorEl(null);
+  };
+
+  const leaveServerOnClick = (serverName: string) => {
+    if (serverName === 'Default') return console.log(`You can't leave the default server`);
+    dispatch(leaveServer(name, serverName));
+    if (selectedServerName === serverName) {
+      const defaultServer = servers.find((server) => server.name === 'Default') || {
+        _id: '',
+        name: '',
+        channels: [],
+      };
+      const firstChannel = defaultServer.channels[0];
+      dispatch(selectServerName(defaultServer.name));
+      dispatch(selectChannel(firstChannel));
+      dispatch(selectChannelIo(name, firstChannel));
+    }
   };
 
   return (
@@ -66,6 +86,13 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
             onClick={() => setCreateChannelModalOpen(true)}
           >
             Create Channel Here
+          </MenuItem>
+          <MenuItem
+            classes={{ root: classes.menuItem }}
+            disableGutters
+            onClick={() => leaveServerOnClick(server.name)}
+          >
+            Leave Server
           </MenuItem>
           <MenuItem
             classes={{ root: classes.menuItem }}

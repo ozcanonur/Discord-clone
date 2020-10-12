@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import serverCardStyles from '../../styles/serverCard';
 import qs from 'qs';
 
-import { joinServer } from '../../../../../actions/socket';
-import { selectServerName } from '../../../../../actions/react';
+import { joinServer, selectChannel as selectChannelIo } from '../../../../../actions/socket';
+import { selectServerName, selectChannel } from '../../../../../actions/react';
 
 const useStyles = makeStyles(serverCardStyles);
 
@@ -27,11 +27,18 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
 
   const { serverName, onlineUsers, totalUsers, channelCount, messageCount, img, description } = res;
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const servers = useSelector((state: RootState) => state.servers);
+  const selectedServer = servers.find((server) => server.name === serverName) || {
+    _id: '',
+    name: '',
+    channels: [],
+  };
 
   const dispatch = useDispatch();
   const joinServerOnClick = () => {
     dispatch(joinServer(name, serverName));
     dispatch(selectServerName(serverName));
+    dispatch(selectChannel({ _id: '', name: '', voice: false }));
     setModalOpen(false);
   };
 

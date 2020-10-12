@@ -224,3 +224,30 @@ export const onUserDeletedChannel = async (
     })
   );
 };
+
+export const onUserLeftServer = async (
+  socket: Socket,
+  action: { type: string; payload: { name: string; serverName: string } }
+) => {
+  const { name, serverName } = action.payload;
+
+  // Find the user, remove the server from it and save
+  const user = await User.findOne({ name }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+    },
+  });
+  user.servers = user.servers.filter((server: IServer) => server.name !== serverName);
+  await user.save();
+
+  // Find the server, remove the user from it and save
+  const server = await Server.findOne({ name: serverName }).populate('users');
+  server.users = server.users.filter((u: IUser) => u.name !== name);
+  await server.save();
+
+  // Send the new server list back
+  socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });
+};

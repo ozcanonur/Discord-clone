@@ -149,6 +149,14 @@ export namespace ClientIOActions {
       username: string;
     };
   }
+
+  export interface LeaveServerIOAction {
+    type: string;
+    payload: {
+      name: string;
+      serverName: string;
+    };
+  }
 }
 
 export namespace ServerIOActions {

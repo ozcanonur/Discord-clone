@@ -15,8 +15,8 @@ const buttonStyles = createStyles({
     color: '#dcddde',
     fontSize: '1.5rem',
     textAlign: 'center',
-    letterSpacing: 0,
     padding: '1rem 2rem',
+    letterSpacing: 0,
   },
 });
 

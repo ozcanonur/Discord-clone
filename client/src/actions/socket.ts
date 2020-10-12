@@ -128,3 +128,13 @@ export const connectNewPrivateUser = (
     payload: { name, username },
   };
 };
+
+export const leaveServer = (
+  name: string,
+  serverName: string
+): ClientIOActions.LeaveServerIOAction => {
+  return {
+    type: 'io/userLeftServer',
+    payload: { name, serverName },
+  };
+};
