@@ -2,7 +2,6 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Mic from '@material-ui/icons/Mic';
 import Headset from '@material-ui/icons/Headset';
-import Settings from '@material-ui/icons/Settings';
 import { ReactComponent as DiscordIcon } from '../../../assets/discordIcon.svg';
 import qs from 'qs';
 
@@ -34,9 +33,6 @@ const Footer = () => {
         </Button>
         <Button>
           <Headset />
-        </Button>
-        <Button>
-          <Settings />
         </Button>
       </div>
     </div>

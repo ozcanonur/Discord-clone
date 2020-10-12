@@ -8,7 +8,7 @@ const activeUsersStyles = createStyles({
   },
   usersStatus: {
     color: 'rgb(142,146,151)',
-    fontSize: '1.3rem',
+    fontSize: '1.5rem',
     paddingTop: 0,
   },
   listItem: {

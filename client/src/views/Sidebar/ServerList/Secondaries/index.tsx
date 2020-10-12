@@ -6,6 +6,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import qs from 'qs';
@@ -15,6 +16,7 @@ import { selectChannel as selectChannelIo } from '../../../../actions/socket';
 import ServerIcon from '../../../../components/ServerIcon';
 import indexStyles from '../styles/index';
 import ServerModal from './Modals/ServerModal';
+import ExploreModal from './Modals/ExploreModal';
 
 const useStyles = makeStyles(indexStyles);
 
@@ -23,7 +25,8 @@ const SecondaryButtons = () => {
 
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const servers = useSelector((state: RootState) => state.servers);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [addServerModalOpen, setAddServerModalOpen] = useState(false);
+  const [exploreModalOpen, setExploreModalOpen] = useState(true);
 
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName: string) => {
@@ -70,14 +73,31 @@ const SecondaryButtons = () => {
             TransitionComponent={Zoom}
           >
             <div>
-              <ServerIcon onClick={() => setModalOpen(true)} privateRoute={false}>
+              <ServerIcon onClick={() => setAddServerModalOpen(true)} privateRoute={false}>
                 <Add />
               </ServerIcon>
             </div>
           </Tooltip>
         </ListItem>
+        <ListItem disableGutters className={classes.listItem}>
+          <Tooltip
+            title='Explore Servers'
+            arrow
+            placement='right'
+            enterDelay={0}
+            classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
+            TransitionComponent={Zoom}
+          >
+            <div>
+              <ServerIcon onClick={() => setExploreModalOpen(true)} privateRoute={false}>
+                <ExploreRoundedIcon />
+              </ServerIcon>
+            </div>
+          </Tooltip>
+        </ListItem>
       </List>
-      <ServerModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <ServerModal modalOpen={addServerModalOpen} setModalOpen={setAddServerModalOpen} />
+      <ExploreModal modalOpen={exploreModalOpen} setModalOpen={setExploreModalOpen} />
     </>
   );
 };

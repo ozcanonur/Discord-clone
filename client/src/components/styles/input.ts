@@ -72,8 +72,7 @@ const inputStyles = createStyles({
     alignItems: 'center',
   },
   pinFooterButton: {
-    fontSize: '1.4rem',
-    fontWeight: 700,
+    fontSize: '1.5rem',
     fontFamily: 'Whitney Medium, sans-serif',
     backgroundColor: '#7289da',
     color: 'white',

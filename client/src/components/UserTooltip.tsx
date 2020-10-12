@@ -38,23 +38,21 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   useEffect(() => {
     let mounted = true;
 
-    const fetchServersAndNote = async () => {
-      const [serverResults, noteResult]: any = await Promise.all([
-        axios.get('/userServers', {
-          params: { name },
-        }),
-        axios.get('/note', {
-          params: { name: user.name, otherUserName: name },
-        }),
-      ]).catch((error) => console.log(error));
-
-      if (mounted) {
-        setUserServers(serverResults.data);
-        setUserNote(noteResult.data);
-      }
-    };
-
-    fetchServersAndNote();
+    Promise.all([
+      axios.get('/userServers', {
+        params: { name },
+      }),
+      axios.get('/note', {
+        params: { name: user.name, otherUserName: name },
+      }),
+    ])
+      .then(([serverResults, noteResults]) => {
+        if (mounted) {
+          setUserServers(serverResults.data);
+          setUserNote(noteResults.data);
+        }
+      })
+      .catch((error) => console.log(error));
 
     return function cleanUp() {
       mounted = false;

@@ -49,6 +49,7 @@ const messageStyles = createStyles({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     position: 'relative',
+    cursor: 'pointer',
   },
   icon: {
     width: '3.2rem',

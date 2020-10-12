@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 import { searchUsers, searchChannels, SearchResult } from './utils';
-import { IServer } from './db/models/server';
+import Server, { IServer } from './db/models/server';
 import User, { IUser } from './db/models/user';
 import Note, { INote } from './db/models/note';
 
@@ -96,6 +96,27 @@ app.get('/note', async (req: ExtendedRequest, res: Response) => {
   const note = user.notes.find((note: INote) => note.about.name === otherUserName);
   if (note) res.send(note.note);
   else res.send('');
+});
+
+app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
+  const servers = await Server.find().populate('users').populate('channels').limit(20);
+
+  const response = [];
+  for (let server of servers) {
+    const serverName = server.name;
+    const onlineUsers = server.users.filter((user: IUser) => user.online).length;
+    const totalUsers = server.users.length;
+    const channelCount = server.channels.length;
+    let messageCount = 0;
+    for (let channel of server.channels) {
+      messageCount += channel.messages.length;
+    }
+    response.push({ serverName, onlineUsers, totalUsers, channelCount, messageCount });
+  }
+
+  response.sort((x, y) => y.totalUsers - x.totalUsers);
+
+  res.send(response);
 });
 
 // Catch all for deploy

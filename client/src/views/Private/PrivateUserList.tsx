@@ -28,7 +28,7 @@ const PrivateUserList = () => {
         </div>
         <div className={classes.titleContainer}>
           <EmojiPeopleIcon className={classes.usersIcon} />
-          <div className={classes.usersText}>Friends</div>
+          <div className={classes.usersText}>{`Friends (${friends.length})`}</div>
           <EmojiPeopleIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
         </div>
         <div className={classes.userList}>
@@ -41,7 +41,7 @@ const PrivateUserList = () => {
       <div className={classes.subContainer} style={{ borderTop: '4px solid rgb(32,34,37)' }}>
         <div className={classes.titleContainer}>
           <GroupRoundedIcon className={classes.usersIcon} />
-          <div className={classes.usersText}>Other users</div>
+          <div className={classes.usersText}>{`Other users (${otherUsers.length})`}</div>
           <GroupRoundedIcon className={classes.usersIcon} style={{ visibility: 'hidden' }} />
         </div>
         <div className={classes.userList}>
