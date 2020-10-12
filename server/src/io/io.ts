@@ -59,7 +59,7 @@ io.on('connection', async (socket: Socket) => {
     else if (action.type === 'io/userConnectedNewPrivateUser')
       await onUserConnectedNewPrivateUser(io, action);
     else if (action.type === 'io/userLeftServer') await onUserLeftServer(socket, action);
-    else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, socket, action);
+    else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, action);
   });
 
   socket.on('disconnect', async () => {

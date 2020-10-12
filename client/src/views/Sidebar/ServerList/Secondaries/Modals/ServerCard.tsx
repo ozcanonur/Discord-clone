@@ -18,6 +18,7 @@ interface Props {
     messageCount: number;
     img: string;
     description: string;
+    subscribed: boolean;
   };
   setModalOpen: (x: boolean) => void;
 }
@@ -25,7 +26,16 @@ interface Props {
 const ServerCard = ({ res, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const { serverName, onlineUsers, totalUsers, channelCount, messageCount, img, description } = res;
+  const {
+    serverName,
+    onlineUsers,
+    totalUsers,
+    channelCount,
+    messageCount,
+    img,
+    description,
+    subscribed,
+  } = res;
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
   const dispatch = useDispatch();
@@ -37,7 +47,11 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
   };
 
   return (
-    <div className={classes.container} onClick={joinServerOnClick}>
+    <div
+      className={classes.container}
+      onClick={joinServerOnClick}
+      style={{ border: subscribed ? '2px solid green' : 'none' }}
+    >
       <div className={classes.imgContainer}>
         <img src={img} className={classes.img} />
       </div>

@@ -116,7 +116,6 @@ export const onUserConnectedNewPrivateUser = async (
 
 export const onUserRemovedFriend = async (
   io: SocketIO.Server,
-  socket: Socket,
   action: {
     type: string;
     payload: {

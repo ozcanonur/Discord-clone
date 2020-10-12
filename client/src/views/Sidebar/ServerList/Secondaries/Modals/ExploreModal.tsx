@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
+import qs from 'qs';
 
 import ExploreServer from './ServerCard';
 import exploreModalStyle from '../../styles/exploreModal';
@@ -24,6 +25,7 @@ interface SearchResult {
   messageCount: number;
   img: string;
   description: string;
+  subscribed: boolean;
 }
 
 interface Props {
@@ -41,6 +43,7 @@ const otherDescription =
 const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
+  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
@@ -52,7 +55,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
     const getServers = async () => {
       const serversResponse: any = await axios
         .get('/exploreServers', {
-          params: { text: inputText },
+          params: { name, text: inputText },
         })
         .catch((error) => console.log(error));
 

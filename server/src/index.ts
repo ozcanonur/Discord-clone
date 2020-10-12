@@ -99,7 +99,7 @@ app.get('/note', async (req: ExtendedRequest, res: Response) => {
 });
 
 app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
-  const { text } = req.query;
+  const { name, text } = req.query;
   let servers;
   if (text === '') servers = await Server.find().populate('users').populate('channels').limit(20);
   else
@@ -114,11 +114,12 @@ app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
     const onlineUsers = server.users.filter((user: IUser) => user.online).length;
     const totalUsers = server.users.length;
     const channelCount = server.channels.length;
+    const subscribed = server.users.some((user: IUser) => user.name === name);
     let messageCount = 0;
     for (let channel of server.channels) {
       messageCount += channel.messages.length;
     }
-    response.push({ serverName, onlineUsers, totalUsers, channelCount, messageCount });
+    response.push({ serverName, onlineUsers, totalUsers, channelCount, messageCount, subscribed });
   }
 
   response.sort((x, y) => y.totalUsers - x.totalUsers);

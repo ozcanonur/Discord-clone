@@ -36,7 +36,6 @@ const indexStyles = createStyles({
     padding: '1rem',
   },
   menuItem: {
-    fontFamily: 'Whitney Medium, sans-serif',
     fontSize: '1.5rem',
     fontWeight: 600,
     padding: '1rem 2rem',
@@ -45,6 +44,17 @@ const indexStyles = createStyles({
     '&:hover': {
       backgroundColor: '#dcddde',
       color: 'black',
+    },
+  },
+  menuItemDelete: {
+    fontSize: '1.5rem',
+    fontWeight: 600,
+    padding: '1rem 2rem',
+    borderRadius: '1rem',
+
+    '&:hover': {
+      backgroundColor: 'red',
+      color: 'white',
     },
   },
 });

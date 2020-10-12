@@ -96,7 +96,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
             Leave Server
           </MenuItem>
           <MenuItem
-            classes={{ root: classes.menuItem }}
+            classes={{ root: classes.menuItemDelete }}
             disableGutters
             disabled={server.name === 'Default' || server.name === 'Games'}
             onClick={() => setDeleteModalOpen(true)}
