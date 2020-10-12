@@ -91,6 +91,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
             classes={{ root: classes.menuItem }}
             disableGutters
             onClick={() => leaveServerOnClick(server.name)}
+            disabled={server.name === 'Default'}
           >
             Leave Server
           </MenuItem>

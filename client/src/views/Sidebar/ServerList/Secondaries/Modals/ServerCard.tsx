@@ -27,12 +27,6 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
 
   const { serverName, onlineUsers, totalUsers, channelCount, messageCount, img, description } = res;
   const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-  const servers = useSelector((state: RootState) => state.servers);
-  const selectedServer = servers.find((server) => server.name === serverName) || {
-    _id: '',
-    name: '',
-    channels: [],
-  };
 
   const dispatch = useDispatch();
   const joinServerOnClick = () => {

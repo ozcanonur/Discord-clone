@@ -61,6 +61,16 @@ export const sendFriendRequest = (
   };
 };
 
+export const removeFriend = (
+  name: string,
+  friendName: string
+): ClientIOActions.RemoveFriendIOAction => {
+  return {
+    type: 'io/userRemovedFriend',
+    payload: { name, friendName },
+  };
+};
+
 export const createPin = (
   name: string,
   message: string,

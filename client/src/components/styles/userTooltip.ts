@@ -100,17 +100,19 @@ const userTooltipStyles = createStyles({
     padding: '1.5rem',
   },
   buttonPrivate: {
-    fontSize: '1rem',
     backgroundColor: '#7289da',
     color: 'white',
     transition: 'all .2s ease-in-out',
-
+    fontSize: '1rem',
     '&:hover': {
       backgroundColor: '#677bc4',
     },
-    marginTop: '0.5rem',
-    marginBottom: '1.5rem',
-    width: '100%',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '1.5rem',
   },
 });
 

@@ -16,6 +16,7 @@ import {
   joinServer,
   selectPrivateChannel as selectPrivateChannelIo,
   connectNewPrivateUser,
+  sendFriendRequest,
 } from '../actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
@@ -89,6 +90,10 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     dispatch(selectPrivateChannelIo(user.name, name));
   };
 
+  const addFriendOnClick = () => {
+    dispatch(sendFriendRequest(user.name, name));
+  };
+
   return (
     <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
       <div className={classes.header}>
@@ -114,17 +119,6 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
         ))}
       </List>
       <div className={classes.noteContainer}>
-        {name !== user.name ? (
-          <NavLink to={`/private?name=${user.name}`} style={{ textDecoration: 'none' }}>
-            <Button
-              variant='contained'
-              className={classes.buttonPrivate}
-              onClick={privateMessageOnClick}
-            >
-              Private Message
-            </Button>
-          </NavLink>
-        ) : null}
         <div className={classes.noteTitle}>Note: {userNote}</div>
         <TextField
           multiline
@@ -139,6 +133,26 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
+        {name !== user.name ? (
+          <div className={classes.buttons}>
+            <NavLink to={`/private?name=${user.name}`} style={{ textDecoration: 'none' }}>
+              <Button
+                variant='contained'
+                className={classes.buttonPrivate}
+                onClick={privateMessageOnClick}
+              >
+                Message
+              </Button>
+            </NavLink>
+            <Button
+              variant='contained'
+              className={classes.buttonPrivate}
+              onClick={addFriendOnClick}
+            >
+              Add friend
+            </Button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -101,6 +101,14 @@ export namespace ClientIOActions {
     };
   }
 
+  export interface RemoveFriendIOAction {
+    type: string;
+    payload: {
+      name: string;
+      friendName: string;
+    };
+  }
+
   export interface CreatePinIOAction {
     type: string;
     payload: {

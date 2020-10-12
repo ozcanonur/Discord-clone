@@ -113,3 +113,37 @@ export const onUserConnectedNewPrivateUser = async (
     payload: reducePrivateUsers(user),
   });
 };
+
+export const onUserRemovedFriend = async (
+  io: SocketIO.Server,
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      friendName: string;
+    };
+  }
+) => {
+  const { name, friendName } = action.payload;
+  const user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
+  // Remove friend from user
+  user.friends = user.friends.filter((f: IUser) => f.name !== friendName);
+  await user.save();
+  // Remove user from friend
+  const friend = await User.findOne({ name: friendName })
+    .populate('friends')
+    .populate('usersMessagedBefore');
+  friend.friends = friend.friends.filter((f: IUser) => f.name !== name);
+  await friend.save();
+
+  // Send the new private user list to both users
+  io.to(user.socketId).emit('action', {
+    type: 'io/privateUsers',
+    payload: reducePrivateUsers(user),
+  });
+  io.to(friend.socketId).emit('action', {
+    type: 'io/privateUsers',
+    payload: reducePrivateUsers(friend),
+  });
+};

@@ -4,12 +4,14 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
+import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import Button from '../../components/Button';
 import qs from 'qs';
 
 import {
   selectPrivateChannel as selectPrivateChannelIo,
   sendFriendRequest,
+  removeFriend,
 } from '../../actions/socket';
 import {
   selectPrivateChannel,
@@ -53,6 +55,10 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
     dispatch(sendFriendRequest(name, username));
   };
 
+  const removeFriendOnClick = () => {
+    dispatch(removeFriend(name, username));
+  };
+
   return (
     <div
       className={classes.user}
@@ -71,7 +77,11 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
         <Button onClick={addFriendOnClick} tooltipText='Add as friend' style={{ padding: 0 }}>
           <AddCircleRoundedIcon style={{ fontSize: '2rem' }} />
         </Button>
-      ) : null}
+      ) : (
+        <Button onClick={removeFriendOnClick} tooltipText='Remove friend' style={{ padding: 0 }}>
+          <RemoveCircleRoundedIcon style={{ fontSize: '2rem' }} />
+        </Button>
+      )}
       {messageNotification ? (
         <AnnouncementRoundedIcon
           style={{
