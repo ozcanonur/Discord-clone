@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { ReactComponent as PinLogo } from '../../../../assets/office.svg';
+import { ReactComponent as PinLogo } from '../../assets/office.svg';
+import OutsideClickHandler from 'react-outside-click-handler';
 
 import PinnedMessages from './PinnedMessages';
-import CustomButton from '../../../../components/Button';
-import { clearPinNotification } from '../../../../actions/react';
-import headerStyles from '../../styles/header';
+import CustomButton from '../../components/Button';
+import { clearPinNotification } from '../../actions/react';
+import headerStyles from './styles/header';
 
 const useStyles = makeStyles(headerStyles);
 
@@ -38,7 +39,9 @@ const PinnedMessagesButton = () => {
         <PinLogo style={{ fill: '#dcddde', height: '2rem' }} />
         {pinNotification ? <div className={classes.notificationAlert} /> : null}
       </CustomButton>
-      <PinnedMessages pinOpen={pinOpen} />
+      <OutsideClickHandler onOutsideClick={() => setPinOpen(false)}>
+        <PinnedMessages pinOpen={pinOpen} />
+      </OutsideClickHandler>
     </>
   );
 };

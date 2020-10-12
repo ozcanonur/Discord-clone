@@ -5,7 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import qs from 'qs';
 
 import Main from './views/Main/index';
-import Sidebar from './views/Sidebar/index';
+import Servers from './views/Servers';
+import Channels from './views/Channels';
 import { connect } from './actions/socket';
 
 const App = () => {
@@ -20,7 +21,14 @@ const App = () => {
   return (
     <Grid container direction='row'>
       <Grid item style={{ width: '35rem' }}>
-        <Sidebar />
+        <Grid container direction='row'>
+          <Grid item xs={3}>
+            <Servers />
+          </Grid>
+          <Grid item xs={9}>
+            <Channels />
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item xs>
         <Main />

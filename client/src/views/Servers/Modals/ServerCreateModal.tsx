@@ -6,28 +6,29 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import qs from 'qs';
 
-import { createChannel } from '../../../../actions/socket';
-import { clearIoResponse } from '../../../../actions/react';
-import channelCreateModalStyles from '../styles/channelCreateModal';
+import { clearIoResponse } from '../../../actions/react';
+import { createServer } from '../../../actions/socket';
+import serverCreateModalStyles from '../styles/serverCreateModal';
 
-const useStyles = makeStyles(channelCreateModalStyles);
+const useStyles = makeStyles(serverCreateModalStyles);
 
 interface Props {
   modalOpen: boolean;
   setModalOpen: (x: boolean) => void;
-  selectedServer: Server;
 }
 
-const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) => {
+const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const dispatch = useDispatch();
-  const [modalInputValue, setModalInputValue] = useState('');
+  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const [modalInputValue, setModalInputValue] = useState(`${name}'s server`);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearIoResponse());
   }, [dispatch, modalOpen]);
@@ -35,14 +36,11 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   const handleModalInputChange = (e: any) => {
     setModalInputValue(e.target.value);
     dispatch(clearIoResponse());
-    if (selectedServer.name === 'Default' || selectedServer.name === 'Games') {
-      setErrorText(`Channels can't be created on default servers. Try creating a new server.`);
+    if (e.target.value.split(' ').length > 3) {
+      setErrorText(`Server name can't be longer than 4 words.`);
       setError(true);
-    } else if (e.target.value.length > 10) {
-      setErrorText(`Channel name can't be longer than 10 characters.`);
-      setError(true);
-    } else if (e.target.value.length === 0) {
-      setErrorText(`Channel name can't be empty.`);
+    } else if (e.target.value.trim().length === 0) {
+      setErrorText(`Server name can't be empty.`);
       setError(true);
     } else {
       setErrorText('Perfect!');
@@ -50,12 +48,9 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
     }
   };
 
-  // eslint-disable-next-line no-unused-vars
-  const createChannelOnClick = (channelName: string, isVoice: boolean) => {
-    if (selectedServer.name !== 'Default' && selectedServer.name !== 'Games') {
-      setErrorText(`Success! ${modalInputValue} created in ${selectedServer.name}.`);
-      dispatch(createChannel(selectedServer, channelName, false));
-    }
+  const createServerOnClick = () => {
+    setErrorText(`Success! ${modalInputValue} created.`);
+    dispatch(createServer(name, modalInputValue));
   };
 
   return (
@@ -71,16 +66,21 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
     >
       <Slide in={modalOpen} direction='down'>
         <div className={classes.modalContainer}>
-          <div className={classes.modalHeading}>Create channel</div>
+          <div className={classes.modalHeading}>Customize your server</div>
+          <div className={classes.modalSubHeading}>
+            Give your server a personality with a name and an icon.
+          </div>
+          <div className={classes.modalSubHeading} style={{ marginBottom: '0.2rem' }}>
+            You can always change it later.
+          </div>
           <div className={classes.modalInputContainer}>
-            <div className={classes.inputLabel}>Channel name</div>
+            <div className={classes.inputLabel}>Server name</div>
             <TextField
               className={classes.input}
               variant='outlined'
               fullWidth
               InputProps={{
                 className: classes.inputProps,
-                autoFocus: true,
               }}
               value={modalInputValue}
               onChange={(e) => handleModalInputChange(e)}
@@ -97,15 +97,15 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
               className={classes.modalButton}
               onClick={() => setModalOpen(false)}
             >
-              Cancel
+              Back
             </Button>
             <Button
               variant='contained'
               className={classes.modalButton}
-              onClick={() => createChannelOnClick(modalInputValue, false)}
+              onClick={createServerOnClick}
               disabled={!!error}
             >
-              Create Channel
+              Create
             </Button>
           </div>
         </div>
@@ -114,4 +114,4 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   );
 };
 
-export default ChannelCreateModal;
+export default ServerCreateModal;

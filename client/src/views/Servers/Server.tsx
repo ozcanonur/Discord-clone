@@ -7,11 +7,11 @@ import Zoom from '@material-ui/core/Zoom';
 import ListItem from '@material-ui/core/ListItem';
 import qs from 'qs';
 
-import { selectServerName, selectChannel, clearMessages } from '../../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../../actions/socket';
-import ServerIcon from '../../../../components/ServerIcon';
+import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
+import ServerIcon from '../../components/ServerIcon';
 import ContextMenu from './ContextMenu';
-import indexStyles from '../styles/index';
+import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
 

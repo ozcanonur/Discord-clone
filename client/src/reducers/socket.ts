@@ -69,7 +69,10 @@ export const notifications = (
 ) => {
   switch (action.type) {
     case 'io/notification':
-      return uniqBy([...state, action.payload], (e) => e.from);
+      if (action.payload.type === 'private')
+        return uniqBy([...state, action.payload], (e) => e.from);
+      else if (action.payload.type === 'pin')
+        return uniqBy([...state, action.payload], (e) => e.channelId);
     case 'CLEAR_PRIVATE_NOTIFICATION':
       return state.map((notification) => notification.type !== 'private');
     case 'CLEAR_PIN_NOTIFICATION':

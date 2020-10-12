@@ -5,12 +5,12 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
-import { ReactComponent as PinLogo } from '../../../../assets/office.svg';
+import { ReactComponent as PinLogo } from '../../assets/office.svg';
 import qs from 'qs';
 
-import { selectChannel } from '../../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../../actions/socket';
-import channelsStyles from '../styles/channels';
+import { selectChannel } from '../../actions/react';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
+import channelsStyles from './styles/channels';
 import ContextMenu from './ContextMenu';
 
 const useStyles = makeStyles(channelsStyles);
@@ -64,7 +64,7 @@ const Channel = ({ channel }: ChannelProps) => {
           <PinLogo
             style={{
               height: '1.5rem',
-              fill: 'rgba(255, 0,0, 0.3)',
+              fill: 'rgb(220,221,222)',
             }}
           />
         ) : null}

@@ -11,10 +11,10 @@ import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import qs from 'qs';
 
-import { selectServerName, selectChannel, clearMessages } from '../../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../../actions/socket';
-import ServerIcon from '../../../../components/ServerIcon';
-import indexStyles from '../styles/index';
+import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
+import ServerIcon from '../../components/ServerIcon';
+import indexStyles from './styles/index';
 import ServerModal from './Modals/ServerModal';
 import ExploreModal from './Modals/ExploreModal';
 

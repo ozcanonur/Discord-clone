@@ -9,9 +9,9 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import qs from 'qs';
 
-import { clearIoResponse, addPinNotification } from '../../../../../actions/react';
-import { joinServer } from '../../../../../actions/socket';
-import serverJoinModalStyles from '../../styles/serverJoinModal';
+import { clearIoResponse, addPinNotification } from '../../../actions/react';
+import { joinServer } from '../../../actions/socket';
+import serverJoinModalStyles from '../styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);
 

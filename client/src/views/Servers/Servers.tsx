@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
 
 import Server from './Server';
-import indexStyles from '../styles/index';
+import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
 

@@ -21,7 +21,7 @@ const pinnedMessagesStyles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     minWidth: '30vw',
-    height: '60vh',
+    height: '50vh',
     right: '15.5rem',
     top: '5rem',
   },

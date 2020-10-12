@@ -2,6 +2,7 @@ import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Server, { IServer } from '../db/models/server';
 import { reduceUsers, reduceServers, reducePrivateUsers } from './util';
+import { IChannel } from '../db/models/channel';
 
 export const onUserConnected = async (
   io: SocketIO.Server,
@@ -53,6 +54,19 @@ export const onUserConnected = async (
     await defaultServer.save();
     secondaryServer.users.push(user);
     await secondaryServer.save();
+
+    // Also send pin notifications
+    // First, get the channelIds in the default servers
+    const defaultChannelIds = defaultServer.channels.map((ch: IChannel) => ch._id);
+    const secondaryChannelIds = secondaryServer.channels.map((ch: IChannel) => ch._id);
+    // Send pin notification for each channel in default servers
+    [...defaultChannelIds, ...secondaryChannelIds].forEach((id: string) => {
+      console.log(id);
+      socket.emit('action', {
+        type: 'io/notification',
+        payload: { type: 'pin', channelId: id },
+      });
+    });
   }
 
   // Let other users know

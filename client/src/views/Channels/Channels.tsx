@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 
 import Channel from './Channel';
 import ChannelCreateModal from './ChannelCreateModal';
-import channelsStyles from '../styles/channels';
+import channelsStyles from './styles/channels';
 
 const useStyles = makeStyles(channelsStyles);
 

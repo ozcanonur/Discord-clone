@@ -8,12 +8,12 @@ import TextField from '@material-ui/core/TextField';
 import qs from 'qs';
 
 import ExploreServer from './ServerCard';
-import exploreModalStyle from '../../styles/exploreModal';
-import globalImg from '../../../../../assets/global.jpg';
-import gamesImg from '../../../../../assets/wow.jpg';
-import landscape1 from '../../../../../assets/landscape1.jpg';
-import landscape2 from '../../../../../assets/landscape2.jpg';
-import landscape3 from '../../../../../assets/landscape3.jpg';
+import exploreModalStyle from '../styles/exploreModal';
+import globalImg from '../../../assets/global.jpg';
+import gamesImg from '../../../assets/wow.jpg';
+import landscape1 from '../../../assets/landscape1.jpg';
+import landscape2 from '../../../assets/landscape2.jpg';
+import landscape3 from '../../../assets/landscape3.jpg';
 
 const useStyles = makeStyles(exploreModalStyle);
 

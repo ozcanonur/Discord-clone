@@ -5,9 +5,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Fade from '@material-ui/core/Fade';
 
-import Message from '../../../../components/Message';
+import Message from '../../components/Message';
 import PinnedMessageInput from './PinnedMessageInput';
-import pinnedMessagesStyles from '../../styles/pinnedMessages';
+import pinnedMessagesStyles from './styles/pinnedMessages';
 
 const useStyles = makeStyles(pinnedMessagesStyles);
 

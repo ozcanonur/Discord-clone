@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import PinnedMessagesButton from './PinnedMessages/PinnedMessagesButton';
+import PinnedMessagesButton from './PinnedMessagesButton';
 import ActiveUsersButton from './ActiveUsersButton';
 import GithubButton from './GithubButton';
 import PrivateNotificationButton from './PrivateNotificationButton';
-import SearchModal from '../../../components/SearchModal';
-import headerStyles from '../styles/header';
+import SearchModal from '../../components/SearchModal';
+import headerStyles from './styles/header';
 
 const useStyles = makeStyles(headerStyles);
 

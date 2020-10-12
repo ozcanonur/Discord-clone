@@ -9,8 +9,8 @@ import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
 import qs from 'qs';
 
-import inputStyles from '../../../../components/styles/input';
-import { createPin } from '../../../../actions/socket';
+import inputStyles from '../../components/styles/input';
+import { createPin } from '../../actions/socket';
 
 const useStyles = makeStyles(inputStyles);
 
@@ -31,17 +31,10 @@ const PinnedMessageInput = () => {
     setEmojiMenuVisible(false);
   };
 
-  const isEmptyMessage = (message: string) => {
-    if (message.trim() === '') return true;
-    return false;
-  };
-
   const dispatch = useDispatch();
   const createPinOnClick = () => {
-    if (isEmptyMessage(text) || !selectedChannel.name) {
-      console.log(`Need to select a channel first`);
-      return;
-    }
+    if (text.trim() === '' || !selectedChannel.name)
+      return console.log(`You need to select a channel first`);
     dispatch(createPin(name, text, selectedChannel));
     setText('');
   };

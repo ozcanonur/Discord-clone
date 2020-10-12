@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import Channels from './Channels/index';
+import Channels from './Channels';
 import bodyStyles from './styles/body';
 
 const useStyles = makeStyles(bodyStyles);

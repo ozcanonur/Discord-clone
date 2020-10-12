@@ -4,10 +4,10 @@ import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
-import { ReactComponent as DiscordIcon } from '../../../assets/discordIcon.svg';
+import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import qs from 'qs';
 
-import Button from '../../../components/Button';
+import Button from '../../components/Button';
 import footerStyles from './styles/footer';
 
 const useStyles = makeStyles(footerStyles);

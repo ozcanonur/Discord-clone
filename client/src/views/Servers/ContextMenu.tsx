@@ -6,15 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 import qs from 'qs';
 
-import { selectServerName, clearMessages, selectChannel } from '../../../../actions/react';
-import {
-  deleteServer,
-  leaveServer,
-  selectChannel as selectChannelIo,
-} from '../../../../actions/socket';
-import indexStyles from '../styles/index';
-import ConfirmationModal from '../../../../components/ConfirmationModal';
-import ChannelCreateModal from '../../ChannelList/Channels/ChannelCreateModal';
+import { selectServerName, clearMessages, selectChannel } from '../../actions/react';
+import { deleteServer, leaveServer, selectChannel as selectChannelIo } from '../../actions/socket';
+import indexStyles from './styles/index';
+import ConfirmationModal from '../../components/ConfirmationModal';
+import ChannelCreateModal from '../Channels/ChannelCreateModal';
 
 const useStyles = makeStyles(indexStyles);
 

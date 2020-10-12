@@ -6,7 +6,7 @@ import qs from 'qs';
 
 import { connect } from '../../actions/socket';
 import PrivateUserList from './PrivateUserList';
-import ServerList from '../Sidebar/ServerList/index';
+import ServerList from '../Servers/index';
 import indexStyles from './styles/index';
 import Header from './Header';
 import ActiveUsers from '../Main/ActiveUsers';

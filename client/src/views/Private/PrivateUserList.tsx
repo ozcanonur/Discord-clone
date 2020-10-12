@@ -5,7 +5,7 @@ import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import GroupRoundedIcon from '@material-ui/icons/GroupRounded';
 
 import PrivateUser from './PrivateUser';
-import Footer from '../Sidebar/ChannelList/Footer';
+import Footer from '../Channels/Footer';
 import privateUserListStyles from './styles/privateUserList';
 import SearchModal from '../../components/SearchModal';
 

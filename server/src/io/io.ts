@@ -29,16 +29,16 @@ const io: SocketIO.Server = socketIo(server);
 io.on('connection', async (socket: Socket) => {
   // Create default servers if they don't exist
   await setupServer('Default', [
-    { name: 'general', isVoice: false },
-    { name: 'world news', isVoice: false },
-    { name: 'covid-19', isVoice: false },
-    { name: 'voice', isVoice: true },
+    { name: 'General', isVoice: false },
+    { name: 'World news', isVoice: false },
+    { name: 'Covid-19', isVoice: false },
+    { name: 'Voice', isVoice: true },
   ]);
   await setupServer('Games', [
-    { name: 'general', isVoice: false },
+    { name: 'General', isVoice: false },
     { name: 'World of Warcraft', isVoice: false },
     { name: 'Path of Exile', isVoice: false },
-    { name: 'voice', isVoice: true },
+    { name: 'Voice', isVoice: true },
   ]);
   socket.on('action', async (action: Action) => {
     if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);

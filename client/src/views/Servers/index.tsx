@@ -2,8 +2,8 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import indexStyles from './styles/index';
-import SecondaryButtons from './Secondaries';
-import Servers from './Servers/index';
+import SecondaryButtons from './Options';
+import Servers from './Servers';
 
 const useStyles = makeStyles(indexStyles);
 

@@ -6,10 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 import qs from 'qs';
 
-import { clearMessages } from '../../../../actions/react';
-import { deleteChannel } from '../../../../actions/socket';
-import channelsStyles from '../styles/channels';
-import ConfirmationModal from '../../../../components/ConfirmationModal';
+import { clearMessages } from '../../actions/react';
+import { deleteChannel } from '../../actions/socket';
+import channelsStyles from './styles/channels';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const useStyles = makeStyles(channelsStyles);
 

@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import { Picker } from 'emoji-mart';
-import 'emoji-mart/css/emoji-mart.css';
+import '../../node_modules/emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import qs from 'qs';
 
