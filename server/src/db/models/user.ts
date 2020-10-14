@@ -6,6 +6,7 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
+  password: String,
   socketId: String,
   servers: [
     {
@@ -41,6 +42,7 @@ const UserSchema = new Schema({
 
 export interface IUser extends Document {
   name: string;
+  password: string;
   socketId: string;
   servers?: any; // WOOP
   currentChannel?: any; // WOOP

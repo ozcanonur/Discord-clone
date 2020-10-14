@@ -53,6 +53,11 @@ export namespace InternalActions {
       channelId?: string;
     };
   }
+
+  export interface Login {
+    type: string;
+    payload: string;
+  }
 }
 
 export namespace ClientIOActions {

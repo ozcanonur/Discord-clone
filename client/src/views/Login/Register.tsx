@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -7,8 +8,10 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
+
+import { login } from '../../actions/react';
 import loginStyles from './loginStyles';
-import ParticlesBg from 'particles-bg';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -20,14 +23,25 @@ interface Props {
 const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   const classes = useStyles();
 
-  const [name, setName] = useState('Onur');
+  const [username, setUserName] = useState('Onur');
+  const [password, setPassword] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const dispatch = useDispatch();
+  const registerOnClick = () => {
+    const params = { username, password };
+    axios
+      .post('/register', params)
+      .then((res) => {
+        if (res.status === 201) {
+          console.log('User created');
+          dispatch(login(username));
+        } else if (res.status === 409) console.log('User already exists');
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
-    <Slide in={registerOpen} direction='left' timeout={500} enter mountOnEnter unmountOnExit>
+    <Slide in={registerOpen} direction='left' timeout={500} mountOnEnter unmountOnExit>
       <div className={classes.login}>
         <Avatar className={classes.avatar}>
           <LockOpenRoundedIcon classes={{ root: classes.avatarIcon }} />
@@ -46,8 +60,8 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
             name='name'
             autoComplete='name'
             autoFocus
-            value={name}
-            onChange={handleChange}
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
             classes={{ root: classes.root }}
             InputProps={{
               classes: {
@@ -69,6 +83,8 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
             label='Password'
             type='password'
             id='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             autoComplete='current-password'
             InputProps={{
               classes: {
@@ -92,13 +108,13 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               Back
             </Button>
             <Button
-              type='submit'
               fullWidth
               variant='contained'
               color='primary'
               className={classes.submit}
-              component={Link}
-              to={`/main?name=${name}`}
+              onClick={registerOnClick}
+              // component={Link}
+              // to={`/main?name=${name}`}
             >
               Confirm
             </Button>

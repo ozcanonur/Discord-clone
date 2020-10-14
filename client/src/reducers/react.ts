@@ -62,3 +62,12 @@ export const activeUsersOpen = (
       return state;
   }
 };
+
+export const name = (state: string | null = null, action: InternalActions.Login) => {
+  switch (action.type) {
+    case 'LOGIN':
+      return action.payload;
+    default:
+      return state;
+  }
+};

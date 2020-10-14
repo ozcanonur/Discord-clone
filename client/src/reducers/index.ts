@@ -10,6 +10,7 @@ import {
   pinnedMessages,
 } from './socket';
 import {
+  name,
   selectedServerName,
   selectedChannel,
   selectedTabInPrivate,
@@ -18,6 +19,7 @@ import {
 } from './react';
 
 export const reducers = combineReducers<RootState>({
+  name,
   selectedServerName,
   selectedChannel,
   selectedTabInPrivate,

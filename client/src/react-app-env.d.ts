@@ -31,6 +31,7 @@ interface PrivateUser {
 }
 
 interface RootState {
+  name: string | null;
   selectedServerName: string;
   selectedChannel: Channel;
   selectedTabInPrivate: string;

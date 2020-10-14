@@ -1,142 +1,38 @@
-import express, { Request, Response } from 'express';
+import express, { Response } from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
+import bcrypt from 'bcryptjs';
 import path from 'path';
+import router from './routes';
 
-import { searchUsers, searchChannels, SearchResult } from './utils';
-import Server, { IServer } from './db/models/server';
-import User, { IUser } from './db/models/user';
-import Note, { INote } from './db/models/note';
-import { IChannel } from './db/models/channel';
+import User from './db/models/user';
 
 const app = express();
 const server = http.createServer(app);
 
 export default server;
-
-// WOOP change to import try
-require('./db/mongoose');
-require('./io/io');
+import './db/mongoose';
+import './io/io';
 
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
+app.use('/', router);
 
-interface ExtendedRequest extends Request {
-  query: { [key: string]: string | undefined };
-}
+app.post('/register', async (req, res) => {
+  const user = await User.findOne({ name: req.body.username });
 
-app.get('/search', async (req: ExtendedRequest, res: Response) => {
-  const { name, type, text } = req.query;
+  if (user) return res.status(409).send('User already exists.');
 
-  let results: SearchResult[] = [];
-  if (type === '*') {
-    const channelResults: SearchResult[] = await searchChannels(text, name);
-    const userResults: SearchResult[] = await searchUsers(text, name);
-    results = [...channelResults, ...userResults];
-  } else if (type === '#') results = await searchChannels(text, name);
-  else if (type === '@') results = await searchUsers(text, name);
-
-  res.send(results.slice(0, 20));
-});
-
-app.get('/userServers', async (req: ExtendedRequest, res: Response) => {
-  const { name } = req.query;
-
-  const user: IUser = await User.findOne({ name }).populate('servers');
-  const serverNames: string[] = user.servers.map((server: IServer) => server.name);
-  if (user) res.send(serverNames);
-});
-
-app.post('/note', async (req: ExtendedRequest, res: Response) => {
-  const { name, otherUserName, note } = req.body;
-
-  // Find the user
-  const user: IUser = await User.findOne({ name }).populate({
-    path: 'notes',
-    model: 'Note',
-    populate: {
-      path: 'about',
-      model: 'User',
-    },
+  const hashedPassword = await bcrypt.hash(req.body.password, 8);
+  const newUser = new User({
+    name: req.body.username,
+    password: hashedPassword,
   });
-  // Find if it exists first
-  const otherUsersNote: INote = user.notes.find((note: INote) => note.about.name === otherUserName);
-  if (otherUsersNote) await Note.updateOne({ _id: otherUsersNote._id }, { note });
-  else {
-    // Find the other user, and create the note
-    const otherUser: IUser = await User.findOne({ name: otherUserName });
-    const newNote = new Note({
-      about: otherUser,
-      note: note,
-    });
-    // Save the note
-    await newNote.save();
-    // Save the note to the user
-    user.notes.push(newNote);
-    await user.save();
-  }
-
-  res.send();
-});
-
-app.get('/note', async (req: ExtendedRequest, res: Response) => {
-  const { name, otherUserName } = req.query;
-
-  // Find the user
-  const user: IUser = await User.findOne({ name }).populate({
-    path: 'notes',
-    model: 'Note',
-    populate: {
-      path: 'about',
-      model: 'User',
-    },
-  });
-
-  // Find the note
-  const note = user.notes.find((note: INote) => note.about.name === otherUserName);
-  if (note) res.send(note.note);
-  else res.send('');
-});
-
-app.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
-  const { name, text } = req.query;
-  let servers;
-  if (text === '') servers = await Server.find().populate('users').populate('channels').limit(20);
-  else
-    servers = await Server.find({ name: new RegExp(`^${text}`, 'i') })
-      .populate('users')
-      .populate('channels')
-      .limit(20);
-
-  const response = [];
-  for (let server of servers) {
-    const serverName = server.name;
-    const onlineUsers = server.users.filter((user: IUser) => user.online).length;
-    const totalUsers = server.users.length;
-    const channelCount = server.channels.length;
-    const subscribed = server.users.some((user: IUser) => user.name === name);
-    let messageCount = 0;
-    for (let channel of server.channels) {
-      messageCount += channel.messages.length;
-    }
-    response.push({ serverName, onlineUsers, totalUsers, channelCount, messageCount, subscribed });
-  }
-
-  response.sort((x, y) => y.totalUsers - x.totalUsers);
-
-  res.send(response);
-});
-
-app.get('/channelIds', async (req: ExtendedRequest, res: Response) => {
-  const { serverName } = req.query;
-
-  const server = await Server.findOne({ name: serverName }).populate('channels');
-  const channelIds = server.channels.map((channel: IChannel) => channel._id);
-
-  res.send(channelIds);
+  await newUser.save();
+  res.status(201).send('User Created.');
 });
 
 // Catch all for deploy
@@ -148,5 +44,5 @@ app.get('/*', function (req, res: Response) {
 
 const port = process.env.PORT || 5000;
 server.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`Listening on port ${port}.`);
 });

@@ -15,6 +15,7 @@ const loginStyles = createStyles({
     marginBottom: '1rem',
     height: '6rem',
     width: '6rem',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   avatarIcon: {
     fontSize: '3rem',
@@ -39,10 +40,6 @@ const loginStyles = createStyles({
     fontSize: '2rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
     backgroundColor: '#40444B',
-
-    '&$focused': {
-      color: 'white',
-    },
   },
   root: {
     '& label': {

@@ -79,3 +79,10 @@ export const addPinNotification = (
     payload: { type, channelId },
   };
 };
+
+export const login = (name: string): InternalActions.Login => {
+  return {
+    type: 'LOGIN',
+    payload: name,
+  };
+};

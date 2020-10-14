@@ -87,7 +87,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
       clearTimeout(timeoutId);
       mounted = false;
     };
-  }, [modalOpen, inputText]);
+  }, [modalOpen, inputText, name]);
 
   return (
     <Modal

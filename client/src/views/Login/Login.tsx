@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -19,10 +21,17 @@ interface Props {
 const Login = ({ registerOpen, setRegisterOpen }: Props) => {
   const classes = useStyles();
 
-  const [name, setName] = useState('Onur');
+  const [username, setUsername] = useState('Onur');
+  const [password, setPassword] = useState('');
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+  const loginOnClick = () => {
+    const params = { username, password };
+    axios
+      .post('/login', params)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -45,8 +54,8 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
             name='name'
             autoComplete='name'
             autoFocus
-            value={name}
-            onChange={handleChange}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             classes={{ root: classes.root }}
             InputProps={{
               classes: {
@@ -69,6 +78,8 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
             type='password'
             id='password'
             autoComplete='current-password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             InputProps={{
               classes: {
                 root: classes.inputProps,
@@ -88,16 +99,16 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               className={classes.submit}
               onClick={() => setRegisterOpen(true)}
             >
-              Create
+              Register
             </Button>
             <Button
-              type='submit'
               fullWidth
               variant='contained'
               color='primary'
               className={classes.submit}
-              component={Link}
-              to={`/main?name=${name}`}
+              onClick={loginOnClick}
+              // component={Link}
+              // to={`/main?name=${name}`}
             >
               Sign in
             </Button>

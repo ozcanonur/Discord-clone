@@ -62,7 +62,7 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
       style={{ border: subscribed ? '2px solid green' : 'none' }}
     >
       <div className={classes.imgContainer}>
-        <img src={img} className={classes.img} />
+        <img src={img} className={classes.img} alt='server' />
       </div>
       <div className={classes.bodyContainer}>
         <div className={classes.title}>

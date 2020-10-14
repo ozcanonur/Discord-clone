@@ -29,7 +29,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const servers = useSelector((state: RootState) => state.servers);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
 
-  const selectedServer = servers.find((server) => server.name === server.name) || {
+  const selectedServer = servers.find((server) => server.name === selectedServerName) || {
     _id: '',
     name: '',
     channels: [],
