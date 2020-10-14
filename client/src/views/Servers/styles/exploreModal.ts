@@ -44,7 +44,7 @@ const exploreModalStyles = createStyles({
     padding: '2rem',
     display: 'grid',
     gridGap: '2rem',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(248px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
     overflow: 'auto',
     marginBottom: '2rem',
   },

@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import path from 'path';
 
 import { searchUsers, searchChannels, SearchResult } from './utils';
@@ -21,6 +22,7 @@ require('./io/io');
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
 
 interface ExtendedRequest extends Request {
   query: { [key: string]: string | undefined };

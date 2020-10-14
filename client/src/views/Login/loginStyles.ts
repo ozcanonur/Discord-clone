@@ -1,30 +1,65 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const loginStyles = createStyles({
-  container: {
+  login: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
-    backgroundColor: '#2f3136',
+    padding: '2rem',
+    borderRadius: '1rem',
+    backgroundColor: '#36393F',
   },
   avatar: {
-    backgroundColor: '#3CB371',
+    backgroundColor: '#7289da',
     marginBottom: '1rem',
+    height: '6rem',
+    width: '6rem',
   },
-  form: { color: '#dcddde' },
+  avatarIcon: {
+    fontSize: '3rem',
+  },
+  form: {
+    color: '#dcddde',
+    width: '100%',
+  },
   submit: {
-    backgroundColor: '#3CB371',
-    color: 'black',
+    backgroundColor: '#7289da',
+    color: 'rgb(220,221,222)',
+    fontSize: '2rem',
+    marginTop: '2rem',
+    textTransform: 'none',
+    width: '12rem',
+    '&:hover': {
+      backgroundColor: '#5869a8',
+    },
   },
-  InputProps: {
+  inputProps: {
     color: '#dcddde',
     fontSize: '2rem',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
+    backgroundColor: '#40444B',
+
+    '&$focused': {
+      color: 'white',
+    },
+  },
+  root: {
+    '& label': {
+      fontSize: '1.5rem',
+    },
+  },
+  inputLabelProps: {
+    fontSize: '1.5rem',
+    color: 'rgba(220,221,222, 0.5)',
   },
   title: {
     fontSize: '2rem',
     color: '#dcddde',
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-between',
   },
 });
 

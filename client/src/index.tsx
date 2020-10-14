@@ -11,6 +11,14 @@ import App from './App';
 import './style.css';
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: 'rgb(220,221,222)',
+    },
+    secondary: {
+      main: 'rgb(32,34,37)',
+    },
+  },
   typography: {
     fontFamily: 'Whitney Medium, sans-serif',
   },

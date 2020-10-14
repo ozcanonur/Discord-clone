@@ -1,73 +1,35 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import loginStyles from './loginStyles';
+import { createStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(loginStyles);
+import Login from './Login';
+import Register from './Register';
 
-const Login = () => {
+const useStyles = makeStyles(
+  createStyles({
+    container: {
+      width: '100%',
+      height: '100%',
+      padding: '10% 38%',
+      backgroundColor: '#202225',
+    },
+  })
+);
+
+const LoginPage = () => {
   const classes = useStyles();
 
-  const [name, setName] = useState('Onur');
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
+  const [registerOpen, setRegisterOpen] = useState(false);
 
   return (
     <div className={classes.container}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component='h1' variant='h5' className={classes.title}>
-        Sign in
-      </Typography>
-      <form className={classes.form} noValidate>
-        <TextField
-          variant='outlined'
-          margin='normal'
-          required
-          fullWidth
-          id='name'
-          label='Name'
-          name='name'
-          autoComplete='name'
-          autoFocus
-          value={name}
-          onChange={handleChange}
-          InputProps={{ className: classes.InputProps }}
-        />
-        <TextField
-          variant='outlined'
-          margin='normal'
-          required
-          fullWidth
-          name='password'
-          label='Password'
-          type='password'
-          id='password'
-          autoComplete='current-password'
-          InputProps={{ className: classes.InputProps }}
-        />
-        <Button
-          type='submit'
-          fullWidth
-          variant='contained'
-          color='primary'
-          className={classes.submit}
-          component={Link}
-          to={`/main?name=${name}`}
-        >
-          Sign In
-        </Button>
-      </form>
+      {registerOpen ? (
+        <Register registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+      ) : (
+        <Login registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+      )}
     </div>
   );
 };
 
-export default Login;
+export default LoginPage;

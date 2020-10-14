@@ -61,7 +61,6 @@ export const onUserConnected = async (
     const secondaryChannelIds = secondaryServer.channels.map((ch: IChannel) => ch._id);
     // Send pin notification for each channel in default servers
     [...defaultChannelIds, ...secondaryChannelIds].forEach((id: string) => {
-      console.log(id);
       socket.emit('action', {
         type: 'io/notification',
         payload: { type: 'pin', channelId: id },

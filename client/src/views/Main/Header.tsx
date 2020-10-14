@@ -18,24 +18,22 @@ const Header = () => {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   return (
-    <>
-      <div className={classes.headerContainer}>
-        <div className={classes.titleContainer}>
-          <div className={classes.titleIcon}>{selectedChannel.name ? '#' : null}</div>
-          <div className={classes.titleText}>{selectedChannel.name}</div>
-        </div>
-        <div className={classes.search} onClick={() => setSearchModalOpen(!searchModalOpen)}>
-          <div className={classes.searchText}>Search</div>
-        </div>
-        <div className={classes.optionsContainer}>
-          <PrivateNotificationButton />
-          <PinnedMessagesButton />
-          <ActiveUsersButton />
-          <GithubButton />
-        </div>
+    <div className={classes.headerContainer}>
+      <div className={classes.titleContainer}>
+        <div className={classes.titleIcon}>{selectedChannel.name ? '#' : null}</div>
+        <div className={classes.titleText}>{selectedChannel.name}</div>
+      </div>
+      <div className={classes.search} onClick={() => setSearchModalOpen(!searchModalOpen)}>
+        <div className={classes.searchText}>Search</div>
+      </div>
+      <div className={classes.optionsContainer}>
+        <PrivateNotificationButton />
+        <PinnedMessagesButton />
+        <ActiveUsersButton />
+        <GithubButton />
       </div>
       <SearchModal modalOpen={searchModalOpen} setModalOpen={setSearchModalOpen} />
-    </>
+    </div>
   );
 };
 
