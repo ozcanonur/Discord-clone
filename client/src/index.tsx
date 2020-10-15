@@ -13,10 +13,10 @@ import './style.css';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: 'rgb(220,221,222)',
+      main: '#dcddde',
     },
     secondary: {
-      main: 'rgb(32,34,37)',
+      main: '#202225',
     },
   },
   typography: {

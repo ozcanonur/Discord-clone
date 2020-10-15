@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import OutsideClickHandler from 'react-outside-click-handler';
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded';
 import { Picker } from 'emoji-mart';
-import '../../node_modules/emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
 import { message } from '../actions/socket';
@@ -65,14 +65,16 @@ const Input = () => {
         className={classes.emojiMenuIcon}
         onClick={() => setEmojiMenuVisible(!emojiMenuVisible)}
       />
-      <div
-        className={classes.emojiMenu}
-        style={{ visibility: emojiMenuVisible ? 'visible' : 'hidden' }}
-      >
-        <div className=''>
-          <Picker set='google' onSelect={(e) => handleEmojiClick(e)} />
+      <OutsideClickHandler onOutsideClick={() => setEmojiMenuVisible(false)}>
+        <div
+          className={classes.emojiMenu}
+          style={{ visibility: emojiMenuVisible ? 'visible' : 'hidden' }}
+        >
+          <div>
+            <Picker theme='dark' set='apple' onSelect={(e) => handleEmojiClick(e)} />
+          </div>
         </div>
-      </div>
+      </OutsideClickHandler>
     </div>
   );
 };

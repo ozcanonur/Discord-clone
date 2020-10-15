@@ -56,6 +56,14 @@ const footerStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  notificationTooltip: {
+    backgroundColor: 'black',
+    color: '#dcddde',
+    fontSize: '1.5rem',
+    textAlign: 'center',
+    padding: '0.5rem 1rem',
+    letterSpacing: 0,
+  },
 });
 
 export default footerStyles;

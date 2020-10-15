@@ -72,6 +72,7 @@ interface ExtendedRequest extends Request {
 
 app.get('/user', (req: ExtendedRequest, res) => {
   if (!req.user) return res.status(401).send();
+  // @ts-ignore
   res.send({ name: req.user.name, id: req.user._id });
 });
 

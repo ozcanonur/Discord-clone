@@ -15,13 +15,20 @@ const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get('/user', { withCredentials: true }).then((res) => {
-      if (res.status === 200) {
-        const { name, id } = res.data;
-        dispatch(login(name, id));
-        dispatch(connect(name));
-      } else history.push('/login');
-    });
+    axios
+      .get('/user', { withCredentials: true })
+      .then((res) => {
+        console.log('Got user');
+        if (res.status === 200) {
+          const { name, id } = res.data;
+          dispatch(login(name, id));
+          dispatch(connect(name));
+        }
+      })
+      .catch((err) => {
+        history.push('/login');
+        console.log(err);
+      });
   }, []);
 
   return (

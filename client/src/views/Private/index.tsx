@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -20,21 +21,26 @@ const useStyles = makeStyles(indexStyles);
 const Private = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const selectedTabInPrivate = useSelector((state: RootState) => state.selectedTabInPrivate);
   const activeUsersOpen = useSelector((state: RootState) => state.activeUsersOpen);
 
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    axios.get('/user', { withCredentials: true }).then((res) => {
-      if (res.status === 200) {
-        const { name, id } = res.data;
-        dispatch(login(name, id));
-        dispatch(connect(name));
-      } else history.push('/login');
-    });
-  }, [dispatch, name]);
+    axios
+      .get('/user', { withCredentials: true })
+      .then((res) => {
+        if (res.status === 200) {
+          const { name, id } = res.data;
+          dispatch(login(name, id));
+          dispatch(connect(name));
+        }
+      })
+      .catch((err) => {
+        history.push('/login');
+        console.log(err);
+      });
+  }, []);
 
   return (
     <Grid container direction='row'>

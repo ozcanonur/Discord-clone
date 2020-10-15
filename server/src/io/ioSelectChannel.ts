@@ -26,7 +26,8 @@ export const onUserSelectedChannel = async (
   // Join the new channel
   await socket.join(channel._id.toString());
   // Update the user's current channel
-  await User.updateOne({ name }, { currentChannel: channel });
+  const newChannel = await Channel.findOne({ name: channel.name });
+  await User.updateOne({ name }, { currentChannel: newChannel });
   // Find the older messages in the channel
   const currChannel = await Channel.findOne({ _id: channel._id }).populate([
     {

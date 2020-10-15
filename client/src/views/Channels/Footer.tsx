@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
+import Zoom from '@material-ui/core/Zoom';
+import Tooltip from '@material-ui/core/Tooltip';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
@@ -45,15 +47,42 @@ const Footer = () => {
         <div className={classes.userId}>{`#${id?.slice(-5)}`}</div>
       </div>
       <div className={classes.buttons}>
-        <Button onClick={() => setMicOpen(!micOpen)}>
-          {micOpen ? <MicRoundedIcon /> : <MicOffRoundedIcon />}
-        </Button>
-        <Button onClick={() => setSoundOpen(!soundOpen)}>
-          {soundOpen ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
-        </Button>
-        <Button onClick={logoutOnClick}>
-          <ExitToAppIcon />
-        </Button>
+        <Tooltip
+          enterDelay={0}
+          title={micOpen ? 'Mute' : 'Unmute'}
+          TransitionComponent={Zoom}
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <div>
+            <Button onClick={() => setMicOpen(!micOpen)}>
+              {micOpen ? <MicRoundedIcon /> : <MicOffRoundedIcon />}
+            </Button>
+          </div>
+        </Tooltip>
+        <Tooltip
+          enterDelay={0}
+          title={micOpen ? 'Deafen' : 'Undeafen'}
+          TransitionComponent={Zoom}
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <div>
+            <Button onClick={() => setSoundOpen(!soundOpen)}>
+              {soundOpen ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
+            </Button>
+          </div>
+        </Tooltip>
+        <Tooltip
+          enterDelay={0}
+          title='Log out'
+          TransitionComponent={Zoom}
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <div>
+            <Button onClick={logoutOnClick}>
+              <ExitToAppIcon />
+            </Button>
+          </div>
+        </Tooltip>
       </div>
     </div>
   );
