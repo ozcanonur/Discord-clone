@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,6 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
 import Typography from '@material-ui/core/Typography';
 import loginStyles from './loginStyles';
+import { login } from '../../actions/react';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -24,12 +25,17 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
   const [username, setUsername] = useState('Onur');
   const [password, setPassword] = useState('');
 
+  const history = useHistory();
+  const dispatch = useDispatch();
   const loginOnClick = () => {
     const params = { username, password };
     axios
-      .post('/login', params)
+      .post('/login', params, { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        if (res.status === 200) {
+          dispatch(login(username));
+          history.push('/main');
+        }
       })
       .catch((error) => console.log(error));
   };

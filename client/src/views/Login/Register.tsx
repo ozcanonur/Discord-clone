@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -26,15 +26,16 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   const [username, setUserName] = useState('Onur');
   const [password, setPassword] = useState('');
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const registerOnClick = () => {
     const params = { username, password };
     axios
-      .post('/register', params)
+      .post('/register', params, { withCredentials: true })
       .then((res) => {
         if (res.status === 201) {
-          console.log('User created');
           dispatch(login(username));
+          history.push('/main');
         } else if (res.status === 409) console.log('User already exists');
       })
       .catch((error) => console.log(error));
