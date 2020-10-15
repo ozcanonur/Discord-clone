@@ -6,7 +6,6 @@ import path from 'path';
 import router from './routes';
 import User from './db/models/user';
 import Server, { IServer } from './db/models/server';
-
 import bcrypt from 'bcryptjs';
 import cors from 'cors';
 import passport from 'passport';
@@ -31,18 +30,18 @@ import './io/io';
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CORS_ORIGIN,
     credentials: true,
   })
 );
 app.use(
   session({
-    secret: 'biu',
+    secret: process.env.SECRET,
     resave: true,
     saveUninitialized: true,
   })
 );
-app.use(cookieParser('biu'));
+app.use(cookieParser(process.env.SECRET));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -147,7 +146,7 @@ app.get('/*', function (req, res) {
   });
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 server.listen(port, () => {
   console.log(`Listening on port ${port}.`);
 });
