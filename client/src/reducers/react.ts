@@ -1,10 +1,10 @@
 import { InternalActions } from '../actions/types';
 
 // WOOP TEMP
-const tempSelectedServer = window.location.pathname === '/private' ? 'private' : 'Default';
+// const tempSelectedServer = window.location.pathname === '/private' ? 'private' : 'Default';
 
 export const selectedServerName = (
-  state: string = tempSelectedServer,
+  state: string | null = null,
   action: InternalActions.SelectServerNameAction
 ) => {
   switch (action.type) {

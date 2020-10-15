@@ -13,8 +13,8 @@ import discordRouter from './routes/discord';
 
 const app = express();
 const server = http.createServer(app);
-export const io: SocketIO.Server = socketIo(server);
 
+// Middlewares
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,16 +33,21 @@ app.use(
   })
 );
 app.use(cookieParser(process.env.SECRET));
+// Setup passport
 app.use(passport.initialize());
 app.use(passport.session());
 export default passport;
 import './passport';
+// Setup Mongo
 import './db/mongoose';
+// Setup Socket IO
+export const io: SocketIO.Server = socketIo(server);
 import './io/io';
+// Setup API routes
 app.use('/', authRouter);
 app.use('/', discordRouter);
 
-// Catch all for deploy
+// Catch all
 app.get('/*', function (_req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
     if (err) res.status(500).send(err);

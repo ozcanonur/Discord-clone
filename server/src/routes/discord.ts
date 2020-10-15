@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request } from 'express';
 import { searchUsers, searchChannels, SearchResult } from '../utils';
 import Server, { IServer } from '../db/models/server';
 import User, { IUser } from '../db/models/user';
@@ -11,7 +11,7 @@ interface ExtendedRequest extends Request {
   query: { [key: string]: string | undefined };
 }
 
-router.get('/search', async (req: ExtendedRequest, res: Response) => {
+router.get('/search', async (req: ExtendedRequest, res) => {
   const { name, type, text } = req.query;
 
   let results: SearchResult[] = [];
@@ -25,7 +25,7 @@ router.get('/search', async (req: ExtendedRequest, res: Response) => {
   res.send(results.slice(0, 20));
 });
 
-router.get('/userServers', async (req: ExtendedRequest, res: Response) => {
+router.get('/userServers', async (req: ExtendedRequest, res) => {
   const { name } = req.query;
 
   const user: IUser = await User.findOne({ name }).populate('servers');
@@ -33,7 +33,7 @@ router.get('/userServers', async (req: ExtendedRequest, res: Response) => {
   if (user) res.send(serverNames);
 });
 
-router.post('/note', async (req: ExtendedRequest, res: Response) => {
+router.post('/note', async (req: ExtendedRequest, res) => {
   const { name, otherUserName, note } = req.body;
 
   // Find the user
@@ -65,7 +65,7 @@ router.post('/note', async (req: ExtendedRequest, res: Response) => {
   res.send();
 });
 
-router.get('/note', async (req: ExtendedRequest, res: Response) => {
+router.get('/note', async (req: ExtendedRequest, res) => {
   const { name, otherUserName } = req.query;
 
   // Find the user
@@ -84,7 +84,7 @@ router.get('/note', async (req: ExtendedRequest, res: Response) => {
   else res.send('');
 });
 
-router.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
+router.get('/exploreServers', async (req: ExtendedRequest, res) => {
   const { name, text } = req.query;
   let servers;
   if (text === '') servers = await Server.find().populate('users').populate('channels').limit(20);
@@ -113,13 +113,42 @@ router.get('/exploreServers', async (req: ExtendedRequest, res: Response) => {
   res.send(response);
 });
 
-router.get('/channelIds', async (req: ExtendedRequest, res: Response) => {
+router.get('/channelIds', async (req: ExtendedRequest, res) => {
   const { serverName } = req.query;
 
   const server = await Server.findOne({ name: serverName }).populate('channels');
   const channelIds = server.channels.map((channel: IChannel) => channel._id);
 
   res.send(channelIds);
+});
+
+// Gets pins that were created when the user was offline, a bit hacky.
+router.get('/unseenPins', async (req: ExtendedRequest, res) => {
+  const { name } = req.query;
+  const user = await User.findOne({ name }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+      populate: {
+        path: 'pinnedMessages',
+        model: 'Message',
+      },
+    },
+  });
+
+  const unseenChannelsWhichHasPins: string[] = [];
+  user.servers.forEach((server) => {
+    server.channels.forEach((channel) => {
+      const unseenPinExists = channel.pinnedMessages.some(
+        (message) => message.createdAt.getTime() > user.lastActiveAt.getTime()
+      );
+      if (unseenPinExists) unseenChannelsWhichHasPins.push(channel._id);
+    });
+  });
+
+  res.send(unseenChannelsWhichHasPins);
 });
 
 export default router;

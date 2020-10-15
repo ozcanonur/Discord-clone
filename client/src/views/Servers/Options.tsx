@@ -19,7 +19,7 @@ import ExploreModal from './Modals/ExploreModal';
 
 const useStyles = makeStyles(indexStyles);
 
-const SecondaryButtons = () => {
+const Options = () => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
@@ -72,7 +72,11 @@ const SecondaryButtons = () => {
             TransitionComponent={Zoom}
           >
             <div>
-              <ServerIcon onClick={() => setAddServerModalOpen(true)} privateRoute={false}>
+              <ServerIcon
+                onClick={() => setAddServerModalOpen(true)}
+                privateRoute={false}
+                isOption={true}
+              >
                 <Add />
               </ServerIcon>
             </div>
@@ -88,7 +92,11 @@ const SecondaryButtons = () => {
             TransitionComponent={Zoom}
           >
             <div>
-              <ServerIcon onClick={() => setExploreModalOpen(true)} privateRoute={false}>
+              <ServerIcon
+                onClick={() => setExploreModalOpen(true)}
+                privateRoute={false}
+                isOption={true}
+              >
                 <ExploreRoundedIcon />
               </ServerIcon>
             </div>
@@ -101,4 +109,4 @@ const SecondaryButtons = () => {
   );
 };
 
-export default SecondaryButtons;
+export default Options;

@@ -1,18 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles<Theme, StyleProps>({
   serverContainer: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     padding: '1rem',
     cursor: 'pointer',
-    borderLeft: (isSelected) => (isSelected ? '3px solid white' : 'none'),
+    borderLeft: ({ isSelected }) => (isSelected ? '3px solid white' : 'none'),
   },
   server: {
-    backgroundColor: (isSelected) => (isSelected ? '#7289da' : '#36393f'),
+    backgroundColor: ({ isSelected }) => (isSelected ? '#7289da' : '#36393f'),
     borderRadius: '50%',
     width: '5rem',
     height: '5rem',
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
     textAlign: 'center',
     color: '#dcddde',
     letterSpacing: '1.5px',
+    transition: 'all .2s ease-in-out, transform 0s',
 
     '& > svg': {
       fontSize: '3rem',
@@ -31,8 +33,8 @@ const useStyles = makeStyles({
     },
 
     '&:hover': {
-      backgroundColor: '#7289da',
-      borderRadius: '40%',
+      backgroundColor: ({ isOption }) => (isOption ? '#3CB371' : '#7289da'),
+      borderRadius: '30%',
 
       '& > *': {
         color: 'white',
@@ -50,16 +52,23 @@ interface Props {
   onClick?: () => void;
   style?: any;
   privateRoute?: boolean;
+  isOption?: boolean;
+}
+
+interface StyleProps {
+  isSelected: boolean | undefined;
+  isOption: boolean | undefined;
 }
 
 const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
 
-const ServerIcon = ({ children, onClick, style, privateRoute }: Props) => {
+const ServerIcon = ({ children, onClick, style, privateRoute, isOption }: Props) => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const isSelected =
     selectedServerName === children || (privateRoute && selectedServerName === 'private');
 
-  const classes = useStyles(isSelected);
+  const styleProps = { isSelected, isOption };
+  const classes = useStyles(styleProps);
 
   return (
     <div onClick={onClick} className={classes.serverContainer}>

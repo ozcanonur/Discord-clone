@@ -7,6 +7,14 @@ import { setupDefaultServers } from '../utils';
 
 const router = express.Router();
 
+const getRegisterValidationError = (username: string, password: string) => {
+  if (username.trim() === '') return `Username can't be empty.`;
+  else if (username.length < 3 || username.length > 8)
+    return `Username length must be between 3 and 8 characters.`;
+  else if (password.trim() === '') return `Password can't be empty.`;
+  else if (password.length < 6) return 'Password length needs to be at least 6 characters.';
+};
+
 interface ExtendedRequest extends Request {
   query: { [key: string]: string | undefined };
 }
@@ -36,16 +44,8 @@ router.post('/logout', (req: ExtendedRequest, res) => {
   res.send();
 });
 
-const getRegisterValidationError = (username: string, password: string) => {
-  if (username.trim() === '') return `Username can't be empty.`;
-  else if (username.length < 3 || username.length > 8)
-    return `Username length must be between 3 and 8 characters.`;
-  else if (password.trim() === '') return `Password can't be empty.`;
-  else if (password.length < 6) return 'Password length needs to be at least 6 characters.';
-};
-
 router.post('/register', async (req: ExtendedRequest, res) => {
-  // Setup default servers if it's the first user ever, will only happen in dev
+  // Setup default servers if it's the first user ever, will only happen in dev testing
   await setupDefaultServers();
 
   const user = await User.findOne({ name: req.body.username });
@@ -65,15 +65,12 @@ router.post('/register', async (req: ExtendedRequest, res) => {
 
   const defaultServer = await Server.findOne({ name: 'Default' }).populate('channels');
   const secondaryServer = await Server.findOne({ name: 'Games' }).populate('channels');
-  newUser.servers.push(defaultServer);
-  newUser.servers.push(secondaryServer);
-  await newUser.save();
-
-  // Push the user into the default server, save
-  defaultServer.users.push(newUser);
-  await defaultServer.save();
-  secondaryServer.users.push(newUser);
-  await secondaryServer.save();
+  for (let server of [defaultServer, secondaryServer]) {
+    newUser.servers.push(server);
+    server.users.push(newUser);
+    await newUser.save();
+    await server.save();
+  }
 
   req.login(newUser, (err) => {
     if (err) throw err;

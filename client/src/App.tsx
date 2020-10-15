@@ -4,30 +4,39 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-
 import Main from './views/Main/index';
 import Servers from './views/Servers';
 import Channels from './views/Channels';
 import { connect } from './actions/socket';
-import { login } from './actions/react';
+import { login, selectServerName, addPinNotification } from './actions/react';
 
 const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get('/user', { withCredentials: true })
-      .then((res) => {
-        if (res.status === 200) {
-          const { name, id } = res.data;
+    const authenticateAndInit = async () => {
+      try {
+        const authResponse = await axios.get('/user', { withCredentials: true });
+        if (authResponse.status === 200) {
+          const { name, id } = authResponse.data;
+          const pinResponse = await axios.get('/unseenPins', {
+            params: { name },
+            withCredentials: true,
+          });
+          pinResponse.data.forEach((channelId: string) => {
+            dispatch(addPinNotification('pin', channelId));
+          });
           dispatch(login(name, id));
           dispatch(connect(name));
+          dispatch(selectServerName('Default'));
         }
-      })
-      .catch((err) => {
+      } catch (err) {
         history.push('/login');
         console.log(err);
-      });
+      }
+    };
+
+    authenticateAndInit();
   }, []);
 
   return (

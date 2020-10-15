@@ -2,7 +2,7 @@ import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import indexStyles from './styles/index';
-import SecondaryButtons from './Options';
+import Options from './Options';
 import Servers from './Servers';
 
 const useStyles = makeStyles(indexStyles);
@@ -12,7 +12,7 @@ const ServerList = () => {
 
   return (
     <div className={classes.serverList}>
-      <SecondaryButtons />
+      <Options />
       <Servers />
     </div>
   );
