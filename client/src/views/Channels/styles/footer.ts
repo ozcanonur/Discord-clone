@@ -49,6 +49,8 @@ const footerStyles = createStyles({
   userId: {
     fontSize: '1.1rem',
     color: 'rgb(185,187, 190)',
+    textTransform: 'uppercase',
+    marginTop: '0.3rem',
   },
   buttons: {
     display: 'flex',

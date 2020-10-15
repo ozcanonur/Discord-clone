@@ -1,6 +1,6 @@
 import { ClientIOActions } from './types';
 
-export const connect = (name: string): ClientIOActions.ConnectIOAction => {
+export const connect = (name: string | null): ClientIOActions.ConnectIOAction => {
   return {
     type: 'io/userConnected',
     payload: name,
@@ -19,7 +19,7 @@ export const createChannel = (
 };
 
 export const selectChannel = (
-  name: string,
+  name: string | null,
   channel: Channel
 ): ClientIOActions.SelectChannelIOAction => {
   return {
@@ -29,7 +29,7 @@ export const selectChannel = (
 };
 
 export const createServer = (
-  name: string,
+  name: string | null,
   serverName: string
 ): ClientIOActions.CreateServerIOAction => {
   return {
@@ -42,7 +42,7 @@ export const createServer = (
 };
 
 export const joinServer = (
-  name: string,
+  name: string | null,
   serverName: string
 ): ClientIOActions.JoinServerIOAction => {
   return {
@@ -52,7 +52,7 @@ export const joinServer = (
 };
 
 export const sendFriendRequest = (
-  name: string,
+  name: string | null,
   friendName: string
 ): ClientIOActions.SendFriendRequestIOAction => {
   return {
@@ -62,7 +62,7 @@ export const sendFriendRequest = (
 };
 
 export const removeFriend = (
-  name: string,
+  name: string | null,
   friendName: string
 ): ClientIOActions.RemoveFriendIOAction => {
   return {
@@ -72,7 +72,7 @@ export const removeFriend = (
 };
 
 export const createPin = (
-  name: string,
+  name: string | null,
   message: string,
   selectedChannel: Channel
 ): ClientIOActions.CreatePinIOAction => {
@@ -82,7 +82,7 @@ export const createPin = (
   };
 };
 
-export const message = (name: string, message: string): ClientIOActions.MessageIOAction => {
+export const message = (name: string | null, message: string): ClientIOActions.MessageIOAction => {
   return {
     type: 'io/userMessaged',
     payload: { name, message },
@@ -90,7 +90,7 @@ export const message = (name: string, message: string): ClientIOActions.MessageI
 };
 
 export const deleteMessage = (
-  name: string,
+  name: string | null,
   message: Message
 ): ClientIOActions.DeleteMessageIOAction => {
   return {
@@ -100,7 +100,7 @@ export const deleteMessage = (
 };
 
 export const deleteServer = (
-  name: string,
+  name: string | null,
   serverName: string
 ): ClientIOActions.DeleteServerIOAction => {
   return {
@@ -110,7 +110,7 @@ export const deleteServer = (
 };
 
 export const deleteChannel = (
-  name: string,
+  name: string | null,
   channelId: string
 ): ClientIOActions.DeleteChannelIOAction => {
   return {
@@ -120,7 +120,7 @@ export const deleteChannel = (
 };
 
 export const selectPrivateChannel = (
-  name: string,
+  name: string | null,
   username: string
 ): ClientIOActions.SelectPrivateChannelIOAction => {
   return {
@@ -130,7 +130,7 @@ export const selectPrivateChannel = (
 };
 
 export const connectNewPrivateUser = (
-  name: string,
+  name: string | null,
   username: string
 ): ClientIOActions.ConnectNewPrivateUserIOAction => {
   return {
@@ -140,7 +140,7 @@ export const connectNewPrivateUser = (
 };
 
 export const leaveServer = (
-  name: string,
+  name: string | null,
   serverName: string
 ): ClientIOActions.LeaveServerIOAction => {
   return {

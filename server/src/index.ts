@@ -1,4 +1,4 @@
-import express, { Response } from 'express';
+import express, { Request } from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import helmet from 'helmet';
@@ -66,12 +66,16 @@ passport.deserializeUser((id, done) => {
   });
 });
 
-app.get('/user', (req, res) => {
+interface ExtendedRequest extends Request {
+  query: { [key: string]: string | undefined };
+}
+
+app.get('/user', (req: ExtendedRequest, res) => {
   if (!req.user) return res.status(401).send();
   res.send({ name: req.user.name, id: req.user._id });
 });
 
-app.post('/login', (req, res, next) => {
+app.post('/login', (req: ExtendedRequest, res, next) => {
   passport.authenticate('local', (err, user, _info) => {
     if (err) res.status(401).send(err);
     else if (!user) res.status(409).send('No user exists.');
@@ -84,7 +88,12 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-app.post('/register', async (req, res) => {
+app.post('/logout', (req: ExtendedRequest, res) => {
+  req.logout();
+  res.send();
+});
+
+app.post('/register', async (req: ExtendedRequest, res) => {
   // Create default servers if they don't exist
   await setupServer('Default', [
     { name: 'General', isVoice: false },
@@ -131,7 +140,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Catch all for deploy
-app.get('/*', function (req, res: Response) {
+app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
     if (err) res.status(500).send(err);
   });

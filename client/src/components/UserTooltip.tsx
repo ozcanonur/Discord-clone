@@ -35,7 +35,9 @@ interface Props {
 const UserTooltip = ({ name, positionTop, style }: Props) => {
   const classes = useStyles();
 
-  const username = useSelector((state: RootState) => state.name);
+  const user = useSelector((state: RootState) => state.user);
+  const username = user.name;
+  const id = user.id;
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState<string[]>([]);
   const [userNote, setUserNote] = useState('');
@@ -45,7 +47,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
 
     Promise.all([
       axios.get('/userServers', {
-        params: { name },
+        params: { name: username },
       }),
       axios.get('/note', {
         params: { name: username, otherUserName: name },
@@ -114,7 +116,9 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
             <DiscordIcon style={{ height: '4rem' }} />
           </div>
         </div>
-        <div className={classes.headerText}>{`${name} #4313`}</div>
+        <div className={classes.headerText}>{`${name} #${
+          id ? id.slice(-5).toUpperCase() : ''
+        }`}</div>
       </div>
       <List className={classes.servers}>
         {userServers.map((serverName: string, key) => (

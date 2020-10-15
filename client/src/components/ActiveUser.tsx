@@ -16,13 +16,13 @@ interface Props {
 const ActiveUser = ({ name }: Props) => {
   const classes = useStyles();
 
-  const username = useSelector((state: RootState) => state.name);
+  const user = useSelector((state: RootState) => state.user);
   const [userTooltipOpen, setUserTooltipOpen] = useState(false);
 
   return (
     <div
       className={classes.user}
-      style={{ backgroundColor: username === name ? '#40434a' : 'inherit' }}
+      style={{ backgroundColor: user.name === name ? '#40434a' : 'inherit' }}
     >
       <div className={classes.iconContainer}>
         <div

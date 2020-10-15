@@ -29,6 +29,7 @@ const serverCreateModalStyles = createStyles({
     fontWeight: 400,
     color: '#4f5660',
     opacity: 0.8,
+    textAlign: 'center',
   },
   modalIconUpload: {
     color: 'white',

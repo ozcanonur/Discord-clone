@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 
 import Button from '../../components/Button';
@@ -15,9 +18,19 @@ const useStyles = makeStyles(footerStyles);
 const Footer = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
+  const { name, id } = useSelector((state: RootState) => state.user);
   const [micOpen, setMicOpen] = useState(true);
   const [soundOpen, setSoundOpen] = useState(true);
+
+  const history = useHistory();
+  const logoutOnClick = () => {
+    axios
+      .post('/logout', {}, { withCredentials: true })
+      .then((_res) => {
+        history.push('/login');
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className={classes.footer}>
@@ -29,7 +42,7 @@ const Footer = () => {
       </div>
       <div className={classes.user}>
         <div className={classes.userName}>{name}</div>
-        <div className={classes.userId}>#5421</div>
+        <div className={classes.userId}>{`#${id?.slice(-5)}`}</div>
       </div>
       <div className={classes.buttons}>
         <Button onClick={() => setMicOpen(!micOpen)}>
@@ -37,6 +50,9 @@ const Footer = () => {
         </Button>
         <Button onClick={() => setSoundOpen(!soundOpen)}>
           {soundOpen ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
+        </Button>
+        <Button onClick={logoutOnClick}>
+          <ExitToAppIcon />
         </Button>
       </div>
     </div>

@@ -1,4 +1,7 @@
 import { Document, Model, Schema, model } from 'mongoose';
+import { IServer } from './server';
+import { IChannel } from './channel';
+import { INote } from './note';
 
 const UserSchema = new Schema({
   name: {
@@ -44,13 +47,13 @@ export interface IUser extends Document {
   name: string;
   password: string;
   socketId: string;
-  servers?: any; // WOOP
-  currentChannel?: any; // WOOP
+  servers?: IServer[];
+  currentChannel?: IChannel;
   online: boolean;
   lastActiveAt: Date;
-  friends?: any; // WOOP
-  usersMessagedBefore?: any; // WOOP
-  notes?: any; // WOOP
+  friends?: IUser[];
+  usersMessagedBefore?: IUser[];
+  notes?: INote[];
 }
 
 const User: Model<IUser> = model<IUser>('User', UserSchema);

@@ -22,7 +22,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
-  const [modalInputValue, setModalInputValue] = useState(`${name}'s server`);
+  const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);

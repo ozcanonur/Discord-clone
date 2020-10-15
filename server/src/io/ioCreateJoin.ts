@@ -98,7 +98,8 @@ export const onUserCreatedChannel = async (
   await Server.updateOne({ _id: server._id }, { $addToSet: { channels: channel } });
   // Find the users which are subscribed to this server
   const channelsServer = await Server.findOne({ _id: server._id }).populate('users');
-  const userIds: string[] = channelsServer.users;
+  console.log(channelsServer.users);
+  const userIds: string[] = channelsServer.users.map((u) => u._id);
   const users = await User.find({ _id: { $in: userIds } }).populate({
     path: 'servers',
     model: 'Server',

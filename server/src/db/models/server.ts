@@ -1,7 +1,7 @@
 import { Document, Model, Schema, model } from 'mongoose';
-import User from './user'
-import Channel from './channel'
-import Message from './message'
+import User, { IUser } from './user';
+import Channel, { IChannel } from './channel';
+import Message from './message';
 
 const ServerSchema = new Schema({
   name: {
@@ -29,9 +29,9 @@ const ServerSchema = new Schema({
 
 export interface IServer extends Document {
   name: string;
-  users?: any; // WOOP
-  channels?: any; // WOOP
-  admin?: any; // WOOP
+  users?: IUser[];
+  channels?: IChannel[];
+  admin?: IUser;
 }
 
 // Delete the remnants of the server also
@@ -41,7 +41,9 @@ ServerSchema.pre('remove', async function (next) {
   const users = await User.find({ _id: { $in: server.users } });
   // Delete the server from them
   for (let user of users) {
-    const newServers = user.servers.filter((s: IServer) => s._id.toString() !== server._id.toString());
+    const newServers = user.servers.filter(
+      (s: IServer) => s._id.toString() !== server._id.toString()
+    );
     user.servers = newServers;
     await user.save();
   }

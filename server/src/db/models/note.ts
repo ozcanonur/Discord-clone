@@ -1,4 +1,5 @@
 import { Document, Model, Schema, model } from 'mongoose';
+import { IUser } from './user';
 
 const NoteSchema = new Schema({
   about: {
@@ -9,7 +10,7 @@ const NoteSchema = new Schema({
 });
 
 export interface INote extends Document {
-  about?: any; // WOOP
+  about?: IUser;
   note: string;
 }
 

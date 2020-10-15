@@ -1,4 +1,5 @@
 import { Document, Model, Schema, model } from 'mongoose';
+import { IUser } from './user';
 
 const MessageSchema = new Schema({
   user: {
@@ -10,7 +11,7 @@ const MessageSchema = new Schema({
 });
 
 export interface IMessage extends Document {
-  user?: any; // WOOP
+  user?: IUser;
   message: string;
   createdAt: Date;
 }
