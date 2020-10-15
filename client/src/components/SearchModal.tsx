@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Modal from '@material-ui/core/Modal';
@@ -12,7 +12,6 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import qs from 'qs';
 
 import searchModalStyles from './styles/searchModal';
 import { store } from '../store';
@@ -45,7 +44,7 @@ interface Props {
 const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
@@ -117,7 +116,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
       setModalOpen(false);
 
       // Redirect to main route if not already
-      if (location.pathname !== '/main') history.push(`/main?name=${name}`);
+      if (location.pathname !== '/main') history.push('/main');
     } else if (type === '@') {
       // resultName = username in this case
       dispatch(selectPrivateChannel(resultName));
@@ -127,7 +126,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
       setModalOpen(false);
 
       // Redirect to private route if not already
-      if (location.pathname !== '/private') history.push(`/private?name=${name}`);
+      if (location.pathname !== '/private') history.push('/private');
     }
   };
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { ReactComponent as DiscordIcon } from '../assets/discordIcon.svg';
-import qs from 'qs';
 
 import {
   selectPrivateChannel,
@@ -36,7 +35,7 @@ interface Props {
 const UserTooltip = ({ name, positionTop, style }: Props) => {
   const classes = useStyles();
 
-  const user: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const username = useSelector((state: RootState) => state.name);
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState<string[]>([]);
   const [userNote, setUserNote] = useState('');
@@ -49,7 +48,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
         params: { name },
       }),
       axios.get('/note', {
-        params: { name: user.name, otherUserName: name },
+        params: { name: username, otherUserName: name },
       }),
     ])
       .then(([serverResults, noteResults]) => {
@@ -63,11 +62,11 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     return function cleanUp() {
       mounted = false;
     };
-  }, [user.name, name]);
+  }, [username, name]);
 
   const dispatch = useDispatch();
   const joinServerOnClick = async (serverName: string) => {
-    dispatch(joinServer(user.name, serverName));
+    dispatch(joinServer(username, serverName));
 
     const response = await axios.get('/channelIds', {
       params: { serverName },
@@ -85,7 +84,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
       setInputValue('');
       e.preventDefault();
 
-      const params = { name: user.name, otherUserName: name, note: inputValue };
+      const params = { name: username, otherUserName: name, note: inputValue };
       axios
         .post('/note', params)
         .then((_res) => {
@@ -96,15 +95,15 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   };
 
   const privateMessageOnClick = () => {
-    dispatch(connectNewPrivateUser(user.name, name));
+    dispatch(connectNewPrivateUser(username, name));
     dispatch(selectTabInPrivate('Chat'));
     dispatch(selectPrivateUser(name));
     dispatch(selectPrivateChannel(name));
-    dispatch(selectPrivateChannelIo(user.name, name));
+    dispatch(selectPrivateChannelIo(username, name));
   };
 
   const addFriendOnClick = () => {
-    dispatch(sendFriendRequest(user.name, name));
+    dispatch(sendFriendRequest(username, name));
   };
 
   return (
@@ -146,9 +145,16 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        {name !== user.name ? (
+        {name !== username ? (
           <div className={classes.buttons}>
-            <NavLink to={`/private?name=${user.name}`} style={{ textDecoration: 'none' }}>
+            <Button
+              variant='contained'
+              className={classes.buttonPrivate}
+              onClick={addFriendOnClick}
+            >
+              Add friend
+            </Button>
+            <NavLink to='/private' style={{ textDecoration: 'none' }}>
               <Button
                 variant='contained'
                 className={classes.buttonPrivate}
@@ -157,13 +163,6 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
                 Message
               </Button>
             </NavLink>
-            <Button
-              variant='contained'
-              className={classes.buttonPrivate}
-              onClick={addFriendOnClick}
-            >
-              Add friend
-            </Button>
           </div>
         ) : null}
       </div>

@@ -9,7 +9,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
-import qs from 'qs';
 
 import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
 import { selectChannel as selectChannelIo } from '../../actions/socket';
@@ -23,7 +22,7 @@ const useStyles = makeStyles(indexStyles);
 const SecondaryButtons = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const servers = useSelector((state: RootState) => state.servers);
   const [addServerModalOpen, setAddServerModalOpen] = useState(false);
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
@@ -46,7 +45,7 @@ const SecondaryButtons = () => {
     <>
       <List className={classes.list}>
         <ListItem disableGutters className={classes.listItem}>
-          <NavLink to={`/private?name=${name}`}>
+          <NavLink to='/private'>
             <Tooltip
               title='Friends / Private Messages'
               arrow

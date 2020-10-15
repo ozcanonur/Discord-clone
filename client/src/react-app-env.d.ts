@@ -30,8 +30,13 @@ interface PrivateUser {
   isFriend: boolean;
 }
 
-interface RootState {
+interface User {
   name: string | null;
+  id: string | null;
+}
+
+interface RootState {
+  user: User;
   selectedServerName: string;
   selectedChannel: Channel;
   selectedTabInPrivate: string;

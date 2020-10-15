@@ -5,7 +5,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import { ReactComponent as PinLogo } from '../../assets/office.svg';
-import qs from 'qs';
+
 import chatStyles from './styles/chat';
 import { deleteMessage, createPin } from '../../actions/socket';
 
@@ -18,7 +18,7 @@ interface Props {
 const MessageOptions = ({ message }: Props) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
 
   const dispatch = useDispatch();

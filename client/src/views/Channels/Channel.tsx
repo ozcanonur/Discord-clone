@@ -6,7 +6,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import { ReactComponent as PinLogo } from '../../assets/office.svg';
-import qs from 'qs';
 
 import { selectChannel } from '../../actions/react';
 import { selectChannel as selectChannelIo } from '../../actions/socket';
@@ -22,8 +21,7 @@ interface ChannelProps {
 const Channel = ({ channel }: ChannelProps) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
-
+  const { name } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const notifications = useSelector((state: RootState) => state.notifications);
 

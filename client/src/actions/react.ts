@@ -80,9 +80,9 @@ export const addPinNotification = (
   };
 };
 
-export const login = (name: string): InternalActions.Login => {
+export const login = (name: string, id: string): InternalActions.Login => {
   return {
     type: 'LOGIN',
-    payload: name,
+    payload: { name, id },
   };
 };

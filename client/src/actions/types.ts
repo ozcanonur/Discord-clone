@@ -56,7 +56,10 @@ export namespace InternalActions {
 
   export interface Login {
     type: string;
-    payload: string;
+    payload: {
+      name: string;
+      id: string;
+    };
   }
 }
 

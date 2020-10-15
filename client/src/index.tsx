@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { store } from './store';
@@ -34,9 +34,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={Login} />
+          <Route path='/login' component={Login} />
           <Route path='/main' component={App} />
           <Route path='/private' component={Private} />
+          <Redirect to='/login' />
         </Switch>
       </BrowserRouter>
     </Provider>

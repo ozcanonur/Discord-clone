@@ -7,7 +7,6 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import { Picker } from 'emoji-mart';
 import '../../node_modules/emoji-mart/css/emoji-mart.css';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
-import qs from 'qs';
 
 import { message } from '../actions/socket';
 import inputStyles from './styles/input';
@@ -17,7 +16,7 @@ const useStyles = makeStyles(inputStyles);
 const Input = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);

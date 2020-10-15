@@ -5,7 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import { deleteMessage } from '../../actions/socket';
-import qs from 'qs';
+
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Message from '../../components/Message';
@@ -18,7 +18,7 @@ const useStyles = makeStyles(chatStyles);
 const Chat = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
   const messages = useSelector((state: RootState) => state.messages);
   const [shownMessagesCount, setShownMessagesCount] = useState(15);

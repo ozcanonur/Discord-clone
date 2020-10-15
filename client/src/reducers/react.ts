@@ -63,7 +63,7 @@ export const activeUsersOpen = (
   }
 };
 
-export const name = (state: string | null = null, action: InternalActions.Login) => {
+export const user = (state: User = { name: null, id: null }, action: InternalActions.Login) => {
   switch (action.type) {
     case 'LOGIN':
       return action.payload;

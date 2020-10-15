@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
-import qs from 'qs';
 
 import { connect } from '../../actions/socket';
+import { login } from '../../actions/react';
 import PrivateUserList from './PrivateUserList';
 import ServerList from '../Servers/index';
 import indexStyles from './styles/index';
@@ -18,13 +20,20 @@ const useStyles = makeStyles(indexStyles);
 const Private = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const selectedTabInPrivate = useSelector((state: RootState) => state.selectedTabInPrivate);
   const activeUsersOpen = useSelector((state: RootState) => state.activeUsersOpen);
 
+  const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(connect(name));
+    axios.get('/user', { withCredentials: true }).then((res) => {
+      if (res.status === 200) {
+        const { name, id } = res.data;
+        dispatch(login(name, id));
+        dispatch(connect(name));
+      } else history.push('/login');
+    });
   }, [dispatch, name]);
 
   return (

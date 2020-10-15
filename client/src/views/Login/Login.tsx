@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
@@ -10,7 +9,6 @@ import Slide from '@material-ui/core/Slide';
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
 import Typography from '@material-ui/core/Typography';
 import loginStyles from './loginStyles';
-import { login } from '../../actions/react';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -26,16 +24,12 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
   const [password, setPassword] = useState('');
 
   const history = useHistory();
-  const dispatch = useDispatch();
   const loginOnClick = () => {
     const params = { username, password };
     axios
       .post('/login', params, { withCredentials: true })
       .then((res) => {
-        if (res.status === 200) {
-          dispatch(login(username));
-          history.push('/main');
-        }
+        if (res.status === 200) history.push('/main');
       })
       .catch((error) => console.log(error));
   };
@@ -58,7 +52,6 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
             id='name'
             label='Name'
             name='name'
-            autoComplete='name'
             autoFocus
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -67,6 +60,7 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputProps,
               },
+              autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {
@@ -113,8 +107,6 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               color='primary'
               className={classes.submit}
               onClick={loginOnClick}
-              // component={Link}
-              // to={`/main?name=${name}`}
             >
               Sign in
             </Button>

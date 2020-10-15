@@ -4,7 +4,6 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
-import qs from 'qs';
 
 import { selectServerName, clearMessages, selectChannel } from '../../actions/react';
 import { deleteServer, leaveServer, selectChannel as selectChannelIo } from '../../actions/socket';
@@ -23,7 +22,7 @@ interface Props {
 const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [createChannelModalOpen, setCreateChannelModalOpen] = useState(false);
   const servers = useSelector((state: RootState) => state.servers);

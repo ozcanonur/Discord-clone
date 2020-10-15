@@ -6,7 +6,6 @@ import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import Button from '../../components/Button';
-import qs from 'qs';
 
 import {
   selectPrivateChannel as selectPrivateChannelIo,
@@ -31,7 +30,7 @@ interface Props {
 const PrivateUser = ({ username, isNotFriend }: Props) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
   const notifications = useSelector((state: RootState) => state.notifications);
 

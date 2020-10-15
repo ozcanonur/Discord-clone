@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -10,7 +9,6 @@ import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-import { login } from '../../actions/react';
 import loginStyles from './loginStyles';
 
 const useStyles = makeStyles(loginStyles);
@@ -27,16 +25,13 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   const [password, setPassword] = useState('');
 
   const history = useHistory();
-  const dispatch = useDispatch();
   const registerOnClick = () => {
     const params = { username, password };
     axios
       .post('/register', params, { withCredentials: true })
       .then((res) => {
-        if (res.status === 201) {
-          dispatch(login(username));
-          history.push('/main');
-        } else if (res.status === 409) console.log('User already exists');
+        if (res.status === 201) history.push('/main');
+        else if (res.status === 409) console.log('User already exists');
       })
       .catch((error) => console.log(error));
   };
@@ -68,6 +63,7 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputProps,
               },
+              autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {
@@ -114,8 +110,6 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               color='primary'
               className={classes.submit}
               onClick={registerOnClick}
-              // component={Link}
-              // to={`/main?name=${name}`}
             >
               Confirm
             </Button>

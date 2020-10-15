@@ -16,7 +16,7 @@ const serverModal = createStyles({
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
-    width: '30vw',
+    width: '25vw',
   },
   modalHeading: {
     fontSize: '2.5rem',

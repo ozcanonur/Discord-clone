@@ -1,9 +1,8 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import serverCardStyles from '../styles/serverCard';
 import axios from 'axios';
-import qs from 'qs';
 
 import { joinServer } from '../../../actions/socket';
 import { selectServerName, selectChannel, addPinNotification } from '../../../actions/react';
@@ -37,8 +36,8 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
     description,
     subscribed,
   } = res;
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
 
+  const { name } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const joinServerOnClick = async () => {
     dispatch(joinServer(name, serverName));

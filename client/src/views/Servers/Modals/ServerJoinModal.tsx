@@ -7,7 +7,6 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import qs from 'qs';
 
 import { clearIoResponse, addPinNotification } from '../../../actions/react';
 import { joinServer } from '../../../actions/socket';
@@ -23,7 +22,7 @@ interface Props {
 const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');

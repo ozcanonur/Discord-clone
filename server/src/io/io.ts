@@ -1,6 +1,5 @@
 import socketIo, { Socket } from 'socket.io';
 import server from '../index';
-import { setupServer } from './util';
 import { onUserConnected, onUserDisconnected } from './ioConnection';
 import {
   onUserCreatedChannel,
@@ -26,20 +25,7 @@ export interface Action {
 
 const io: SocketIO.Server = socketIo(server);
 
-io.on('connection', async (socket: Socket) => {
-  // Create default servers if they don't exist
-  await setupServer('Default', [
-    { name: 'General', isVoice: false },
-    { name: 'World news', isVoice: false },
-    { name: 'Covid-19', isVoice: false },
-    { name: 'Voice', isVoice: true },
-  ]);
-  await setupServer('Games', [
-    { name: 'General', isVoice: false },
-    { name: 'World of Warcraft', isVoice: false },
-    { name: 'Path of Exile', isVoice: false },
-    { name: 'Voice', isVoice: true },
-  ]);
+io.on('connection', (socket: Socket) => {
   socket.on('action', async (action: Action) => {
     if (action.type === 'io/userConnected') await onUserConnected(io, socket, action);
     else if (action.type === 'io/userCreatedServer') await onUserCreatedServer(socket, action);

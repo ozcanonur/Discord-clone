@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import MicRoundedIcon from '@material-ui/icons/MicRounded';
 import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
-import qs from 'qs';
 
 import Button from '../../components/Button';
 import footerStyles from './styles/footer';
@@ -15,7 +15,7 @@ const useStyles = makeStyles(footerStyles);
 const Footer = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [micOpen, setMicOpen] = useState(true);
   const [soundOpen, setSoundOpen] = useState(true);
 

@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import { Picker } from 'emoji-mart';
 import 'emoji-mart/css/emoji-mart.css';
-import qs from 'qs';
 
 import inputStyles from '../../components/styles/input';
 import { createPin } from '../../actions/socket';
@@ -17,7 +16,7 @@ const useStyles = makeStyles(inputStyles);
 const PinnedMessageInput = () => {
   const classes = useStyles();
 
-  const { name }: any = qs.parse(window.location.search, { ignoreQueryPrefix: true });
+  const { name } = useSelector((state: RootState) => state.user);
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
