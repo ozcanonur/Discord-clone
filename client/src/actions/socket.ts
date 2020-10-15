@@ -7,6 +7,12 @@ export const connect = (name: string | null): ClientIOActions.ConnectIOAction =>
   };
 };
 
+export const disconnect = (): ClientIOActions.DisconnectIOAction => {
+  return {
+    type: 'io/userDisconnected',
+  };
+};
+
 export const createChannel = (
   server: Server,
   channelName: string,

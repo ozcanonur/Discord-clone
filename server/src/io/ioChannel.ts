@@ -220,7 +220,7 @@ export const onUserCreatedPin = async (
   });
   // Find the channel's server, send notification to all users subscribed to that server
   const server = await Server.findOne({ channels: { $all: [channel.id] } }).populate('users');
-  server.users.forEach((user: IUser) => {
+  server.users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/notification',
       payload: { type: 'pin', channelId: channel._id },

@@ -1,9 +1,9 @@
 import express, { Request, Response } from 'express';
-import { searchUsers, searchChannels, SearchResult } from './utils';
-import Server, { IServer } from './db/models/server';
-import User, { IUser } from './db/models/user';
-import Note, { INote } from './db/models/note';
-import { IChannel } from './db/models/channel';
+import { searchUsers, searchChannels, SearchResult } from '../utils';
+import Server, { IServer } from '../db/models/server';
+import User, { IUser } from '../db/models/user';
+import Note, { INote } from '../db/models/note';
+import { IChannel } from '../db/models/channel';
 
 const router = express.Router();
 

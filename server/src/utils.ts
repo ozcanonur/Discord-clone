@@ -35,7 +35,7 @@ const setupChannels = async (
   return createdChannels;
 };
 
-export const setupServer = async (
+const setupServer = async (
   name: string,
   channels: {
     name: string;
@@ -54,6 +54,21 @@ export const setupServer = async (
     users: [],
   });
   await server.save();
+};
+
+export const setupDefaultServers = async () => {
+  await setupServer('Default', [
+    { name: 'General', isVoice: false },
+    { name: 'World news', isVoice: false },
+    { name: 'Covid-19', isVoice: false },
+    { name: 'Voice', isVoice: true },
+  ]);
+  await setupServer('Games', [
+    { name: 'General', isVoice: false },
+    { name: 'World of Warcraft', isVoice: false },
+    { name: 'Path of Exile', isVoice: false },
+    { name: 'Voice', isVoice: true },
+  ]);
 };
 
 export const searchUsers = async (text: string, name: string) => {

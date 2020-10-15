@@ -33,9 +33,15 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
       .then((res) => {
         if (res.status === 200) history.push('/main');
       })
-      .catch((_error) => {
-        setError(true);
-        setErrorText('Wrong username / password.');
+      .catch((error) => {
+        console.log(error.response);
+        if (error.response.status === 409) {
+          setError(true);
+          setErrorText('User is already logged in.');
+        } else if (error.response.status === 401) {
+          setError(true);
+          setErrorText('Wrong username or password.');
+        }
       });
   };
 

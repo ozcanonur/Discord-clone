@@ -69,6 +69,10 @@ export namespace ClientIOActions {
     payload: string | null;
   }
 
+  export interface DisconnectIOAction {
+    type: string;
+  }
+
   export interface CreateServerIOAction {
     type: string;
     payload: {
