@@ -58,6 +58,19 @@ const loginStyles = createStyles({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  helperText: {
+    fontSize: '1.4rem',
+    fontFamily: 'Whitney Medium, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
+    color: '#3CB371',
+  },
+  helperErrorText: {
+    fontSize: '1.4rem',
+    fontFamily: 'Whitney Medium, sans-serif',
+    marginLeft: 0,
+    marginTop: '0.7rem',
+  },
 });
 
 export default loginStyles;

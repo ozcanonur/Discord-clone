@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Channel from '../db/models/channel';
-import { reducePrivateUsers } from './util';
+import { reducePrivateUsers, reduceMessages } from './utils';
 
 const getFriendRequestValidationError = async (name: string, friendName: string) => {
   if (friendName.length === 0) return `Friend name can't be empty.`;
@@ -145,4 +145,43 @@ export const onUserRemovedFriend = async (
     type: 'io/privateUsers',
     payload: reducePrivateUsers(friend),
   });
+};
+
+export const onUserSelectedPrivateChannel = async (
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      username: string;
+    };
+  }
+) => {
+  const { name, username } = action.payload;
+
+  // Leave the current channel first
+  const user = await User.findOne({ name }).populate('currentChannel');
+  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
+
+  // Find the channel, try both combinations since we don't know who added who
+  // And we created the channel name via concat'ing the names above
+  const populateFields = {
+    path: 'messages',
+    model: 'Message',
+    populate: {
+      path: 'user',
+      model: 'User',
+    },
+  };
+  let channel =
+    (await Channel.findOne({ name: `${name}${username}_private` }).populate(populateFields)) ||
+    (await Channel.findOne({ name: `${username}${name}_private` }).populate(populateFields));
+  // Join the new channel
+
+  await socket.join(channel._id.toString());
+
+  // Update user's channel
+  await User.updateOne({ name }, { currentChannel: channel });
+  // Emit the older messages to the user
+  socket.emit('action', { type: 'io/messages', payload: reduceMessages(channel.messages) });
 };

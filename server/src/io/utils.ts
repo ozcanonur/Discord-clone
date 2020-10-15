@@ -1,54 +1,7 @@
-import Server, { IServer } from '../db/models/server';
-import Channel, { IChannel } from '../db/models/channel';
+import { IServer } from '../db/models/server';
+import { IChannel } from '../db/models/channel';
 import { IMessage } from '../db/models/message';
 import { IUser } from '../db/models/user';
-
-const setupChannel = async (name: string, isVoice: boolean) => {
-  const channel = new Channel({
-    name,
-    messages: [],
-    voice: isVoice,
-  });
-
-  await channel.save();
-  return channel;
-};
-
-const setupChannels = async (
-  channels: {
-    name: string;
-    isVoice: boolean;
-  }[]
-) => {
-  const createdChannels: IChannel[] = [];
-  for (const channel of channels) {
-    const createdChannel: IChannel = await setupChannel(channel.name, channel.isVoice);
-    createdChannels.push(createdChannel);
-  }
-
-  return createdChannels;
-};
-
-export const setupServer = async (
-  name: string,
-  channels: {
-    name: string;
-    isVoice: boolean;
-  }[]
-) => {
-  const serverExists: boolean = await Server.exists({ name });
-  if (serverExists) return;
-
-  console.log(`Setting up ${name}`);
-
-  const createdChannels: IChannel[] = await setupChannels(channels);
-  const server = new Server({
-    name,
-    channels: createdChannels,
-    users: [],
-  });
-  await server.save();
-};
 
 export const reduceUsers = (users: IUser[]) => users.map((user) => user.name);
 
@@ -99,5 +52,3 @@ export const reducePrivateUsers = (user: IUser) => {
     };
   });
 };
-
-module.exports = { setupServer, reduceUsers, reduceServers, reduceMessages, reducePrivateUsers };

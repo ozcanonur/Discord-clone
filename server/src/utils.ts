@@ -9,6 +9,53 @@ export interface SearchResult {
   id: string;
 }
 
+const setupChannel = async (name: string, isVoice: boolean) => {
+  const channel = new Channel({
+    name,
+    messages: [],
+    voice: isVoice,
+  });
+
+  await channel.save();
+  return channel;
+};
+
+const setupChannels = async (
+  channels: {
+    name: string;
+    isVoice: boolean;
+  }[]
+) => {
+  const createdChannels: IChannel[] = [];
+  for (const channel of channels) {
+    const createdChannel: IChannel = await setupChannel(channel.name, channel.isVoice);
+    createdChannels.push(createdChannel);
+  }
+
+  return createdChannels;
+};
+
+export const setupServer = async (
+  name: string,
+  channels: {
+    name: string;
+    isVoice: boolean;
+  }[]
+) => {
+  const serverExists: boolean = await Server.exists({ name });
+  if (serverExists) return;
+
+  console.log(`Setting up ${name}`);
+
+  const createdChannels: IChannel[] = await setupChannels(channels);
+  const server = new Server({
+    name,
+    channels: createdChannels,
+    users: [],
+  });
+  await server.save();
+};
+
 export const searchUsers = async (text: string, name: string) => {
   // Letting the user search for EVERY USER, not only friends
   // This is questionable.

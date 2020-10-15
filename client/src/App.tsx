@@ -18,7 +18,6 @@ const App = () => {
     axios
       .get('/user', { withCredentials: true })
       .then((res) => {
-        console.log('Got user');
         if (res.status === 200) {
           const { name, id } = res.data;
           dispatch(login(name, id));

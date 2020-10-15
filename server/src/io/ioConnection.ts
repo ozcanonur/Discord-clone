@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Server, { IServer } from '../db/models/server';
-import { reduceUsers, reduceServers, reducePrivateUsers } from './util';
+import { reduceUsers, reduceServers, reducePrivateUsers } from './utils';
 import { IChannel } from '../db/models/channel';
 
 export const onUserConnected = async (

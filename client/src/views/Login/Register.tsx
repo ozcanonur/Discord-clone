@@ -22,18 +22,39 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   const classes = useStyles();
 
   const [username, setUserName] = useState('Onur');
+  const [usernameError, setUsernameError] = useState(false);
+  const [usernameErrorText, setUsernameErrorText] = useState('');
+
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [passwordErrorText, setPasswordErrorText] = useState('');
 
   const history = useHistory();
   const registerOnClick = () => {
-    const params = { username, password };
-    axios
-      .post('/register', params, { withCredentials: true })
-      .then((res) => {
-        if (res.status === 201) history.push('/main');
-        else if (res.status === 409) console.log('User already exists');
-      })
-      .catch((error) => console.log(error));
+    if (username.trim() === '') {
+      setUsernameError(true);
+      setUsernameErrorText(`Username can't be empty.`);
+    } else if (username.length < 3 || username.length > 8) {
+      setUsernameError(true);
+      setUsernameErrorText(`Username length must be between 3 and 8 characters.`);
+    } else if (password.trim() === '') {
+      setPasswordError(true);
+      setPasswordErrorText(`Password can't be empty.`);
+    } else if (password.length < 6) {
+      setPasswordError(true);
+      setPasswordErrorText('Password length needs to be at least 6 characters.');
+    } else {
+      const params = { username, password };
+      axios
+        .post('/register', params, { withCredentials: true })
+        .then((res) => {
+          if (res.status === 201) history.push('/main');
+        })
+        .catch((_error) => {
+          setUsernameError(true);
+          setUsernameErrorText('User already exists.');
+        });
+    }
   };
 
   return (
@@ -70,6 +91,11 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
                 root: classes.inputLabelProps,
               },
             }}
+            error={usernameError}
+            helperText={usernameErrorText}
+            FormHelperTextProps={{
+              className: usernameError ? classes.helperErrorText : classes.helperText,
+            }}
           />
           <TextField
             variant='outlined'
@@ -92,6 +118,11 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputLabelProps,
               },
+            }}
+            error={passwordError}
+            helperText={passwordErrorText}
+            FormHelperTextProps={{
+              className: passwordError ? classes.helperErrorText : classes.helperText,
             }}
           />
           <div className={classes.buttons}>

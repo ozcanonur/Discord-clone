@@ -3,20 +3,23 @@ import server from '../index';
 import { onUserConnected, onUserDisconnected } from './ioConnection';
 import {
   onUserCreatedChannel,
+  onUserDeletedChannel,
+  onUserSelectedChannel,
+  onUserCreatedPin,
+} from './ioChannel';
+import {
   onUserCreatedServer,
   onUserJoinedServer,
   onUserDeletedServer,
-  onUserDeletedChannel,
   onUserLeftServer,
-} from './ioCreateJoin';
+} from './ioServer';
 import {
   onUserSentFriendRequest,
   onUserConnectedNewPrivateUser,
   onUserRemovedFriend,
+  onUserSelectedPrivateChannel,
 } from './ioPrivate';
 import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
-import { onUserSelectedChannel, onUserSelectedPrivateChannel } from './ioSelectChannel';
-import { onUserCreatedPin } from './ioMisc';
 
 export interface Action {
   type: string;

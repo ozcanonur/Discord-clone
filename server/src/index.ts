@@ -12,7 +12,7 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import { setupServer } from './io/util';
+import { setupServer } from './utils';
 
 const app = express();
 const server = http.createServer(app);
@@ -93,6 +93,14 @@ app.post('/logout', (req: ExtendedRequest, res) => {
   res.send();
 });
 
+const getRegisterValidationError = (username: string, password: string) => {
+  if (username.trim() === '') return `Username can't be empty.`;
+  else if (username.length < 3 || username.length > 8)
+    return `Username length must be between 3 and 8 characters.`;
+  else if (password.trim() === '') return `Password can't be empty.`;
+  else if (password.length < 6) return 'Password length needs to be at least 6 characters.';
+};
+
 app.post('/register', async (req: ExtendedRequest, res) => {
   // Create default servers if they don't exist
   await setupServer('Default', [
@@ -109,8 +117,10 @@ app.post('/register', async (req: ExtendedRequest, res) => {
   ]);
 
   const user = await User.findOne({ name: req.body.username });
-
   if (user) return res.status(409).send('User already exists.');
+
+  const validationError = getRegisterValidationError(req.body.username, req.body.password);
+  if (validationError) res.status(400).send(validationError);
 
   const hashedPassword = await bcrypt.hash(req.body.password, 8);
   const newUser = new User({
@@ -140,7 +150,7 @@ app.post('/register', async (req: ExtendedRequest, res) => {
 });
 
 // Catch all for deploy
-app.get('/*', function (req, res) {
+app.get('/*', function (_req, res) {
   res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
     if (err) res.status(500).send(err);
   });

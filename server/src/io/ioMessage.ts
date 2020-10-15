@@ -1,7 +1,7 @@
 import User from '../db/models/user';
 import Channel from '../db/models/channel';
 import Message from '../db/models/message';
-import { reduceMessages, reducePrivateUsers } from './util';
+import { reduceMessages, reducePrivateUsers } from './utils';
 
 export const onUserMessaged = async (
   io: SocketIO.Server,

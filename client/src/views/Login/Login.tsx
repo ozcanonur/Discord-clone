@@ -22,6 +22,8 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
 
   const [username, setUsername] = useState('Onur');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState('');
 
   const history = useHistory();
   const loginOnClick = () => {
@@ -31,7 +33,10 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
       .then((res) => {
         if (res.status === 200) history.push('/main');
       })
-      .catch((error) => console.log(error));
+      .catch((_error) => {
+        setError(true);
+        setErrorText('Wrong username / password.');
+      });
   };
 
   return (
@@ -66,6 +71,11 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputLabelProps,
               },
+            }}
+            error={error}
+            helperText={errorText}
+            FormHelperTextProps={{
+              className: error ? classes.helperErrorText : classes.helperText,
             }}
           />
           <TextField
