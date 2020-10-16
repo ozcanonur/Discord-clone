@@ -10,7 +10,8 @@ interface Message {
 interface Channel {
   _id: string;
   name: string;
-  voice: boolean;
+  isVoice: boolean;
+  voiceUsers: string[];
 }
 
 interface Server {

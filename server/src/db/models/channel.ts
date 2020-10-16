@@ -1,5 +1,6 @@
 import { Document, Model, Schema, model } from 'mongoose';
 import Message, { IMessage } from './message';
+import { IUser } from './user';
 
 const ChannelSchema = new Schema({
   name: {
@@ -23,6 +24,12 @@ const ChannelSchema = new Schema({
       ref: 'Message',
     },
   ],
+  voiceUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 export interface IChannel extends Document {
@@ -31,6 +38,7 @@ export interface IChannel extends Document {
   voice?: boolean;
   category?: string;
   pinnedMessages?: IMessage[];
+  voiceUsers?: IUser[];
 }
 
 ChannelSchema.pre('remove', async function (next) {

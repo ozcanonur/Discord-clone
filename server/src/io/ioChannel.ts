@@ -83,6 +83,7 @@ export const onUserDeletedChannel = async (
 ) => {
   const { name, channelId } = action.payload;
   // Check if the user is admin in this server, also if they are default servers
+  // @ts-ignore
   const server = await Server.findOne({ channels: { $all: channelId } }).populate('admin');
   const isDefaultServers = server.name === 'Default' || server.name === 'Games';
   if (isDefaultServers || server.admin.name !== name) return;
@@ -100,6 +101,10 @@ export const onUserDeletedChannel = async (
     populate: {
       path: 'channels',
       model: 'Channel',
+      populate: {
+        path: 'voiceUsers',
+        model: 'User',
+      },
     },
   });
   // Emit the new server list containing new channels to everyone that was subscribed to this server
@@ -113,6 +118,7 @@ export const onUserDeletedChannel = async (
 };
 
 export const onUserSelectedChannel = async (
+  io: SocketIO.Server,
   socket: Socket,
   action: {
     type: string;
@@ -133,6 +139,39 @@ export const onUserSelectedChannel = async (
 
   // Join the new channel
   await socket.join(channel._id.toString());
+  // Remove the user from voiceUsers of the channel if present
+  const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate('voiceUsers');
+  const wasOnVoice = oldChannel.voiceUsers.some((u) => u._id.toString() === user._id.toString());
+  if (wasOnVoice) {
+    oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
+      (u) => u._id.toString() !== user._id.toString()
+    );
+    await oldChannel.save();
+    // Send the new servers back to each of the users that are subscribed to the channel's server
+    // Find the server that this channel is on
+    const server = await Server.findOne({ channels: { $all: [oldChannel._id] } }).populate({
+      path: 'users',
+      model: 'User',
+      populate: {
+        path: 'servers',
+        model: 'Server',
+        populate: {
+          path: 'channels',
+          model: 'Channel',
+          populate: {
+            path: 'voiceUsers',
+            model: 'User',
+          },
+        },
+      },
+    });
+
+    // Send the new servers to each of the users
+    server.users.forEach((u) => {
+      io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
+    });
+  }
+
   // Update the user's current channel
   const newChannel = await Channel.findOne({ name: channel.name });
   await User.updateOne({ name }, { currentChannel: newChannel });
@@ -225,5 +264,57 @@ export const onUserCreatedPin = async (
       type: 'io/notification',
       payload: { type: 'pin', channelId: channel._id },
     });
+  });
+};
+
+export const onUserSelectedVoiceChannel = async (
+  io: SocketIO.Server,
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      channel: {
+        _id: string;
+        name: string;
+        voice: boolean;
+      };
+    };
+  }
+) => {
+  const { name, channel: channelReq } = action.payload;
+  // Find the user
+  const user = await User.findOne({ name }).populate('currentChannel');
+  // Leave the current channel first
+  if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
+  // Join the new channel
+  await socket.join(channelReq._id.toString());
+  // Update the current channel of the suer
+  const newChannel = await Channel.findOne({ _id: channelReq._id });
+  await User.updateOne({ name }, { currentChannel: newChannel });
+
+  // Add the user to the voiceUsers in the channel
+  await Channel.updateOne({ _id: channelReq._id }, { $addToSet: { voiceUsers: user } });
+  // Find the server that this channel is on
+  const server = await Server.findOne({ channels: { $all: [channelReq._id] } }).populate({
+    path: 'users',
+    model: 'User',
+    populate: {
+      path: 'servers',
+      model: 'Server',
+      populate: {
+        path: 'channels',
+        model: 'Channel',
+        populate: {
+          path: 'voiceUsers',
+          model: 'User',
+        },
+      },
+    },
+  });
+
+  // Send the new servers to each of the users
+  server.users.forEach((u) => {
+    io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
   });
 };

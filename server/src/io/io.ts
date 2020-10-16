@@ -5,6 +5,7 @@ import {
   onUserCreatedChannel,
   onUserDeletedChannel,
   onUserSelectedChannel,
+  onUserSelectedVoiceChannel,
   onUserCreatedPin,
 } from './ioChannel';
 import {
@@ -39,7 +40,10 @@ io.on('connection', (socket: Socket) => {
     // ioChannel
     else if (action.type === 'io/userCreatedChannel')
       await onUserCreatedChannel(io, socket, action);
-    else if (action.type === 'io/userSelectedChannel') await onUserSelectedChannel(socket, action);
+    else if (action.type === 'io/userSelectedChannel')
+      await onUserSelectedChannel(io, socket, action);
+    else if (action.type === 'io/userSelectedVoiceChannel')
+      await onUserSelectedVoiceChannel(io, socket, action);
     else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
     else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     // ioPrivate

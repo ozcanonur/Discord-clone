@@ -8,17 +8,23 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import { ReactComponent as PinLogo } from '../../assets/office.svg';
 
 import { selectChannel } from '../../actions/react';
-import { selectChannel as selectChannelIo } from '../../actions/socket';
+import {
+  selectChannel as selectChannelIo,
+  selectVoiceChannel as selectVoiceChannelIo,
+} from '../../actions/socket';
 import channelsStyles from './styles/channels';
 import ContextMenu from './ContextMenu';
+import User from './User';
 
 const useStyles = makeStyles(channelsStyles);
 
 interface ChannelProps {
   channel: Channel;
+  isVoice: boolean;
+  selectedServer: Server;
 }
 
-const Channel = ({ channel }: ChannelProps) => {
+const Channel = ({ channel, isVoice, selectedServer }: ChannelProps) => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
@@ -31,8 +37,13 @@ const Channel = ({ channel }: ChannelProps) => {
 
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
-    dispatch(selectChannel(channel));
-    dispatch(selectChannelIo(name, channel));
+    if (channel.isVoice) {
+      dispatch(selectChannel(channel));
+      dispatch(selectVoiceChannelIo(name, channel));
+    } else {
+      dispatch(selectChannel(channel));
+      dispatch(selectChannelIo(name, channel));
+    }
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,34 +52,48 @@ const Channel = ({ channel }: ChannelProps) => {
     setAnchorEl(e.currentTarget);
   };
 
+  const voiceUsersInChannel =
+    selectedServer.channels.find((c) => c._id === channel._id)?.voiceUsers || [];
+
   return (
-    <div onContextMenu={(e) => openContextMenuOnClick(e)} style={{ width: '100%' }}>
-      <ListItem
-        button
-        onClick={() => selectChannelOnClick(channel)}
-        selected={selectedChannel.name === channel.name}
-        classes={{ selected: classes.channelSelected, root: classes.channel }}
-        disableGutters
-      >
-        <ListItemIcon>
-          {channel.voice ? (
-            <VolumeUp className={classes.icon} />
-          ) : (
-            <div className={classes.icon}>#</div>
-          )}
-        </ListItemIcon>
-        <ListItemText primary={channel.name} className={classes.text} />
-        {pinNotification ? (
-          <PinLogo
-            style={{
-              height: '1.5rem',
-              fill: 'rgb(220,221,222)',
-            }}
-          />
-        ) : null}
-      </ListItem>
-      <ContextMenu channel={channel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-    </div>
+    <>
+      <div onContextMenu={(e) => openContextMenuOnClick(e)} style={{ width: '100%' }}>
+        <ListItem
+          button
+          onClick={() => selectChannelOnClick(channel)}
+          selected={selectedChannel.name === channel.name}
+          classes={{ selected: classes.channelSelected, root: classes.channel }}
+          disableGutters
+        >
+          <ListItemIcon>
+            {channel.isVoice ? (
+              <VolumeUp className={classes.icon} />
+            ) : (
+              <div className={classes.icon}>#</div>
+            )}
+          </ListItemIcon>
+          <ListItemText primary={channel.name} className={classes.text} />
+          {pinNotification ? (
+            <PinLogo
+              style={{
+                height: '1.5rem',
+                fill: 'rgb(220,221,222)',
+              }}
+            />
+          ) : null}
+        </ListItem>
+        <ContextMenu channel={channel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+      </div>
+      {isVoice ? (
+        <div
+          style={{ paddingLeft: '3rem', display: 'flex', flexDirection: 'column', width: '100%' }}
+        >
+          {voiceUsersInChannel.map((u, key) => (
+            <User key={key} name={u} />
+          ))}
+        </div>
+      ) : null}
+    </>
   );
 };
 

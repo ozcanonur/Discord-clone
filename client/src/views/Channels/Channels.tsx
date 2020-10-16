@@ -16,10 +16,10 @@ const useStyles = makeStyles(channelsStyles);
 
 interface Props {
   channels: Channel[];
-  voice: boolean;
+  isVoice: boolean;
 }
 
-const Channels = ({ channels, voice }: Props) => {
+const Channels = ({ channels, isVoice }: Props) => {
   const classes = useStyles();
 
   const servers = useSelector((state: RootState) => state.servers);
@@ -43,7 +43,7 @@ const Channels = ({ channels, voice }: Props) => {
             <KeyboardArrowRightRoundedIcon className={classes.categoryIcon} />
           )}
         </IconButton>
-        <div className={classes.categoryText}>{voice ? 'Voice channels' : 'Text channels'}</div>
+        <div className={classes.categoryText}>{isVoice ? 'Voice channels' : 'Text channels'}</div>
         <IconButton className={classes.iconButton} onClick={() => setModalOpen(true)}>
           <Add className={classes.categoryIcon} />
         </IconButton>
@@ -53,7 +53,12 @@ const Channels = ({ channels, voice }: Props) => {
           {channels.length > 0 ? (
             <List className={classes.channelList}>
               {channels.map((channel: Channel, key: number) => (
-                <Channel key={key} channel={channel} />
+                <Channel
+                  key={key}
+                  channel={channel}
+                  isVoice={isVoice}
+                  selectedServer={selectedServer}
+                />
               ))}
             </List>
           ) : null}

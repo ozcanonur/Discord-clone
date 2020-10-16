@@ -15,7 +15,8 @@ export const reduceServers = (servers: IServer[]) => {
       return {
         _id: channel._id,
         name: channel.name,
-        voice: channel.voice,
+        isVoice: channel.voice,
+        voiceUsers: reduceUsers(channel.voiceUsers),
       };
     });
     return {

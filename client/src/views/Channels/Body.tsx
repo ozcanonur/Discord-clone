@@ -16,15 +16,15 @@ const Body = () => {
     channels: [],
   };
 
-  const voiceChannels = selectedServer.channels.filter((channel) => channel.voice);
-  const textChannels = selectedServer.channels.filter((channel) => !channel.voice);
+  const voiceChannels = selectedServer.channels.filter((channel) => channel.isVoice);
+  const textChannels = selectedServer.channels.filter((channel) => !channel.isVoice);
 
   return (
     <div className={classes.body}>
       {selectedServerName !== '' ? (
         <>
-          <Channels channels={textChannels} voice={false} />
-          <Channels channels={voiceChannels} voice />
+          <Channels channels={textChannels} isVoice={false} />
+          <Channels channels={voiceChannels} isVoice />
         </>
       ) : null}
     </div>

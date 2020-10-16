@@ -34,6 +34,16 @@ export const selectChannel = (
   };
 };
 
+export const selectVoiceChannel = (
+  name: string | null,
+  channel: Channel
+): ClientIOActions.SelectVoiceChannelIOAction => {
+  return {
+    type: 'io/userSelectedVoiceChannel',
+    payload: { name, channel },
+  };
+};
+
 export const createServer = (
   name: string | null,
   serverName: string

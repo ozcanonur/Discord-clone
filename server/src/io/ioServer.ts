@@ -48,7 +48,14 @@ export const onUserCreatedServer = async (
   await User.updateOne({ name }, { $addToSet: { servers: newServer } });
   // Find the user's servers and send them back
   user = await User.findOne({ name });
-  const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
+  const userServers = await Server.find({ _id: { $in: user.servers } }).populate({
+    path: 'channels',
+    model: 'Channel',
+    populate: {
+      path: 'voiceUsers',
+      model: 'User',
+    },
+  });
   socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
   // Emit success
   socket.emit('action', { type: 'io/response' });
@@ -76,7 +83,14 @@ export const onUserJoinedServer = async (
   await user.save();
   // Find the user's servers and send them back
   user = await User.findOne({ name });
-  const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
+  const userServers = await Server.find({ _id: { $in: user.servers } }).populate({
+    path: 'channels',
+    model: 'Channel',
+    populate: {
+      path: 'voiceUsers',
+      model: 'User',
+    },
+  });
   socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
 };
 
@@ -103,11 +117,11 @@ export const onUserDeletedServer = async (
   await server.remove();
 
   const users = await User.find({ _id: { $in: server.users } }).populate({
-    path: 'servers',
-    model: 'Server',
+    path: 'channels',
+    model: 'Channel',
     populate: {
-      path: 'channels',
-      model: 'Channel',
+      path: 'voiceUsers',
+      model: 'User',
     },
   });
   // Emit the new server list to everyone that was subscribed to this server
@@ -132,6 +146,10 @@ export const onUserLeftServer = async (
     populate: {
       path: 'channels',
       model: 'Channel',
+      populate: {
+        path: 'voiceUsers',
+        model: 'User',
+      },
     },
   });
   user.servers = user.servers.filter((server: IServer) => server.name !== serverName);

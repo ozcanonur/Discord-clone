@@ -42,6 +42,8 @@ const Chat = () => {
         <div className={classes.warning}>Select a server</div>
       ) : selectedChannel.name === '' ? (
         <div className={classes.warning}>Select a channel</div>
+      ) : selectedChannel.isVoice ? (
+        <div className={classes.warning}>{`You are in # ${selectedChannel.name} (voice)`}</div>
       ) : (
         <div className={classes.chat}>
           <InfiniteScroll

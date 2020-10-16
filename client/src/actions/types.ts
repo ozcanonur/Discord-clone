@@ -89,6 +89,14 @@ export namespace ClientIOActions {
     };
   }
 
+  export interface SelectVoiceChannelIOAction {
+    type: string;
+    payload: {
+      name: string | null;
+      channel: Channel;
+    };
+  }
+
   export interface MessageIOAction {
     type: string;
     payload: {

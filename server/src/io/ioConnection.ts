@@ -18,6 +18,10 @@ export const onUserConnected = async (
       populate: {
         path: 'channels',
         model: 'Channel',
+        populate: {
+          path: 'voiceUsers',
+          model: 'User',
+        },
       },
     },
     {
@@ -31,16 +35,6 @@ export const onUserConnected = async (
   ]);
 
   await User.updateOne({ name }, { socketId: socket.id, online: true, lastActiveAt: new Date() });
-
-  //  const defaultChannelIds = defaultServer.channels.map((ch: IChannel) => ch._id);
-  //   const secondaryChannelIds = secondaryServer.channels.map((ch: IChannel) => ch._id);
-  //   // Send pin notification for each channel in default servers
-  //   [...defaultChannelIds, ...secondaryChannelIds].forEach((id: string) => {
-  //     socket.emit('action', {
-  //       type: 'io/notification',
-  //       payload: { type: 'pin', channelId: id },
-  //     });
-  //   });
 
   // Let the other online users know
   const users: IUser[] = await User.find({ online: true });
