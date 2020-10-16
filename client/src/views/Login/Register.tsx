@@ -84,7 +84,7 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputProps,
               },
-              autoComplete: 'off',
+              // autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {

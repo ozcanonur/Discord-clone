@@ -37,13 +37,10 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
     subscribed,
   } = res;
 
-  const servers = useSelector((state: RootState) => state.servers);
   const { name } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const joinServerOnClick = async () => {
-    const server = servers.find((s) => s.name === serverName);
     dispatch(joinServer(name, serverName));
-    dispatch(selectServer(server));
     dispatch(selectChannel({ _id: '', name: '', voice: false, voiceUsers: [] }));
     setModalOpen(false);
 

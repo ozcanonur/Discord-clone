@@ -22,7 +22,7 @@ interface Props {
 const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
+  const { name, id } = useSelector((state: RootState) => state.user);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [createChannelModalOpen, setCreateChannelModalOpen] = useState(false);
   const servers = useSelector((state: RootState) => state.servers);
@@ -70,6 +70,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
             classes={{ root: classes.menuItem }}
             disableGutters
             onClick={() => setCreateChannelModalOpen(true)}
+            disabled={server.name === 'Default' || server.name === 'Games'}
           >
             Create Channel Here
           </MenuItem>
@@ -84,7 +85,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
           <MenuItem
             classes={{ root: classes.menuItemDelete }}
             disableGutters
-            disabled={server.name === 'Default' || server.name === 'Games'}
+            disabled={server.name === 'Default' || server.name === 'Games' || server.admin !== id}
             onClick={() => setDeleteModalOpen(true)}
           >
             Delete Server
@@ -100,7 +101,6 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
       <ChannelCreateModal
         modalOpen={createChannelModalOpen}
         setModalOpen={setCreateChannelModalOpen}
-        selectedServer={selectedServer}
       />
     </>
   );

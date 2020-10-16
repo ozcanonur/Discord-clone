@@ -42,6 +42,7 @@ const Channel = ({ channel, isVoice }: ChannelProps) => {
       dispatch(selectChannel(channel));
       dispatch(selectVoiceChannelIo(name, channel));
     } else {
+      console.log(channel);
       dispatch(selectChannel(channel));
       dispatch(selectChannelIo(name, channel));
     }

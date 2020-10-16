@@ -41,12 +41,13 @@ router.get('/search', async (req: ExtendedRequest, res) => {
   res.send(results.slice(0, 20));
 });
 
-router.get('/userServers', async (req: ExtendedRequest, res) => {
+router.get('/userServers', async (req: ExtendedRequest, res, next) => {
   const { name } = req.query;
 
   const user: IUser = await User.findOne({ name }).populate('servers');
   const serverNames: string[] = user.servers.map((server: IServer) => server.name);
-  if (user) res.send(serverNames);
+  if (user) return res.send(serverNames);
+  next();
 });
 
 router.post('/note', async (req: ExtendedRequest, res) => {

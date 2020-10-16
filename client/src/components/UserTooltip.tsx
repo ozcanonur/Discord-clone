@@ -47,10 +47,10 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
 
     Promise.all([
       axios.get('/userServers', {
-        params: { name: username },
+        params: { name },
       }),
       axios.get('/note', {
-        params: { name: username, otherUserName: name },
+        params: { name: user.name, otherUserName: name },
       }),
     ])
       .then(([serverResults, noteResults]) => {

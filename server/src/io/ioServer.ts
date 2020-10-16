@@ -1,8 +1,7 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Server, { IServer } from '../db/models/server';
-import Channel, { IChannel } from '../db/models/channel';
-import { reduceServers } from './utils';
+import { reduceServer, reduceServers } from './utils';
 
 const getCreateServerValidationError = async (server: string) => {
   if (server.split(' ').length > 3) return `Server name can't be longer than 4 words.`;
@@ -67,7 +66,7 @@ export const onUserJoinedServer = async (
   }
   // Find server and user
   let user = await User.findOne({ name });
-  const server = await Server.findOne({ name: serverName }).populate('users');
+  const server = await Server.findOne({ name: serverName }).populate('users').populate('channels');
   // Update server's users
   server.users.push(user);
   await server.save();
@@ -78,6 +77,7 @@ export const onUserJoinedServer = async (
   user = await User.findOne({ name });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate('channels');
   socket.emit('action', { type: 'io/servers', payload: reduceServers(userServers) });
+  socket.emit('action', { type: 'io/selectedServer', payload: reduceServer(server) });
 };
 
 export const onUserDeletedServer = async (

@@ -6,7 +6,6 @@ import { IUser } from '../db/models/user';
 export const reduceUsers = (users: IUser[]) => users.map((user) => user.name);
 
 export const reduceServer = (server: IServer) => {
-  console.log(server);
   const channels = server.channels.map((channel: IChannel) => {
     return {
       _id: channel._id,
@@ -20,6 +19,7 @@ export const reduceServer = (server: IServer) => {
     _id: server._id,
     name: server.name,
     channels,
+    admin: server.admin,
   };
 };
 
@@ -41,6 +41,7 @@ export const reduceServers = (servers: IServer[]) => {
       _id: server._id,
       name: server.name,
       channels,
+      admin: server.admin,
     };
   });
   return reducedServers;

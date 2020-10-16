@@ -21,7 +21,7 @@ interface Props {
 const ContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
+  const { name, id } = useSelector((state: RootState) => state.user);
   const selectedServer = useSelector((state: RootState) => state.selectedServer);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -32,6 +32,7 @@ const ContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const dispatch = useDispatch();
   const deleteChannelOnClick = (channelId: string) => {
     dispatch(deleteChannel(name, channelId));
+    // WOOP only clear messages if delete was successful
     dispatch(clearMessages());
     setAnchorEl(null);
   };
@@ -53,7 +54,11 @@ const ContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
             classes={{ root: classes.menuItem }}
             disableGutters
             onClick={() => setModalOpen(true)}
-            disabled={selectedServer.name === 'Default' || selectedServer.name === 'Games'}
+            disabled={
+              selectedServer.name === 'Default' ||
+              selectedServer.name === 'Games' ||
+              selectedServer.admin !== id
+            }
           >
             Delete Channel
           </MenuItem>

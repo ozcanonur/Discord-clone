@@ -88,8 +88,9 @@ export const onUserDeletedChannel = async (
   action: { type: string; payload: { name: string; channelId: string } }
 ) => {
   const { name, channelId } = action.payload;
+
   // Check if the user is admin in this server, also if they are default servers
-  const server = await Server.findOne({ channels: { $all: channelId } }).populate('admin');
+  let server = await Server.findOne({ channels: { $all: channelId } }).populate('admin');
   const isDefaultServers = server.name === 'Default' || server.name === 'Games';
   if (isDefaultServers || server.admin.name !== name) return;
 
@@ -108,14 +109,19 @@ export const onUserDeletedChannel = async (
       model: 'Channel',
     },
   });
+  server = await Server.findOne({ channels: { $all: channelId } });
   // Emit the new server list containing new channels to everyone that was subscribed to this server
   // Emit the new server list to everyone that was subscribed to this server
-  users.forEach((user) =>
+  users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/servers',
       payload: reduceServers(user.servers),
-    })
-  );
+    });
+    io.to(user.socketId).emit('action', {
+      type: 'io/selectedServer',
+      payload: reduceServer(server),
+    });
+  });
 };
 
 export const onUserSelectedChannel = async (
@@ -136,12 +142,8 @@ export const onUserSelectedChannel = async (
   // Leave the current channel first
   const user = await User.findOne({ name }).populate('currentChannel');
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
-
   // Join the new channel
   await socket.join(channel._id.toString());
-  // Update the user's current channel
-  const newChannel = await Channel.findOne({ name: channel.name });
-  await User.updateOne({ name }, { currentChannel: newChannel });
   // Find the older messages in the channel
   const currChannel = await Channel.findOne({ _id: channel._id }).populate([
     {
@@ -161,6 +163,9 @@ export const onUserSelectedChannel = async (
       },
     },
   ]);
+  // Update the user's current channel
+  await User.updateOne({ name }, { currentChannel: currChannel });
+
   // Emit the older messages to client
   socket.emit('action', { type: 'io/messages', payload: reduceMessages(currChannel.messages) });
   // Emit the pins also, Sort by date first

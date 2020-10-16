@@ -21,13 +21,14 @@ interface Props {
 const ChannelCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const dispatch = useDispatch();
+  const { id } = useSelector((state: RootState) => state.user);
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
   const selectedServer = useSelector((state: RootState) => state.selectedServer);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearIoResponse());
   }, [dispatch, modalOpen]);
@@ -103,7 +104,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen }: Props) => {
               variant='contained'
               className={classes.modalButton}
               onClick={() => createChannelOnClick(modalInputValue, false)}
-              disabled={!!error}
+              disabled={!!error || selectedServer.admin !== id}
             >
               Create Channel
             </Button>
