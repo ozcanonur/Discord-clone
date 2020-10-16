@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
 import ListItem from '@material-ui/core/ListItem';
 
 import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
@@ -44,20 +42,15 @@ const Server = ({ server }: Props) => {
     <div onContextMenu={(e) => openContextMenuOnClick(e)}>
       <NavLink to='/main' style={{ textDecoration: 'none' }}>
         <ListItem disableGutters className={classes.listItem}>
-          <Tooltip
-            title={server.name}
-            arrow
-            placement='right'
-            enterDelay={0}
-            TransitionComponent={Zoom}
-            classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
-          >
-            <div>
-              <ServerIcon onClick={() => selectServerOnClick(server)} privateRoute={false}>
-                {server.name}
-              </ServerIcon>
-            </div>
-          </Tooltip>
+          <div>
+            <ServerIcon
+              onClick={() => selectServerOnClick(server)}
+              privateRoute={false}
+              name={server.name}
+            >
+              {server.name}
+            </ServerIcon>
+          </div>
         </ListItem>
       </NavLink>
       <ContextMenu server={server} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />

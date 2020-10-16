@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import Tooltip from '@material-ui/core/Tooltip';
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles<Theme, StyleProps>({
   serverContainer: {
@@ -9,7 +11,6 @@ const useStyles = makeStyles<Theme, StyleProps>({
     justifyContent: 'center',
     alignItems: 'center',
     padding: '1rem',
-    cursor: 'pointer',
     borderLeft: ({ isSelected }) => (isSelected ? '3px solid white' : 'none'),
   },
   server: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles<Theme, StyleProps>({
     color: '#dcddde',
     letterSpacing: '1.5px',
     transition: 'all .2s ease-in-out, transform 0s',
+    cursor: 'pointer',
 
     '& > svg': {
       fontSize: '3rem',
@@ -45,6 +47,17 @@ const useStyles = makeStyles<Theme, StyleProps>({
       transform: 'translateY(2px)',
     },
   },
+  tooltip: {
+    backgroundColor: 'black',
+    color: '#dcddde',
+    fontSize: '1.5rem',
+    textAlign: 'center',
+    padding: '1rem 2rem',
+    letterSpacing: 0,
+  },
+  arrow: {
+    color: 'black',
+  },
 });
 
 interface Props {
@@ -53,6 +66,7 @@ interface Props {
   style?: any;
   privateRoute?: boolean;
   isOption?: boolean;
+  name: string;
 }
 
 interface StyleProps {
@@ -62,7 +76,7 @@ interface StyleProps {
 
 const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
 
-const ServerIcon = ({ children, onClick, style, privateRoute, isOption }: Props) => {
+const ServerIcon = ({ children, onClick, style, privateRoute, isOption, name }: Props) => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const isSelected =
     selectedServerName === children || (privateRoute && selectedServerName === 'private');
@@ -72,9 +86,18 @@ const ServerIcon = ({ children, onClick, style, privateRoute, isOption }: Props)
 
   return (
     <div onClick={onClick} className={classes.serverContainer}>
-      <div className={classes.server} style={style}>
-        {typeof children === 'string' ? shortenServerName(children) : children}
-      </div>
+      <Tooltip
+        title={name}
+        arrow
+        placement='right'
+        enterDelay={0}
+        TransitionComponent={Zoom}
+        classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
+      >
+        <div className={classes.server} style={style}>
+          {typeof children === 'string' ? shortenServerName(children) : children}
+        </div>
+      </Tooltip>
     </div>
   );
 };

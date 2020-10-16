@@ -10,17 +10,6 @@ const indexStyles = createStyles({
     overflowY: 'auto',
     padding: '0.8rem',
   },
-  tooltip: {
-    backgroundColor: 'black',
-    color: '#dcddde',
-    fontSize: '1.5rem',
-    textAlign: 'center',
-    padding: '1rem 2rem',
-    letterSpacing: 0,
-  },
-  arrow: {
-    color: 'black',
-  },
   list: {
     padding: 0,
   },

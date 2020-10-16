@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import Tooltip from '@material-ui/core/Tooltip';
-import Zoom from '@material-ui/core/Zoom';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
@@ -42,70 +40,41 @@ const Options = () => {
   };
 
   return (
-    <>
-      <List className={classes.list}>
-        <ListItem disableGutters className={classes.listItem}>
-          <NavLink to='/private'>
-            <Tooltip
-              title='Friends / Private Messages'
-              arrow
-              placement='right'
-              enterDelay={0}
-              TransitionComponent={Zoom}
-              classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
-            >
-              <div>
-                <ServerIcon onClick={() => selectServerOnClick('private')} privateRoute>
-                  <PeopleAlt style={{ color: '#dcddde' }} />
-                </ServerIcon>
-              </div>
-            </Tooltip>
-          </NavLink>
-        </ListItem>
-        <ListItem disableGutters className={classes.listItem}>
-          <Tooltip
-            title='Add / Join Server'
-            arrow
-            placement='right'
-            enterDelay={0}
-            classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
-            TransitionComponent={Zoom}
+    <List className={classes.list}>
+      <ListItem disableGutters className={classes.listItem}>
+        <NavLink to='/private'>
+          <ServerIcon
+            onClick={() => selectServerOnClick('private')}
+            privateRoute
+            name='Friends / Private Messages'
           >
-            <div>
-              <ServerIcon
-                onClick={() => setAddServerModalOpen(true)}
-                privateRoute={false}
-                isOption={true}
-              >
-                <Add />
-              </ServerIcon>
-            </div>
-          </Tooltip>
-        </ListItem>
-        <ListItem disableGutters className={classes.listItem}>
-          <Tooltip
-            title='Explore Servers'
-            arrow
-            placement='right'
-            enterDelay={0}
-            classes={{ tooltip: classes.tooltip, arrow: classes.arrow }}
-            TransitionComponent={Zoom}
-          >
-            <div>
-              <ServerIcon
-                onClick={() => setExploreModalOpen(true)}
-                privateRoute={false}
-                isOption={true}
-              >
-                <ExploreRoundedIcon />
-              </ServerIcon>
-            </div>
-          </Tooltip>
-        </ListItem>
-      </List>
+            <PeopleAlt style={{ color: '#dcddde' }} />
+          </ServerIcon>
+        </NavLink>
+      </ListItem>
+      <ListItem disableGutters className={classes.listItem}>
+        <ServerIcon
+          onClick={() => setAddServerModalOpen(true)}
+          privateRoute={false}
+          isOption={true}
+          name='Add / Join Server'
+        >
+          <Add />
+        </ServerIcon>
+      </ListItem>
+      <ListItem disableGutters className={classes.listItem}>
+        <ServerIcon
+          onClick={() => setExploreModalOpen(true)}
+          privateRoute={false}
+          isOption={true}
+          name='Explore Servers'
+        >
+          <ExploreRoundedIcon />
+        </ServerIcon>
+      </ListItem>
       <ServerModal modalOpen={addServerModalOpen} setModalOpen={setAddServerModalOpen} />
       <ExploreModal modalOpen={exploreModalOpen} setModalOpen={setExploreModalOpen} />
-    </>
+    </List>
   );
 };
 
