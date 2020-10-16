@@ -8,7 +8,7 @@ import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectServer, selectChannel, clearMessages } from '../../actions/react';
 import { selectChannel as selectChannelIo } from '../../actions/socket';
 import ServerIcon from '../../components/ServerIcon';
 import indexStyles from './styles/index';
@@ -28,7 +28,8 @@ const Options = () => {
   const dispatch = useDispatch();
   const selectServerOnClick = (serverName: string) => {
     dispatch(clearMessages());
-    dispatch(selectServerName(serverName));
+    const server = servers.find((s) => s.name === serverName);
+    // dispatch(selectServer(server));
     if (serverName !== 'private') {
       const server = servers.find((server: Server) => server.name === serverName);
       if (server && server.channels.length > 0) {

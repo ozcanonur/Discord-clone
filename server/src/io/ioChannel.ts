@@ -3,7 +3,7 @@ import User, { IUser } from '../db/models/user';
 import Server from '../db/models/server';
 import Channel, { IChannel } from '../db/models/channel';
 import Message, { IMessage } from '../db/models/message';
-import { reduceServers, reduceMessages } from './utils';
+import { reduceServers, reduceMessages, reduceServer } from './utils';
 
 const getCreateChannelValidationError = async (
   server: { _id: string; name: string; channels: any },
@@ -59,8 +59,10 @@ export const onUserCreatedChannel = async (
   // @ts-ignore
   await Server.updateOne({ _id: server._id }, { $addToSet: { channels: channel } });
   // Find the users which are subscribed to this server
-  const channelsServer = await Server.findOne({ _id: server._id }).populate('users');
-  console.log(channelsServer.users);
+  const channelsServer = await Server.findOne({ _id: server._id })
+    .populate('users')
+    .populate('channels');
+
   const userIds: string[] = channelsServer.users.map((u) => u._id);
   const users = await User.find({ _id: { $in: userIds } }).populate({
     path: 'servers',
@@ -72,7 +74,11 @@ export const onUserCreatedChannel = async (
   });
   // Send the updated servers to each of them
   users.forEach((user) => {
-    const { socketId, servers }: { socketId: string; servers?: any } = user;
+    const { socketId, servers } = user;
+    io.to(socketId).emit('action', {
+      type: 'io/selectedServer',
+      payload: reduceServer(channelsServer),
+    });
     io.to(socketId).emit('action', { type: 'io/servers', payload: reduceServers(servers) });
   });
 };
@@ -219,11 +225,84 @@ export const onUserCreatedPin = async (
     });
   });
   // Find the channel's server, send notification to all users subscribed to that server
-  const server = await Server.findOne({ channels: { $all: [channel.id] } }).populate('users');
+  // WOOP changed id to _id
+  const server = await Server.findOne({ channels: { $all: [channel._id] } }).populate('users');
   server.users.forEach((user) => {
     io.to(user.socketId).emit('action', {
       type: 'io/notification',
       payload: { type: 'pin', channelId: channel._id },
     });
   });
+};
+
+export const onUserSelectedVoiceChannel = async (
+  io: SocketIO.Server,
+  socket: Socket,
+  action: {
+    type: string;
+    payload: {
+      name: string;
+      channel: {
+        _id: string;
+        name: string;
+        voice: boolean;
+      };
+    };
+  }
+) => {
+  const { name, channel } = action.payload;
+
+  // Leave current channel
+  const user = await User.findOne({ name }).populate({
+    path: 'currentChannel',
+    model: 'Channel',
+    populate: {
+      path: 'voiceUsers',
+      model: 'User',
+    },
+  });
+
+  if (user.currentChannel) {
+    await socket.leave(user.currentChannel._id.toString());
+    // Remove the user from current channel's voiceUsers
+    const currentChannel = await Channel.findOne({ _id: user.currentChannel._id });
+    currentChannel.voiceUsers = currentChannel.voiceUsers.filter((u) => u.name !== name);
+    await currentChannel.save();
+  }
+
+  // Join the voice channel
+  await socket.join(channel._id.toString());
+
+  // Update the user's current channel
+  const newChannel = await Channel.findOne({ name: channel.name }).populate('voiceUsers');
+  await User.updateOne({ name }, { currentChannel: newChannel });
+  // Update the channel's voice users
+  await Channel.updateOne({ name: channel.name }, { $addToSet: { voiceUsers: user } });
+
+  // channel = {_id, name, voice, voiceUsers=[]}
+  // // Find all the users subscribed to this channel
+  const server = await Server.findOne({ channels: { $all: [channel._id] } }).populate({
+    path: 'users',
+    model: 'User',
+    populate: {
+      path: 'servers',
+      model: 'Server',
+      populate: {
+        path: 'channels',
+        model: 'Channel',
+        populate: {
+          path: 'voiceUsers',
+          model: 'User',
+        },
+      },
+    },
+  });
+  const usersSubscribed = server.users;
+  // Find all the servers that each user is subscribed, and send them back
+  for (let userSubscribed of usersSubscribed) {
+    io.to(userSubscribed.socketId).emit('action', {
+      type: 'io/servers',
+      payload: reduceServers(userSubscribed.servers),
+    });
+  }
 };

@@ -26,7 +26,7 @@ const useStyles = makeStyles<Theme, StyleProps>({
     textAlign: 'center',
     color: '#dcddde',
     letterSpacing: '1.5px',
-    transition: 'all .2s ease-in-out, transform 0s',
+    transition: 'all .1s ease-in-out, transform 0s',
     cursor: 'pointer',
 
     '& > svg': {
@@ -77,9 +77,9 @@ interface StyleProps {
 const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
 
 const ServerIcon = ({ children, onClick, style, privateRoute, isOption, name }: Props) => {
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
   const isSelected =
-    selectedServerName === children || (privateRoute && selectedServerName === 'private');
+    selectedServer.name === children || (privateRoute && selectedServer.name === 'private');
 
   const styleProps = { isSelected, isOption };
   const classes = useStyles(styleProps);

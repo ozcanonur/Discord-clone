@@ -5,7 +5,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import { selectServerName, clearMessages, selectChannel } from '../../actions/react';
+import { selectServer, clearMessages, selectChannel } from '../../actions/react';
 import { deleteServer, leaveServer, selectChannel as selectChannelIo } from '../../actions/socket';
 import indexStyles from './styles/index';
 import ConfirmationModal from '../../components/ConfirmationModal';
@@ -26,13 +26,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [createChannelModalOpen, setCreateChannelModalOpen] = useState(false);
   const servers = useSelector((state: RootState) => state.servers);
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
-
-  const selectedServer = servers.find((server) => server.name === selectedServerName) || {
-    _id: '',
-    name: '',
-    channels: [],
-  };
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -42,21 +36,18 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const deleteServerOnClick = (serverName: string) => {
     dispatch(deleteServer(name, serverName));
     dispatch(clearMessages());
-    dispatch(selectServerName('Default'));
+    const defaultServer = servers.find((server) => server.name === 'Default');
+    dispatch(selectServer(defaultServer));
     setAnchorEl(null);
   };
 
   const leaveServerOnClick = (serverName: string) => {
     if (serverName === 'Default') return console.log(`You can't leave the default server`);
     dispatch(leaveServer(name, serverName));
-    if (selectedServerName === serverName) {
-      const defaultServer = servers.find((server) => server.name === 'Default') || {
-        _id: '',
-        name: '',
-        channels: [],
-      };
+    if (selectedServer.name === serverName) {
+      const defaultServer = servers.find((server) => server.name === 'Default');
       const firstChannel = defaultServer.channels[0];
-      dispatch(selectServerName(defaultServer.name));
+      dispatch(selectServer(defaultServer));
       dispatch(selectChannel(firstChannel));
       dispatch(selectChannelIo(name, firstChannel));
     }

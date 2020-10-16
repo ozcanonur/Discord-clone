@@ -8,7 +8,7 @@ import Main from './views/Main/index';
 import Servers from './views/Servers';
 import Channels from './views/Channels';
 import { connect } from './actions/socket';
-import { login, selectServerName, addPinNotification } from './actions/react';
+import { login, selectServer, addPinNotification, setServers } from './actions/react';
 
 const App = () => {
   const history = useHistory();
@@ -28,7 +28,14 @@ const App = () => {
           });
           dispatch(login(name, id));
           dispatch(connect(name));
-          dispatch(selectServerName('Default'));
+
+          const serversResponse = await axios.get('/servers', {
+            params: { name },
+            withCredentials: true,
+          });
+          dispatch(setServers(serversResponse.data));
+          const defaultServer = serversResponse.data.find((s: Server) => s.name === 'Default');
+          dispatch(selectServer(defaultServer));
         }
       } catch (err) {
         history.push('/login');

@@ -5,7 +5,7 @@ import serverCardStyles from '../styles/serverCard';
 import axios from 'axios';
 
 import { joinServer } from '../../../actions/socket';
-import { selectServerName, selectChannel, addPinNotification } from '../../../actions/react';
+import { selectServer, selectChannel, addPinNotification } from '../../../actions/react';
 
 const useStyles = makeStyles(serverCardStyles);
 
@@ -37,12 +37,14 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
     subscribed,
   } = res;
 
+  const servers = useSelector((state: RootState) => state.servers);
   const { name } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const joinServerOnClick = async () => {
+    const server = servers.find((s) => s.name === serverName);
     dispatch(joinServer(name, serverName));
-    dispatch(selectServerName(serverName));
-    dispatch(selectChannel({ _id: '', name: '', voice: false }));
+    dispatch(selectServer(server));
+    dispatch(selectChannel({ _id: '', name: '', voice: false, voiceUsers: [] }));
     setModalOpen(false);
 
     const response = await axios.get('/channelIds', {

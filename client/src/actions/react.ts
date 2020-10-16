@@ -1,9 +1,16 @@
 import { InternalActions } from './types';
 
-export const selectServerName = (serverName: string): InternalActions.SelectServerNameAction => {
+export const setServers = (servers: Server[]): InternalActions.SetServersAction => {
   return {
-    type: 'SELECT_SERVER_NAME',
-    payload: serverName,
+    type: 'SET_SERVERS',
+    payload: servers,
+  };
+};
+
+export const selectServer = (server: Server): InternalActions.SelectServerAction => {
+  return {
+    type: 'SELECT_SERVER',
+    payload: server,
   };
 };
 

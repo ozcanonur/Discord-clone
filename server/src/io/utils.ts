@@ -5,6 +5,24 @@ import { IUser } from '../db/models/user';
 
 export const reduceUsers = (users: IUser[]) => users.map((user) => user.name);
 
+export const reduceServer = (server: IServer) => {
+  console.log(server);
+  const channels = server.channels.map((channel: IChannel) => {
+    return {
+      _id: channel._id,
+      name: channel.name,
+      voice: channel.voice,
+      voiceUsers: channel.voiceUsers.map((u) => u.name),
+    };
+  });
+
+  return {
+    _id: server._id,
+    name: server.name,
+    channels,
+  };
+};
+
 export const reduceServers = (servers: IServer[]) => {
   const reducedServers: {
     _id: any;
@@ -16,6 +34,7 @@ export const reduceServers = (servers: IServer[]) => {
         _id: channel._id,
         name: channel.name,
         voice: channel.voice,
+        voiceUsers: channel.voiceUsers.map((u) => u.name),
       };
     });
     return {
@@ -24,7 +43,6 @@ export const reduceServers = (servers: IServer[]) => {
       channels,
     };
   });
-
   return reducedServers;
 };
 

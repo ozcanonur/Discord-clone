@@ -17,7 +17,7 @@ import searchModalStyles from './styles/searchModal';
 import { store } from '../store';
 import {
   selectChannel,
-  selectServerName,
+  selectServer,
   selectPrivateChannel,
   selectPrivateUser,
   selectTabInPrivate,
@@ -110,7 +110,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
         }
       }
 
-      dispatch(selectServerName(server.name));
+      dispatch(selectServer(server));
       dispatch(selectChannel(channel));
       dispatch(selectChannelIo(name, channel));
       setModalOpen(false);

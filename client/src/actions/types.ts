@@ -1,7 +1,12 @@
 export namespace InternalActions {
-  export interface SelectServerNameAction {
+  export interface SetServersAction {
     type: string;
-    payload: string;
+    payload: Server[];
+  }
+
+  export interface SelectServerAction {
+    type: string;
+    payload: Server;
   }
 
   export interface SelectChannelAction {
@@ -82,6 +87,14 @@ export namespace ClientIOActions {
   }
 
   export interface SelectChannelIOAction {
+    type: string;
+    payload: {
+      name: string | null;
+      channel: Channel;
+    };
+  }
+
+  export interface SelectVoiceChannelIOAction {
     type: string;
     payload: {
       name: string | null;

@@ -34,7 +34,6 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
         if (res.status === 200) history.push('/main');
       })
       .catch((error) => {
-        console.log(error.response);
         if (error.response.status === 409) {
           setError(true);
           setErrorText('User is already logged in.');

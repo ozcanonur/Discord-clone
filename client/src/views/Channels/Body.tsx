@@ -10,21 +10,17 @@ const useStyles = makeStyles(bodyStyles);
 const Body = () => {
   const classes = useStyles();
 
-  const servers = useSelector((state: RootState) => state.servers);
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
-  const selectedServer = servers.find((server: Server) => server.name === selectedServerName) || {
-    channels: [],
-  };
-
-  const voiceChannels = selectedServer.channels.filter((channel) => channel.voice);
-  const textChannels = selectedServer.channels.filter((channel) => !channel.voice);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
 
   return (
     <div className={classes.body}>
-      {selectedServerName !== '' ? (
+      {selectedServer.name !== '' ? (
         <>
-          <Channels channels={textChannels} voice={false} />
-          <Channels channels={voiceChannels} voice />
+          <Channels
+            channels={selectedServer.channels.filter((channel) => !channel.voice)}
+            voice={false}
+          />
+          <Channels channels={selectedServer.channels.filter((channel) => channel.voice)} voice />
         </>
       ) : null}
     </div>

@@ -11,6 +11,7 @@ interface Channel {
   _id: string;
   name: string;
   voice: boolean;
+  voiceUsers: string[];
 }
 
 interface Server {
@@ -37,7 +38,7 @@ interface User {
 
 interface RootState {
   user: User;
-  selectedServerName: string;
+  selectedServer: Server;
   selectedChannel: Channel;
   selectedTabInPrivate: string;
   activeUsersOpen: boolean;

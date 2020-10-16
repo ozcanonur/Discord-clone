@@ -17,6 +17,8 @@ export const servers = (state: Server[] = [], action: ServerIOActions.IOResponse
   switch (action.type) {
     case 'io/servers':
       return [...action.payload];
+    case 'SET_SERVERS':
+      return [...action.payload];
     default:
       return state;
   }

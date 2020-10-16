@@ -22,7 +22,7 @@ const ContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleClose = () => {
@@ -53,7 +53,7 @@ const ContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
             classes={{ root: classes.menuItem }}
             disableGutters
             onClick={() => setModalOpen(true)}
-            disabled={selectedServerName === 'Default' || selectedServerName === 'Games'}
+            disabled={selectedServer.name === 'Default' || selectedServer.name === 'Games'}
           >
             Delete Channel
           </MenuItem>

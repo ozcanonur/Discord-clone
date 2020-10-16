@@ -9,11 +9,11 @@ const useStyles = makeStyles(headerStyles);
 const Header = () => {
   const classes = useStyles();
 
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
 
   return (
     <div className={classes.header}>
-      <div className={classes.serverName}>{selectedServerName}</div>
+      <div className={classes.serverName}>{selectedServer.name}</div>
     </div>
   );
 };

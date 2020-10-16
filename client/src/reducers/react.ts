@@ -1,14 +1,13 @@
 import { InternalActions } from '../actions/types';
 
-// WOOP TEMP
-// const tempSelectedServer = window.location.pathname === '/private' ? 'private' : 'Default';
-
-export const selectedServerName = (
-  state: string | null = null,
-  action: InternalActions.SelectServerNameAction
+export const selectedServer = (
+  state: Server = { _id: '', name: '', channels: [] },
+  action: InternalActions.SelectServerAction
 ) => {
   switch (action.type) {
-    case 'SELECT_SERVER_NAME':
+    case 'SELECT_SERVER':
+      return action.payload;
+    case 'io/selectedServer':
       return action.payload;
     default:
       return state;
@@ -16,7 +15,7 @@ export const selectedServerName = (
 };
 
 export const selectedChannel = (
-  state: Channel = { _id: '', name: '', voice: false },
+  state: Channel = { _id: '', name: '', voice: false, voiceUsers: [] },
   action: InternalActions.SelectChannelAction
 ) => {
   switch (action.type) {

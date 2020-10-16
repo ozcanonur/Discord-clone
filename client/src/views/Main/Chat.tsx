@@ -18,7 +18,7 @@ const Chat = () => {
 
   const messages = useSelector((state: RootState) => state.messages);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
   const [shownMessagesCount, setShownMessagesCount] = useState(15);
 
   // Scroll messages to bottom on change
@@ -38,7 +38,7 @@ const Chat = () => {
 
   return (
     <div className={classes.container}>
-      {selectedServerName === '' ? (
+      {selectedServer.name === '' ? (
         <div className={classes.warning}>Select a server</div>
       ) : selectedChannel.name === '' ? (
         <div className={classes.warning}>Select a channel</div>

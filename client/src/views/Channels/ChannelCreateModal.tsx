@@ -16,10 +16,9 @@ const useStyles = makeStyles(channelCreateModalStyles);
 interface Props {
   modalOpen: boolean;
   setModalOpen: (x: boolean) => void;
-  selectedServer: Server;
 }
 
-const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) => {
+const ChannelCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -27,6 +26,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
+  const selectedServer = useSelector((state: RootState) => state.selectedServer);
 
   useEffect(() => {
     dispatch(clearIoResponse());

@@ -22,16 +22,8 @@ interface Props {
 const Channels = ({ channels, voice }: Props) => {
   const classes = useStyles();
 
-  const servers = useSelector((state: RootState) => state.servers);
-  const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [modalOpen, setModalOpen] = useState(false);
   const [listOpen, setListOpen] = useState(true);
-
-  const selectedServer = servers.find((server) => server.name === selectedServerName) || {
-    _id: '',
-    name: '',
-    channels: [],
-  };
 
   return (
     <div className={classes.category}>
@@ -53,17 +45,13 @@ const Channels = ({ channels, voice }: Props) => {
           {channels.length > 0 ? (
             <List className={classes.channelList}>
               {channels.map((channel: Channel, key: number) => (
-                <Channel key={key} channel={channel} />
+                <Channel key={key} channel={channel} isVoice={voice} />
               ))}
             </List>
           ) : null}
         </div>
       </Slide>
-      <ChannelCreateModal
-        modalOpen={modalOpen}
-        setModalOpen={setModalOpen}
-        selectedServer={selectedServer}
-      />
+      <ChannelCreateModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
     </div>
   );
 };

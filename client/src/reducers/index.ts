@@ -11,7 +11,7 @@ import {
 } from './socket';
 import {
   user,
-  selectedServerName,
+  selectedServer,
   selectedChannel,
   selectedTabInPrivate,
   selectedPrivateUser,
@@ -20,7 +20,7 @@ import {
 
 export const reducers = combineReducers<RootState>({
   user,
-  selectedServerName,
+  selectedServer,
   selectedChannel,
   selectedTabInPrivate,
   activeUsersOpen,

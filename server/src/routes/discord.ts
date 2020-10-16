@@ -4,12 +4,28 @@ import Server, { IServer } from '../db/models/server';
 import User, { IUser } from '../db/models/user';
 import Note, { INote } from '../db/models/note';
 import { IChannel } from '../db/models/channel';
+import { reduceServers } from '../io/utils';
 
 const router = express.Router();
 
 interface ExtendedRequest extends Request {
   query: { [key: string]: string | undefined };
 }
+
+router.get('/servers', async (req: ExtendedRequest, res) => {
+  const { name } = req.query;
+
+  const user = await User.findOne({ name }).populate({
+    path: 'servers',
+    model: 'Server',
+    populate: {
+      path: 'channels',
+      model: 'Channel',
+    },
+  });
+
+  res.send(reduceServers(user.servers));
+});
 
 router.get('/search', async (req: ExtendedRequest, res) => {
   const { name, type, text } = req.query;

@@ -14,6 +14,7 @@ const setupChannel = async (name: string, isVoice: boolean) => {
     name,
     messages: [],
     voice: isVoice,
+    voiceUsers: [],
   });
 
   await channel.save();

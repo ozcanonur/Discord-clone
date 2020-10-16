@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectServer, selectChannel, clearMessages } from '../../actions/react';
 import { selectChannel as selectChannelIo } from '../../actions/socket';
 import ServerIcon from '../../components/ServerIcon';
 import ContextMenu from './ContextMenu';
@@ -24,7 +24,7 @@ const Server = ({ server }: Props) => {
   const dispatch = useDispatch();
   const selectServerOnClick = (server: Server) => {
     dispatch(clearMessages());
-    dispatch(selectServerName(server.name));
+    dispatch(selectServer(server));
     if (server.channels.length > 0) {
       const firstChannel = server.channels[0];
       dispatch(selectChannel(firstChannel));
