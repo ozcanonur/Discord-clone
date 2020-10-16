@@ -8,7 +8,7 @@ import Main from './views/Main/index';
 import Servers from './views/Servers';
 import Channels from './views/Channels';
 import { connect } from './actions/socket';
-import { login, selectServerName, addPinNotification } from './actions/react';
+import { login, selectServerName, addPinNotification, selectChannel } from './actions/react';
 
 const App = () => {
   const history = useHistory();
@@ -37,6 +37,10 @@ const App = () => {
     };
 
     authenticateAndInit();
+
+    return () => {
+      dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
+    };
   }, []);
 
   return (

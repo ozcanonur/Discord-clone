@@ -17,13 +17,15 @@ const channelsStyles = createStyles({
     letterSpacing: '2',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     padding: '0 5px',
   },
   categoryIcon: {
     fontSize: '2rem',
   },
-  categoryText: {},
+  categoryText: {
+    flexGrow: 1,
+    marginLeft: '1.5rem',
+  },
   channelList: {
     display: 'flex',
     flexDirection: 'column',
@@ -38,7 +40,8 @@ const channelsStyles = createStyles({
       borderRadius: '4px',
     },
     marginBottom: '4px',
-    padding: '0.5rem',
+    padding: '0.3rem',
+    paddingLeft: '0.9rem',
   },
   channelSelected: {
     backgroundColor: '#40434a !important',

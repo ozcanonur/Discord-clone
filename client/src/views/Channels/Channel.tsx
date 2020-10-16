@@ -14,7 +14,7 @@ import {
 } from '../../actions/socket';
 import channelsStyles from './styles/channels';
 import ContextMenu from './ContextMenu';
-import User from './User';
+import VoiceUser from './VoiceUser';
 
 const useStyles = makeStyles(channelsStyles);
 
@@ -65,7 +65,7 @@ const Channel = ({ channel, isVoice, selectedServer }: ChannelProps) => {
           classes={{ selected: classes.channelSelected, root: classes.channel }}
           disableGutters
         >
-          <ListItemIcon>
+          <ListItemIcon style={{ minWidth: '3.5rem' }}>
             {channel.isVoice ? (
               <VolumeUp className={classes.icon} />
             ) : (
@@ -86,10 +86,10 @@ const Channel = ({ channel, isVoice, selectedServer }: ChannelProps) => {
       </div>
       {isVoice ? (
         <div
-          style={{ paddingLeft: '3rem', display: 'flex', flexDirection: 'column', width: '100%' }}
+          style={{ paddingLeft: '4rem', display: 'flex', flexDirection: 'column', width: '100%' }}
         >
           {voiceUsersInChannel.map((u, key) => (
-            <User key={key} name={u} />
+            <VoiceUser key={key} name={u} />
           ))}
         </div>
       ) : null}

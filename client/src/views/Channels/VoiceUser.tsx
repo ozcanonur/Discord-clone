@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,11 +10,11 @@ const useStyles = makeStyles({
   container: {
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: '#40434a',
+      backgroundColor: '#40434a !important',
       borderRadius: '4px',
     },
     marginBottom: '4px',
-    padding: '0.5rem',
+    padding: '0.3rem',
   },
   iconContainer: {
     backgroundColor: '#7289da',
@@ -29,10 +30,10 @@ const useStyles = makeStyles({
     cursor: 'pointer',
   },
   text: {
-    color: '#a3a8ad',
+    color: 'rgba(220,221,222,0.8)',
     '& span': {
       fontSize: '1.6rem',
-      fontFamily: 'Whitney Book Regular, sans-serif',
+      fontFamily: 'Whitney Medium, sans-serif',
     },
   },
 });
@@ -41,7 +42,7 @@ interface Props {
   name: string;
 }
 
-const User = ({ name }: Props) => {
+const VoiceUser = ({ name }: Props) => {
   const classes = useStyles();
 
   return (
@@ -58,4 +59,4 @@ const User = ({ name }: Props) => {
   );
 };
 
-export default User;
+export default VoiceUser;

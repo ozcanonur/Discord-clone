@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import User, { IUser } from '../db/models/user';
+import User from '../db/models/user';
 import Server from '../db/models/server';
 import Channel, { IChannel } from '../db/models/channel';
 import Message, { IMessage } from '../db/models/message';
