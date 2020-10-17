@@ -22,7 +22,6 @@ interface Props {
 const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
@@ -51,7 +50,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
       return;
     }
     setErrorText(`Success! Joined ${modalInputValue}.`);
-    dispatch(joinServer(name, modalInputValue));
+    dispatch(joinServer(modalInputValue));
 
     const response = await axios.get('/channelIds', {
       params: { serverName: modalInputValue },

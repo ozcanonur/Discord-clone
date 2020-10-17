@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import serverCardStyles from '../styles/serverCard';
 import axios from 'axios';
@@ -37,12 +37,11 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
     subscribed,
   } = res;
 
-  const { name } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const joinServerOnClick = async () => {
-    dispatch(joinServer(name, serverName));
+    dispatch(joinServer(serverName));
     dispatch(selectServerName(serverName));
-    dispatch(selectChannel({ _id: '', name: '', voice: false }));
+    dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
     setModalOpen(false);
 
     const response = await axios.get('/channelIds', {

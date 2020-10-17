@@ -21,7 +21,6 @@ interface Props {
 const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const [modalInputValue, setModalInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
@@ -49,7 +48,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
 
   const createServerOnClick = () => {
     setErrorText(`Success! ${modalInputValue} created.`);
-    dispatch(createServer(name, modalInputValue));
+    dispatch(createServer(modalInputValue));
   };
 
   return (
