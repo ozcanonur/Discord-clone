@@ -17,11 +17,6 @@ import joinSound from '../../assets/discord-join.mp3';
 
 const useStyles = makeStyles(channelsStyles);
 
-interface ChannelProps {
-  channel: Channel;
-  selectedServer: Server;
-}
-
 const addAudio = (audio: HTMLAudioElement, remoteStream: MediaStream) => {
   audio.srcObject = remoteStream;
   audio.addEventListener('loadedmetadata', () => {
@@ -29,6 +24,11 @@ const addAudio = (audio: HTMLAudioElement, remoteStream: MediaStream) => {
   });
   document.querySelector('#root')?.append(audio);
 };
+
+interface ChannelProps {
+  channel: Channel;
+  selectedServer: Server;
+}
 
 const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const classes = useStyles();
@@ -60,9 +60,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
       .getUserMedia({ audio: true })
       .then((stream) => {
         voiceUsersInChannel.forEach((voiceUser) => {
-          if (voiceUser._id !== id) {
-            peer.call(voiceUser._id, stream);
-          }
+          if (voiceUser._id !== id) peer.call(voiceUser._id, stream);
         });
       })
       .catch((error) => console.log(error));

@@ -38,6 +38,7 @@ const Channel = ({ channel }: ChannelProps) => {
 
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
+    // If previous channel was a voice channel
     if (selectedChannel.isVoice) {
       playLeaveSound();
       // Destroy the peer instance
