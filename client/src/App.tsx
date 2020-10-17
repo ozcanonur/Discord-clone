@@ -4,9 +4,9 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import Main from './views/Main/index';
-import Servers from './views/Servers';
-import Channels from './views/Channels';
+import Main from './components/Main';
+import Servers from './components/Servers';
+import Channels from './components/Channels';
 import { connect } from './actions/socket';
 import { login, selectServerName, addPinNotification, selectChannel } from './actions/react';
 

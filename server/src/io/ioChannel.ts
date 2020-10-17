@@ -60,7 +60,6 @@ export const onUserCreatedChannel = async (
   await Server.updateOne({ _id: server._id }, { $addToSet: { channels: channel } });
   // Find the users which are subscribed to this server
   const channelsServer = await Server.findOne({ _id: server._id }).populate('users');
-  console.log(channelsServer.users);
   const userIds: string[] = channelsServer.users.map((u) => u._id);
   const users = await User.find({ _id: { $in: userIds } }).populate({
     path: 'servers',
@@ -147,7 +146,6 @@ export const onUserSelectedChannel = async (
       oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
         (u) => u._id.toString() !== user._id.toString()
       );
-      console.log(4);
       await oldChannel.save();
       // Send the new servers back to each of the users that are subscribed to the channel's server
       // Find the server that this channel is on

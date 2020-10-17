@@ -5,8 +5,8 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { store } from './store';
-import Private from './views/Private';
-import Login from './views/Login';
+import Private from './components/Private';
+import Login from './components/Login';
 import App from './App';
 import './style.css';
 
