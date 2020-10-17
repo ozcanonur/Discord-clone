@@ -5,8 +5,8 @@ import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
-import Button from '../Misc/Button';
 
+import Button from '../Misc/Button';
 import {
   selectPrivateChannel as selectPrivateChannelIo,
   sendFriendRequest,

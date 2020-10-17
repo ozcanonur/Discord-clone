@@ -45,7 +45,7 @@ io.on('connection', (socket: Socket) => {
     else if (action.type === 'io/userSelectedVoiceChannel')
       await onUserSelectedVoiceChannel(io, socket, action);
     else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
-    else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, socket, action);
+    else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     // ioPrivate
     else if (action.type === 'io/userConnectedNewPrivateUser')
       await onUserConnectedNewPrivateUser(io, socket, action);

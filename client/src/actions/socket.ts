@@ -73,7 +73,7 @@ export const removeFriend = (friendName: string): ClientIOActions.RemoveFriendIO
 };
 
 export const createPin = (
-  message: string,
+  message: Message,
   selectedChannel: Channel
 ): ClientIOActions.CreatePinIOAction => {
   return {

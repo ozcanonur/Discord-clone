@@ -208,11 +208,15 @@ export const onUserSelectedChannel = async (
 
 export const onUserCreatedPin = async (
   io: SocketIO.Server,
-  socket: Socket,
   action: {
     type: string;
     payload: {
-      message: string;
+      message: {
+        _id: string;
+        username: string;
+        message: string;
+        createdAt: string;
+      };
       selectedChannel: {
         _id: string;
         name: string;
@@ -222,13 +226,13 @@ export const onUserCreatedPin = async (
   }
 ) => {
   const { message, selectedChannel } = action.payload;
-  // Find which user
-  const user = await User.findOne({ socketId: socket.id });
+  // Find the user
+  const user = await User.findOne({ name: message.username });
   // Create and save the message
   const newPinMessage = new Message({
     user,
-    message,
-    createdAt: new Date(),
+    message: message.message,
+    createdAt: message.createdAt ? message.createdAt : new Date(),
   });
   await newPinMessage.save();
 

@@ -25,6 +25,7 @@ export const reduceServers = (servers: IServer[]) => {
       _id: server._id,
       name: server.name,
       channels,
+      admin: server.admin,
     };
   });
 

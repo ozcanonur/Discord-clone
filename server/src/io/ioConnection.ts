@@ -53,38 +53,42 @@ export const onUserDisconnected = async (io: SocketIO.Server, socket: Socket) =>
   const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
   if (!user) return;
 
-  const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate('voiceUsers');
-
   // Broadcast the new servers if this user was in a voice channel
-  const wasOnVoice = oldChannel.voiceUsers.some((u) => u._id.toString() === user._id.toString());
-  if (wasOnVoice) {
-    oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
-      (u) => u._id.toString() !== user._id.toString()
-    );
-    await oldChannel.save();
-    // Send the new servers back to each of the users that are subscribed to the channel's server
-    // Find the server that this channel is on
-    const server = await Server.findOne({ channels: { $all: [oldChannel._id] } }).populate({
-      path: 'users',
-      model: 'User',
-      populate: {
-        path: 'servers',
-        model: 'Server',
+  if (user.currentChannel) {
+    const oldVoiceChannel = await Channel.findOne({
+      _id: user.currentChannel._id,
+      voice: true,
+    }).populate('voiceUsers');
+
+    if (oldVoiceChannel) {
+      oldVoiceChannel.voiceUsers = oldVoiceChannel.voiceUsers.filter(
+        (u) => u._id.toString() !== user._id.toString()
+      );
+      await oldVoiceChannel.save();
+      // Send the new servers back to each of the users that are subscribed to the channel's server
+      // Find the server that this channel is on
+      const server = await Server.findOne({ channels: { $all: [oldVoiceChannel._id] } }).populate({
+        path: 'users',
+        model: 'User',
         populate: {
-          path: 'channels',
-          model: 'Channel',
+          path: 'servers',
+          model: 'Server',
           populate: {
-            path: 'voiceUsers',
-            model: 'User',
+            path: 'channels',
+            model: 'Channel',
+            populate: {
+              path: 'voiceUsers',
+              model: 'User',
+            },
           },
         },
-      },
-    });
+      });
 
-    // Send the new servers to each of the users
-    server.users.forEach((u) => {
-      io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
-    });
+      // Send the new servers to each of the users
+      server.users.forEach((u) => {
+        io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
+      });
+    }
   }
 
   // Update the user's online status to false

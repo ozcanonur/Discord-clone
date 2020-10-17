@@ -1,9 +1,9 @@
 import React from 'react';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import indexStyles from './styles/index';
 import Options from './Options';
 import Servers from './Servers';
+import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
 

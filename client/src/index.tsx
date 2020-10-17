@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import createSocketIoMiddleware from 'redux-socket.io';
+import io from 'socket.io-client';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
-import { store } from './store';
+import { reducers } from './reducers';
 import Private from './components/Private';
 import Login from './components/Login';
 import App from './App';
@@ -28,6 +32,14 @@ const theme = createMuiTheme({
     },
   },
 });
+
+const socket = io('http://localhost:5000');
+const socketIoMiddleware = createSocketIoMiddleware(socket, 'io/');
+
+export const store = createStore(
+  reducers,
+  composeWithDevTools(applyMiddleware(socketIoMiddleware))
+);
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

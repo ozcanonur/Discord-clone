@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import { Picker } from 'emoji-mart';
+import OutsideClickHandler from 'react-outside-click-handler';
 import 'emoji-mart/css/emoji-mart.css';
 
 import inputStyles from '../styles/input';
@@ -16,6 +16,7 @@ const useStyles = makeStyles(inputStyles);
 const PinnedMessageInput = () => {
   const classes = useStyles();
 
+  const { name } = useSelector((state: RootState) => state.user);
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
@@ -30,16 +31,22 @@ const PinnedMessageInput = () => {
   };
 
   const dispatch = useDispatch();
-  const createPinOnClick = () => {
-    if (text.trim() === '' || !selectedChannel.name)
-      return console.log(`You need to select a channel first`);
-    dispatch(createPin(text, selectedChannel));
-    setText('');
+  const createPinOnClick = (e: any) => {
+    if (e.which === 13 && !e.shiftKey) {
+      if (text.trim() === '' || !selectedChannel.name)
+        return console.log(`You need to select a channel first`);
+      dispatch(
+        // @ts-ignore
+        createPin({ _id: '', username: name, message: text, createdAt: '' }, selectedChannel)
+      );
+      setText('');
+      e.preventDefault();
+    }
   };
 
   return (
     <div className={classes.pinFooter}>
-      <div className={classes.inputContainer} style={{ marginRight: '2rem' }}>
+      <div className={classes.inputContainer}>
         <TextField
           placeholder='Create a pin'
           variant='outlined'
@@ -50,23 +57,27 @@ const PinnedMessageInput = () => {
           }}
           value={text}
           onChange={(e) => handleChange(e)}
+          onKeyPress={(e) => createPinOnClick(e)}
         />
         <EmojiEmotionsIcon
           className={classes.emojiMenuIcon}
           onClick={() => setEmojiMenuVisible(!emojiMenuVisible)}
         />
-        <div
-          className={classes.emojiMenu}
-          style={{ visibility: emojiMenuVisible ? 'visible' : 'hidden' }}
-        >
-          <div className=''>
-            <Picker set='google' onSelect={(e) => handleEmojiClick(e)} />
+        <OutsideClickHandler onOutsideClick={() => setEmojiMenuVisible(false)}>
+          <div
+            className={classes.emojiMenu}
+            style={{
+              visibility: emojiMenuVisible ? 'visible' : 'hidden',
+              bottom: '1rem',
+              right: '5rem',
+            }}
+          >
+            <div>
+              <Picker theme='dark' set='google' onSelect={(e) => handleEmojiClick(e)} />
+            </div>
           </div>
-        </div>
+        </OutsideClickHandler>
       </div>
-      <Button variant='contained' className={classes.pinFooterButton} onClick={createPinOnClick}>
-        Create pin
-      </Button>
     </div>
   );
 };

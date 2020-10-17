@@ -6,9 +6,9 @@ import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import QuestionAnswerRoundedIcon from '@material-ui/icons/QuestionAnswerRounded';
 
-import { selectTabInPrivate, toggleActiveUsers } from '../../actions/react';
 import CustomButton from '../Misc/Button';
 import headerStyles from './styles/header';
+import { selectTabInPrivate, toggleActiveUsers } from '../../actions/react';
 
 const useStyles = makeStyles(headerStyles);
 

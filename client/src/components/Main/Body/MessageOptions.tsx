@@ -2,12 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
-
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 
-import chatStyles from '../styles/chat';
+import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 import { deleteMessage, createPin } from '../../../actions/socket';
+import chatStyles from '../styles/chat';
 
 const useStyles = makeStyles(chatStyles);
 
@@ -27,7 +26,7 @@ const MessageOptions = ({ message }: Props) => {
   };
 
   const pinMessageOnClick = (message: Message) => {
-    dispatch(createPin(message.message, selectedChannel));
+    dispatch(createPin(message, selectedChannel));
   };
 
   return (

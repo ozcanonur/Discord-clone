@@ -1,20 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Peer from 'peerjs';
+import useSound from 'use-sound';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
-import { selectChannel } from '../../../actions/react';
+import VoiceUser from './VoiceUser';
+import joinSound from '../../../assets/discord-join.mp3';
+import { selectChannel, setPeer } from '../../../actions/react';
 import { selectVoiceChannel } from '../../../actions/socket';
 import channelsStyles from '../styles/channels';
-import VoiceUser from './VoiceUser';
-import Peer from 'peerjs';
-import { setPeer } from '../../../actions/react';
-import useSound from 'use-sound';
-import joinSound from '../../../assets/discord-join.mp3';
 
 const useStyles = makeStyles(channelsStyles);
 

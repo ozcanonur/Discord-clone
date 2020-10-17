@@ -143,7 +143,7 @@ export namespace ClientIOActions {
   export interface CreatePinIOAction {
     type: string;
     payload: {
-      message: string;
+      message: Message;
       selectedChannel: Channel;
     };
   }

@@ -6,40 +6,47 @@ import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import Grid from '@material-ui/core/Grid';
 
-import { connect } from '../../actions/socket';
-import { login } from '../../actions/react';
 import PrivateUserList from './PrivateUserList';
 import ServerList from '../Servers/index';
-import indexStyles from './styles/index';
 import Header from './Header';
 import ActiveUsers from '../Main/Body/ActiveUsers';
 import Chat from './Chat';
 import AddFriendBox from './AddFriendBox';
+import { connect } from '../../actions/socket';
+import { login } from '../../actions/react';
+import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
 
 const Private = () => {
   const classes = useStyles();
 
+  const user = useSelector((state: RootState) => state.user);
   const selectedTabInPrivate = useSelector((state: RootState) => state.selectedTabInPrivate);
   const activeUsersOpen = useSelector((state: RootState) => state.activeUsersOpen);
 
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get('/user', { withCredentials: true })
-      .then((res) => {
-        if (res.status === 200) {
-          const { name, id } = res.data;
-          dispatch(login(name, id));
-          dispatch(connect(name));
-        }
-      })
-      .catch((err) => {
-        history.push('/login');
-        console.log(err);
-      });
+    const authenticateAndInit = () => {
+      axios
+        .get('/user', { withCredentials: true })
+        .then((res) => {
+          if (res.status === 200) {
+            const { name, id } = res.data;
+            dispatch(login(name, id));
+            dispatch(connect(name));
+          }
+        })
+        .catch((err) => {
+          history.push('/login');
+          console.log(err);
+        });
+    };
+    // If user is coming directly to /private instead of the login route (refresh etc.)
+    if (user.name === null) {
+      authenticateAndInit();
+    }
   }, []);
 
   return (

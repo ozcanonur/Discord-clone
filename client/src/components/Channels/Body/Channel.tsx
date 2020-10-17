@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Peer from 'peerjs';
+import useSound from 'use-sound';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 
+import ChannelContextMenu from './ChannelContextMenu';
 import { selectChannel } from '../../../actions/react';
 import { selectChannel as selectChannelIo } from '../../../actions/socket';
-import channelsStyles from '../styles/channels';
-import ChannelContextMenu from './ChannelContextMenu';
-import useSound from 'use-sound';
+import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 import leaveSound from '../../../assets/discord-leave.mp3';
-import Peer from 'peerjs';
+
+import channelsStyles from '../styles/channels';
 
 const useStyles = makeStyles(channelsStyles);
 

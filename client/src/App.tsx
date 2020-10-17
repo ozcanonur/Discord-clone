@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
+
 import Main from './components/Main';
 import Servers from './components/Servers';
 import Channels from './components/Channels';
@@ -11,9 +13,12 @@ import { connect } from './actions/socket';
 import { login, selectServerName, addPinNotification, selectChannel } from './actions/react';
 
 const App = () => {
+  const user = useSelector((state: RootState) => state.user);
+
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
+    // If user is not coming from the /private route
     const authenticateAndInit = async () => {
       try {
         const authResponse = await axios.get('/user', { withCredentials: true });
@@ -36,7 +41,9 @@ const App = () => {
       }
     };
 
-    authenticateAndInit();
+    if (user.name === null) {
+      authenticateAndInit();
+    }
 
     return () => {
       dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));

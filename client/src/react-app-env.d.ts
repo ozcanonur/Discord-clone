@@ -28,6 +28,7 @@ interface Server {
   _id: string;
   name: string;
   channels: Channel[];
+  admin: string;
 }
 
 interface Notification {

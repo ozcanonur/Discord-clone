@@ -8,13 +8,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 
+import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import {
   selectPrivateChannel,
   selectPrivateUser,
   selectTabInPrivate,
   addPinNotification,
+  selectServerName,
 } from '../../actions/react';
 import {
   joinServer,
@@ -36,7 +37,6 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   const classes = useStyles();
 
   const user = useSelector((state: RootState) => state.user);
-  const username = user.name;
   const id = user.id;
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState<string[]>([]);
@@ -47,10 +47,10 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
 
     Promise.all([
       axios.get('/userServers', {
-        params: { name: username },
+        params: { name },
       }),
       axios.get('/note', {
-        params: { name: username, otherUserName: name },
+        params: { name: user.name, otherUserName: name },
       }),
     ])
       .then(([serverResults, noteResults]) => {
@@ -64,11 +64,12 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     return function cleanUp() {
       mounted = false;
     };
-  }, [username, name]);
+  }, [user.name, name]);
 
   const dispatch = useDispatch();
   const joinServerOnClick = async (serverName: string) => {
     dispatch(joinServer(serverName));
+    dispatch(selectServerName(serverName));
 
     const response = await axios.get('/channelIds', {
       params: { serverName },
@@ -86,7 +87,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
       setInputValue('');
       e.preventDefault();
 
-      const params = { name: username, otherUserName: name, note: inputValue };
+      const params = { name: user.name, otherUserName: name, note: inputValue };
       axios
         .post('/note', params)
         .then((_res) => {
@@ -149,7 +150,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
-        {name !== username ? (
+        {name !== user.name ? (
           <div className={classes.buttons}>
             <Button
               variant='contained'

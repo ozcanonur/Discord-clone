@@ -5,8 +5,8 @@ import Fade from '@material-ui/core/Fade';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import activeUsersStyles from '../styles/activeUsers';
 import ActiveUser from './ActiveUser';
+import activeUsersStyles from '../styles/activeUsers';
 
 const useStyles = makeStyles(activeUsersStyles);
 

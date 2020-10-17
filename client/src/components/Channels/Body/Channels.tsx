@@ -23,6 +23,7 @@ interface Props {
 const Channels = ({ channels, isVoice }: Props) => {
   const classes = useStyles();
 
+  const { id } = useSelector((state: RootState) => state.user);
   const servers = useSelector((state: RootState) => state.servers);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [modalOpen, setModalOpen] = useState(false);
@@ -32,6 +33,7 @@ const Channels = ({ channels, isVoice }: Props) => {
     _id: '',
     name: '',
     channels: [],
+    admin: '',
   };
 
   return (
@@ -45,8 +47,16 @@ const Channels = ({ channels, isVoice }: Props) => {
           )}
         </IconButton>
         <div className={classes.categoryText}>{isVoice ? 'Voice channels' : 'Text channels'}</div>
-        <IconButton className={classes.iconButton} onClick={() => setModalOpen(true)}>
-          <Add className={classes.categoryIcon} />
+        <IconButton
+          className={classes.iconButton}
+          onClick={() => {
+            if (selectedServer.admin === id) setModalOpen(true);
+          }}
+        >
+          <Add
+            className={classes.categoryIcon}
+            style={{ opacity: selectedServer.admin !== id ? '0.3' : 'inherit' }}
+          />
         </IconButton>
       </div>
       <Slide in={listOpen} direction='right' unmountOnExit mountOnEnter>

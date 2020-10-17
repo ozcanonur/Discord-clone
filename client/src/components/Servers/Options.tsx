@@ -8,12 +8,12 @@ import ExploreRoundedIcon from '@material-ui/icons/ExploreRounded';
 import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
-import { selectChannel as selectChannelIo } from '../../actions/socket';
 import ServerIcon from './ServerIcon';
 import indexStyles from './styles/index';
 import ServerModal from './Modals/ServerModal';
 import ExploreModal from './Modals/ExploreModal';
+import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
 
 const useStyles = makeStyles(indexStyles);
 

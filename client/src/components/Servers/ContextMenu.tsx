@@ -7,9 +7,9 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { selectServerName, clearMessages, selectChannel } from '../../actions/react';
 import { deleteServer, leaveServer, selectChannel as selectChannelIo } from '../../actions/socket';
-import indexStyles from './styles/index';
 import ConfirmationModal from '../Misc/ConfirmationModal';
 import ChannelCreateModal from '../Channels/Body/ChannelCreateModal';
+import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
 
@@ -22,7 +22,7 @@ interface Props {
 const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
+  const { name, id } = useSelector((state: RootState) => state.user);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [createChannelModalOpen, setCreateChannelModalOpen] = useState(false);
   const servers = useSelector((state: RootState) => state.servers);
@@ -32,6 +32,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
     _id: '',
     name: '',
     channels: [],
+    admin: '',
   };
 
   const handleClose = () => {
@@ -54,6 +55,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
         _id: '',
         name: '',
         channels: [],
+        admin: '',
       };
       const firstChannel = defaultServer.channels[0];
       dispatch(selectServerName(defaultServer.name));
@@ -79,6 +81,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
             classes={{ root: classes.menuItem }}
             disableGutters
             onClick={() => setCreateChannelModalOpen(true)}
+            disabled={selectedServer.admin !== id}
           >
             Create Channel Here
           </MenuItem>
@@ -93,7 +96,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
           <MenuItem
             classes={{ root: classes.menuItemDelete }}
             disableGutters
-            disabled={server.name === 'Default' || server.name === 'Games'}
+            disabled={selectedServer.admin !== id}
             onClick={() => setDeleteModalOpen(true)}
           >
             Delete Server

@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Slide from '@material-ui/core/Slide';
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
 import Typography from '@material-ui/core/Typography';
+
 import loginStyles from './styles/loginStyles';
 
 const useStyles = makeStyles(loginStyles);

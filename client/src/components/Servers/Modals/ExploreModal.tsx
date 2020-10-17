@@ -7,7 +7,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 
-import ExploreServer from './ServerCard';
+import ExploreServer from './ExploreServerCard';
 import exploreModalStyle from '../styles/exploreModal';
 import globalImg from '../../../assets/global.jpg';
 import gamesImg from '../../../assets/wow.jpg';

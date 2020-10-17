@@ -10,8 +10,8 @@ import MicOffRoundedIcon from '@material-ui/icons/MicOffRounded';
 import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 
+import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
 import Button from '../Misc/Button';
 import footerStyles from './styles/footer';
 

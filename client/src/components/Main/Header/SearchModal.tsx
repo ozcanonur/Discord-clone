@@ -13,8 +13,6 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import searchModalStyles from '../styles/searchModal';
-import { store } from '../../../store';
 import {
   selectChannel,
   selectServerName,
@@ -26,6 +24,7 @@ import {
   selectChannel as selectChannelIo,
   selectPrivateChannel as selectPrivateChannelIo,
 } from '../../../actions/socket';
+import searchModalStyles from '../styles/searchModal';
 
 const useStyles = makeStyles(searchModalStyles);
 
@@ -47,6 +46,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
   const { name } = useSelector((state: RootState) => state.user);
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const servers = useSelector((state: RootState) => state.servers);
 
   useEffect(() => {
     let mounted = true;
@@ -86,9 +86,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
   // To redirect to another page
   const history = useHistory();
   const location = useLocation();
-  const { servers } = store.getState();
   const dispatch = useDispatch();
-
   const redirectOnClick = (type: string, id: string, resultName: string) => {
     if (type === '#') {
       // Find the channel and server

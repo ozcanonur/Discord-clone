@@ -6,8 +6,8 @@ import GroupRoundedIcon from '@material-ui/icons/GroupRounded';
 
 import PrivateUser from './PrivateUser';
 import Footer from '../Channels/Footer';
-import privateUserListStyles from './styles/privateUserList';
 import SearchModal from '../Main/Header/SearchModal';
+import privateUserListStyles from './styles/privateUserList';
 
 const useStyles = makeStyles(privateUserListStyles);
 

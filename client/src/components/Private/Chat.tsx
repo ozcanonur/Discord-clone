@@ -4,14 +4,13 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
-import { deleteMessage } from '../../actions/socket';
-
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Message from '../Main/Body/Message';
 import Input from '../Main/Body/Input';
-import chatStyles from './styles/chat';
 import { ReactComponent as Loading } from '../../assets/spinner.svg';
+import { deleteMessage } from '../../actions/socket';
+import chatStyles from './styles/chat';
 
 const useStyles = makeStyles(chatStyles);
 

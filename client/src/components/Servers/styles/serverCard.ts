@@ -28,6 +28,8 @@ const serverCardStyles = createStyles({
     padding: '1rem',
     color: '#dcddde',
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
   },
   title: {
     marginTop: '1rem',
@@ -38,6 +40,7 @@ const serverCardStyles = createStyles({
     opacity: 0.8,
     fontSize: '1.2rem',
     marginTop: '0.7rem',
+    flexGrow: 1,
   },
   footer: {
     marginTop: '3rem',

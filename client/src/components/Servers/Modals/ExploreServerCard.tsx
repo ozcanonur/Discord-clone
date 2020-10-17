@@ -1,11 +1,11 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import serverCardStyles from '../styles/serverCard';
 import axios from 'axios';
 
 import { joinServer } from '../../../actions/socket';
 import { selectServerName, selectChannel, addPinNotification } from '../../../actions/react';
+import serverCardStyles from '../styles/serverCard';
 
 const useStyles = makeStyles(serverCardStyles);
 
@@ -23,7 +23,7 @@ interface Props {
   setModalOpen: (x: boolean) => void;
 }
 
-const ServerCard = ({ res, setModalOpen }: Props) => {
+const ExploreServerCard = ({ res, setModalOpen }: Props) => {
   const classes = useStyles();
 
   const {
@@ -85,4 +85,4 @@ const ServerCard = ({ res, setModalOpen }: Props) => {
   );
 };
 
-export default ServerCard;
+export default ExploreServerCard;

@@ -4,10 +4,10 @@ import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
-import { selectChannel as selectChannelIo } from '../../actions/socket';
 import ServerIcon from './ServerIcon';
 import ContextMenu from './ContextMenu';
+import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
 import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
