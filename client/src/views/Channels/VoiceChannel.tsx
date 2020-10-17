@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,6 +12,8 @@ import channelsStyles from './styles/channels';
 import VoiceUser from './VoiceUser';
 import Peer from 'peerjs';
 import { setPeer } from '../../actions/react';
+import useSound from 'use-sound';
+import joinSound from '../../assets/discord-join.mp3';
 
 const useStyles = makeStyles(channelsStyles);
 
@@ -20,12 +22,21 @@ interface ChannelProps {
   selectedServer: Server;
 }
 
+const addAudio = (audio: HTMLAudioElement, remoteStream: MediaStream) => {
+  audio.srcObject = remoteStream;
+  audio.addEventListener('loadedmetadata', () => {
+    audio.play();
+  });
+  document.querySelector('#root')?.append(audio);
+};
+
 const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const classes = useStyles();
 
   const { name, id } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const peer: Peer = useSelector((state: RootState) => state.peer);
+  const [playJoinSound] = useSound(joinSound);
 
   const voiceUsersInChannel =
     selectedServer.channels.find((c) => c._id === channel._id)?.voiceUsers || [];
@@ -38,22 +49,20 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
     // @ts-ignore
     const newPeer = new Peer(id);
     dispatch(setPeer(newPeer));
+    playJoinSound();
   };
 
-  if (peer.id === id && selectedChannel._id === channel._id && voiceUsersInChannel.length > 1) {
+  useEffect(() => {
+    if (!(peer.id === id && selectedChannel._id === channel._id && voiceUsersInChannel.length > 1))
+      return;
+
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        const remotePeerId = voiceUsersInChannel[1]._id;
-        console.log(remotePeerId);
-        const call = peer.call(remotePeerId, stream);
-        call.on('stream', (remoteStream) => {
-          const audio = document.createElement('audio');
-          audio.srcObject = remoteStream;
-          audio.addEventListener('loadedmetadata', () => {
-            audio.play();
-          });
-          document.querySelector('#root')?.append(audio);
+        voiceUsersInChannel.forEach((voiceUser) => {
+          if (voiceUser._id !== id) {
+            peer.call(voiceUser._id, stream);
+          }
         });
       })
       .catch((error) => console.log(error));
@@ -63,18 +72,17 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
         .getUserMedia({ audio: true })
         .then((stream) => {
           call.answer(stream);
+          const audio = document.createElement('audio');
           call.on('stream', (remoteStream) => {
-            const audio = document.createElement('audio');
-            audio.srcObject = remoteStream;
-            audio.addEventListener('loadedmetadata', () => {
-              audio.play();
-            });
-            document.querySelector('#root')?.append(audio);
+            addAudio(audio, remoteStream);
+          });
+          call.on('close', () => {
+            audio.remove();
           });
         })
         .catch((error) => console.log(error));
     });
-  }
+  }, [voiceUsersInChannel.length]);
 
   return (
     <>
@@ -86,13 +94,13 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
           classes={{ selected: classes.channelSelected, root: classes.channel }}
           disableGutters
         >
-          <ListItemIcon style={{ minWidth: '3.5rem' }}>
+          <ListItemIcon className={classes.listItemIcon}>
             <VolumeUp className={classes.icon} />
           </ListItemIcon>
           <ListItemText primary={channel.name} className={classes.text} />
         </ListItem>
       </div>
-      <div style={{ paddingLeft: '4rem', display: 'flex', flexDirection: 'column', width: '100%' }}>
+      <div className={classes.voiceUsersList}>
         {voiceUsersInChannel.map((u, key) => (
           <VoiceUser key={key} name={u.name} />
         ))}

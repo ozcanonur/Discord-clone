@@ -8,12 +8,12 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import { ReactComponent as PinLogo } from '../../assets/office.svg';
 
 import { selectChannel } from '../../actions/react';
-import {
-  selectChannel as selectChannelIo,
-  selectVoiceChannel as selectVoiceChannelIo,
-} from '../../actions/socket';
+import { selectChannel as selectChannelIo } from '../../actions/socket';
 import channelsStyles from './styles/channels';
 import ContextMenu from './ContextMenu';
+import useSound from 'use-sound';
+import leaveSound from '../../assets/discord-leave.mp3';
+import Peer from 'peerjs';
 
 const useStyles = makeStyles(channelsStyles);
 
@@ -29,6 +29,8 @@ const Channel = ({ channel }: ChannelProps) => {
   const { name } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const notifications = useSelector((state: RootState) => state.notifications);
+  const peer: Peer = useSelector((state: RootState) => state.peer);
+  const [playLeaveSound] = useSound(leaveSound);
 
   const pinNotification = notifications.find(
     (notification) => notification.type === 'pin' && notification.channelId === channel._id
@@ -36,13 +38,18 @@ const Channel = ({ channel }: ChannelProps) => {
 
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
-    if (channel.isVoice) {
-      dispatch(selectChannel(channel));
-      dispatch(selectVoiceChannelIo(name, channel));
-    } else {
-      dispatch(selectChannel(channel));
-      dispatch(selectChannelIo(name, channel));
+    if (selectedChannel.isVoice) {
+      playLeaveSound();
+      // Destroy the peer instance
+      peer.destroy();
+      // Remove all audio html elements
+      const audios = document.getElementsByTagName('audio');
+      while (audios[0]) {
+        audios[0].parentNode?.removeChild(audios[0]);
+      }
     }
+    dispatch(selectChannel(channel));
+    dispatch(selectChannelIo(name, channel));
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -60,22 +67,11 @@ const Channel = ({ channel }: ChannelProps) => {
         classes={{ selected: classes.channelSelected, root: classes.channel }}
         disableGutters
       >
-        <ListItemIcon style={{ minWidth: '3.5rem' }}>
-          {channel.isVoice ? (
-            <VolumeUp className={classes.icon} />
-          ) : (
-            <div className={classes.icon}>#</div>
-          )}
+        <ListItemIcon className={classes.listItemIcon}>
+          <VolumeUp className={classes.icon} />
         </ListItemIcon>
         <ListItemText primary={channel.name} className={classes.text} />
-        {pinNotification ? (
-          <PinLogo
-            style={{
-              height: '1.5rem',
-              fill: 'rgb(220,221,222)',
-            }}
-          />
-        ) : null}
+        {pinNotification ? <PinLogo className={classes.pinLogo} /> : null}
       </ListItem>
       <ContextMenu channel={channel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
     </div>

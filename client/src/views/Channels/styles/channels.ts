@@ -57,10 +57,17 @@ const channelsStyles = createStyles({
       fontFamily: 'Whitney Book Regular, sans-serif',
     },
   },
+  listItemIcon: {
+    minWidth: '3.5rem',
+  },
   icon: { fontSize: '2rem', color: '#a3a8ad' },
   iconButton: {
     color: '#a3a8ad',
     padding: '1rem 0',
+  },
+  pinLogo: {
+    height: '1.5rem',
+    fill: 'rgb(220,221,222)',
   },
   menuPaper: {
     backgroundColor: '#202225',
@@ -80,6 +87,12 @@ const channelsStyles = createStyles({
       backgroundColor: '#dcddde',
       color: 'black',
     },
+  },
+  voiceUsersList: {
+    paddingLeft: '4rem',
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
   },
 });
 export default channelsStyles;
