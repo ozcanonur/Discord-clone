@@ -16,6 +16,7 @@ import {
   selectedTabInPrivate,
   selectedPrivateUser,
   activeUsersOpen,
+  peer,
 } from './react';
 
 export const reducers = combineReducers<RootState>({
@@ -32,4 +33,5 @@ export const reducers = combineReducers<RootState>({
   pinnedMessages,
   ioResponse,
   notifications,
+  peer,
 });

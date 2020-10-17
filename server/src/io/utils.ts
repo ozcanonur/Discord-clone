@@ -16,7 +16,9 @@ export const reduceServers = (servers: IServer[]) => {
         _id: channel._id,
         name: channel.name,
         isVoice: channel.voice,
-        voiceUsers: reduceUsers(channel.voiceUsers),
+        voiceUsers: channel.voiceUsers.map((user) => {
+          return { name: user.name, _id: user._id };
+        }),
       };
     });
     return {

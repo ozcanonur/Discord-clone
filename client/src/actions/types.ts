@@ -1,3 +1,5 @@
+import Peer from 'peerjs';
+
 export namespace InternalActions {
   export interface SelectServerNameAction {
     type: string;
@@ -60,6 +62,11 @@ export namespace InternalActions {
       name: string | null;
       id: string;
     };
+  }
+
+  export interface setPeer {
+    type: string;
+    payload: Peer;
   }
 }
 

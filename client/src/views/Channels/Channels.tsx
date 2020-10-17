@@ -8,6 +8,7 @@ import Add from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
 import Slide from '@material-ui/core/Slide';
 
+import VoiceChannel from './VoiceChannel';
 import Channel from './Channel';
 import ChannelCreateModal from './ChannelCreateModal';
 import channelsStyles from './styles/channels';
@@ -52,14 +53,18 @@ const Channels = ({ channels, isVoice }: Props) => {
         <div>
           {channels.length > 0 ? (
             <List className={classes.channelList}>
-              {channels.map((channel: Channel, key: number) => (
-                <Channel
-                  key={key}
-                  channel={channel}
-                  isVoice={isVoice}
-                  selectedServer={selectedServer}
-                />
-              ))}
+              {isVoice
+                ? channels.map((channel: Channel, key: number) => (
+                    <VoiceChannel key={key} channel={channel} selectedServer={selectedServer} />
+                  ))
+                : channels.map((channel: Channel, key: number) => (
+                    <Channel
+                      key={key}
+                      channel={channel}
+                      isVoice={isVoice}
+                      selectedServer={selectedServer}
+                    />
+                  ))}
             </List>
           ) : null}
         </div>

@@ -1,7 +1,5 @@
+import Peer from 'peerjs';
 import { InternalActions } from '../actions/types';
-
-// WOOP TEMP
-// const tempSelectedServer = window.location.pathname === '/private' ? 'private' : 'Default';
 
 export const selectedServerName = (
   state: string | null = null,
@@ -16,7 +14,7 @@ export const selectedServerName = (
 };
 
 export const selectedChannel = (
-  state: Channel = { _id: '', name: '', voice: false },
+  state: Channel = { _id: '', name: '', isVoice: false, voiceUsers: [] },
   action: InternalActions.SelectChannelAction
 ) => {
   switch (action.type) {
@@ -66,6 +64,15 @@ export const activeUsersOpen = (
 export const user = (state: User = { name: null, id: null }, action: InternalActions.Login) => {
   switch (action.type) {
     case 'LOGIN':
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const peer = (state: Peer = new Peer(undefined), action: InternalActions.setPeer) => {
+  switch (action.type) {
+    case 'SET_PEER':
       return action.payload;
     default:
       return state;

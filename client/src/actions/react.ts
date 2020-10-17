@@ -1,3 +1,4 @@
+import Peer from 'peerjs';
 import { InternalActions } from './types';
 
 export const selectServerName = (serverName: string): InternalActions.SelectServerNameAction => {
@@ -84,5 +85,12 @@ export const login = (name: string | null, id: string): InternalActions.Login =>
   return {
     type: 'LOGIN',
     payload: { name, id },
+  };
+};
+
+export const setPeer = (peer: Peer): InternalActions.setPeer => {
+  return {
+    type: 'SET_PEER',
+    payload: peer,
   };
 };

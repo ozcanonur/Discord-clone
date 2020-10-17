@@ -7,11 +7,16 @@ interface Message {
   createdAt: string;
 }
 
+interface VoiceUser {
+  name: string;
+  _id: string;
+}
+
 interface Channel {
   _id: string;
   name: string;
   isVoice: boolean;
-  voiceUsers: string[];
+  voiceUsers: VoiceUser[];
 }
 
 interface Server {
@@ -38,7 +43,7 @@ interface User {
 
 interface RootState {
   user: User;
-  selectedServerName: string;
+  selectedServerName: string | null;
   selectedChannel: Channel;
   selectedTabInPrivate: string;
   activeUsersOpen: boolean;
@@ -52,4 +57,5 @@ interface RootState {
     error?: string;
   };
   notifications: Notification[];
+  peer: any;
 }
