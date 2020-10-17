@@ -123,7 +123,6 @@ export const onUserSelectedChannel = async (
   action: {
     type: string;
     payload: {
-      name: string;
       channel: {
         _id: string;
         name: string;
@@ -132,51 +131,52 @@ export const onUserSelectedChannel = async (
     };
   }
 ) => {
-  const { name, channel } = action.payload;
+  const { channel } = action.payload;
   // Leave the current channel first
-  const user = await User.findOne({ name }).populate('currentChannel');
+  const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
-
   // Join the new channel
   await socket.join(channel._id.toString());
   // Remove the user from voiceUsers of the channel if present
-  const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate('voiceUsers');
-  const wasOnVoice = oldChannel.voiceUsers.some((u) => u._id.toString() === user._id.toString());
-  if (wasOnVoice) {
-    oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
-      (u) => u._id.toString() !== user._id.toString()
+  if (user.currentChannel) {
+    const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate(
+      'voiceUsers'
     );
-    await oldChannel.save();
-    // Send the new servers back to each of the users that are subscribed to the channel's server
-    // Find the server that this channel is on
-    const server = await Server.findOne({ channels: { $all: [oldChannel._id] } }).populate({
-      path: 'users',
-      model: 'User',
-      populate: {
-        path: 'servers',
-        model: 'Server',
+    const wasOnVoice = oldChannel.voiceUsers.some((u) => u._id.toString() === user._id.toString());
+    if (wasOnVoice) {
+      oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
+        (u) => u._id.toString() !== user._id.toString()
+      );
+      console.log(4);
+      await oldChannel.save();
+      // Send the new servers back to each of the users that are subscribed to the channel's server
+      // Find the server that this channel is on
+      const server = await Server.findOne({ channels: { $all: [oldChannel._id] } }).populate({
+        path: 'users',
+        model: 'User',
         populate: {
-          path: 'channels',
-          model: 'Channel',
+          path: 'servers',
+          model: 'Server',
           populate: {
-            path: 'voiceUsers',
-            model: 'User',
+            path: 'channels',
+            model: 'Channel',
+            populate: {
+              path: 'voiceUsers',
+              model: 'User',
+            },
           },
         },
-      },
-    });
+      });
 
-    // Send the new servers to each of the users
-    server.users.forEach((u) => {
-      io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
-    });
+      // Send the new servers to each of the users
+      server.users.forEach((u) => {
+        io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
+      });
+    }
   }
 
-  // Update the user's current channel
-  const newChannel = await Channel.findOne({ name: channel.name });
-  await User.updateOne({ name }, { currentChannel: newChannel });
   // Find the older messages in the channel
-  const currChannel = await Channel.findOne({ _id: channel._id }).populate([
+  const newChannel = await Channel.findOne({ _id: channel._id }).populate([
     {
       path: 'messages',
       model: 'Message',
@@ -194,10 +194,12 @@ export const onUserSelectedChannel = async (
       },
     },
   ]);
+  // Update the user's current channel
+  await User.updateOne({ socketId: socket.id }, { currentChannel: newChannel });
   // Emit the older messages to client
-  socket.emit('action', { type: 'io/messages', payload: reduceMessages(currChannel.messages) });
+  socket.emit('action', { type: 'io/messages', payload: reduceMessages(newChannel.messages) });
   // Emit the pins also, Sort by date first
-  const sortedPinnedMessages: IMessage[] = currChannel.pinnedMessages.sort(
+  const sortedPinnedMessages: IMessage[] = newChannel.pinnedMessages.sort(
     (x: any, y: any) => y.createdAt - x.createdAt
   );
   socket.emit('action', {
@@ -208,10 +210,10 @@ export const onUserSelectedChannel = async (
 
 export const onUserCreatedPin = async (
   io: SocketIO.Server,
+  socket: Socket,
   action: {
     type: string;
     payload: {
-      name: string;
       message: string;
       selectedChannel: {
         _id: string;
@@ -221,9 +223,9 @@ export const onUserCreatedPin = async (
     };
   }
 ) => {
-  const { name, message, selectedChannel } = action.payload;
+  const { message, selectedChannel } = action.payload;
   // Find which user
-  const user = await User.findOne({ name });
+  const user = await User.findOne({ socketId: socket.id });
   // Create and save the message
   const newPinMessage = new Message({
     user,
@@ -273,7 +275,6 @@ export const onUserSelectedVoiceChannel = async (
   action: {
     type: string;
     payload: {
-      name: string;
       channel: {
         _id: string;
         name: string;
@@ -282,16 +283,16 @@ export const onUserSelectedVoiceChannel = async (
     };
   }
 ) => {
-  const { name, channel: channelReq } = action.payload;
+  const { channel: channelReq } = action.payload;
   // Find the user
-  const user = await User.findOne({ name }).populate('currentChannel');
+  const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
   // Leave the current channel first
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
   // Join the new channel
   await socket.join(channelReq._id.toString());
   // Update the current channel of the suer
   const newChannel = await Channel.findOne({ _id: channelReq._id });
-  await User.updateOne({ name }, { currentChannel: newChannel });
+  await User.updateOne({ socketId: socket.id }, { currentChannel: newChannel });
 
   // Add the user to the voiceUsers in the channel
   await Channel.updateOne({ _id: channelReq._id }, { $addToSet: { voiceUsers: user } });

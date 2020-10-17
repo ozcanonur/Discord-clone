@@ -30,14 +30,13 @@ interface Props {
 const PrivateUser = ({ username, isNotFriend }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
   const notifications = useSelector((state: RootState) => state.notifications);
 
   const dispatch = useDispatch();
   const selectPrivateChannelOnClick = (username: string) => {
     dispatch(selectPrivateChannel(username));
-    dispatch(selectPrivateChannelIo(name, username));
+    dispatch(selectPrivateChannelIo(username));
     dispatch(selectPrivateUser(username));
     dispatch(selectTabInPrivate('Chat'));
     dispatch(clearPrivateNotification());
@@ -51,11 +50,11 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
   );
 
   const addFriendOnClick = () => {
-    dispatch(sendFriendRequest(name, username));
+    dispatch(sendFriendRequest(username));
   };
 
   const removeFriendOnClick = () => {
-    dispatch(removeFriend(name, username));
+    dispatch(removeFriend(username));
   };
 
   return (

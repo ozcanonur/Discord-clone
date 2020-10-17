@@ -33,7 +33,7 @@ interface ChannelProps {
 const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const classes = useStyles();
 
-  const { name, id } = useSelector((state: RootState) => state.user);
+  const { id } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const peer: Peer = useSelector((state: RootState) => state.peer);
   const [playJoinSound] = useSound(joinSound);
@@ -44,7 +44,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
     dispatch(selectChannel(channel));
-    dispatch(selectVoiceChannel(name, channel));
+    dispatch(selectVoiceChannel(channel));
 
     // @ts-ignore
     const newPeer = new Peer(id);

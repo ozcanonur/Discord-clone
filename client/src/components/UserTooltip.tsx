@@ -68,7 +68,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
 
   const dispatch = useDispatch();
   const joinServerOnClick = async (serverName: string) => {
-    dispatch(joinServer(username, serverName));
+    dispatch(joinServer(serverName));
 
     const response = await axios.get('/channelIds', {
       params: { serverName },
@@ -97,15 +97,15 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   };
 
   const privateMessageOnClick = () => {
-    dispatch(connectNewPrivateUser(username, name));
+    dispatch(connectNewPrivateUser(name));
     dispatch(selectTabInPrivate('Chat'));
     dispatch(selectPrivateUser(name));
     dispatch(selectPrivateChannel(name));
-    dispatch(selectPrivateChannelIo(username, name));
+    dispatch(selectPrivateChannelIo(name));
   };
 
   const addFriendOnClick = () => {
-    dispatch(sendFriendRequest(username, name));
+    dispatch(sendFriendRequest(name));
   };
 
   return (

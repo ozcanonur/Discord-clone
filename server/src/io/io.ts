@@ -45,18 +45,19 @@ io.on('connection', (socket: Socket) => {
     else if (action.type === 'io/userSelectedVoiceChannel')
       await onUserSelectedVoiceChannel(io, socket, action);
     else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
-    else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
+    else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, socket, action);
     // ioPrivate
     else if (action.type === 'io/userConnectedNewPrivateUser')
-      await onUserConnectedNewPrivateUser(io, action);
-    else if (action.type === 'io/userSentFriendRequest')
+      await onUserConnectedNewPrivateUser(io, socket, action);
+    else if (action.type === 'io/userAddedFriend')
       await onUserSentFriendRequest(io, socket, action);
     else if (action.type === 'io/userSelectedPrivateChannel')
       await onUserSelectedPrivateChannel(socket, action);
-    else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, action);
+    else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, socket, action);
     // ioMessage
-    else if (action.type === 'io/userMessaged') await onUserMessaged(io, action);
-    else if (action.type === 'io/userDeletedMessage') await onUserDeletedMessage(io, action);
+    else if (action.type === 'io/userMessaged') await onUserMessaged(io, socket, action);
+    else if (action.type === 'io/userDeletedMessage')
+      await onUserDeletedMessage(io, socket, action);
   });
 
   socket.on('disconnect', async () => {

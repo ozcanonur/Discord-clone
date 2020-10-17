@@ -16,7 +16,6 @@ const useStyles = makeStyles(inputStyles);
 const Input = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
@@ -29,7 +28,7 @@ const Input = () => {
   const handleSubmit = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
       if (text.trim() === '') return;
-      dispatch(message(name, text));
+      dispatch(message(text));
       setText('');
       e.preventDefault();
     }

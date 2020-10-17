@@ -22,12 +22,17 @@ const getFriendRequestValidationError = async (name: string, friendName: string)
 export const onUserSentFriendRequest = async (
   io: SocketIO.Server,
   socket: Socket,
-  action: { type: string; payload: { name: string; friendName: string } }
+  action: { type: string; payload: { friendName: string } }
 ) => {
-  const { name, friendName } = action.payload;
+  const { friendName } = action.payload;
+
+  let user = await User.findOne({ socketId: socket.id })
+    .populate('friends')
+    .populate('usersMessagedBefore');
+
   // Validate
   const validationError: string | undefined = await getFriendRequestValidationError(
-    name,
+    user.name,
     friendName
   );
   if (validationError) {
@@ -35,7 +40,6 @@ export const onUserSentFriendRequest = async (
     return;
   }
 
-  let user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
   const friend = await User.findOne({ name: friendName })
     .populate('friends')
     .populate('usersMessagedBefore');
@@ -58,7 +62,9 @@ export const onUserSentFriendRequest = async (
   user.friends.push(friend);
   await user.save();
   // Find the user again
-  user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
+  user = await User.findOne({ socketId: socket.id })
+    .populate('friends')
+    .populate('usersMessagedBefore');
   // Add user to the friend, also to messaged before
   friend.friends.push(user);
   await friend.save();
@@ -76,17 +82,17 @@ export const onUserSentFriendRequest = async (
 
 export const onUserConnectedNewPrivateUser = async (
   io: SocketIO.Server,
+  socket: Socket,
   action: {
     type: string;
     payload: {
-      name: string;
       username: string;
     };
   }
 ) => {
-  const { name, username } = action.payload;
+  const { username } = action.payload;
   // Check if they messaged each other before
-  let user = await User.findOne({ name }).populate('usersMessagedBefore');
+  let user = await User.findOne({ socketId: socket.id }).populate('usersMessagedBefore');
   let otherUser = await User.findOne({ name: username });
   const messagedBefore = user.usersMessagedBefore.some(
     (otherUser: IUser) => otherUser.name === username
@@ -94,7 +100,7 @@ export const onUserConnectedNewPrivateUser = async (
   // If not, create new private channel, save it
   if (!messagedBefore) {
     const channel = new Channel({
-      name: `${name}${username}_private`,
+      name: `${user.name}${username}_private`,
       messages: [],
       voice: false,
     });
@@ -102,12 +108,15 @@ export const onUserConnectedNewPrivateUser = async (
 
     // Update users' messagedBefore
     // @ts-ignore
-    await User.updateOne({ name }, { $addToSet: { usersMessagedBefore: otherUser } });
+    await User.updateOne(
+      { socketId: socket.id },
+      { $addToSet: { usersMessagedBefore: otherUser } }
+    );
     // @ts-ignore
     await User.updateOne({ name: username }, { $addToSet: { usersMessagedBefore: user } });
   }
   // Emit updated privateUser list
-  user = await User.findOne({ name }).populate('usersMessagedBefore');
+  user = await User.findOne({ socketId: socket.id }).populate('usersMessagedBefore');
   io.to(user.socketId).emit('action', {
     type: 'io/privateUsers',
     payload: reducePrivateUsers(user),
@@ -116,16 +125,18 @@ export const onUserConnectedNewPrivateUser = async (
 
 export const onUserRemovedFriend = async (
   io: SocketIO.Server,
+  socket: Socket,
   action: {
     type: string;
     payload: {
-      name: string;
       friendName: string;
     };
   }
 ) => {
-  const { name, friendName } = action.payload;
-  const user = await User.findOne({ name }).populate('friends').populate('usersMessagedBefore');
+  const { friendName } = action.payload;
+  const user = await User.findOne({ socketId: socket.id })
+    .populate('friends')
+    .populate('usersMessagedBefore');
   // Remove friend from user
   user.friends = user.friends.filter((f: IUser) => f.name !== friendName);
   await user.save();
@@ -133,7 +144,7 @@ export const onUserRemovedFriend = async (
   const friend = await User.findOne({ name: friendName })
     .populate('friends')
     .populate('usersMessagedBefore');
-  friend.friends = friend.friends.filter((f: IUser) => f.name !== name);
+  friend.friends = friend.friends.filter((f: IUser) => f.name !== user.name);
   await friend.save();
 
   // Send the new private user list to both users
@@ -152,15 +163,14 @@ export const onUserSelectedPrivateChannel = async (
   action: {
     type: string;
     payload: {
-      name: string;
       username: string;
     };
   }
 ) => {
-  const { name, username } = action.payload;
+  const { username } = action.payload;
 
   // Leave the current channel first
-  const user = await User.findOne({ name }).populate('currentChannel');
+  const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
   if (user.currentChannel) await socket.leave(user.currentChannel._id.toString());
 
   // Find the channel, try both combinations since we don't know who added who
@@ -174,14 +184,14 @@ export const onUserSelectedPrivateChannel = async (
     },
   };
   let channel =
-    (await Channel.findOne({ name: `${name}${username}_private` }).populate(populateFields)) ||
-    (await Channel.findOne({ name: `${username}${name}_private` }).populate(populateFields));
+    (await Channel.findOne({ name: `${user.name}${username}_private` }).populate(populateFields)) ||
+    (await Channel.findOne({ name: `${username}${user.name}_private` }).populate(populateFields));
   // Join the new channel
 
   await socket.join(channel._id.toString());
 
   // Update user's channel
-  await User.updateOne({ name }, { currentChannel: channel });
+  await User.updateOne({ socketId: socket.id }, { currentChannel: channel });
   // Emit the older messages to the user
   socket.emit('action', { type: 'io/messages', payload: reduceMessages(channel.messages) });
 };

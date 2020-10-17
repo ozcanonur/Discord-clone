@@ -26,7 +26,6 @@ interface ChannelProps {
 const Channel = ({ channel }: ChannelProps) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const notifications = useSelector((state: RootState) => state.notifications);
   const peer: Peer = useSelector((state: RootState) => state.peer);
@@ -50,7 +49,7 @@ const Channel = ({ channel }: ChannelProps) => {
       }
     }
     dispatch(selectChannel(channel));
-    dispatch(selectChannelIo(name, channel));
+    dispatch(selectChannelIo(channel));
   };
 
   const [anchorEl, setAnchorEl] = useState(null);

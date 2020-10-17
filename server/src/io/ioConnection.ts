@@ -1,15 +1,15 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
-import Server, { IServer } from '../db/models/server';
+import Server from '../db/models/server';
 import { reduceUsers, reduceServers, reducePrivateUsers } from './utils';
-import Channel, { IChannel } from '../db/models/channel';
+import Channel from '../db/models/channel';
 
 export const onUserConnected = async (
   io: SocketIO.Server,
   socket: Socket,
-  action: { type: string; payload: string }
+  action: { type: string; payload: { name: string } }
 ) => {
-  const name = action.payload;
+  const { name } = action.payload;
 
   let user: IUser = await User.findOne({ name }).populate([
     {
@@ -51,6 +51,8 @@ export const onUserConnected = async (
 
 export const onUserDisconnected = async (io: SocketIO.Server, socket: Socket) => {
   const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
+  if (!user) return;
+
   const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate('voiceUsers');
 
   // Broadcast the new servers if this user was in a voice channel

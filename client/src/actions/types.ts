@@ -73,7 +73,9 @@ export namespace InternalActions {
 export namespace ClientIOActions {
   export interface ConnectIOAction {
     type: string;
-    payload: string | null;
+    payload: {
+      name: string | null;
+    };
   }
 
   export interface DisconnectIOAction {
@@ -83,7 +85,6 @@ export namespace ClientIOActions {
   export interface CreateServerIOAction {
     type: string;
     payload: {
-      name: string | null;
       server: string;
     };
   }
@@ -91,7 +92,6 @@ export namespace ClientIOActions {
   export interface SelectChannelIOAction {
     type: string;
     payload: {
-      name: string | null;
       channel: Channel;
     };
   }
@@ -99,7 +99,6 @@ export namespace ClientIOActions {
   export interface SelectVoiceChannelIOAction {
     type: string;
     payload: {
-      name: string | null;
       channel: Channel;
     };
   }
@@ -107,7 +106,6 @@ export namespace ClientIOActions {
   export interface MessageIOAction {
     type: string;
     payload: {
-      name: string | null;
       message: string;
     };
   }
@@ -124,7 +122,6 @@ export namespace ClientIOActions {
   export interface JoinServerIOAction {
     type: string;
     payload: {
-      name: string | null;
       serverName: string;
     };
   }
@@ -132,7 +129,6 @@ export namespace ClientIOActions {
   export interface SendFriendRequestIOAction {
     type: string;
     payload: {
-      name: string | null;
       friendName: string;
     };
   }
@@ -140,7 +136,6 @@ export namespace ClientIOActions {
   export interface RemoveFriendIOAction {
     type: string;
     payload: {
-      name: string | null;
       friendName: string;
     };
   }
@@ -148,7 +143,6 @@ export namespace ClientIOActions {
   export interface CreatePinIOAction {
     type: string;
     payload: {
-      name: string | null;
       message: string;
       selectedChannel: Channel;
     };
@@ -157,7 +151,6 @@ export namespace ClientIOActions {
   export interface DeleteMessageIOAction {
     type: string;
     payload: {
-      name: string | null;
       message: Message;
     };
   }
@@ -181,7 +174,6 @@ export namespace ClientIOActions {
   export interface SelectPrivateChannelIOAction {
     type: string;
     payload: {
-      name: string | null;
       username: string;
     };
   }
@@ -189,7 +181,6 @@ export namespace ClientIOActions {
   export interface ConnectNewPrivateUserIOAction {
     type: string;
     payload: {
-      name: string | null;
       username: string;
     };
   }
@@ -197,7 +188,6 @@ export namespace ClientIOActions {
   export interface LeaveServerIOAction {
     type: string;
     payload: {
-      name: string | null;
       serverName: string;
     };
   }

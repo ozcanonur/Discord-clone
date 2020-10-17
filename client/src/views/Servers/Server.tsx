@@ -19,8 +19,6 @@ interface Props {
 const Server = ({ server }: Props) => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
-
   const dispatch = useDispatch();
   const selectServerOnClick = (server: Server) => {
     dispatch(clearMessages());
@@ -28,7 +26,7 @@ const Server = ({ server }: Props) => {
     if (server.channels.length > 0) {
       const firstChannel = server.channels[0];
       dispatch(selectChannel(firstChannel));
-      dispatch(selectChannelIo(name, firstChannel));
+      dispatch(selectChannelIo(firstChannel));
     }
   };
 

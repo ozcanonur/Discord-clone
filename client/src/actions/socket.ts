@@ -3,7 +3,7 @@ import { ClientIOActions } from './types';
 export const connect = (name: string | null): ClientIOActions.ConnectIOAction => {
   return {
     type: 'io/userConnected',
-    payload: name,
+    payload: { name },
   };
 };
 
@@ -24,94 +24,75 @@ export const createChannel = (
   };
 };
 
-export const selectChannel = (
-  name: string | null,
-  channel: Channel
-): ClientIOActions.SelectChannelIOAction => {
+export const selectChannel = (channel: Channel): ClientIOActions.SelectChannelIOAction => {
   return {
     type: 'io/userSelectedChannel',
-    payload: { name, channel },
+    payload: { channel },
   };
 };
 
 export const selectVoiceChannel = (
-  name: string | null,
   channel: Channel
 ): ClientIOActions.SelectVoiceChannelIOAction => {
   return {
     type: 'io/userSelectedVoiceChannel',
-    payload: { name, channel },
+    payload: { channel },
   };
 };
 
-export const createServer = (
-  name: string | null,
-  serverName: string
-): ClientIOActions.CreateServerIOAction => {
+export const createServer = (serverName: string): ClientIOActions.CreateServerIOAction => {
   return {
     type: 'io/userCreatedServer',
     payload: {
-      name,
       server: serverName,
     },
   };
 };
 
-export const joinServer = (
-  name: string | null,
-  serverName: string
-): ClientIOActions.JoinServerIOAction => {
+export const joinServer = (serverName: string): ClientIOActions.JoinServerIOAction => {
   return {
     type: 'io/userJoinedServer',
-    payload: { name, serverName },
+    payload: { serverName },
   };
 };
 
 export const sendFriendRequest = (
-  name: string | null,
   friendName: string
 ): ClientIOActions.SendFriendRequestIOAction => {
   return {
-    type: 'io/userSentFriendRequest',
-    payload: { name, friendName },
+    type: 'io/userAddedFriend',
+    payload: { friendName },
   };
 };
 
-export const removeFriend = (
-  name: string | null,
-  friendName: string
-): ClientIOActions.RemoveFriendIOAction => {
+export const removeFriend = (friendName: string): ClientIOActions.RemoveFriendIOAction => {
   return {
     type: 'io/userRemovedFriend',
-    payload: { name, friendName },
+    payload: { friendName },
   };
 };
 
 export const createPin = (
-  name: string | null,
   message: string,
   selectedChannel: Channel
 ): ClientIOActions.CreatePinIOAction => {
   return {
     type: 'io/userCreatedPin',
-    payload: { name, message, selectedChannel },
+    payload: { message, selectedChannel },
   };
 };
 
-export const message = (name: string | null, message: string): ClientIOActions.MessageIOAction => {
+export const message = (message: string): ClientIOActions.MessageIOAction => {
   return {
     type: 'io/userMessaged',
-    payload: { name, message },
+    payload: { message },
   };
 };
 
-export const deleteMessage = (
-  name: string | null,
-  message: Message
-): ClientIOActions.DeleteMessageIOAction => {
+export const deleteMessage = (message: Message): ClientIOActions.DeleteMessageIOAction => {
   return {
     type: 'io/userDeletedMessage',
-    payload: { name, message },
+    payload: { message },
   };
 };
 
@@ -136,31 +117,26 @@ export const deleteChannel = (
 };
 
 export const selectPrivateChannel = (
-  name: string | null,
   username: string
 ): ClientIOActions.SelectPrivateChannelIOAction => {
   return {
     type: 'io/userSelectedPrivateChannel',
-    payload: { name, username },
+    payload: { username },
   };
 };
 
 export const connectNewPrivateUser = (
-  name: string | null,
   username: string
 ): ClientIOActions.ConnectNewPrivateUserIOAction => {
   return {
     type: 'io/userConnectedNewPrivateUser',
-    payload: { name, username },
+    payload: { username },
   };
 };
 
-export const leaveServer = (
-  name: string | null,
-  serverName: string
-): ClientIOActions.LeaveServerIOAction => {
+export const leaveServer = (serverName: string): ClientIOActions.LeaveServerIOAction => {
   return {
     type: 'io/userLeftServer',
-    payload: { name, serverName },
+    payload: { serverName },
   };
 };

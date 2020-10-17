@@ -13,7 +13,6 @@ const useStyles = makeStyles(addFriendBoxStyles);
 const AddFriendBox = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const [friendName, setFriendName] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
@@ -38,7 +37,7 @@ const AddFriendBox = () => {
 
   const sendFriendRequestOnClick = () => {
     setErrorText('');
-    dispatch(sendFriendRequest(name, friendName));
+    dispatch(sendFriendRequest(friendName));
   };
 
   return (

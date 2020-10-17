@@ -16,7 +16,6 @@ const useStyles = makeStyles(inputStyles);
 const PinnedMessageInput = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const [text, setText] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
@@ -34,7 +33,7 @@ const PinnedMessageInput = () => {
   const createPinOnClick = () => {
     if (text.trim() === '' || !selectedChannel.name)
       return console.log(`You need to select a channel first`);
-    dispatch(createPin(name, text, selectedChannel));
+    dispatch(createPin(text, selectedChannel));
     setText('');
   };
 

@@ -20,7 +20,6 @@ const useStyles = makeStyles(indexStyles);
 const Options = () => {
   const classes = useStyles();
 
-  const { name } = useSelector((state: RootState) => state.user);
   const servers = useSelector((state: RootState) => state.servers);
   const [addServerModalOpen, setAddServerModalOpen] = useState(false);
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
@@ -34,7 +33,7 @@ const Options = () => {
       if (server && server.channels.length > 0) {
         const firstChannel = server.channels[0];
         dispatch(selectChannel(firstChannel));
-        dispatch(selectChannelIo(name, firstChannel));
+        dispatch(selectChannelIo(firstChannel));
       }
     }
   };

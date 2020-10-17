@@ -1,7 +1,6 @@
 import { Socket } from 'socket.io';
 import User, { IUser } from '../db/models/user';
 import Server, { IServer } from '../db/models/server';
-import Channel, { IChannel } from '../db/models/channel';
 import { reduceServers } from './utils';
 
 const getCreateServerValidationError = async (server: string) => {
@@ -23,9 +22,9 @@ const getJoinServerValidationError = async (name: string, serverName: string) =>
 
 export const onUserCreatedServer = async (
   socket: Socket,
-  action: { type: string; payload: { name: string; server: string } }
+  action: { type: string; payload: { server: string } }
 ) => {
-  const { name, server } = action.payload;
+  const { server } = action.payload;
   // Validate
   const validationError: string | undefined = await getCreateServerValidationError(server);
   if (validationError) {
@@ -33,7 +32,7 @@ export const onUserCreatedServer = async (
     return;
   }
 
-  let user: IUser = await User.findOne({ name });
+  let user: IUser = await User.findOne({ socketId: socket.id });
   // Create the server, register the user, save
   const newServer: IServer = new Server({
     name: server,
@@ -45,9 +44,9 @@ export const onUserCreatedServer = async (
 
   // Update the user's servers
   // @ts-ignore
-  await User.updateOne({ name }, { $addToSet: { servers: newServer } });
+  await User.updateOne({ socketId: socket.id }, { $addToSet: { servers: newServer } });
   // Find the user's servers and send them back
-  user = await User.findOne({ name });
+  user = await User.findOne({ socketId: socket.id });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate({
     path: 'channels',
     model: 'Channel',
@@ -63,18 +62,23 @@ export const onUserCreatedServer = async (
 
 export const onUserJoinedServer = async (
   socket: Socket,
-  action: { type: string; payload: { name: string; serverName: string } }
+  action: { type: string; payload: { serverName: string } }
 ) => {
-  const { name, serverName } = action.payload;
+  const { serverName } = action.payload;
+  // Find server and user
+  let user = await User.findOne({ socketId: socket.id });
+  const server = await Server.findOne({ name: serverName }).populate('users');
+
   // Validate
-  const validationError: string | undefined = await getJoinServerValidationError(name, serverName);
+  const validationError: string | undefined = await getJoinServerValidationError(
+    user.name,
+    serverName
+  );
   if (validationError) {
     socket.emit('action', { type: 'io/response', payload: { error: validationError } });
     return;
   }
-  // Find server and user
-  let user = await User.findOne({ name });
-  const server = await Server.findOne({ name: serverName }).populate('users');
+
   // Update server's users
   server.users.push(user);
   await server.save();
@@ -82,7 +86,7 @@ export const onUserJoinedServer = async (
   user.servers.push(server);
   await user.save();
   // Find the user's servers and send them back
-  user = await User.findOne({ name });
+  user = await User.findOne({ socketId: socket.id });
   const userServers = await Server.find({ _id: { $in: user.servers } }).populate({
     path: 'channels',
     model: 'Channel',
@@ -135,12 +139,12 @@ export const onUserDeletedServer = async (
 
 export const onUserLeftServer = async (
   socket: Socket,
-  action: { type: string; payload: { name: string; serverName: string } }
+  action: { type: string; payload: { serverName: string } }
 ) => {
-  const { name, serverName } = action.payload;
+  const { serverName } = action.payload;
 
   // Find the user, remove the server from it and save
-  const user = await User.findOne({ name }).populate({
+  const user = await User.findOne({ socketId: socket.id }).populate({
     path: 'servers',
     model: 'Server',
     populate: {
@@ -157,7 +161,7 @@ export const onUserLeftServer = async (
 
   // Find the server, remove the user from it and save
   const server = await Server.findOne({ name: serverName }).populate('users');
-  server.users = server.users.filter((u: IUser) => u.name !== name);
+  server.users = server.users.filter((u: IUser) => u.name !== user.name);
   await server.save();
 
   // Send the new server list back

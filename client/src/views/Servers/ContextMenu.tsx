@@ -48,7 +48,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
 
   const leaveServerOnClick = (serverName: string) => {
     if (serverName === 'Default') return console.log(`You can't leave the default server`);
-    dispatch(leaveServer(name, serverName));
+    dispatch(leaveServer(serverName));
     if (selectedServerName === serverName) {
       const defaultServer = servers.find((server) => server.name === 'Default') || {
         _id: '',
@@ -58,7 +58,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
       const firstChannel = defaultServer.channels[0];
       dispatch(selectServerName(defaultServer.name));
       dispatch(selectChannel(firstChannel));
-      dispatch(selectChannelIo(name, firstChannel));
+      dispatch(selectChannelIo(firstChannel));
     }
   };
 

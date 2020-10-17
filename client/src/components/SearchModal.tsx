@@ -112,7 +112,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
 
       dispatch(selectServerName(server.name));
       dispatch(selectChannel(channel));
-      dispatch(selectChannelIo(name, channel));
+      dispatch(selectChannelIo(channel));
       setModalOpen(false);
 
       // Redirect to main route if not already
@@ -120,7 +120,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
     } else if (type === '@') {
       // resultName = username in this case
       dispatch(selectPrivateChannel(resultName));
-      dispatch(selectPrivateChannelIo(name, resultName));
+      dispatch(selectPrivateChannelIo(resultName));
       dispatch(selectPrivateUser(resultName));
       dispatch(selectTabInPrivate('Chat'));
       setModalOpen(false);

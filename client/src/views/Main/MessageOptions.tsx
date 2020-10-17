@@ -23,11 +23,11 @@ const MessageOptions = ({ message }: Props) => {
 
   const dispatch = useDispatch();
   const deleteMessageOnClick = (message: Message) => {
-    dispatch(deleteMessage(name, message));
+    dispatch(deleteMessage(message));
   };
 
   const pinMessageOnClick = (message: Message) => {
-    dispatch(createPin(message.username, message.message, selectedChannel));
+    dispatch(createPin(message.message, selectedChannel));
   };
 
   return (

@@ -33,7 +33,7 @@ const Chat = () => {
 
   const dispatch = useDispatch();
   const deleteMessageOnClick = (message: Message) => {
-    dispatch(deleteMessage(name, message));
+    dispatch(deleteMessage(message));
   };
 
   const fetchMoreData = () => {
