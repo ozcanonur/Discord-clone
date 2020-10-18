@@ -25,26 +25,29 @@ const Chat = () => {
   const shownMessages = messages.slice(0, shownMessagesCount);
 
   // Scroll messages to bottom on change
-  const scrollRef = useRef<any>(null);
+  const scrollDownRef = useRef<any>(null);
   useEffect(() => {
-    if (scrollRef.current) scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
+    // Only do it when the user is the one messaging
+    if (scrollDownRef.current && messages.length > 0 && messages[0].username === name)
+      scrollDownRef.current.scrollIntoView({ behaviour: 'smooth' });
   }, [messages]);
 
-  // useEffect(() => {
-  //   // Cleanup, reset count to 15
-  //   setShownMessagesCount(15);
-  // }, [selectedPrivateUser]);
+  useEffect(() => {
+    if (scrollDownRef.current) scrollDownRef.current.scrollIntoView({ behaviour: 'smooth' });
+    // Cleanup, reset count to 20
+    setShownMessagesCount(20);
+  }, [selectedPrivateUser]);
+
+  const fetchMoreData = () => {
+    setTimeout(() => {
+      const additionalCount = Math.min(20, messages.length - shownMessagesCount);
+      setShownMessagesCount(shownMessagesCount + additionalCount);
+    }, 1000);
+  };
 
   const dispatch = useDispatch();
   const deleteMessageOnClick = (message: Message) => {
     dispatch(deleteMessage(message));
-  };
-
-  const fetchMoreData = () => {
-    setTimeout(() => {
-      const additionalCount = Math.min(15, messages.length - shownMessagesCount);
-      setShownMessagesCount(shownMessagesCount + additionalCount);
-    }, 1000);
   };
 
   return (
@@ -81,7 +84,7 @@ const Chat = () => {
               }
               scrollableTarget='scrollableDiv'
             >
-              <div ref={scrollRef} />
+              <div ref={scrollDownRef} />
               {shownMessages.map((message: Message, key) => (
                 <ListItem key={key} disableGutters className={classes.listItem}>
                   <Message key={key} message={message} />
