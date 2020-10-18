@@ -5,7 +5,6 @@ const chatStyles = createStyles({
     display: 'flex',
     flexGrow: 1,
     flexDirection: 'column',
-    overflow: 'auto',
   },
   chat: {
     flexGrow: 1,
@@ -13,8 +12,8 @@ const chatStyles = createStyles({
     fontSize: '1.5rem',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
     position: 'relative',
+    maxHeight: '100%',
   },
   warning: {
     margin: 'auto auto',

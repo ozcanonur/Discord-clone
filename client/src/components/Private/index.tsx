@@ -13,7 +13,7 @@ import ActiveUsers from '../Main/Body/ActiveUsers';
 import Chat from './Chat';
 import AddFriendBox from './AddFriendBox';
 import { connect } from '../../actions/socket';
-import { login } from '../../actions/react';
+import { login, selectServerName } from '../../actions/react';
 import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);
@@ -46,6 +46,11 @@ const Private = () => {
     // If user is coming directly to /private instead of the login route (refresh etc.)
     if (user.name === null) {
       authenticateAndInit();
+    } else {
+      // @ts-ignore
+      dispatch(login(user.name, user.id));
+      dispatch(connect(user.name));
+      dispatch(selectServerName('private'));
     }
   }, []);
 

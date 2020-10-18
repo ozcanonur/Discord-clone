@@ -18,7 +18,6 @@ const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   useEffect(() => {
-    // If user is not coming from the /private route
     const authenticateAndInit = async () => {
       try {
         const authResponse = await axios.get('/user', { withCredentials: true });
@@ -41,8 +40,14 @@ const App = () => {
       }
     };
 
+    // If user is not coming from the /private route
     if (user.name === null) {
       authenticateAndInit();
+    } else {
+      // @ts-ignore
+      dispatch(login(user.name, user.id));
+      dispatch(connect(user.name));
+      dispatch(selectServerName('Default'));
     }
 
     return () => {

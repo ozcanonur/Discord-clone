@@ -21,13 +21,19 @@ const Chat = () => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [shownMessagesCount, setShownMessagesCount] = useState(15);
 
+  const shownMessages = messages.slice(0, shownMessagesCount);
+
   // Scroll messages to bottom on change
-  const scrollRef = useRef<any>(null);
+  const scrollDownRef = useRef<any>(null);
   useEffect(() => {
+    if (scrollDownRef.current) scrollDownRef.current.scrollIntoView({ behaviour: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
+    // if (scrollDownRef.current) scrollDownRef.current.scrollIntoView({ behaviour: 'smooth' });
     // Cleanup, reset count to 15
     setShownMessagesCount(15);
-    if (scrollRef.current) scrollRef.current.scrollIntoView({ behaviour: 'smooth' });
-  }, [messages]);
+  }, [selectedChannel]);
 
   const fetchMoreData = () => {
     setTimeout(() => {
@@ -46,33 +52,44 @@ const Chat = () => {
         <div className={classes.warning}>{`You are in # ${selectedChannel.name} (voice)`}</div>
       ) : (
         <div className={classes.chat}>
-          <InfiniteScroll
-            dataLength={shownMessagesCount}
-            next={fetchMoreData}
-            className={classes.infiniteScroll}
-            height={window.innerHeight > 850 ? '80vh' : '75vh'}
-            inverse={true}
-            hasMore={messages.length > shownMessagesCount}
-            endMessage={
-              <h4
-                className={classes.endMessage}
-              >{`This is the start of the # ${selectedChannel.name} channel.`}</h4>
-            }
-            loader={
-              <div className={classes.loading}>
-                <Loading style={{ height: '10rem' }} />
-              </div>
-            }
+          <div
+            id='scrollableDiv'
+            style={{
+              height: '100%',
+              overflow: 'auto',
+              display: 'flex',
+              flexDirection: 'column-reverse',
+              marginBottom: '1rem',
+            }}
           >
-            {messages.slice(0, shownMessagesCount).map((message, key) => (
-              <ListItem key={key} disableGutters className={classes.listItem}>
-                <Message message={message} />
-                <MessageOptions message={message} />
-              </ListItem>
-            ))}
-          </InfiniteScroll>
+            <InfiniteScroll
+              dataLength={shownMessagesCount}
+              next={fetchMoreData}
+              className={classes.infiniteScroll}
+              inverse
+              hasMore={messages.length > shownMessagesCount}
+              endMessage={
+                <h4
+                  className={classes.endMessage}
+                >{`This is the start of the # ${selectedChannel.name} channel.`}</h4>
+              }
+              loader={
+                <div className={classes.loading}>
+                  <Loading style={{ height: '10rem' }} />
+                </div>
+              }
+              scrollableTarget='scrollableDiv'
+            >
+              <div ref={scrollDownRef} />
+              {shownMessages.map((message, key) => (
+                <ListItem key={key} disableGutters className={classes.listItem}>
+                  <Message message={message} />
+                  <MessageOptions message={message} />
+                </ListItem>
+              ))}
+            </InfiniteScroll>
+          </div>
           <Input />
-          <div ref={scrollRef} />
         </div>
       )}
     </div>

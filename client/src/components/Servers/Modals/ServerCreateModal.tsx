@@ -40,6 +40,9 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
     } else if (e.target.value.trim().length === 0) {
       setErrorText(`Server name can't be empty.`);
       setError(true);
+    } else if (e.target.value === 'private') {
+      setErrorText(`Server name can't be "private"`);
+      setError(true);
     } else {
       setErrorText('Perfect!');
       setError(false);
