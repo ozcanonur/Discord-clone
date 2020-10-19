@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,33 +9,24 @@ import Add from '@material-ui/icons/Add';
 import PeopleAlt from '@material-ui/icons/PeopleAlt';
 
 import ServerIcon from './ServerIcon';
-import indexStyles from './styles/index';
-import ServerModal from './Modals/ServerModal';
+import ServerModal from './Modals/ServerModalsIndex';
 import ExploreModal from './Modals/ExploreModal';
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
-import { selectChannel as selectChannelIo } from '../../actions/socket';
+import { selectServerName, clearMessages, selectPrivateUser } from '../../actions/react';
+import optionsStyles from './styles/options';
 
-const useStyles = makeStyles(indexStyles);
+const useStyles = makeStyles(optionsStyles);
 
 const Options = () => {
   const classes = useStyles();
 
-  const servers = useSelector((state: RootState) => state.servers);
   const [addServerModalOpen, setAddServerModalOpen] = useState(false);
   const [exploreModalOpen, setExploreModalOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const selectServerOnClick = (serverName: string) => {
+  const selectPrivateRouteOnClick = () => {
     dispatch(clearMessages());
-    dispatch(selectServerName(serverName));
-    if (serverName !== 'private') {
-      const server = servers.find((server: Server) => server.name === serverName);
-      if (server && server.channels.length > 0) {
-        const firstChannel = server.channels[0];
-        dispatch(selectChannel(firstChannel));
-        dispatch(selectChannelIo(firstChannel));
-      }
-    }
+    dispatch(selectServerName('private'));
+    dispatch(selectPrivateUser(''));
   };
 
   return (
@@ -43,7 +34,7 @@ const Options = () => {
       <ListItem disableGutters className={classes.listItem}>
         <NavLink to='/private'>
           <ServerIcon
-            onClick={() => selectServerOnClick('private')}
+            onClick={selectPrivateRouteOnClick}
             privateRoute
             name='Friends / Private Messages'
           >

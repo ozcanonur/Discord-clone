@@ -1,21 +1,6 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const indexStyles = createStyles({
-  serverList: {
-    height: '100vh',
-    backgroundColor: '#202225',
-    color: 'white',
-    fontSize: '2rem',
-    overflowX: 'hidden',
-    overflowY: 'auto',
-    padding: '0.8rem',
-  },
-  list: {
-    padding: 0,
-  },
-  listItem: {
-    padding: 0,
-  },
+const contextMenuStyles = createStyles({
   menuPaper: {
     backgroundColor: '#202225',
     color: '#dcddde',
@@ -48,4 +33,4 @@ const indexStyles = createStyles({
   },
 });
 
-export default indexStyles;
+export default contextMenuStyles;

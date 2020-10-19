@@ -81,7 +81,19 @@ export const addPinNotification = (
   };
 };
 
-export const login = (name: string | null, id: string): InternalActions.Login => {
+export const addPinNotifications = (
+  type: string,
+  channelIds?: string[]
+): InternalActions.AddPinNotifications => {
+  return {
+    type: 'ADD_PIN_NOTIFICATIONS',
+    payload: channelIds?.map((channelId) => {
+      return { type, channelId };
+    }),
+  };
+};
+
+export const login = (name: string | null, id: string | null): InternalActions.Login => {
   return {
     type: 'LOGIN',
     payload: { name, id },

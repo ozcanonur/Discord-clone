@@ -21,7 +21,7 @@ interface Props {
 const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
-  const [modalInputValue, setModalInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
@@ -31,16 +31,17 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
     dispatch(clearIoResponse());
   }, [dispatch, modalOpen]);
 
-  const handleModalInputChange = (e: any) => {
-    setModalInputValue(e.target.value);
+  // Validate input
+  const handleModalInputChange = (value: string) => {
+    setInputValue(value);
     dispatch(clearIoResponse());
-    if (e.target.value.split(' ').length > 3) {
+    if (value.split(' ').length > 3) {
       setErrorText(`Server name can't be longer than 4 words.`);
       setError(true);
-    } else if (e.target.value.trim().length === 0) {
+    } else if (value.trim().length === 0) {
       setErrorText(`Server name can't be empty.`);
       setError(true);
-    } else if (e.target.value === 'private') {
+    } else if (value === 'private') {
       setErrorText(`Server name can't be "private"`);
       setError(true);
     } else {
@@ -50,8 +51,12 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   };
 
   const createServerOnClick = () => {
-    setErrorText(`Success! ${modalInputValue} created.`);
-    dispatch(createServer(modalInputValue));
+    setErrorText(`Success! ${inputValue} created.`);
+    dispatch(createServer(inputValue));
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -83,8 +88,8 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
               InputProps={{
                 className: classes.inputProps,
               }}
-              value={modalInputValue}
-              onChange={(e) => handleModalInputChange(e)}
+              value={inputValue}
+              onChange={(e) => handleModalInputChange(e.target.value)}
               error={error || ioResponse.error !== undefined}
               helperText={ioResponse.error || errorText}
               FormHelperTextProps={{
@@ -93,11 +98,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
             />
           </div>
           <div className={classes.modalFooter}>
-            <Button
-              variant='contained'
-              className={classes.modalButton}
-              onClick={() => setModalOpen(false)}
-            >
+            <Button variant='contained' className={classes.modalButton} onClick={closeModal}>
               Back
             </Button>
             <Button

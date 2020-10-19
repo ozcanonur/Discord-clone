@@ -7,7 +7,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 
-import ExploreServer from './ExploreServerCard';
+import ExploreServerCard from './ExploreServerCard';
 import exploreModalStyle from '../styles/exploreModal';
 import globalImg from '../../../assets/global.jpg';
 import gamesImg from '../../../assets/wow.jpg';
@@ -47,40 +47,47 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
   const [inputText, setInputText] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
+  // Get all servers, actually limited to 20 without filtering
+  const getServers = async () => {
+    try {
+      const response = await axios.get('/exploreServers', {
+        params: { name, text: inputText },
+      });
+      return response.data;
+    } catch (err) {
+      return console.error(err);
+    }
+  };
+
+  // Default and games is set img/desc
+  // Assign others randomly
+  const setImgDescToServerResults = (servers: SearchResult[]) => {
+    servers.forEach((server: SearchResult) => {
+      if (server.serverName === 'Default') {
+        server.img = globalImg;
+        server.description = defaultDescription;
+      } else if (server.serverName === 'Games') {
+        server.img = gamesImg;
+        server.description = gamesDescription;
+      } else {
+        const random = Math.floor(Math.random() * Math.floor(3));
+        server.img = [landscape1, landscape2, landscape3][random];
+        server.description = otherDescription;
+      }
+    });
+  };
+
   useEffect(() => {
     let mounted = true;
 
     if (!modalOpen) return;
 
-    const getServers = async () => {
-      const serversResponse: any = await axios
-        .get('/exploreServers', {
-          params: { name, text: inputText },
-        })
-        .catch((err) => console.log(err));
-
-      // Set images/desc for the servers, kind of randomly.
-      for (let i = 0; i < serversResponse.data.length; i++) {
-        const server = serversResponse.data[i];
-        if (server.serverName === 'Default') {
-          server.img = globalImg;
-          server.description = defaultDescription;
-        } else if (server.serverName === 'Games') {
-          server.img = gamesImg;
-          server.description = gamesDescription;
-        } else {
-          const random = Math.floor(Math.random() * Math.floor(3));
-          server.img = [landscape1, landscape2, landscape3][random];
-          server.description = otherDescription;
-        }
-      }
-
-      if (mounted) setSearchResults(serversResponse.data);
-    };
-
     // Throttle requests
     const timeoutId = setTimeout(() => {
-      getServers();
+      getServers().then((servers) => {
+        setImgDescToServerResults(servers);
+        if (mounted) setSearchResults(servers);
+      });
     }, 200);
 
     return function cleanUp() {
@@ -117,7 +124,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
           </div>
           <div className={classes.serversContainer}>
             {searchResults.map((res, key) => (
-              <ExploreServer key={key} res={res} setModalOpen={setModalOpen} />
+              <ExploreServerCard key={key} res={res} setModalOpen={setModalOpen} />
             ))}
           </div>
         </div>

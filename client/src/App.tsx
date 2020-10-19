@@ -17,39 +17,59 @@ const App = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const authenticateAndInit = async () => {
-      try {
-        const authResponse = await axios.get('/user', { withCredentials: true });
-        if (authResponse.status === 200) {
-          const { name, id } = authResponse.data;
-          const pinResponse = await axios.get('/unseenPins', {
-            params: { name },
-            withCredentials: true,
-          });
-          pinResponse.data.forEach((channelId: string) => {
-            dispatch(addPinNotification('pin', channelId));
-          });
-          dispatch(login(name, id));
-          dispatch(connect(name));
-          dispatch(selectServerName('Default'));
-        }
-      } catch (err) {
-        history.push('/login');
-        console.log(err);
-      }
-    };
 
-    // If user is not coming from the /private route
-    if (user.name === null) {
-      authenticateAndInit();
-    } else {
-      // @ts-ignore
-      dispatch(login(user.name, user.id));
-      dispatch(connect(user.name));
+  // State on login/route change
+  const dispatchInitState = (name: string | null, id: string | null) => {
+    dispatch(login(name, id));
+    dispatch(connect(name));
+  };
+
+  const authenticate = async () => {
+    try {
+      return await axios.get('/user', { withCredentials: true });
+    } catch (err) {
+      history.push('/login');
+      return console.error(err);
+    }
+  };
+
+  // Get unseen pins in currently subscribed servers
+  // Between the time user logged out and pins created
+  const getUnseenPins = async (name: string | null) => {
+    try {
+      return await axios.get('/unseenPins', {
+        params: { name },
+        withCredentials: true,
+      });
+    } catch (err) {
+      return console.log(err);
+    }
+  };
+
+  const init = async () => {
+    const auth = await authenticate();
+    if (auth && auth.status === 200) {
+      const { name, id } = auth?.data;
+      const pins = await getUnseenPins(name);
+
+      if (pins) {
+        pins.data.forEach((channelId: string) => {
+          dispatch(addPinNotification('pin', channelId));
+        });
+      }
+
+      dispatchInitState(name, id);
+      // Also select the default server
       dispatch(selectServerName('Default'));
     }
+  };
 
+  useEffect(() => {
+    // If user just logged in
+    if (user.name === null) init();
+    // If user is coming from any other route
+    else dispatchInitState(user.name, user.id);
+    // Just to cleanup things by switching to no channel
     return () => {
       dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
     };

@@ -80,6 +80,8 @@ export const notifications = (
       return state.filter((notification) => notification.channelId !== action.payload._id);
     case 'ADD_PIN_NOTIFICATION':
       return uniqBy([...state, action.payload], (e) => e.channelId);
+    case 'ADD_PIN_NOTIFICATIONS':
+      return uniqBy([...state, ...action.payload], (e) => e.channelId);
     default:
       return state;
   }

@@ -5,6 +5,11 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import Tooltip from '@material-ui/core/Tooltip';
 import Zoom from '@material-ui/core/Zoom';
 
+interface StyleProps {
+  isSelected: boolean | undefined;
+  isOption: boolean | undefined;
+}
+
 const useStyles = makeStyles<Theme, StyleProps>({
   serverContainer: {
     display: 'flex',
@@ -69,20 +74,18 @@ interface Props {
   name: string;
 }
 
-interface StyleProps {
-  isSelected: boolean | undefined;
-  isOption: boolean | undefined;
-}
-
-const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
-
 const ServerIcon = ({ children, onClick, style, privateRoute, isOption, name }: Props) => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+
+  // To get the selected bg color, children(string) is either selected server name, OR
+  // It's the private route (children is a Mui Icon in this case)
   const isSelected =
     selectedServerName === children || (privateRoute && selectedServerName === 'private');
 
   const styleProps = { isSelected, isOption };
   const classes = useStyles(styleProps);
+
+  const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
 
   return (
     <div onClick={onClick} className={classes.serverContainer}>

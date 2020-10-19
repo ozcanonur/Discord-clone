@@ -16,18 +16,22 @@ interface Props {
   setModalOpen: (x: boolean) => void;
 }
 
-const ServerModal = ({ modalOpen, setModalOpen }: Props) => {
+const ServerModalsIndex = ({ modalOpen, setModalOpen }: Props) => {
   const classes = useStyles();
 
   const [createModalServerOpen, setCreateServerModalOpen] = useState(false);
   const [createModalJoinOpen, setCreateModalJoinOpen] = useState(false);
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   return (
     <>
       <Modal
         className={classes.modal}
         open={modalOpen}
-        onClose={() => setModalOpen(false)}
+        onClose={closeModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -68,4 +72,4 @@ const ServerModal = ({ modalOpen, setModalOpen }: Props) => {
   );
 };
 
-export default ServerModal;
+export default ServerModalsIndex;

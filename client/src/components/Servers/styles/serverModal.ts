@@ -1,6 +1,6 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
-const serverModal = createStyles({
+const serverModalStyles = createStyles({
   modal: {
     display: 'flex',
     alignItems: 'center',
@@ -77,4 +77,4 @@ const serverModal = createStyles({
   },
 });
 
-export default serverModal;
+export default serverModalStyles;

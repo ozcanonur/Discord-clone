@@ -56,11 +56,21 @@ export namespace InternalActions {
     };
   }
 
+  interface PinNotification {
+    type: string;
+    channelId: string;
+  }
+
+  export interface AddPinNotifications {
+    type: string;
+    payload: PinNotification[] | undefined;
+  }
+
   export interface Login {
     type: string;
     payload: {
       name: string | null;
-      id: string;
+      id: string | null;
     };
   }
 

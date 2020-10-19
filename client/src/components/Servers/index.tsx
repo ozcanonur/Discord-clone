@@ -3,15 +3,24 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import Options from './Options';
 import Servers from './Servers';
-import indexStyles from './styles/index';
 
-const useStyles = makeStyles(indexStyles);
+const useStyles = makeStyles({
+  list: {
+    height: '100vh',
+    backgroundColor: '#202225',
+    color: 'white',
+    fontSize: '2rem',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    padding: '0.8rem',
+  },
+});
 
 const ServerList = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.serverList}>
+    <div className={classes.list}>
       <Options />
       <Servers />
     </div>

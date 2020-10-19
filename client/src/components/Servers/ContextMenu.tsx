@@ -9,9 +9,10 @@ import { selectServerName, clearMessages, selectChannel } from '../../actions/re
 import { deleteServer, leaveServer, selectChannel as selectChannelIo } from '../../actions/socket';
 import ConfirmationModal from '../Misc/ConfirmationModal';
 import ChannelCreateModal from '../Channels/Body/ChannelCreateModal';
-import indexStyles from './styles/index';
+import contextMenuStyles from './styles/contextMenu';
+import { ensure } from '../../util';
 
-const useStyles = makeStyles(indexStyles);
+const useStyles = makeStyles(contextMenuStyles);
 
 interface Props {
   server: Server;
@@ -39,82 +40,87 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
     setAnchorEl(null);
   };
 
+  const openCreateChannelModal = () => {
+    setCreateChannelModalOpen(true);
+  };
+
+  const openDeleteModal = () => {
+    setDeleteModalOpen(true);
+  };
+
   const dispatch = useDispatch();
-  const deleteServerOnClick = (serverName: string) => {
-    dispatch(deleteServer(name, serverName));
+
+  const deleteServerOnClick = () => {
+    dispatch(deleteServer(name, server.name));
     dispatch(clearMessages());
     dispatch(selectServerName('Default'));
     setAnchorEl(null);
   };
 
-  const leaveServerOnClick = (serverName: string) => {
-    if (serverName === 'Default') return console.log(`You can't leave the default server`);
-    dispatch(leaveServer(serverName));
-    if (selectedServerName === serverName) {
-      const defaultServer = servers.find((server) => server.name === 'Default') || {
-        _id: '',
-        name: '',
-        channels: [],
-        admin: '',
-      };
-      const firstChannel = defaultServer.channels[0];
-      dispatch(selectServerName(defaultServer.name));
-      dispatch(selectChannel(firstChannel));
-      dispatch(selectChannelIo(firstChannel));
-    }
+  const stepBackToDefaultServer = () => {
+    const defaultServer = ensure(servers.find((server) => server.name === 'Default'));
+    const firstChannel = defaultServer.channels[0];
+    dispatch(selectServerName(defaultServer.name));
+    dispatch(selectChannel(firstChannel));
+    dispatch(selectChannelIo(firstChannel));
+  };
+
+  const leaveServerOnClick = () => {
+    if (server.name === 'Default') return console.log(`You can't leave the default server`);
+    dispatch(leaveServer(server.name));
+    // If the user was on the server deleted, step back to default server and channel
+    if (selectedServerName === server.name) stepBackToDefaultServer();
   };
 
   return (
-    <>
-      <OutsideClickHandler onOutsideClick={handleClose}>
-        <Menu
-          id={server.name}
-          classes={{ paper: classes.menuPaper, list: classes.menuList }}
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          getContentAnchorEl={null}
+    <OutsideClickHandler onOutsideClick={handleClose}>
+      <Menu
+        id={server.name}
+        classes={{ paper: classes.menuPaper, list: classes.menuList }}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        getContentAnchorEl={null}
+      >
+        <MenuItem
+          classes={{ root: classes.menuItem }}
+          disableGutters
+          onClick={openCreateChannelModal}
+          disabled={selectedServer.admin !== id}
         >
-          <MenuItem
-            classes={{ root: classes.menuItem }}
-            disableGutters
-            onClick={() => setCreateChannelModalOpen(true)}
-            disabled={selectedServer.admin !== id}
-          >
-            Create Channel Here
-          </MenuItem>
-          <MenuItem
-            classes={{ root: classes.menuItem }}
-            disableGutters
-            onClick={() => leaveServerOnClick(server.name)}
-            disabled={server.name === 'Default'}
-          >
-            Leave Server
-          </MenuItem>
-          <MenuItem
-            classes={{ root: classes.menuItemDelete }}
-            disableGutters
-            disabled={selectedServer.admin !== id}
-            onClick={() => setDeleteModalOpen(true)}
-          >
-            Delete Server
-          </MenuItem>
-        </Menu>
-      </OutsideClickHandler>
+          Create Channel Here
+        </MenuItem>
+        <MenuItem
+          classes={{ root: classes.menuItem }}
+          disableGutters
+          onClick={leaveServerOnClick}
+          disabled={server.name === 'Default'}
+        >
+          Leave Server
+        </MenuItem>
+        <MenuItem
+          classes={{ root: classes.menuItemDelete }}
+          disableGutters
+          disabled={selectedServer.admin !== id}
+          onClick={openDeleteModal}
+        >
+          Delete Server
+        </MenuItem>
+      </Menu>
       <ConfirmationModal
         modalOpen={deleteModalOpen}
         setModalOpen={setDeleteModalOpen}
         itemName={server.name}
-        confirmAction={() => deleteServerOnClick(server.name)}
+        confirmAction={deleteServerOnClick}
       />
       <ChannelCreateModal
         modalOpen={createChannelModalOpen}
         setModalOpen={setCreateChannelModalOpen}
         selectedServer={selectedServer}
       />
-    </>
+    </OutsideClickHandler>
   );
 };
 

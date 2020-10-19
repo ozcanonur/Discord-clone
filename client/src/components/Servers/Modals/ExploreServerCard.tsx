@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import axios from 'axios';
 
 import { joinServer } from '../../../actions/socket';
-import { selectServerName, selectChannel, addPinNotification } from '../../../actions/react';
+import { selectServerName, selectChannel, addPinNotifications } from '../../../actions/react';
 import serverCardStyles from '../styles/serverCard';
 
 const useStyles = makeStyles(serverCardStyles);
@@ -38,19 +38,23 @@ const ExploreServerCard = ({ res, setModalOpen }: Props) => {
   } = res;
 
   const dispatch = useDispatch();
+
+  // Get pin notifications if any exists on the channels
+  const getPinNotifications = async () => {
+    const response = await axios.get('/channelIds', {
+      params: { serverName },
+    });
+
+    dispatch(addPinNotifications('pin', response.data));
+  };
+
   const joinServerOnClick = async () => {
     dispatch(joinServer(serverName));
     dispatch(selectServerName(serverName));
     dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
     setModalOpen(false);
 
-    const response = await axios.get('/channelIds', {
-      params: { serverName },
-    });
-
-    response.data.forEach((id: string) => {
-      dispatch(addPinNotification('pin', id));
-    });
+    await getPinNotifications();
   };
 
   return (
