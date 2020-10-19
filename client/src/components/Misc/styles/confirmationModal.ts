@@ -16,6 +16,8 @@ const confirmationModalStyles = createStyles({
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
+    position: 'absolute',
+    top: '30vh',
   },
   warningTextContainer: {
     width: '100%',

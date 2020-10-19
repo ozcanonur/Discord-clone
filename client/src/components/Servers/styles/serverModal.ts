@@ -5,6 +5,8 @@ const serverModalStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    top: '30vh',
   },
   modalContainer: {
     backgroundColor: 'white',
@@ -17,6 +19,8 @@ const serverModalStyles = createStyles({
     borderRadius: '6px',
     outline: 'none',
     width: '25vw',
+    position: 'absolute',
+    top: '20vh',
   },
   modalHeading: {
     fontSize: '2.5rem',

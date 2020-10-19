@@ -92,7 +92,7 @@ const chatStyles = createStyles({
     marginBottom: '1rem',
   },
   pinLogo: {
-    marginRight: '0.5rem',
+    marginLeft: '0.5rem',
     height: '2rem',
     fill: '#dcddde',
   },

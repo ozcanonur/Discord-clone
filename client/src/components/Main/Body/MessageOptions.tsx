@@ -32,6 +32,16 @@ const MessageOptions = ({ message }: Props) => {
 
   return (
     <div className={classes.messageOptions}>
+      {message.username === name ? (
+        <Tooltip
+          enterDelay={0}
+          placement='top'
+          title='Delete message'
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <DeleteForeverRoundedIcon className={classes.optionIcon} onClick={deleteMessageOnClick} />
+        </Tooltip>
+      ) : null}
       <Tooltip
         enterDelay={0}
         placement='top'
@@ -43,16 +53,6 @@ const MessageOptions = ({ message }: Props) => {
           onClick={pinMessageOnClick}
         />
       </Tooltip>
-      {message.username === name ? (
-        <Tooltip
-          enterDelay={0}
-          placement='top'
-          title='Delete message'
-          classes={{ tooltip: classes.notificationTooltip }}
-        >
-          <DeleteForeverRoundedIcon className={classes.optionIcon} onClick={deleteMessageOnClick} />
-        </Tooltip>
-      ) : null}
     </div>
   );
 };

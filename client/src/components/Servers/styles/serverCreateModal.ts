@@ -17,6 +17,8 @@ const serverCreateModalStyles = createStyles({
     borderRadius: '6px',
     outline: 'none',
     width: '25vw',
+    position: 'absolute',
+    top: '20vh',
   },
   modalHeading: {
     fontSize: '2.5rem',

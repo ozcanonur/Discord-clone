@@ -17,6 +17,8 @@ const channelCreateModalStyles = createStyles({
     borderRadius: '6px',
     outline: 'none',
     width: '50vw',
+    position: 'absolute',
+    top: '20vh',
   },
   modalHeading: {
     fontSize: '1.8rem',

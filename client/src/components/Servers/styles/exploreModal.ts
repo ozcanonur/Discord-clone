@@ -42,6 +42,7 @@ const exploreModalStyles = createStyles({
   serversContainer: {
     width: '100%',
     padding: '2rem',
+    paddingTop: '1rem',
     display: 'grid',
     gridGap: '2rem',
     gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',

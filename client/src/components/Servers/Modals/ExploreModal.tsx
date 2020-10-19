@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -94,7 +95,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
       clearTimeout(timeoutId);
       mounted = false;
     };
-  }, [modalOpen, inputText, name]);
+  }, [modalOpen, inputText]);
 
   return (
     <Modal

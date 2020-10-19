@@ -16,6 +16,7 @@ import {
   selectTabInPrivate,
   addPinNotifications,
   selectServerName,
+  selectChannel,
 } from '../../actions/react';
 import {
   joinServer,
@@ -98,6 +99,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   const joinServerOnClick = async (serverName: string) => {
     dispatch(joinServer(serverName));
     dispatch(selectServerName(serverName));
+    dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
 
     const response = await getChannelIds(serverName);
     dispatch(addPinNotifications('pin', response.data));

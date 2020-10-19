@@ -18,6 +18,8 @@ const searchModalStyles = createStyles({
     outline: 'none',
     width: '50vw',
     maxHeight: '50vh',
+    position: 'absolute',
+    top: '20vh',
   },
   input: {
     backgroundColor: '#72767d',
