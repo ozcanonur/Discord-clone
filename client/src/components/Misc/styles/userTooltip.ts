@@ -114,6 +114,13 @@ const userTooltipStyles = createStyles({
     alignItems: 'center',
     marginTop: '1.5rem',
   },
+  discordIconContainer: {
+    display: 'flex',
+    position: 'relative',
+  },
+  discordIcon: {
+    height: '4rem',
+  },
 });
 
 export default userTooltipStyles;

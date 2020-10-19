@@ -51,6 +51,9 @@ const messageStyles = createStyles({
     position: 'relative',
     cursor: 'pointer',
   },
+  discordIconContainer: {
+    display: 'flex',
+  },
   icon: {
     width: '3.3rem',
   },

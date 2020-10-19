@@ -9,7 +9,7 @@ import LockOpenRoundedIcon from '@material-ui/icons/LockOpenRounded';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 
-import loginStyles from './styles/loginStyles';
+import loginStyles from './styles/login';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -30,7 +30,8 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   const [passwordErrorText, setPasswordErrorText] = useState('');
 
   const history = useHistory();
-  const registerOnClick = () => {
+
+  const registerOnClick = async () => {
     if (username.trim() === '') {
       setUsernameError(true);
       setUsernameErrorText(`Username can't be empty.`);
@@ -45,16 +46,18 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
       setPasswordErrorText('Password length needs to be at least 6 characters.');
     } else {
       const params = { username, password };
-      axios
-        .post('/register', params, { withCredentials: true })
-        .then((res) => {
-          if (res.status === 201) history.push('/main');
-        })
-        .catch((_error) => {
-          setUsernameError(true);
-          setUsernameErrorText('User already exists.');
-        });
+      try {
+        const response = await axios.post('/register', params, { withCredentials: true });
+        if (response.status === 201) history.push('/main');
+      } catch (err) {
+        setUsernameError(true);
+        setUsernameErrorText('User already exists.');
+      }
     }
+  };
+
+  const closeRegister = () => {
+    setRegisterOpen(false);
   };
 
   return (
@@ -131,7 +134,7 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               variant='contained'
               color='primary'
               className={classes.submit}
-              onClick={() => setRegisterOpen(false)}
+              onClick={closeRegister}
             >
               Back
             </Button>

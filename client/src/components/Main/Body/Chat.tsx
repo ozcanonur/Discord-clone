@@ -55,16 +55,7 @@ const Chat = () => {
         <div className={classes.warning}>{`You are in # ${selectedChannel.name} (voice)`}</div>
       ) : (
         <div className={classes.chat}>
-          <div
-            id='scrollableDiv'
-            style={{
-              height: '100%',
-              overflow: 'auto',
-              display: 'flex',
-              flexDirection: 'column-reverse',
-              marginBottom: '1rem',
-            }}
-          >
+          <div id='scrollableDiv' className={classes.scrollableDiv}>
             <InfiniteScroll
               dataLength={shownMessagesCount}
               next={fetchMoreData}
@@ -77,8 +68,8 @@ const Chat = () => {
                 >{`This is the start of the # ${selectedChannel.name} channel.`}</h4>
               }
               loader={
-                <div className={classes.loading}>
-                  <Loading style={{ height: '10rem' }} />
+                <div className={classes.loadingContainer}>
+                  <Loading className={classes.loading} />
                 </div>
               }
               scrollableTarget='scrollableDiv'

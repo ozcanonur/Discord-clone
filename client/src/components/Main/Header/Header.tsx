@@ -17,13 +17,17 @@ const Header = () => {
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
+  const openSearch = () => {
+    setSearchModalOpen(true);
+  };
+
   return (
     <div className={classes.headerContainer}>
       <div className={classes.titleContainer}>
         <div className={classes.titleIcon}>{selectedChannel.name ? '#' : null}</div>
         <div className={classes.titleText}>{selectedChannel.name}</div>
       </div>
-      <div className={classes.search} onClick={() => setSearchModalOpen(!searchModalOpen)}>
+      <div className={classes.search} onClick={openSearch}>
         <div className={classes.searchText}>Search</div>
       </div>
       <div className={classes.optionsContainer}>

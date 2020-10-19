@@ -19,7 +19,7 @@ const useStyles = makeStyles(channelsStyles);
 
 interface ChannelProps {
   channel: Channel;
-  isVoice: boolean;
+  isVoice: boolean | undefined;
   selectedServer: Server;
 }
 
@@ -36,7 +36,8 @@ const Channel = ({ channel }: ChannelProps) => {
   );
 
   const dispatch = useDispatch();
-  const selectChannelOnClick = (channel: Channel) => {
+
+  const selectChannelOnClick = () => {
     // If previous channel was a voice channel
     if (selectedChannel.isVoice) {
       playLeaveSound();
@@ -53,16 +54,16 @@ const Channel = ({ channel }: ChannelProps) => {
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const openContextMenuOnClick = (e: any) => {
+  const openContextMenu = (e: any) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
   };
 
   return (
-    <div onContextMenu={(e) => openContextMenuOnClick(e)} style={{ width: '100%' }}>
+    <div className={classes.channelContainer} onContextMenu={(e) => openContextMenu(e)}>
       <ListItem
         button
-        onClick={() => selectChannelOnClick(channel)}
+        onClick={selectChannelOnClick}
         selected={selectedChannel.name === channel.name}
         classes={{ selected: classes.channelSelected, root: classes.channel }}
         disableGutters

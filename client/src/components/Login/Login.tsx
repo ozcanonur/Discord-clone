@@ -9,7 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
 import Typography from '@material-ui/core/Typography';
 
-import loginStyles from './styles/loginStyles';
+import loginStyles from './styles/login';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -27,23 +27,26 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
   const [errorText, setErrorText] = useState('');
 
   const history = useHistory();
-  const loginOnClick = () => {
+  const loginOnClick = async () => {
     const params = { username, password };
-    axios
-      .post('/login', params, { withCredentials: true })
-      .then((res) => {
-        if (res.status === 200) history.push('/main');
-      })
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response.status === 409) {
-          setError(true);
-          setErrorText('User is already logged in.');
-        } else if (err.response.status === 401) {
-          setError(true);
-          setErrorText('Wrong username or password.');
-        }
-      });
+
+    try {
+      const response = await axios.post('/login', params, { withCredentials: true });
+      if (response.status === 200) history.push('/main');
+    } catch (err) {
+      console.error(err.response);
+      if (err.response.status === 409) {
+        setError(true);
+        setErrorText('User is already logged in.');
+      } else if (err.response.status === 401) {
+        setError(true);
+        setErrorText('Wrong username or password.');
+      }
+    }
+  };
+
+  const openRegister = () => {
+    setRegisterOpen(true);
   };
 
   return (
@@ -114,7 +117,7 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               variant='contained'
               color='primary'
               className={classes.submit}
-              onClick={() => setRegisterOpen(true)}
+              onClick={openRegister}
             >
               Register
             </Button>

@@ -17,31 +17,40 @@ const PinnedMessageInput = () => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
-  const [text, setText] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
 
-  const handleChange = (e: any) => {
-    setText(e.target.value);
-  };
-
-  const handleEmojiClick = (e: any) => {
-    setText(text + e.native);
-    setEmojiMenuVisible(false);
+  const handleChange = (value: string) => {
+    setInputValue(value);
   };
 
   const dispatch = useDispatch();
+
   const createPinOnClick = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
-      if (text.trim() === '' || !selectedChannel.name)
-        return console.log(`You need to select a channel first`);
+      if (inputValue.trim() === '' || selectedChannel.name !== '')
+        return console.warn(`You need to select a channel first`);
       dispatch(
         // @ts-ignore
-        createPin({ _id: '', username: name, message: text, createdAt: '' }, selectedChannel)
+        createPin({ _id: '', username: name, message: inputValue, createdAt: '' }, selectedChannel)
       );
-      setText('');
+      setInputValue('');
       e.preventDefault();
     }
+  };
+
+  const toggleEmojiMenu = () => {
+    setEmojiMenuVisible(!emojiMenuVisible);
+  };
+
+  const closeEmojiMenu = () => {
+    setEmojiMenuVisible(false);
+  };
+
+  const chooseEmoji = (e: any) => {
+    setInputValue(inputValue + e.native);
+    setEmojiMenuVisible(false);
   };
 
   return (
@@ -55,15 +64,12 @@ const PinnedMessageInput = () => {
           InputProps={{
             className: `${classes.inputProps} ${classes.pinnedInputProps}`,
           }}
-          value={text}
-          onChange={(e) => handleChange(e)}
+          value={inputValue}
+          onChange={(e) => handleChange(e.target.value)}
           onKeyPress={(e) => createPinOnClick(e)}
         />
-        <EmojiEmotionsIcon
-          className={classes.emojiMenuIcon}
-          onClick={() => setEmojiMenuVisible(!emojiMenuVisible)}
-        />
-        <OutsideClickHandler onOutsideClick={() => setEmojiMenuVisible(false)}>
+        <EmojiEmotionsIcon className={classes.emojiMenuIcon} onClick={toggleEmojiMenu} />
+        <OutsideClickHandler onOutsideClick={closeEmojiMenu}>
           <div
             className={classes.emojiMenu}
             style={{
@@ -73,7 +79,7 @@ const PinnedMessageInput = () => {
             }}
           >
             <div>
-              <Picker theme='dark' set='google' onSelect={(e) => handleEmojiClick(e)} />
+              <Picker theme='dark' set='google' onSelect={(e) => chooseEmoji(e)} />
             </div>
           </div>
         </OutsideClickHandler>

@@ -13,7 +13,7 @@ const useStyles = makeStyles(addFriendBoxStyles);
 const AddFriendBox = () => {
   const classes = useStyles();
 
-  const [friendName, setFriendName] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
@@ -23,10 +23,11 @@ const AddFriendBox = () => {
     dispatch(clearIoResponse());
   }, [dispatch]);
 
-  const handleChange = (e: any) => {
-    setFriendName(e.target.value);
+  // Validate
+  const handleChange = (value: string) => {
+    setInputValue(value);
     dispatch(clearIoResponse());
-    if (e.target.value.length === 0) {
+    if (value.trim() === '') {
       setErrorText(`Username can't be empty.`);
       setError(true);
     } else {
@@ -35,9 +36,14 @@ const AddFriendBox = () => {
     }
   };
 
-  const sendFriendRequestOnClick = () => {
+  const addFriendOnClick = () => {
     setErrorText('');
-    dispatch(sendFriendRequest(friendName));
+    dispatch(sendFriendRequest(inputValue));
+  };
+
+  const onBlur = () => {
+    setError(false);
+    setErrorText('');
   };
 
   return (
@@ -58,23 +64,21 @@ const AddFriendBox = () => {
             <Button
               variant='contained'
               className={classes.button}
-              onClick={sendFriendRequestOnClick}
+              onClick={addFriendOnClick}
+              disabled={!!error}
             >
               Add Friend
             </Button>
           ),
         }}
-        value={friendName}
-        onChange={(e) => handleChange(e)}
+        value={inputValue}
+        onChange={(e) => handleChange(e.target.value)}
         error={error || ioResponse.error !== undefined}
         helperText={ioResponse.error || errorText}
         FormHelperTextProps={{
           className: error ? classes.helperErrorText : classes.helperText,
         }}
-        onBlur={() => {
-          setError(false);
-          setErrorText('');
-        }}
+        onBlur={onBlur}
       />
       <hr className={classes.hr} />
     </div>

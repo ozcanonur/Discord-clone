@@ -27,31 +27,35 @@ const Private = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const authenticateAndInit = () => {
-      axios
-        .get('/user', { withCredentials: true })
-        .then((res) => {
-          if (res.status === 200) {
-            const { name, id } = res.data;
-            dispatch(login(name, id));
-            dispatch(connect(name));
-          }
-        })
-        .catch((err) => {
-          history.push('/login');
-          console.log(err);
-        });
-    };
-    // If user is coming directly to /private instead of the login route (refresh etc.)
-    if (user.name === null) {
-      authenticateAndInit();
-    } else {
-      // @ts-ignore
-      dispatch(login(user.name, user.id));
-      dispatch(connect(user.name));
-      dispatch(selectServerName('private'));
+
+  // State on login/route change
+  const dispatchInitState = (name: string | null, id: string | null) => {
+    dispatch(login(name, id));
+    dispatch(connect(name));
+    dispatch(selectServerName('private'));
+  };
+
+  const authenticate = async () => {
+    try {
+      return await axios.get('/user', { withCredentials: true });
+    } catch (err) {
+      history.push('/login');
+      console.error(err);
     }
+  };
+
+  const init = async () => {
+    const auth = await authenticate();
+    if (auth && auth.status === 200) {
+      const { name, id } = auth?.data;
+      dispatchInitState(name, id);
+    }
+  };
+
+  useEffect(() => {
+    // If user is coming directly to /private instead of the login route (refresh etc.)
+    if (user.name === null) init();
+    else dispatchInitState(user.name, user.id);
   }, []);
 
   return (

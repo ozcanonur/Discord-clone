@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import List from '@material-ui/core/List';
@@ -14,7 +14,7 @@ import {
   selectPrivateChannel,
   selectPrivateUser,
   selectTabInPrivate,
-  addPinNotification,
+  addPinNotifications,
   selectServerName,
 } from '../../actions/react';
 import {
@@ -37,64 +37,70 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   const classes = useStyles();
 
   const user = useSelector((state: RootState) => state.user);
-  const id = user.id;
   const [inputValue, setInputValue] = useState('');
   const [userServers, setUserServers] = useState<string[]>([]);
   const [userNote, setUserNote] = useState('');
 
+  const getServers = async () => {
+    return await axios.get('/userServers', { params: { name } });
+  };
+
+  const getNotes = async () => {
+    return await axios.get('/note', { params: { name: user.name, otherUserName: name } });
+  };
+
+  const getChannelIds = async (serverName: string) => {
+    return await axios.get('/channelIds', {
+      params: { serverName },
+    });
+  };
+
   useEffect(() => {
     let mounted = true;
 
-    Promise.all([
-      axios.get('/userServers', {
-        params: { name },
-      }),
-      axios.get('/note', {
-        params: { name: user.name, otherUserName: name },
-      }),
-    ])
+    Promise.all([getServers(), getNotes()])
       .then(([serverResults, noteResults]) => {
         if (mounted) {
           setUserServers(serverResults.data);
           setUserNote(noteResults.data);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
 
-    return function cleanUp() {
+    return () => {
       mounted = false;
     };
-  }, [user.name, name]);
+  }, [user, name]);
 
-  const dispatch = useDispatch();
-  const joinServerOnClick = async (serverName: string) => {
-    dispatch(joinServer(serverName));
-    dispatch(selectServerName(serverName));
-
-    const response = await axios.get('/channelIds', {
-      params: { serverName },
-    });
-
-    response.data.forEach((id: string) => {
-      dispatch(addPinNotification('pin', id));
-    });
+  const postNote = async () => {
+    try {
+      return await axios.post('/note', { name: user.name, otherUserName: name, note: inputValue });
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleNoteSubmit = async (e: any) => {
     if (inputValue.trim() === '') return;
 
     if (e.which === 13 && !e.shiftKey) {
       setInputValue('');
       e.preventDefault();
 
-      const params = { name: user.name, otherUserName: name, note: inputValue };
-      axios
-        .post('/note', params)
-        .then((_res) => {
-          setUserNote(inputValue);
-        })
-        .catch((err) => console.log(err));
+      setUserNote(inputValue);
+      await postNote();
     }
+  };
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const joinServerOnClick = async (serverName: string) => {
+    dispatch(joinServer(serverName));
+    dispatch(selectServerName(serverName));
+
+    const response = await getChannelIds(serverName);
+    dispatch(addPinNotifications('pin', response.data));
   };
 
   const privateMessageOnClick = () => {
@@ -103,6 +109,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     dispatch(selectPrivateUser(name));
     dispatch(selectPrivateChannel(name));
     dispatch(selectPrivateChannelIo(name));
+    if (history.location.pathname !== '/private') history.push('/private');
   };
 
   const addFriendOnClick = () => {
@@ -113,12 +120,12 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
     <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
       <div className={classes.header}>
         <div className={classes.headerImg}>
-          <div style={{ display: 'flex', position: 'relative' }}>
-            <DiscordIcon style={{ height: '4rem' }} />
+          <div className={classes.discordIconContainer}>
+            <DiscordIcon className={classes.discordIcon} />
           </div>
         </div>
         <div className={classes.headerText}>{`${name} #${
-          id ? id.slice(-5).toUpperCase() : ''
+          user.id ? user.id.slice(-5).toUpperCase() : ''
         }`}</div>
       </div>
       <List className={classes.servers}>
@@ -139,14 +146,14 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
         <div className={classes.noteTitle}>Note: {userNote}</div>
         <TextField
           multiline
-          placeholder='Click to set a note'
+          placeholder='Set note'
           variant='outlined'
           fullWidth
           InputLabelProps={{ className: classes.inputLabel }}
           InputProps={{
             className: classes.inputProps,
           }}
-          onKeyPress={(e) => handleSubmit(e)}
+          onKeyPress={(e) => handleNoteSubmit(e)}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
         />
@@ -159,15 +166,13 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
             >
               Add friend
             </Button>
-            <NavLink to='/private' style={{ textDecoration: 'none' }}>
-              <Button
-                variant='contained'
-                className={classes.buttonPrivate}
-                onClick={privateMessageOnClick}
-              >
-                Message
-              </Button>
-            </NavLink>
+            <Button
+              variant='contained'
+              className={classes.buttonPrivate}
+              onClick={privateMessageOnClick}
+            >
+              Message
+            </Button>
           </div>
         ) : null}
       </div>

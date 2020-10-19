@@ -43,6 +43,7 @@ const headerStyles = createStyles({
     '&:hover': {
       color: '#36393f',
     },
+    borderRadius: '4px',
   },
   friendButtonAdd: {
     fontSize: '1.5rem',

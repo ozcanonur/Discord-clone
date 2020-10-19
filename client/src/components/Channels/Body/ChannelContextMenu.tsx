@@ -26,11 +26,8 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
   const dispatch = useDispatch();
+
   const deleteChannelOnClick = (channelId: string) => {
     dispatch(deleteChannel(name, channelId));
     dispatch(clearMessages());
@@ -44,36 +41,42 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
     admin: '',
   };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openConfirmationModal = () => {
+    setModalOpen(true);
+  };
+
   return (
-    <>
-      <OutsideClickHandler onOutsideClick={handleClose}>
-        <Menu
-          id={channel.name}
-          classes={{ paper: classes.menuPaper, list: classes.menuList }}
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          getContentAnchorEl={null}
+    <OutsideClickHandler onOutsideClick={handleClose}>
+      <Menu
+        id={channel.name}
+        classes={{ paper: classes.menuPaper, list: classes.menuList }}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        getContentAnchorEl={null}
+      >
+        <MenuItem
+          classes={{ root: classes.menuItem }}
+          disableGutters
+          onClick={openConfirmationModal}
+          disabled={selectedServer.admin !== id}
         >
-          <MenuItem
-            classes={{ root: classes.menuItem }}
-            disableGutters
-            onClick={() => setModalOpen(true)}
-            disabled={selectedServer.admin !== id}
-          >
-            Delete Channel
-          </MenuItem>
-        </Menu>
-      </OutsideClickHandler>
+          Delete Channel
+        </MenuItem>
+      </Menu>
       <ConfirmationModal
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         itemName={channel.name}
         confirmAction={() => deleteChannelOnClick(channel._id)}
       />
-    </>
+    </OutsideClickHandler>
   );
 };
 

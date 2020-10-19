@@ -24,23 +24,16 @@ const useStyles = makeStyles(privateUserStyles);
 
 interface Props {
   username: string;
-  isNotFriend?: boolean;
+  isFriend?: boolean;
 }
 
-const PrivateUser = ({ username, isNotFriend }: Props) => {
+const PrivateUser = ({ username, isFriend }: Props) => {
   const classes = useStyles();
 
   const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
   const notifications = useSelector((state: RootState) => state.notifications);
 
   const dispatch = useDispatch();
-  const selectPrivateChannelOnClick = (username: string) => {
-    dispatch(selectPrivateChannel(username));
-    dispatch(selectPrivateChannelIo(username));
-    dispatch(selectPrivateUser(username));
-    dispatch(selectTabInPrivate('Chat'));
-    dispatch(clearPrivateNotification());
-  };
 
   const messageNotification = notifications.find(
     (notification) =>
@@ -57,36 +50,39 @@ const PrivateUser = ({ username, isNotFriend }: Props) => {
     dispatch(removeFriend(username));
   };
 
+  const selectPrivateChannelOnClick = () => {
+    dispatch(selectPrivateChannel(username));
+    dispatch(selectPrivateChannelIo(username));
+    dispatch(selectPrivateUser(username));
+    dispatch(selectTabInPrivate('Chat'));
+    dispatch(clearPrivateNotification());
+  };
+
   return (
     <div
       className={classes.user}
-      onClick={() => selectPrivateChannelOnClick(username)}
+      onClick={selectPrivateChannelOnClick}
       style={{
         backgroundColor: selectedPrivateUser === username ? '#40434a' : 'inherit',
       }}
     >
       <div className={classes.iconContainer}>
-        <div style={{ display: 'flex', position: 'relative' }}>
-          <DiscordIcon style={{ height: '2.4rem' }} />
+        <div className={classes.discordIconContainer}>
+          <DiscordIcon className={classes.discordIcon} />
         </div>
       </div>
       <div className={classes.username}>{username}</div>
-      {isNotFriend ? (
-        <Button onClick={addFriendOnClick} tooltipText='Add as friend' style={{ padding: 0 }}>
-          <AddCircleRoundedIcon style={{ fontSize: '2rem' }} />
+      {isFriend ? (
+        <Button onClick={removeFriendOnClick} tooltipText='Remove friend' style={{ padding: 0 }}>
+          <RemoveCircleRoundedIcon className={classes.icon} />
         </Button>
       ) : (
-        <Button onClick={removeFriendOnClick} tooltipText='Remove friend' style={{ padding: 0 }}>
-          <RemoveCircleRoundedIcon style={{ fontSize: '2rem' }} />
+        <Button onClick={addFriendOnClick} tooltipText='Add friend' style={{ padding: 0 }}>
+          <AddCircleRoundedIcon className={classes.icon} />
         </Button>
       )}
       {messageNotification ? (
-        <AnnouncementRoundedIcon
-          style={{
-            height: '1.5rem',
-            fill: 'rgba(220,221,222)',
-          }}
-        />
+        <AnnouncementRoundedIcon className={classes.messageNotification} />
       ) : null}
     </div>
   );

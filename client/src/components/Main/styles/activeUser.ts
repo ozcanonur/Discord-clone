@@ -44,6 +44,13 @@ const activeUserStyles = createStyles({
     right: '0.9rem',
     backgroundColor: '#3CB371',
   },
+  discordIconContainer: {
+    display: 'flex',
+    position: 'relative',
+  },
+  discordIcon: {
+    height: '2.4rem',
+  },
 });
 
 export default activeUserStyles;

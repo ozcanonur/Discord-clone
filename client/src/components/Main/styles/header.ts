@@ -73,6 +73,13 @@ const headerStyles = createStyles({
       opacity: '1 !important',
     },
   },
+  pinLogo: {
+    fill: '#dcddde',
+    height: '2rem',
+  },
+  notifications: {
+    position: 'relative',
+  },
 });
 
 export default headerStyles;

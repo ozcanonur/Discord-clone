@@ -47,7 +47,7 @@ const Message = ({ message, pinned = false }: Props) => {
       {!pinned ? (
         <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
           <div className={classes.iconContainer}>
-            <div onClick={(e) => handleUserIconClick(e)} style={{ display: 'flex' }}>
+            <div className={classes.discordIconContainer} onClick={(e) => handleUserIconClick(e)}>
               <DiscordIcon className={classes.icon} />
             </div>
             <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>

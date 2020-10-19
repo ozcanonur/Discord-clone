@@ -30,6 +30,15 @@ const voiceUserStyles = createStyles({
       fontFamily: 'Whitney Medium, sans-serif',
     },
   },
+  listItemIcon: {
+    minWidth: '4rem',
+  },
+  discordIconContainer: {
+    display: 'flex',
+  },
+  discordIcon: {
+    height: '2rem',
+  },
 });
 
 export default voiceUserStyles;

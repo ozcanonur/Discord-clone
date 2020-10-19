@@ -25,20 +25,29 @@ const Footer = () => {
   const [soundOpen, setSoundOpen] = useState(true);
 
   const history = useHistory();
-  const logoutOnClick = () => {
-    axios
-      .post('/logout', {}, { withCredentials: true })
-      .then((_res) => {
-        history.push('/login');
-      })
-      .catch((err) => console.log(err));
+
+  const logoutOnClick = async () => {
+    try {
+      await axios.post('/logout', {}, { withCredentials: true });
+      history.push('/login');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const toggleMic = () => {
+    setMicOpen(!micOpen);
+  };
+
+  const toggleSound = () => {
+    setSoundOpen(!soundOpen);
   };
 
   return (
     <div className={classes.footer}>
       <div className={classes.iconContainer}>
-        <div style={{ display: 'flex', position: 'relative' }}>
-          <DiscordIcon style={{ height: '2.4rem' }} />
+        <div className={classes.discordIconContainer}>
+          <DiscordIcon className={classes.discordIcon} />
           <div className={classes.onlineCircle} />
         </div>
       </div>
@@ -54,7 +63,7 @@ const Footer = () => {
           classes={{ tooltip: classes.notificationTooltip }}
         >
           <div>
-            <Button onClick={() => setMicOpen(!micOpen)}>
+            <Button onClick={toggleMic}>
               {micOpen ? <MicRoundedIcon /> : <MicOffRoundedIcon />}
             </Button>
           </div>
@@ -66,7 +75,7 @@ const Footer = () => {
           classes={{ tooltip: classes.notificationTooltip }}
         >
           <div>
-            <Button onClick={() => setSoundOpen(!soundOpen)}>
+            <Button onClick={toggleSound}>
               {soundOpen ? <VolumeUpRoundedIcon /> : <VolumeOffRoundedIcon />}
             </Button>
           </div>

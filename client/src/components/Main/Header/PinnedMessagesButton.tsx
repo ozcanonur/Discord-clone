@@ -25,21 +25,27 @@ const PinnedMessagesButton = () => {
       notification.type === 'pin' && notification.channelId === selectedChannel._id
   );
 
+  const closePins = () => {
+    setPinOpen(false);
+  };
+
+  const togglePins = () => {
+    setPinOpen(!pinOpen);
+    dispatch(clearPinNotification(selectedChannel));
+  };
+
   return (
     <>
       <CustomButton
         tooltipText='Pinned Messages'
         marginRight
-        onClick={() => {
-          setPinOpen(!pinOpen);
-          dispatch(clearPinNotification(selectedChannel));
-        }}
+        onClick={togglePins}
         style={{ backgroundColor: pinOpen ? 'rgba(220, 221, 222, 0.2)' : 'inherit' }}
       >
-        <PinLogo style={{ fill: '#dcddde', height: '2rem' }} />
+        <PinLogo className={classes.pinLogo} />
         {pinNotification ? <div className={classes.notificationAlert} /> : null}
       </CustomButton>
-      <OutsideClickHandler onOutsideClick={() => setPinOpen(false)}>
+      <OutsideClickHandler onOutsideClick={closePins}>
         <PinnedMessages pinOpen={pinOpen} />
       </OutsideClickHandler>
     </>

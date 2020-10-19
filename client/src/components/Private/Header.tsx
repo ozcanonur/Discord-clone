@@ -19,12 +19,30 @@ const Header = () => {
   const activeUsersOpen = useSelector((state: RootState) => state.activeUsersOpen);
 
   const dispatch = useDispatch();
-  const selectTabInPrivateOnClick = (tabName: string) => {
-    dispatch(selectTabInPrivate(tabName));
-  };
 
   const toggleActiveUsersOnClick = () => {
     dispatch(toggleActiveUsers());
+  };
+
+  const selectChatTab = () => {
+    dispatch(selectTabInPrivate('Chat'));
+  };
+
+  const selectAddFriendTab = () => {
+    dispatch(selectTabInPrivate('AddFriend'));
+  };
+
+  const chatTabStyles = {
+    backgroundColor: selectedTabInPrivateName === 'Chat' ? '#dcddde' : 'transparent',
+    color: selectedTabInPrivateName === 'Chat' ? '#36393f' : '#dcddde',
+    border: selectedTabInPrivateName === 'Chat' ? '3px solid transparent' : '3px solid #202225',
+  };
+
+  const addFriendTabStyles = {
+    backgroundColor: selectedTabInPrivateName === 'AddFriend' ? '#dcddde' : 'transparent',
+    color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : '#43b581',
+    border:
+      selectedTabInPrivateName === 'AddFriend' ? '3px solid transparent' : '3px solid #43b581',
   };
 
   return (
@@ -36,13 +54,11 @@ const Header = () => {
           <Button
             variant='contained'
             className={classes.friendButton}
-            onClick={() => selectTabInPrivateOnClick('Chat')}
+            onClick={selectChatTab}
             style={{
-              backgroundColor: selectedTabInPrivateName === 'Chat' ? '#dcddde' : 'transparent',
-              color: selectedTabInPrivateName === 'Chat' ? '#36393f' : '#dcddde',
-              border:
-                selectedTabInPrivateName === 'Chat' ? '3px solid transparent' : '3px solid #202225',
-              borderRadius: '4px',
+              backgroundColor: chatTabStyles.backgroundColor,
+              color: chatTabStyles.color,
+              border: chatTabStyles.border,
             }}
           >
             Chat
@@ -50,15 +66,11 @@ const Header = () => {
           <Button
             variant='contained'
             className={classes.friendButton}
-            onClick={() => selectTabInPrivateOnClick('AddFriend')}
+            onClick={selectAddFriendTab}
             style={{
-              backgroundColor: selectedTabInPrivateName === 'AddFriend' ? '#dcddde' : 'transparent',
-              color: selectedTabInPrivateName === 'AddFriend' ? '#36393f' : '#43b581',
-              border:
-                selectedTabInPrivateName === 'AddFriend'
-                  ? '3px solid transparent'
-                  : '3px solid #43b581',
-              borderRadius: '4px',
+              backgroundColor: addFriendTabStyles.backgroundColor,
+              color: addFriendTabStyles.color,
+              border: addFriendTabStyles.border,
             }}
           >
             Add Friend

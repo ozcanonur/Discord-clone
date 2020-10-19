@@ -17,6 +17,7 @@ const PrivateNotificationButton = () => {
   const notifications = useSelector((state: RootState) => state.notifications);
 
   const dispatch = useDispatch();
+
   const privateMessageNotificationOnClick = () => {
     dispatch(clearPrivateNotification());
   };
@@ -43,7 +44,7 @@ const PrivateNotificationButton = () => {
       }
       marginRight
     >
-      <Notifications style={{ position: 'relative' }} />
+      <Notifications className={classes.notifications} />
       {privateMessageNotifications.length > 0 ? (
         <div className={classes.notificationAlert} />
       ) : null}

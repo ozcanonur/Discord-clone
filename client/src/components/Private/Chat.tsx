@@ -57,16 +57,7 @@ const Chat = () => {
         <div className={classes.warning}>Select a user to chat!</div>
       ) : (
         <div className={classes.chat}>
-          <div
-            id='scrollableDiv'
-            style={{
-              height: '100%',
-              overflow: 'auto',
-              display: 'flex',
-              flexDirection: 'column-reverse',
-              marginBottom: '1rem',
-            }}
-          >
+          <div id='scrollableDiv' className={classes.scrollableDiv}>
             <InfiniteScroll
               dataLength={shownMessagesCount}
               next={fetchMoreData}
@@ -79,8 +70,8 @@ const Chat = () => {
                 >{`This is the start of the conversation with @${selectedPrivateUser}.`}</h4>
               }
               loader={
-                <div className={classes.loading}>
-                  <Loading style={{ height: '10rem' }} />
+                <div className={classes.loadingContainer}>
+                  <Loading className={classes.loading} />
                 </div>
               }
               scrollableTarget='scrollableDiv'

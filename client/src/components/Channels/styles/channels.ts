@@ -33,6 +33,9 @@ const channelsStyles = createStyles({
     cursor: 'pointer',
     padding: 0,
   },
+  channelContainer: {
+    width: '100%',
+  },
   channel: {
     transition: 'all .2s ease-in-out',
     '&:hover': {

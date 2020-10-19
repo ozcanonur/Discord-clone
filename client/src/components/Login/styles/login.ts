@@ -1,6 +1,12 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const loginStyles = createStyles({
+  container: {
+    width: '100%',
+    height: '100%',
+    padding: '10% 35%',
+    backgroundColor: '#202225',
+  },
   login: {
     display: 'flex',
     flexDirection: 'column',

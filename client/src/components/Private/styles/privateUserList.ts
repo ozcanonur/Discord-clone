@@ -12,6 +12,15 @@ const privateUserListStyles = createStyles({
   },
   subContainer: {
     flexGrow: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    padding: '2rem',
+    paddingTop: '1.5rem',
+    maxHeight: '50%',
+    overflow: 'auto',
+  },
+  otherSubContainer: {
+    borderTop: '4px solid #202225',
   },
   heading: {
     backgroundColor: '#292b2f',
@@ -41,8 +50,6 @@ const privateUserListStyles = createStyles({
   titleContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '2rem',
   },
   usersIcon: {
     fontSize: '3rem',
@@ -53,21 +60,26 @@ const privateUserListStyles = createStyles({
     fontSize: '1.5rem',
     fontWeight: 1000,
     color: '#dcddde',
+    marginLeft: '2rem',
   },
   userList: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '2rem',
-    paddingTop: 0,
     fontWeight: 1000,
-    maxHeight: '32vh',
-    overflow: 'auto',
+    flexGrow: 1,
+    marginTop: '1rem',
   },
   directMessages: {
     fontSize: '1.3rem',
     color: '#dcddde',
     opacity: 0.7,
     textTransform: 'uppercase',
+    marginTop: '2rem',
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   },
 });
 

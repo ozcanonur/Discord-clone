@@ -17,7 +17,7 @@ const useStyles = makeStyles(channelsStyles);
 
 interface Props {
   channels: Channel[];
-  isVoice: boolean;
+  isVoice?: boolean;
 }
 
 const Channels = ({ channels, isVoice }: Props) => {
@@ -36,10 +36,18 @@ const Channels = ({ channels, isVoice }: Props) => {
     admin: '',
   };
 
+  const toggleListOpen = () => {
+    setListOpen(!listOpen);
+  };
+
+  const openCreateChannelModal = () => {
+    if (selectedServer.admin === id) setModalOpen(true);
+  };
+
   return (
     <div className={classes.category}>
       <div className={classes.categoryDescription}>
-        <IconButton className={classes.iconButton} onClick={() => setListOpen(!listOpen)}>
+        <IconButton className={classes.iconButton} onClick={toggleListOpen}>
           {listOpen ? (
             <KeyboardArrowDownRoundedIcon className={classes.categoryIcon} />
           ) : (
@@ -47,12 +55,7 @@ const Channels = ({ channels, isVoice }: Props) => {
           )}
         </IconButton>
         <div className={classes.categoryText}>{isVoice ? 'Voice channels' : 'Text channels'}</div>
-        <IconButton
-          className={classes.iconButton}
-          onClick={() => {
-            if (selectedServer.admin === id) setModalOpen(true);
-          }}
-        >
+        <IconButton className={classes.iconButton} onClick={openCreateChannelModal}>
           <Add
             className={classes.categoryIcon}
             style={{ opacity: selectedServer.admin !== id ? '0.3' : 'inherit' }}

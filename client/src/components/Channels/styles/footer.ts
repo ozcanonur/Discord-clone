@@ -24,6 +24,13 @@ const footerStyles = createStyles({
     height: '2.5rem',
     color: 'white',
   },
+  discordIconContainer: {
+    display: 'flex',
+    position: 'relative',
+  },
+  discordIcon: {
+    height: '2.4rem',
+  },
   onlineCircle: {
     height: '1rem',
     width: '1rem',

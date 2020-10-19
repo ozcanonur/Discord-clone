@@ -13,11 +13,13 @@ const ActiveUsersButton = () => {
     dispatch(toggleActiveUsers());
   };
 
+  const backgroundColor = activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit';
+
   return (
     <CustomButton
       onClick={toggleActiveUsersOnClick}
       style={{
-        backgroundColor: activeUsersOpen ? 'rgba(220,221,222,0.2)' : 'inherit',
+        backgroundColor,
       }}
       tooltipText='Toggle Active Users'
       marginRight

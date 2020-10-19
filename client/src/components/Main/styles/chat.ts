@@ -67,10 +67,13 @@ const chatStyles = createStyles({
     flexDirection: 'column-reverse',
     marginBottom: '1rem',
   },
-  loading: {
+  loadingContainer: {
     alignSelf: 'center',
     position: 'absolute',
     top: 0,
+  },
+  loading: {
+    height: '10rem',
   },
   endMessage: {
     textAlign: 'center',
@@ -80,6 +83,18 @@ const chatStyles = createStyles({
     borderBottom: '2px solid rgba(220,221,222,0.5)',
     marginBottom: '1rem',
     fontWeight: 700,
+  },
+  scrollableDiv: {
+    height: '100%',
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column-reverse',
+    marginBottom: '1rem',
+  },
+  pinLogo: {
+    marginRight: '0.5rem',
+    height: '2rem',
+    fill: '#dcddde',
   },
 });
 

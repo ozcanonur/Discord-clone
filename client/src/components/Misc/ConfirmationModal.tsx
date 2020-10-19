@@ -45,7 +45,7 @@ const ConfirmationModal = ({ modalOpen, setModalOpen, itemName, confirmAction }:
               Cancel
             </Button>
             <Button variant='contained' className={classes.confirmButton} onClick={confirmAction}>
-              Yes, I am sure
+              Yes, I am sure.
             </Button>
           </div>
         </div>

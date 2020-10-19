@@ -18,10 +18,10 @@ const VoiceUser = ({ name }: Props) => {
 
   return (
     <ListItem button classes={{ root: classes.container }} disableGutters>
-      <ListItemIcon style={{ minWidth: '4rem' }}>
+      <ListItemIcon className={classes.listItemIcon}>
         <div className={classes.iconContainer}>
-          <div style={{ display: 'flex' }}>
-            <DiscordIcon style={{ height: '2rem' }} />
+          <div className={classes.discordIconContainer}>
+            <DiscordIcon className={classes.discordIcon} />
           </div>
         </div>
       </ListItemIcon>

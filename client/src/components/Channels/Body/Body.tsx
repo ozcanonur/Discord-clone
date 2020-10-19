@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import partition from 'lodash/partition';
 
 import Channels from './Channels';
 import bodyStyles from '../styles/body';
@@ -16,14 +17,13 @@ const Body = () => {
     channels: [],
   };
 
-  const voiceChannels = selectedServer.channels.filter((channel) => channel.isVoice);
-  const textChannels = selectedServer.channels.filter((channel) => !channel.isVoice);
+  const [textChannels, voiceChannels] = partition(selectedServer.channels, { isVoice: false });
 
   return (
     <div className={classes.body}>
       {selectedServerName !== '' ? (
         <>
-          <Channels channels={textChannels} isVoice={false} />
+          <Channels channels={textChannels} />
           <Channels channels={voiceChannels} isVoice />
         </>
       ) : null}

@@ -33,6 +33,7 @@ const Servers = () => {
     dispatch(selectServerName(server.name));
     // Select the first channel if we can
     if (server.channels.length > 0) selectFirstChannelInServer(server);
+    else dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
     // Change route if coming from /private
     if (history.location.pathname === '/private') history.push('/main');
   };

@@ -21,11 +21,12 @@ const MessageOptions = ({ message }: Props) => {
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
 
   const dispatch = useDispatch();
-  const deleteMessageOnClick = (message: Message) => {
+
+  const deleteMessageOnClick = () => {
     dispatch(deleteMessage(message));
   };
 
-  const pinMessageOnClick = (message: Message) => {
+  const pinMessageOnClick = () => {
     dispatch(createPin(message, selectedChannel));
   };
 
@@ -38,9 +39,8 @@ const MessageOptions = ({ message }: Props) => {
         classes={{ tooltip: classes.notificationTooltip }}
       >
         <PinLogo
-          className={classes.optionIcon}
-          style={{ marginRight: '0.5rem', height: '2rem', fill: '#dcddde' }}
-          onClick={() => pinMessageOnClick(message)}
+          className={`${classes.optionIcon} ${classes.pinLogo}`}
+          onClick={pinMessageOnClick}
         />
       </Tooltip>
       {message.username === name ? (
@@ -50,10 +50,7 @@ const MessageOptions = ({ message }: Props) => {
           title='Delete message'
           classes={{ tooltip: classes.notificationTooltip }}
         >
-          <DeleteForeverRoundedIcon
-            className={classes.optionIcon}
-            onClick={() => deleteMessageOnClick(message)}
-          />
+          <DeleteForeverRoundedIcon className={classes.optionIcon} onClick={deleteMessageOnClick} />
         </Tooltip>
       ) : null}
     </div>

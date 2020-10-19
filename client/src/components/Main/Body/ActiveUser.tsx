@@ -20,17 +20,18 @@ const ActiveUser = ({ name }: Props) => {
   const user = useSelector((state: RootState) => state.user);
   const [userTooltipOpen, setUserTooltipOpen] = useState(false);
 
+  const toggleUserTooltip = () => {
+    setUserTooltipOpen(!userTooltipOpen);
+  };
+
   return (
     <div
       className={classes.user}
       style={{ backgroundColor: user.name === name ? '#40434a' : 'inherit' }}
     >
       <div className={classes.iconContainer}>
-        <div
-          style={{ display: 'flex', position: 'relative' }}
-          onClick={() => setUserTooltipOpen(!userTooltipOpen)}
-        >
-          <DiscordIcon style={{ height: '2.4rem' }} />
+        <div className={classes.discordIconContainer} onClick={toggleUserTooltip}>
+          <DiscordIcon className={classes.discordIcon} />
           <div className={classes.onlineCircle} />
         </div>
         <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>

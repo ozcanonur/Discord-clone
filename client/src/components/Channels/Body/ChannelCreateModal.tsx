@@ -22,26 +22,28 @@ interface Props {
 const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) => {
   const classes = useStyles();
 
-  const dispatch = useDispatch();
-  const [modalInputValue, setModalInputValue] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('Perfect!');
   const ioResponse = useSelector((state: RootState) => state.ioResponse);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(clearIoResponse());
   }, [dispatch, modalOpen]);
 
-  const handleModalInputChange = (e: any) => {
-    setModalInputValue(e.target.value);
+  const handleModalInputChange = (value: string) => {
+    setInputValue(value);
     dispatch(clearIoResponse());
+
     if (selectedServer.name === 'Default' || selectedServer.name === 'Games') {
       setErrorText(`Channels can't be created on default servers. Try creating a new server.`);
       setError(true);
-    } else if (e.target.value.length > 10) {
+    } else if (value.length > 10) {
       setErrorText(`Channel name can't be longer than 10 characters.`);
       setError(true);
-    } else if (e.target.value.length === 0) {
+    } else if (value.length === 0) {
       setErrorText(`Channel name can't be empty.`);
       setError(true);
     } else {
@@ -51,10 +53,10 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   };
 
   // eslint-disable-next-line no-unused-vars
-  const createChannelOnClick = (channelName: string, isVoice: boolean) => {
+  const createChannelOnClick = () => {
     if (selectedServer.name !== 'Default' && selectedServer.name !== 'Games') {
-      setErrorText(`Success! ${modalInputValue} created in ${selectedServer.name}.`);
-      dispatch(createChannel(selectedServer, channelName, false));
+      setErrorText(`Success! ${inputValue} created in ${selectedServer.name}.`);
+      dispatch(createChannel(selectedServer, inputValue, false));
     }
   };
 
@@ -82,8 +84,8 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
                 className: classes.inputProps,
                 autoFocus: true,
               }}
-              value={modalInputValue}
-              onChange={(e) => handleModalInputChange(e)}
+              value={inputValue}
+              onChange={(e) => handleModalInputChange(e.target.value)}
               error={error || ioResponse.error !== undefined}
               helperText={ioResponse.error || errorText}
               FormHelperTextProps={{
@@ -102,7 +104,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
             <Button
               variant='contained'
               className={classes.modalButton}
-              onClick={() => createChannelOnClick(modalInputValue, false)}
+              onClick={createChannelOnClick}
               disabled={!!error}
             >
               Create Channel

@@ -19,6 +19,8 @@ interface Props {
 const Button = ({ children, onClick, style, tooltipText = '', marginRight }: Props) => {
   const classes = useStyles();
 
+  const margin = marginRight ? '2.4rem' : 'inherit';
+
   return (
     <Tooltip
       enterDelay={0}
@@ -26,7 +28,7 @@ const Button = ({ children, onClick, style, tooltipText = '', marginRight }: Pro
       TransitionComponent={Zoom}
       classes={{ tooltip: classes.notificationTooltip }}
     >
-      <div style={{ marginRight: marginRight ? '2.4rem' : 'inherit' }}>
+      <div style={{ marginRight: margin }}>
         <IconButton className={classes.button} onClick={onClick} style={{ ...style }}>
           {children}
         </IconButton>

@@ -16,26 +16,35 @@ const useStyles = makeStyles(inputStyles);
 const Input = () => {
   const classes = useStyles();
 
-  const [text, setText] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
 
-  const handleChange = (e: any) => {
-    setText(e.target.value);
+  const handleChange = (value: string) => {
+    setInputValue(value);
   };
 
   const dispatch = useDispatch();
+
   const handleSubmit = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
-      if (text.trim() === '') return;
-      dispatch(message(text));
-      setText('');
+      if (inputValue.trim() === '') return;
+      dispatch(message(inputValue));
+      setInputValue('');
       e.preventDefault();
     }
   };
 
-  const handleEmojiClick = (e: any) => {
-    setText(text + e.native);
+  const chooseEmoji = (e: any) => {
+    setInputValue(inputValue + e.native);
+    setEmojiMenuVisible(false);
+  };
+
+  const toggleEmojiMenu = () => {
+    setEmojiMenuVisible(!emojiMenuVisible);
+  };
+
+  const closeEmojiMenu = () => {
     setEmojiMenuVisible(false);
   };
 
@@ -57,20 +66,17 @@ const Input = () => {
           autoFocus: true,
         }}
         onKeyPress={(e) => handleSubmit(e)}
-        value={text}
-        onChange={(e) => handleChange(e)}
+        value={inputValue}
+        onChange={(e) => handleChange(e.target.value)}
       />
-      <EmojiEmotionsIcon
-        className={classes.emojiMenuIcon}
-        onClick={() => setEmojiMenuVisible(!emojiMenuVisible)}
-      />
-      <OutsideClickHandler onOutsideClick={() => setEmojiMenuVisible(false)}>
+      <EmojiEmotionsIcon className={classes.emojiMenuIcon} onClick={toggleEmojiMenu} />
+      <OutsideClickHandler onOutsideClick={closeEmojiMenu}>
         <div
           className={classes.emojiMenu}
           style={{ visibility: emojiMenuVisible ? 'visible' : 'hidden' }}
         >
           <div>
-            <Picker theme='dark' set='apple' onSelect={(e) => handleEmojiClick(e)} />
+            <Picker theme='dark' set='apple' onSelect={(e) => chooseEmoji(e)} />
           </div>
         </div>
       </OutsideClickHandler>

@@ -6,7 +6,7 @@ const privateUserStyles = createStyles({
     alignItems: 'center',
     marginTop: '1rem',
     cursor: 'pointer',
-    padding: '0.8rem',
+    padding: '0.8rem 0.4rem',
     transition: 'all .2s ease-in-out',
     '&:hover': {
       backgroundColor: '#40434a !important',
@@ -23,15 +23,27 @@ const privateUserStyles = createStyles({
     justifyContent: 'center',
   },
   icon: {
-    width: '2.5rem',
-    height: '2.5rem',
-    color: 'white',
+    fontSize: '2rem',
   },
   username: {
     fontSize: '1.5rem',
     marginLeft: '1rem',
     color: '#dcddde',
     flexGrow: 1,
+  },
+  discordIconContainer: {
+    display: 'flex',
+    position: 'relative',
+  },
+  discordIcon: {
+    height: '2.4rem',
+  },
+  messageNotification: {
+    height: '1.5rem',
+    fill: 'rgba(220,221,222)',
+  },
+  button: {
+    padding: 0,
   },
 });
 
