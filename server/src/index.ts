@@ -41,7 +41,7 @@ import './passport';
 // Setup Mongo
 import './db/mongoose';
 // Setup Socket IO
-export const io: SocketIO.Server = socketIo(server);
+export const io = socketIo(server);
 import './io/io';
 // Setup API routes
 app.use('/', authRouter);

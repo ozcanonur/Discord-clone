@@ -10,8 +10,9 @@ export const reduceServers = (servers: IServer[]) => {
     _id: any;
     name: string;
     channels: any;
+    admin: any;
   }[] = servers.map((server) => {
-    const channels = server.channels.map((channel: IChannel) => {
+    const channels = server.channels.map((channel) => {
       return {
         _id: channel._id,
         name: channel.name,
@@ -46,13 +47,15 @@ export const reduceMessages = (messages: IMessage[]) => {
   return reducedMessages;
 };
 
-export const reducePrivateUsers = (user: IUser) => {
-  const friendIds = user.friends.map((friend: IUser) => friend._id);
-  return user.usersMessagedBefore.map((u: IUser) => {
+export const reducePrivateUsers = (friends: IUser[], usersMessagedBefore: IUser[]) => {
+  const friendIds = friends.map((friend: IUser) => friend._id);
+  const result = usersMessagedBefore.map((u: IUser) => {
     const isFriend = friendIds.includes(u._id);
     return {
       name: u.name,
       isFriend,
     };
   });
+  console.log(result);
+  return result;
 };

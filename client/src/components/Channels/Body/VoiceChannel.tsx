@@ -12,7 +12,7 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import VoiceUser from './VoiceUser';
 import joinSound from '../../../assets/discord-join.mp3';
 import { selectChannel, setPeer } from '../../../actions/react';
-import { selectVoiceChannel } from '../../../actions/socket';
+import { selectChannel as selectChannelIo } from '../../../actions/socket';
 import channelsStyles from '../styles/channels';
 
 const useStyles = makeStyles(channelsStyles);
@@ -44,7 +44,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
     dispatch(selectChannel(channel));
-    dispatch(selectVoiceChannel(channel));
+    dispatch(selectChannelIo(channel, true));
 
     // @ts-ignore
     const newPeer = new Peer(id);

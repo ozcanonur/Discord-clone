@@ -29,7 +29,7 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const dispatch = useDispatch();
 
   const deleteChannelOnClick = (channelId: string) => {
-    dispatch(deleteChannel(name, channelId));
+    dispatch(deleteChannel(channelId));
     dispatch(clearMessages());
     setAnchorEl(null);
   };

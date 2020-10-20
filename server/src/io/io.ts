@@ -5,7 +5,6 @@ import {
   onUserCreatedChannel,
   onUserDeletedChannel,
   onUserSelectedChannel,
-  onUserSelectedVoiceChannel,
   onUserCreatedPin,
 } from './ioChannel';
 import {
@@ -15,7 +14,7 @@ import {
   onUserLeftServer,
 } from './ioServer';
 import {
-  onUserSentFriendRequest,
+  onUserAddedFriend,
   onUserConnectedNewPrivateUser,
   onUserRemovedFriend,
   onUserSelectedPrivateChannel,
@@ -42,17 +41,15 @@ io.on('connection', (socket: Socket) => {
       await onUserCreatedChannel(io, socket, action);
     else if (action.type === 'io/userSelectedChannel')
       await onUserSelectedChannel(io, socket, action);
-    else if (action.type === 'io/userSelectedVoiceChannel')
-      await onUserSelectedVoiceChannel(io, socket, action);
-    else if (action.type === 'io/userDeletedChannel') await onUserDeletedChannel(io, action);
+    else if (action.type === 'io/userDeletedChannel')
+      await onUserDeletedChannel(io, socket, action);
     else if (action.type === 'io/userCreatedPin') await onUserCreatedPin(io, action);
     // ioPrivate
     else if (action.type === 'io/userConnectedNewPrivateUser')
-      await onUserConnectedNewPrivateUser(io, socket, action);
-    else if (action.type === 'io/userAddedFriend')
-      await onUserSentFriendRequest(io, socket, action);
+      await onUserConnectedNewPrivateUser(socket, action);
+    else if (action.type === 'io/userAddedFriend') await onUserAddedFriend(io, socket, action);
     else if (action.type === 'io/userSelectedPrivateChannel')
-      await onUserSelectedPrivateChannel(socket, action);
+      await onUserSelectedPrivateChannel(io, socket, action);
     else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, socket, action);
     // ioMessage
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, socket, action);

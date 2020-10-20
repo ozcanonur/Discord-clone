@@ -46,6 +46,9 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
     } else if (value.length === 0) {
       setErrorText(`Channel name can't be empty.`);
       setError(true);
+    } else if (value.includes('private')) {
+      setErrorText(`Channel name can't include "private"`);
+      setError(true);
     } else {
       setErrorText('Perfect!');
       setError(false);

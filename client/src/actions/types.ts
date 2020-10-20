@@ -103,13 +103,7 @@ export namespace ClientIOActions {
     type: string;
     payload: {
       channel: Channel;
-    };
-  }
-
-  export interface SelectVoiceChannelIOAction {
-    type: string;
-    payload: {
-      channel: Channel;
+      isVoice: boolean | undefined;
     };
   }
 
@@ -136,7 +130,7 @@ export namespace ClientIOActions {
     };
   }
 
-  export interface SendFriendRequestIOAction {
+  export interface AddFriendIOAction {
     type: string;
     payload: {
       friendName: string;
@@ -176,7 +170,6 @@ export namespace ClientIOActions {
   export interface DeleteChannelIOAction {
     type: string;
     payload: {
-      name: string | null;
       channelId: string;
     };
   }

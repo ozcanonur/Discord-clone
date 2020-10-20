@@ -17,7 +17,6 @@ const ChannelSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  category: String,
   pinnedMessages: [
     {
       type: Schema.Types.ObjectId,
@@ -36,7 +35,6 @@ export interface IChannel extends Document {
   name?: any;
   messages?: IMessage[];
   voice?: boolean;
-  category?: string;
   pinnedMessages?: IMessage[];
   voiceUsers?: IUser[];
 }

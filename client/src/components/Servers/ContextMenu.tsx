@@ -88,7 +88,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
           classes={{ root: classes.menuItem }}
           disableGutters
           onClick={openCreateChannelModal}
-          disabled={selectedServer.admin !== id}
+          disabled={server.admin !== id}
         >
           Create Channel Here
         </MenuItem>
@@ -103,7 +103,7 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
         <MenuItem
           classes={{ root: classes.menuItemDelete }}
           disableGutters
-          disabled={selectedServer.admin !== id}
+          disabled={server.admin !== id}
           onClick={openDeleteModal}
         >
           Delete Server

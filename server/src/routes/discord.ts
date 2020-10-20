@@ -1,5 +1,5 @@
 import express, { Request } from 'express';
-import { searchUsers, searchChannels, SearchResult } from '../utils';
+import { searchUsers, searchChannels, SearchResult } from '../utils/api';
 import Server, { IServer } from '../db/models/server';
 import User, { IUser } from '../db/models/user';
 import Note, { INote } from '../db/models/note';

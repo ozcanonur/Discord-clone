@@ -34,16 +34,14 @@ export interface IServer extends Document {
   admin?: IUser;
 }
 
-// Delete the remnants of the server also
+// Delete the remnants of the server
 ServerSchema.pre('remove', async function (next) {
   const server: any = this;
   // Find everyone subscribed to this server
   const users = await User.find({ _id: { $in: server.users } });
   // Delete the server from them
   for (let user of users) {
-    const newServers = user.servers.filter(
-      (s: IServer) => s._id.toString() !== server._id.toString()
-    );
+    const newServers = user.servers.filter((s) => s._id.toString() !== server._id.toString());
     user.servers = newServers;
     await user.save();
   }

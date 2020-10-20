@@ -1,51 +1,32 @@
 import { Socket } from 'socket.io';
-import User, { IUser } from '../db/models/user';
-import Server from '../db/models/server';
-import { reduceUsers, reduceServers, reducePrivateUsers } from './utils';
-import Channel from '../db/models/channel';
+import User from '../db/models/user';
+
+import { findUserByNameAndPopulatePrivate } from '../utils/dbUtils';
+import { emitActiveUsers, removeIfVoiceAndEmitServers } from '../utils/emit';
+import { reduceServers, reducePrivateUsers } from '../utils/reduce';
 
 export const onUserConnected = async (
   io: SocketIO.Server,
   socket: Socket,
-  action: { type: string; payload: { name: string } }
+  action: ConnectIOAction
 ) => {
   const { name } = action.payload;
 
-  let user: IUser = await User.findOne({ name }).populate([
-    {
-      path: 'servers',
-      model: 'Server',
-      populate: {
-        path: 'channels',
-        model: 'Channel',
-        populate: {
-          path: 'voiceUsers',
-          model: 'User',
-        },
-      },
-    },
-    {
-      path: 'friends',
-      model: 'User',
-    },
-    {
-      path: 'usersMessagedBefore',
-      model: 'User',
-    },
-  ]);
-
+  // Update the user
   await User.updateOne({ name }, { socketId: socket.id, online: true, lastActiveAt: new Date() });
 
-  // Let the other online users know
-  const users: IUser[] = await User.find({ online: true });
+  // Let the other users who are online know
+  emitActiveUsers(io);
 
-  io.emit('action', { type: 'io/activeUsers', payload: reduceUsers(users) });
-  // Send the current user's servers (with channels populated) and send to client
+  let user = await findUserByNameAndPopulatePrivate(name);
+
+  // Send the current user's servers (with channels populated) to client
   socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });
-  // Also send friends
+
+  // Also send private contacts
   socket.emit('action', {
     type: 'io/privateUsers',
-    payload: reducePrivateUsers(user),
+    payload: reducePrivateUsers(user.friends, user.usersMessagedBefore),
   });
 };
 
@@ -53,47 +34,12 @@ export const onUserDisconnected = async (io: SocketIO.Server, socket: Socket) =>
   const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
   if (!user) return;
 
-  // Broadcast the new servers if this user was in a voice channel
-  if (user.currentChannel) {
-    const oldVoiceChannel = await Channel.findOne({
-      _id: user.currentChannel._id,
-      voice: true,
-    }).populate('voiceUsers');
+  // Remove the user from voiceUsers of the channel if present
+  if (user.currentChannel) removeIfVoiceAndEmitServers(io, user);
 
-    if (oldVoiceChannel) {
-      oldVoiceChannel.voiceUsers = oldVoiceChannel.voiceUsers.filter(
-        (u) => u._id.toString() !== user._id.toString()
-      );
-      await oldVoiceChannel.save();
-      // Send the new servers back to each of the users that are subscribed to the channel's server
-      // Find the server that this channel is on
-      const server = await Server.findOne({ channels: { $all: [oldVoiceChannel._id] } }).populate({
-        path: 'users',
-        model: 'User',
-        populate: {
-          path: 'servers',
-          model: 'Server',
-          populate: {
-            path: 'channels',
-            model: 'Channel',
-            populate: {
-              path: 'voiceUsers',
-              model: 'User',
-            },
-          },
-        },
-      });
-
-      // Send the new servers to each of the users
-      server.users.forEach((u) => {
-        io.to(u.socketId).emit('action', { type: 'io/servers', payload: reduceServers(u.servers) });
-      });
-    }
-  }
-
-  // Update the user's online status to false
+  // Update the user's online status and current channel
   await User.updateOne({ socketId: socket.id }, { online: false, currentChannel: undefined });
-  // Let other users know
-  const users: IUser[] = await User.find({ online: true });
-  io.emit('action', { type: 'io/activeUsers', payload: reduceUsers(users) });
+
+  // Let the other users who are online know
+  emitActiveUsers(io);
 };

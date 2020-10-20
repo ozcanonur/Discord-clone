@@ -24,19 +24,13 @@ export const createChannel = (
   };
 };
 
-export const selectChannel = (channel: Channel): ClientIOActions.SelectChannelIOAction => {
+export const selectChannel = (
+  channel: Channel,
+  isVoice: boolean | undefined
+): ClientIOActions.SelectChannelIOAction => {
   return {
     type: 'io/userSelectedChannel',
-    payload: { channel },
-  };
-};
-
-export const selectVoiceChannel = (
-  channel: Channel
-): ClientIOActions.SelectVoiceChannelIOAction => {
-  return {
-    type: 'io/userSelectedVoiceChannel',
-    payload: { channel },
+    payload: { channel, isVoice },
   };
 };
 
@@ -56,9 +50,7 @@ export const joinServer = (serverName: string): ClientIOActions.JoinServerIOActi
   };
 };
 
-export const sendFriendRequest = (
-  friendName: string
-): ClientIOActions.SendFriendRequestIOAction => {
+export const sendFriendRequest = (friendName: string): ClientIOActions.AddFriendIOAction => {
   return {
     type: 'io/userAddedFriend',
     payload: { friendName },
@@ -106,13 +98,10 @@ export const deleteServer = (
   };
 };
 
-export const deleteChannel = (
-  name: string | null,
-  channelId: string
-): ClientIOActions.DeleteChannelIOAction => {
+export const deleteChannel = (channelId: string): ClientIOActions.DeleteChannelIOAction => {
   return {
     type: 'io/userDeletedChannel',
-    payload: { name, channelId },
+    payload: { channelId },
   };
 };
 

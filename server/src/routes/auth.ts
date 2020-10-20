@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import passport from '../index';
 import Server from '../db/models/server';
 import User from '../db/models/user';
-import { setupDefaultServers } from '../utils';
+import { setupDefaultServers } from '../utils/api';
 
 const router = express.Router();
 
