@@ -17,9 +17,10 @@ interface Props {
   modalOpen: boolean;
   setModalOpen: (x: boolean) => void;
   selectedServer: Server;
+  isVoice: boolean | undefined;
 }
 
-const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) => {
+const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer, isVoice }: Props) => {
   const classes = useStyles();
 
   const [inputValue, setInputValue] = useState('');
@@ -59,7 +60,8 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer }: Props) 
   const createChannelOnClick = () => {
     if (selectedServer.name !== 'Default' && selectedServer.name !== 'Games') {
       setErrorText(`Success! ${inputValue} created in ${selectedServer.name}.`);
-      dispatch(createChannel(selectedServer, inputValue, false));
+      dispatch(createChannel(selectedServer, inputValue, isVoice || false));
+      setInputValue('');
     }
   };
 

@@ -5,8 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import { clearMessages } from '../../../actions/react';
-import { deleteChannel } from '../../../actions/socket';
+import { clearMessages, selectChannel } from '../../../actions/react';
+import { deleteChannel, selectChannel as selectChannelIo } from '../../../actions/socket';
 import channelsStyles from '../styles/channels';
 import ConfirmationModal from '../../Misc/ConfirmationModal';
 
@@ -21,24 +21,31 @@ interface Props {
 const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
   const classes = useStyles();
 
-  const { name, id } = useSelector((state: RootState) => state.user);
+  const { id } = useSelector((state: RootState) => state.user);
   const servers = useSelector((state: RootState) => state.servers);
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
   const [modalOpen, setModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
-  const deleteChannelOnClick = (channelId: string) => {
-    dispatch(deleteChannel(channelId));
-    dispatch(clearMessages());
-    setAnchorEl(null);
-  };
-
   const selectedServer = servers.find((server) => server.name === selectedServerName) || {
     _id: '',
     name: '',
     channels: [],
     admin: '',
+  };
+
+  const deleteChannelOnClick = (channelId: string) => {
+    dispatch(deleteChannel(channelId));
+    dispatch(clearMessages());
+    const fallbackChannel = selectedServer.channels[0] || {
+      _id: '',
+      name: '',
+      isVoice: false,
+      voiceUsers: [],
+    };
+    dispatch(selectChannel(fallbackChannel));
+    setAnchorEl(null);
   };
 
   const handleClose = () => {

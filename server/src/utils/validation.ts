@@ -1,6 +1,14 @@
 import User from '../db/models/user';
 import Server from '../db/models/server';
 
+export const getRegisterValidationError = (username: string, password: string) => {
+  if (username.trim() === '') return `Username can't be empty.`;
+  else if (username.length < 3 || username.length > 8)
+    return `Username length must be between 3 and 8 characters.`;
+  else if (password.trim() === '') return `Password can't be empty.`;
+  else if (password.length < 6) return 'Password length needs to be at least 6 characters.';
+};
+
 export const getCreateChannelValidationError = async (
   server: { _id: string; name: string; channels: any },
   channelName: string

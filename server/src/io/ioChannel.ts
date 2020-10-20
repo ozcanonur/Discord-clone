@@ -84,7 +84,7 @@ export const onUserSelectedChannel = async (
   socket: Socket,
   action: SelectChannelIOAction
 ) => {
-  const { channel, isVoice } = action.payload;
+  const { channel } = action.payload;
 
   const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
 
@@ -104,7 +104,8 @@ export const onUserSelectedChannel = async (
   // Update the user's current channel
   await User.updateOne({ socketId: socket.id }, { currentChannel: newChannel });
 
-  if (isVoice) {
+  // If it is a voice channel
+  if (newChannel.voice) {
     // Add the user to the voiceUsers in the channel
     await Channel.updateOne({ _id: channel._id }, { $addToSet: { voiceUsers: user } });
 

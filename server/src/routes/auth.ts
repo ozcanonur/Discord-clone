@@ -4,16 +4,9 @@ import passport from '../index';
 import Server from '../db/models/server';
 import User from '../db/models/user';
 import { setupDefaultServers } from '../utils/api';
+import { getRegisterValidationError } from '../utils/validation';
 
 const router = express.Router();
-
-const getRegisterValidationError = (username: string, password: string) => {
-  if (username.trim() === '') return `Username can't be empty.`;
-  else if (username.length < 3 || username.length > 8)
-    return `Username length must be between 3 and 8 characters.`;
-  else if (password.trim() === '') return `Password can't be empty.`;
-  else if (password.length < 6) return 'Password length needs to be at least 6 characters.';
-};
 
 interface ExtendedRequest extends Request {
   query: { [key: string]: string | undefined };
@@ -58,7 +51,6 @@ router.post('/register', async (req: ExtendedRequest, res) => {
   const newUser = new User({
     name: req.body.username,
     password: hashedPassword,
-    servers: [],
     online: true,
     lastActiveAt: new Date(),
   });

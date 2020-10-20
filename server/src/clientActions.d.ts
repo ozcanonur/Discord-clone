@@ -42,7 +42,6 @@ interface SelectChannelIOAction {
   type: string;
   payload: {
     channel: ClientChannel;
-    isVoice: boolean;
   };
 }
 

@@ -140,7 +140,7 @@ export const onUserSelectedPrivateChannel = async (
       model: 'User',
     },
   };
-  let channel =
+  const channel =
     (await Channel.findOne({ name: `${user.name}${username}_private` }).populate(populateFields)) ||
     (await Channel.findOne({ name: `${username}${user.name}_private` }).populate(populateFields));
 

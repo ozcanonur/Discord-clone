@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Peer from 'peerjs';
 import useSound from 'use-sound';
@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 
+import ChannelContextMenu from './ChannelContextMenu';
 import VoiceUser from './VoiceUser';
 import joinSound from '../../../assets/discord-join.mp3';
 import { selectChannel, setPeer } from '../../../actions/react';
@@ -44,7 +45,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const dispatch = useDispatch();
   const selectChannelOnClick = (channel: Channel) => {
     dispatch(selectChannel(channel));
-    dispatch(selectChannelIo(channel, true));
+    dispatch(selectChannelIo(channel));
 
     // @ts-ignore
     const newPeer = new Peer(id);
@@ -82,9 +83,15 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
     });
   }, [voiceUsersInChannel.length]);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openContextMenu = (e: any) => {
+    e.preventDefault();
+    setAnchorEl(e.currentTarget);
+  };
+
   return (
     <>
-      <div style={{ width: '100%' }}>
+      <div style={{ width: '100%' }} onContextMenu={(e) => openContextMenu(e)}>
         <ListItem
           button
           onClick={() => selectChannelOnClick(channel)}
@@ -99,10 +106,11 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
         </ListItem>
       </div>
       <div className={classes.voiceUsersList}>
-        {voiceUsersInChannel.map((u, key) => (
-          <VoiceUser key={key} name={u.name} />
+        {voiceUsersInChannel.map((user, key) => (
+          <VoiceUser key={key} name={user.name} />
         ))}
       </div>
+      <ChannelContextMenu channel={channel} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
     </>
   );
 };

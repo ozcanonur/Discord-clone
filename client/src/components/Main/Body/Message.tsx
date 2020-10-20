@@ -31,11 +31,10 @@ const Message = ({ message, pinned = false }: Props) => {
   const [userTooltipOpen, setUserTooltipOpen] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState(0);
 
-  const { username, createdAt } = message;
-  const messageText = message.message;
+  const { username, createdAt, message: messageText } = message;
 
   const handleUserIconClick = (e: any) => {
-    // // Display tooltip facing top or bottom depending on the view height
+    // // Display tooltip facing top or bottom depending on the view height and click position
     if (e.clientY < window.innerHeight / 2)
       setTooltipPosition(window.innerHeight - e.clientY - 400);
     else setTooltipPosition(window.innerHeight - e.clientY);
@@ -43,10 +42,14 @@ const Message = ({ message, pinned = false }: Props) => {
     setUserTooltipOpen(!userTooltipOpen);
   };
 
+  const closeTooltip = () => {
+    setUserTooltipOpen(false);
+  };
+
   return (
     <div className={classes.container}>
       {!pinned ? (
-        <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
+        <OutsideClickHandler onOutsideClick={closeTooltip}>
           <div className={classes.iconContainer}>
             <div className={classes.discordIconContainer} onClick={(e) => handleUserIconClick(e)}>
               <DiscordIcon className={classes.icon} />

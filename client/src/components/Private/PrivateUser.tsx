@@ -9,7 +9,7 @@ import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import Button from '../Misc/Button';
 import {
   selectPrivateChannel as selectPrivateChannelIo,
-  sendFriendRequest,
+  addFriend,
   removeFriend,
 } from '../../actions/socket';
 import {
@@ -43,7 +43,7 @@ const PrivateUser = ({ username, isFriend }: Props) => {
   );
 
   const addFriendOnClick = () => {
-    dispatch(sendFriendRequest(username));
+    dispatch(addFriend(username));
   };
 
   const removeFriendOnClick = () => {

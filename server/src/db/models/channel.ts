@@ -32,7 +32,7 @@ const ChannelSchema = new Schema({
 });
 
 export interface IChannel extends Document {
-  name?: any;
+  name?: string;
   messages?: IMessage[];
   voice?: boolean;
   pinnedMessages?: IMessage[];

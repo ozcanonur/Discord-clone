@@ -4,7 +4,7 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { sendFriendRequest } from '../../actions/socket';
+import { addFriend } from '../../actions/socket';
 import { clearIoResponse } from '../../actions/react';
 import addFriendBoxStyles from './styles/addFriendBox';
 
@@ -38,7 +38,7 @@ const AddFriendBox = () => {
 
   const addFriendOnClick = () => {
     setErrorText('');
-    dispatch(sendFriendRequest(inputValue));
+    dispatch(addFriend(inputValue));
   };
 
   const onBlur = () => {

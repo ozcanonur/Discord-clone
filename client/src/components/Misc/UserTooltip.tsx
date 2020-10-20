@@ -22,7 +22,7 @@ import {
   joinServer,
   selectPrivateChannel as selectPrivateChannelIo,
   connectNewPrivateUser,
-  sendFriendRequest,
+  addFriend,
 } from '../../actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
@@ -114,7 +114,8 @@ const UserTooltip = ({ name, style }: Props) => {
   };
 
   const addFriendOnClick = () => {
-    dispatch(sendFriendRequest(name));
+    dispatch(addFriend(name));
+    setInputValue('');
   };
 
   return (

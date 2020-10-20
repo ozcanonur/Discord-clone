@@ -56,6 +56,5 @@ export const reducePrivateUsers = (friends: IUser[], usersMessagedBefore: IUser[
       isFriend,
     };
   });
-  console.log(result);
   return result;
 };

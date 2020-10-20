@@ -86,6 +86,7 @@ const Channels = ({ channels, isVoice }: Props) => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         selectedServer={selectedServer}
+        isVoice={isVoice}
       />
     </div>
   );

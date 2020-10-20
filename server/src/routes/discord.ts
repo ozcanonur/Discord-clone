@@ -16,8 +16,8 @@ router.get('/search', async (req: ExtendedRequest, res) => {
 
   let results: SearchResult[] = [];
   if (type === '*') {
-    const channelResults: SearchResult[] = await searchChannels(text, name);
-    const userResults: SearchResult[] = await searchUsers(text, name);
+    const channelResults = await searchChannels(text, name);
+    const userResults = await searchUsers(text, name);
     results = [...channelResults, ...userResults];
   } else if (type === '#') results = await searchChannels(text, name);
   else if (type === '@') results = await searchUsers(text, name);
@@ -25,19 +25,20 @@ router.get('/search', async (req: ExtendedRequest, res) => {
   res.send(results.slice(0, 20));
 });
 
-router.get('/userServers', async (req: ExtendedRequest, res) => {
+router.get('/userServers', async (req: ExtendedRequest, res, next) => {
   const { name } = req.query;
 
-  const user: IUser = await User.findOne({ name }).populate('servers');
-  const serverNames: string[] = user.servers.map((server: IServer) => server.name);
-  if (user) res.send(serverNames);
+  const user = await User.findOne({ name }).populate('servers');
+  const serverNames = user.servers.map((server) => server.name);
+  if (user) return res.send(serverNames);
+  next();
 });
 
 router.post('/note', async (req: ExtendedRequest, res) => {
   const { name, otherUserName, note } = req.body;
 
   // Find the user
-  const user: IUser = await User.findOne({ name }).populate({
+  const user = await User.findOne({ name }).populate({
     path: 'notes',
     model: 'Note',
     populate: {
@@ -45,12 +46,12 @@ router.post('/note', async (req: ExtendedRequest, res) => {
       model: 'User',
     },
   });
-  // Find if it exists first
-  const otherUsersNote: INote = user.notes.find((note: INote) => note.about.name === otherUserName);
+  // Find if it already exists first
+  const otherUsersNote = user.notes.find((note) => note.about.name === otherUserName);
   if (otherUsersNote) await Note.updateOne({ _id: otherUsersNote._id }, { note });
   else {
     // Find the other user, and create the note
-    const otherUser: IUser = await User.findOne({ name: otherUserName });
+    const otherUser = await User.findOne({ name: otherUserName });
     const newNote = new Note({
       about: otherUser,
       note: note,
@@ -69,7 +70,7 @@ router.get('/note', async (req: ExtendedRequest, res) => {
   const { name, otherUserName } = req.query;
 
   // Find the user
-  const user: IUser = await User.findOne({ name }).populate({
+  const user = await User.findOne({ name }).populate({
     path: 'notes',
     model: 'Note',
     populate: {
@@ -79,13 +80,14 @@ router.get('/note', async (req: ExtendedRequest, res) => {
   });
 
   // Find the note
-  const note = user.notes.find((note: INote) => note.about.name === otherUserName);
+  const note = user.notes.find((note) => note.about.name === otherUserName);
   if (note) res.send(note.note);
   else res.send('');
 });
 
 router.get('/exploreServers', async (req: ExtendedRequest, res) => {
   const { name, text } = req.query;
+
   let servers;
   if (text === '') servers = await Server.find().populate('users').populate('channels').limit(20);
   else
@@ -94,19 +96,16 @@ router.get('/exploreServers', async (req: ExtendedRequest, res) => {
       .populate('channels')
       .limit(20);
 
-  const response = [];
-  for (let server of servers) {
-    const serverName = server.name;
-    const onlineUsers = server.users.filter((user: IUser) => user.online).length;
-    const totalUsers = server.users.length;
-    const channelCount = server.channels.length;
-    const subscribed = server.users.some((user: IUser) => user.name === name);
-    let messageCount = 0;
-    for (let channel of server.channels) {
-      messageCount += channel.messages.length;
-    }
-    response.push({ serverName, onlineUsers, totalUsers, channelCount, messageCount, subscribed });
-  }
+  const response = servers.map((server) => {
+    return {
+      serverName: server.name,
+      onlineUsers: server.users.filter((user) => user.online).length,
+      totalUsers: server.users.length,
+      channelCount: server.channels.length,
+      messageCount: server.channels.reduce((acc, channel) => acc + channel.messages.length, 0),
+      subscribed: server.users.some((user) => user.name === name),
+    };
+  });
 
   response.sort((x, y) => y.totalUsers - x.totalUsers);
 
@@ -125,6 +124,7 @@ router.get('/channelIds', async (req: ExtendedRequest, res) => {
 // Gets pins that were created when the user was offline, a bit hacky.
 router.get('/unseenPins', async (req: ExtendedRequest, res) => {
   const { name } = req.query;
+
   const user = await User.findOne({ name }).populate({
     path: 'servers',
     model: 'Server',
@@ -138,17 +138,17 @@ router.get('/unseenPins', async (req: ExtendedRequest, res) => {
     },
   });
 
-  const unseenChannelsWhichHasPins: string[] = [];
+  const unseenChannelsWhichHavePins: string[] = [];
   user.servers.forEach((server) => {
     server.channels.forEach((channel) => {
       const unseenPinExists = channel.pinnedMessages.some(
         (message) => message.createdAt.getTime() > user.lastActiveAt.getTime()
       );
-      if (unseenPinExists) unseenChannelsWhichHasPins.push(channel._id);
+      if (unseenPinExists) unseenChannelsWhichHavePins.push(channel._id);
     });
   });
 
-  res.send(unseenChannelsWhichHasPins);
+  res.send(unseenChannelsWhichHavePins);
 });
 
 export default router;

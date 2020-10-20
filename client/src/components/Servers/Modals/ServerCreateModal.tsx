@@ -53,6 +53,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
   const createServerOnClick = () => {
     setErrorText(`Success! ${inputValue} created.`);
     dispatch(createServer(inputValue));
+    setInputValue('');
   };
 
   const closeModal = () => {

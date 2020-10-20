@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
-import User, { IUser } from '../db/models/user';
-import Server, { IServer } from '../db/models/server';
+import User from '../db/models/user';
+import Server from '../db/models/server';
 
 import { findUserServers, findUsersSubscribedToServer } from '../utils/dbUtils';
 import { getCreateServerValidationError, getJoinServerValidationError } from '../utils/validation';

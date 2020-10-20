@@ -24,13 +24,10 @@ export const createChannel = (
   };
 };
 
-export const selectChannel = (
-  channel: Channel,
-  isVoice: boolean | undefined
-): ClientIOActions.SelectChannelIOAction => {
+export const selectChannel = (channel: Channel): ClientIOActions.SelectChannelIOAction => {
   return {
     type: 'io/userSelectedChannel',
-    payload: { channel, isVoice },
+    payload: { channel },
   };
 };
 
@@ -50,7 +47,7 @@ export const joinServer = (serverName: string): ClientIOActions.JoinServerIOActi
   };
 };
 
-export const sendFriendRequest = (friendName: string): ClientIOActions.AddFriendIOAction => {
+export const addFriend = (friendName: string): ClientIOActions.AddFriendIOAction => {
   return {
     type: 'io/userAddedFriend',
     payload: { friendName },

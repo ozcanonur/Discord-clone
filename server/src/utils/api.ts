@@ -87,7 +87,8 @@ export const searchChannels = async (text: string, name: string) => {
     // Skip _private because it's reserved for private messaging channels
     if (channel.name.includes('_private')) continue;
     // Find the channel's server
-    const server = await Server.findOne({ channels: { $all: [channel._id] } });
+    // @ts-ignore, WOOP
+    const server = await Server.findOne({ channels: { _id: channel.id } });
     // Find the user and check if the user is subscribed to this server
     const user = await User.findOne({ name }).populate('servers');
     const isSubscribed = user.servers.some((s) => s._id.toString() === server._id.toString());

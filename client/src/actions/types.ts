@@ -103,7 +103,6 @@ export namespace ClientIOActions {
     type: string;
     payload: {
       channel: Channel;
-      isVoice: boolean | undefined;
     };
   }
 

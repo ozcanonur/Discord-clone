@@ -19,6 +19,10 @@ interface Props {
 const ConfirmationModal = ({ modalOpen, setModalOpen, itemName, confirmAction }: Props) => {
   const classes = useStyles();
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Modal
       className={classes.modal}
@@ -37,11 +41,7 @@ const ConfirmationModal = ({ modalOpen, setModalOpen, itemName, confirmAction }:
             <span className={classes.warningItem}>{`${itemName}?`}</span>
           </div>
           <div className={classes.buttons}>
-            <Button
-              variant='contained'
-              className={classes.cancelButton}
-              onClick={() => setModalOpen(false)}
-            >
+            <Button variant='contained' className={classes.cancelButton} onClick={closeModal}>
               Cancel
             </Button>
             <Button variant='contained' className={classes.confirmButton} onClick={confirmAction}>

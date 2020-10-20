@@ -18,7 +18,7 @@ export const onUserConnected = async (
   // Let the other users who are online know
   emitActiveUsers(io);
 
-  let user = await findUserByNameAndPopulatePrivate(name);
+  const user = await findUserByNameAndPopulatePrivate(name);
 
   // Send the current user's servers (with channels populated) to client
   socket.emit('action', { type: 'io/servers', payload: reduceServers(user.servers) });

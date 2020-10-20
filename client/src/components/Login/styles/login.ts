@@ -6,6 +6,10 @@ const loginStyles = createStyles({
     height: '100%',
     padding: '10% 35%',
     backgroundColor: '#202225',
+
+    '@media (min-width: 1600px)': {
+      padding: '10% 38%',
+    },
   },
   login: {
     display: 'flex',

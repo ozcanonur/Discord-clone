@@ -4,7 +4,6 @@ import Channel from '../db/models/channel';
 import Message from '../db/models/message';
 
 import { emitPrivateMessageNotification, emitMessagesToChannel } from '../utils/emit';
-import { reduceMessages } from '../utils/reduce';
 
 export const onUserMessaged = async (
   io: SocketIO.Server,

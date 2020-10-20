@@ -21,7 +21,7 @@ const Chat = () => {
   const { name } = useSelector((state: RootState) => state.user);
   const messages = useSelector((state: RootState) => state.messages);
   const selectedPrivateUser = useSelector((state: RootState) => state.selectedPrivateUser);
-  const [shownMessagesCount, setShownMessagesCount] = useState(15);
+  const [shownMessagesCount, setShownMessagesCount] = useState(20);
 
   const shownMessages = messages.slice(0, shownMessagesCount);
 
