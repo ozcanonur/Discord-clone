@@ -8,17 +8,27 @@ import cors from 'cors';
 import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
+import rateLimit from 'express-rate-limit';
+
 import authRouter from './routes/auth';
 import discordRouter from './routes/discord';
 
 const app = express();
 const server = http.createServer(app);
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Too many requests, please try again later.',
+});
+
 // Middlewares
 app.use(express.static('../client/build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
+app.use('/login', limiter);
+app.use('/register', limiter);
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,

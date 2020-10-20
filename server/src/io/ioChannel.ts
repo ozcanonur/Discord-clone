@@ -65,11 +65,11 @@ export const onUserDeletedChannel = async (
   if (isDefaultServers || server.admin._id.toString() !== user._id.toString()) return;
 
   // Remove the channel from the server
-  server.channels = server.channels.filter((ch) => ch._id.toString() !== channelId);
+  server.channels = server.channels.filter((channel) => channel._id.toString() !== channelId);
   await server.save();
 
   // Remove the channel, remnants (messages) will be taken care of by middleware
-  // Using remove() to trigger middleware instead one liner
+  // Using remove() to trigger middleware instead of one liner
   const channel = await Channel.findOne({ _id: channelId });
   await channel.remove();
 

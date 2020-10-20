@@ -5,10 +5,9 @@ const pinnedMessagesStyles = createStyles({
     width: '100%',
   },
   pinnedMessage: {
-    paddingTop: 0,
     backgroundColor: '#40444b',
     marginTop: '1rem',
-    padding: '1rem 3rem',
+    padding: '0 2rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
 
     '& > div': {

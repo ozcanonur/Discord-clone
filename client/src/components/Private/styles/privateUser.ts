@@ -21,6 +21,7 @@ const privateUserStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   icon: {
     fontSize: '2rem',

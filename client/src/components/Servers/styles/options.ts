@@ -8,7 +8,7 @@ const optionsStyles = createStyles({
     padding: 0,
   },
   friendsIcon: {
-    color: '#dcddde',
+    color: '#dcddde !important',
   },
 });
 

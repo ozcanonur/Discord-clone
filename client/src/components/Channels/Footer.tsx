@@ -40,6 +40,11 @@ const Footer = () => {
   };
 
   const toggleSound = () => {
+    const audios = document.getElementsByTagName('audio');
+    for (let audio of audios) {
+      audio.muted = soundOpen;
+    }
+
     setSoundOpen(!soundOpen);
   };
 

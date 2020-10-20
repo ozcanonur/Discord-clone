@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
 import Main from './components/Main';

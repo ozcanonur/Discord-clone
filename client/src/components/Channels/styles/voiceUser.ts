@@ -22,6 +22,7 @@ const voiceUserStyles = createStyles({
     alignSelf: 'flex-start',
     position: 'relative',
     cursor: 'pointer',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   text: {
     color: 'rgba(220,221,222,0.8)',

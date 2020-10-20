@@ -24,6 +24,7 @@ const activeUserStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   icon: {
     width: '2.5rem',

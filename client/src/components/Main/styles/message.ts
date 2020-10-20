@@ -50,6 +50,7 @@ const messageStyles = createStyles({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     cursor: 'pointer',
+    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   discordIconContainer: {
     display: 'flex',
