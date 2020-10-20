@@ -78,7 +78,9 @@ const Chat = () => {
               {shownMessages.map((message, key) => (
                 <ListItem key={key} disableGutters className={classes.listItem}>
                   <Message message={message} />
-                  <MessageOptions message={message} />
+                  <div className={classes.messageOptionsContainer}>
+                    <MessageOptions message={message} />
+                  </div>
                 </ListItem>
               ))}
             </InfiniteScroll>

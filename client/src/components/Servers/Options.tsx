@@ -29,6 +29,14 @@ const Options = () => {
     dispatch(selectPrivateUser(''));
   };
 
+  const openAddServerModal = () => {
+    setAddServerModalOpen(true);
+  };
+
+  const openExploreModal = () => {
+    setExploreModalOpen(true);
+  };
+
   return (
     <List className={classes.list}>
       <ListItem disableGutters className={classes.listItem}>
@@ -38,13 +46,13 @@ const Options = () => {
             privateRoute
             name='Friends / Private Messages'
           >
-            <PeopleAlt style={{ color: '#dcddde' }} />
+            <PeopleAlt className={classes.friendsIcon} />
           </ServerIcon>
         </NavLink>
       </ListItem>
       <ListItem disableGutters className={classes.listItem}>
         <ServerIcon
-          onClick={() => setAddServerModalOpen(true)}
+          onClick={openAddServerModal}
           privateRoute={false}
           isOption={true}
           name='Add / Join Server'
@@ -54,7 +62,7 @@ const Options = () => {
       </ListItem>
       <ListItem disableGutters className={classes.listItem}>
         <ServerIcon
-          onClick={() => setExploreModalOpen(true)}
+          onClick={openExploreModal}
           privateRoute={false}
           isOption={true}
           name='Explore Servers'

@@ -128,11 +128,15 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
     }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{

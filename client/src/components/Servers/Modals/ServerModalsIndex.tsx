@@ -26,6 +26,14 @@ const ServerModalsIndex = ({ modalOpen, setModalOpen }: Props) => {
     setModalOpen(false);
   };
 
+  const openCreateServerModal = () => {
+    setCreateServerModalOpen(true);
+  };
+
+  const openJoinServerModal = () => {
+    setCreateModalJoinOpen(true);
+  };
+
   return (
     <>
       <Modal
@@ -47,7 +55,7 @@ const ServerModalsIndex = ({ modalOpen, setModalOpen }: Props) => {
             <Button
               variant='outlined'
               className={classes.modalButton}
-              onClick={() => setCreateServerModalOpen(true)}
+              onClick={openCreateServerModal}
             >
               Create My Own
             </Button>
@@ -56,7 +64,7 @@ const ServerModalsIndex = ({ modalOpen, setModalOpen }: Props) => {
             <Button
               variant='contained'
               className={classes.modalButton2}
-              onClick={() => setCreateModalJoinOpen(true)}
+              onClick={openJoinServerModal}
             >
               Join a Server
             </Button>

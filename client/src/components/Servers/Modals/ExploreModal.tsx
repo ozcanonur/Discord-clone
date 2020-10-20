@@ -97,11 +97,15 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
     };
   }, [modalOpen, inputText]);
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{

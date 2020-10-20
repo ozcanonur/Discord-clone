@@ -68,7 +68,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{

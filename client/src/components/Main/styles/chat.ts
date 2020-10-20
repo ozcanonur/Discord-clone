@@ -38,12 +38,21 @@ const chatStyles = createStyles({
       },
     },
   },
+  messageOptionsContainer: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   messageOptions: {
     position: 'absolute',
-    top: 0,
+    bottom: '-0.5rem',
     right: 0,
     padding: '1rem',
+    paddingRight: '0.5rem',
     visibility: 'hidden',
+    display: 'flex',
+    alignItems: 'center',
   },
   optionIcon: {
     fontSize: '2.3rem',

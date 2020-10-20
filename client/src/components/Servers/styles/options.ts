@@ -7,6 +7,9 @@ const optionsStyles = createStyles({
   listItem: {
     padding: 0,
   },
+  friendsIcon: {
+    color: '#dcddde',
+  },
 });
 
 export default optionsStyles;

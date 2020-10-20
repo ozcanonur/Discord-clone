@@ -24,6 +24,10 @@ const ActiveUser = ({ name }: Props) => {
     setUserTooltipOpen(!userTooltipOpen);
   };
 
+  const closeTooltip = () => {
+    setUserTooltipOpen(false);
+  };
+
   return (
     <div
       className={classes.user}
@@ -36,12 +40,8 @@ const ActiveUser = ({ name }: Props) => {
         </div>
         <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
           <div>
-            <OutsideClickHandler onOutsideClick={() => setUserTooltipOpen(false)}>
-              <UserTooltip
-                name={name}
-                positionTop={false}
-                style={{ top: '3rem', right: '18.5rem', left: 'inherit' }}
-              />
+            <OutsideClickHandler onOutsideClick={closeTooltip}>
+              <UserTooltip name={name} style={{ top: '3rem', right: '18.5rem', left: 'inherit' }} />
             </OutsideClickHandler>
           </div>
         </Fade>

@@ -17,7 +17,7 @@ interface Props {
   modalOpen: boolean;
   setModalOpen: (x: boolean) => void;
   selectedServer: Server;
-  isVoice: boolean | undefined;
+  isVoice?: boolean | undefined;
 }
 
 const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer, isVoice }: Props) => {
@@ -65,11 +65,15 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer, isVoice }
     }
   };
 
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -99,11 +103,7 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer, isVoice }
             />
           </div>
           <div className={classes.modalFooter}>
-            <Button
-              variant='contained'
-              className={classes.modalButton}
-              onClick={() => setModalOpen(false)}
-            >
+            <Button variant='contained' className={classes.modalButton} onClick={closeModal}>
               Cancel
             </Button>
             <Button

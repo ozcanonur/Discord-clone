@@ -5,6 +5,7 @@ const messageStyles = createStyles({
     display: 'flex',
     alignItems: 'center',
     padding: '1rem 0',
+    width: '100%',
   },
   avatar: {
     backgroundColor: '#3CB371',

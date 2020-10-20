@@ -27,7 +27,7 @@ const ConfirmationModal = ({ modalOpen, setModalOpen, itemName, confirmAction }:
     <Modal
       className={classes.modal}
       open={modalOpen}
-      onClose={() => setModalOpen(false)}
+      onClose={closeModal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
