@@ -30,6 +30,7 @@ const chatStyles = createStyles({
   },
   listItem: {
     padding: '0 1rem',
+    position: 'inherit',
     '&:hover': {
       backgroundColor: '#2f3136',
       '& div': {
@@ -65,7 +66,6 @@ const chatStyles = createStyles({
   infiniteScroll: {
     display: 'flex',
     flexDirection: 'column-reverse',
-    marginBottom: '1rem',
   },
   loadingContainer: {
     alignSelf: 'center',

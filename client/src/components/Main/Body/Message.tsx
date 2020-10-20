@@ -29,15 +29,16 @@ const Message = ({ message, pinned = false }: Props) => {
   const classes = useStyles();
 
   const [userTooltipOpen, setUserTooltipOpen] = useState(false);
-  const [tooltipPositionTop, setTooltipPositionTop] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState(0);
 
   const { username, createdAt } = message;
   const messageText = message.message;
 
   const handleUserIconClick = (e: any) => {
-    // Display tooltip facing top or bottom depending on the view height
-    if (e.clientY < window.innerHeight / 2) setTooltipPositionTop(true);
-    else setTooltipPositionTop(false);
+    // // Display tooltip facing top or bottom depending on the view height
+    if (e.clientY < window.innerHeight / 2)
+      setTooltipPosition(window.innerHeight - e.clientY - 400);
+    else setTooltipPosition(window.innerHeight - e.clientY);
 
     setUserTooltipOpen(!userTooltipOpen);
   };
@@ -52,7 +53,7 @@ const Message = ({ message, pinned = false }: Props) => {
             </div>
             <Fade in={userTooltipOpen} unmountOnExit mountOnEnter>
               <div>
-                <UserTooltip name={username} positionTop={tooltipPositionTop} />
+                <UserTooltip name={username} style={{ bottom: tooltipPosition }} />
               </div>
             </Fade>
           </div>

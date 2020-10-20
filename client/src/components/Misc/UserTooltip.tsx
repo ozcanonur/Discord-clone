@@ -30,11 +30,10 @@ const useStyles = makeStyles(userTooltipStyles);
 
 interface Props {
   name: string;
-  positionTop: boolean;
   style?: any;
 }
 
-const UserTooltip = ({ name, positionTop, style }: Props) => {
+const UserTooltip = ({ name, style }: Props) => {
   const classes = useStyles();
 
   const user = useSelector((state: RootState) => state.user);
@@ -119,7 +118,7 @@ const UserTooltip = ({ name, positionTop, style }: Props) => {
   };
 
   return (
-    <div className={classes.container} style={{ bottom: positionTop ? 'inherit' : 0, ...style }}>
+    <div className={classes.container} style={{ ...style }}>
       <div className={classes.header}>
         <div className={classes.headerImg}>
           <div className={classes.discordIconContainer}>

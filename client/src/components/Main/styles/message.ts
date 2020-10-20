@@ -48,7 +48,6 @@ const messageStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    position: 'relative',
     cursor: 'pointer',
   },
   discordIconContainer: {
