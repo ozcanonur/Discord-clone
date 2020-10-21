@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
-import AnnouncementRoundedIcon from '@material-ui/icons/AnnouncementRounded';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
+import ErrorRoundedIcon from '@material-ui/icons/ErrorRounded';
 
 import Button from '../Misc/Button';
 import {
@@ -51,6 +51,9 @@ const PrivateUser = ({ username, isFriend }: Props) => {
   };
 
   const selectPrivateChannelOnClick = () => {
+    // Don't select the same user if attempted
+    if (selectedPrivateUser === username) return;
+
     dispatch(selectPrivateChannel(username));
     dispatch(selectPrivateChannelIo(username));
     dispatch(selectPrivateUser(username));
@@ -72,18 +75,30 @@ const PrivateUser = ({ username, isFriend }: Props) => {
         </div>
       </div>
       <div className={classes.username}>{username}</div>
-      {isFriend ? (
-        <Button onClick={removeFriendOnClick} tooltipText='Remove friend' style={{ padding: 0 }}>
-          <RemoveCircleRoundedIcon className={classes.icon} />
-        </Button>
-      ) : (
-        <Button onClick={addFriendOnClick} tooltipText='Add friend' style={{ padding: 0 }}>
-          <AddCircleRoundedIcon className={classes.icon} />
-        </Button>
-      )}
-      {messageNotification ? (
-        <AnnouncementRoundedIcon className={classes.messageNotification} />
-      ) : null}
+      <div className={classes.indicators}>
+        {isFriend ? (
+          <Button
+            onClick={removeFriendOnClick}
+            tooltipText='Remove friend'
+            style={{ padding: 0, display: 'flex' }}
+          >
+            <RemoveCircleRoundedIcon className={classes.icon} />
+          </Button>
+        ) : (
+          <Button
+            onClick={addFriendOnClick}
+            tooltipText='Add friend'
+            style={{ padding: 0, display: 'flex' }}
+          >
+            <AddCircleRoundedIcon className={classes.icon} />
+          </Button>
+        )}
+        {messageNotification ? (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <ErrorRoundedIcon className={classes.messageNotification} />
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 };

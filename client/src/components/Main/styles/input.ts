@@ -88,6 +88,27 @@ const inputStyles = createStyles({
       minWidth: '10rem',
     },
   },
+  typingContainer: {
+    display: 'flex',
+    position: 'absolute',
+    bottom: '-2.8rem',
+    left: '1rem',
+    alignItems: 'center',
+    fontSize: '1.2rem',
+    overflow: 'hidden',
+  },
+  typingSvg: {
+    width: '2.5rem',
+    height: '2.5rem',
+  },
+  typingUser: {
+    marginLeft: '0.7rem',
+    fontWeight: 1000,
+  },
+  typingText: {
+    marginLeft: '0.4rem',
+    fontWeight: 400,
+  },
 });
 
 export default inputStyles;

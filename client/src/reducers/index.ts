@@ -8,6 +8,7 @@ import {
   notifications,
   ioResponse,
   pinnedMessages,
+  typing,
 } from './socket';
 import {
   user,
@@ -34,4 +35,5 @@ export const reducers = combineReducers<RootState>({
   ioResponse,
   notifications,
   peer,
+  typing,
 });

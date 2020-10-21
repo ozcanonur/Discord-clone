@@ -71,6 +71,18 @@ export const createPin = (
   };
 };
 
+export const typing = (): ClientIOActions.TypingIOAction => {
+  return {
+    type: 'io/userTyping',
+  };
+};
+
+export const stopTyping = (): ClientIOActions.StopTypingIOAction => {
+  return {
+    type: 'io/userStoppedTyping',
+  };
+};
+
 export const message = (message: string): ClientIOActions.MessageIOAction => {
   return {
     type: 'io/userMessaged',

@@ -6,7 +6,6 @@ const c = canvas.getContext('2d');
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
 canvas.style.position = 'absolute';
 canvas.style.top = '0';
 canvas.style.height = '100%';

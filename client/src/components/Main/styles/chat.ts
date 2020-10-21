@@ -9,6 +9,7 @@ const chatStyles = createStyles({
   chat: {
     flexGrow: 1,
     padding: '2rem',
+    paddingBottom: '3rem',
     fontSize: '1.5rem',
     display: 'flex',
     flexDirection: 'column',

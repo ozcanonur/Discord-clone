@@ -19,7 +19,12 @@ import {
   onUserRemovedFriend,
   onUserSelectedPrivateChannel,
 } from './ioPrivate';
-import { onUserMessaged, onUserDeletedMessage } from './ioMessage';
+import {
+  onUserTyping,
+  onUserStoppedTyping,
+  onUserMessaged,
+  onUserDeletedMessage,
+} from './ioMessage';
 
 export interface Action {
   type: string;
@@ -52,6 +57,8 @@ io.on('connection', (socket: Socket) => {
       await onUserSelectedPrivateChannel(io, socket, action);
     else if (action.type === 'io/userRemovedFriend') await onUserRemovedFriend(io, socket, action);
     // ioMessage
+    else if (action.type === 'io/userTyping') await onUserTyping(io, socket);
+    else if (action.type === 'io/userStoppedTyping') await onUserStoppedTyping(io, socket);
     else if (action.type === 'io/userMessaged') await onUserMessaged(io, socket, action);
     else if (action.type === 'io/userDeletedMessage')
       await onUserDeletedMessage(io, socket, action);

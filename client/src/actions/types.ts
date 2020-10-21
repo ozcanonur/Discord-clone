@@ -106,6 +106,14 @@ export namespace ClientIOActions {
     };
   }
 
+  export interface TypingIOAction {
+    type: string;
+  }
+
+  export interface StopTypingIOAction {
+    type: string;
+  }
+
   export interface MessageIOAction {
     type: string;
     payload: {
@@ -216,6 +224,16 @@ export namespace ServerIOActions {
   export interface IOResponsePinnedMessagesAction {
     type: string;
     payload: Message[];
+  }
+
+  export interface IOResponseTypingAction {
+    type: string;
+    payload: TypingUser;
+  }
+
+  export interface IOResponseStoppedTypingAction {
+    type: string;
+    payload: TypingUser;
   }
 
   export interface IOResponseMessagesAction {

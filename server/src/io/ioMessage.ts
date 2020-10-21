@@ -5,6 +5,40 @@ import Message from '../db/models/message';
 
 import { emitPrivateMessageNotification, emitMessagesToChannel } from '../utils/emit';
 
+export const onUserTyping = async (io: SocketIO.Server, socket: Socket) => {
+  // Find the user's current channel and name
+  const { name, currentChannel } = await User.findOne({ socketId: socket.id });
+
+  // Find all the users who are currently in the channel
+  // @ts-ignore, WOOP
+  const users = await User.find({ currentChannel: { _id: currentChannel._id } });
+
+  // Send typing indicator to all
+  users.forEach((u) => {
+    io.to(u.socketId).emit('action', {
+      type: 'io/typing',
+      payload: { username: name, channelId: currentChannel._id },
+    });
+  });
+};
+
+export const onUserStoppedTyping = async (io: SocketIO.Server, socket: Socket) => {
+  // Find the user's current channel and name
+  const { name, currentChannel } = await User.findOne({ socketId: socket.id });
+
+  // Find all the users who are currently in the channel
+  // @ts-ignore, WOOP
+  const users = await User.find({ currentChannel: { _id: currentChannel._id } });
+
+  // Send typing indicator to all
+  users.forEach((u) => {
+    io.to(u.socketId).emit('action', {
+      type: 'io/stoppedTyping',
+      payload: { username: name, channelId: currentChannel._id },
+    });
+  });
+};
+
 export const onUserMessaged = async (
   io: SocketIO.Server,
   socket: Socket,
@@ -38,7 +72,7 @@ export const onUserMessaged = async (
   await channel.save();
 
   // Send the messages in the channel back
-  emitMessagesToChannel(io, channel);
+  emitMessagesToChannel(io, channel, user);
 
   // Send a notification if it's a private message
   if (user.currentChannel.name.includes('private')) emitPrivateMessageNotification(io, user);

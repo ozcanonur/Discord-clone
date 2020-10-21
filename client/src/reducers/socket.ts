@@ -1,4 +1,5 @@
 import uniqBy from 'lodash/uniqBy';
+import uniqWith from 'lodash/uniqWith';
 import { ServerIOActions } from '../actions/types';
 
 export const activeUsers = (
@@ -43,6 +44,25 @@ export const pinnedMessages = (
   switch (action.type) {
     case 'io/pinnedMessages':
       return [...action.payload];
+    default:
+      return state;
+  }
+};
+
+export const typing = (
+  state: TypingUser[] = [],
+  action: ServerIOActions.IOResponseTypingAction
+) => {
+  switch (action.type) {
+    case 'io/typing':
+      return uniqWith(
+        [...state, action.payload],
+        (x, y) => x.channelId === y.channelId && x.username === y.username
+      );
+    case 'io/stoppedTyping':
+      return state.filter(
+        (e) => !(e.channelId === action.payload.channelId && e.username === action.payload.username)
+      );
     default:
       return state;
   }

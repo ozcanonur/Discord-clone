@@ -47,6 +47,11 @@ interface User {
   id: string | null;
 }
 
+interface TypingUser {
+  username: string;
+  channelId: string;
+}
+
 interface RootState {
   user: User;
   selectedServerName: string | null;
@@ -64,4 +69,5 @@ interface RootState {
   };
   notifications: Notification[];
   peer: any;
+  typing: TypingUser[];
 }

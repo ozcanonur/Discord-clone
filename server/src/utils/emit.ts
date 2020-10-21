@@ -68,11 +68,20 @@ export const emitPrivateMessageNotification = async (io: SocketIO.Server, user: 
   });
 };
 
-export const emitMessagesToChannel = (io: SocketIO.Server, channel: IChannel) => {
+export const emitMessagesToChannel = (io: SocketIO.Server, channel: IChannel, user?: IUser) => {
   io.to(channel._id.toString()).emit('action', {
     type: 'io/messages',
     payload: reduceMessages(channel.messages),
   });
+
+  // If this is fired after user sent a message
+  if (user) {
+    // Stop the 'typing...' thingie
+    io.to(channel._id.toString()).emit('action', {
+      type: 'io/stoppedTyping',
+      payload: { username: user.name, channelId: channel._id },
+    });
+  }
 };
 
 export const removeIfVoiceAndEmitServers = async (io: SocketIO.Server, user: IUser) => {

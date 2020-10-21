@@ -23,6 +23,7 @@ html {
   --scrollbarBG: rgb(32, 34, 37);
   --thumbBG: rgb(99, 102, 105);
   height: 100%;
+  overflow: hidden;
 }
 
 *::-webkit-scrollbar {
@@ -44,6 +45,7 @@ body {
   min-width: 900px;
   height: 100%;
   font-family: Whitney Medium, sans-serif;
+  overflow: hidden;
 }
 
 #root {

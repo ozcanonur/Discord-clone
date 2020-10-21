@@ -45,6 +45,10 @@ const Header = () => {
       selectedTabInPrivateName === 'AddFriend' ? '3px solid transparent' : '3px solid #43b581',
   };
 
+  const openGithub = () => {
+    window.open('https://github.com/ozcanonur/Discord-clone', '_blank');
+  };
+
   return (
     <div className={classes.headerContainer}>
       <div className={classes.statusContainer}>
@@ -89,10 +93,7 @@ const Header = () => {
           <PeopleAlt />
         </CustomButton>
 
-        <CustomButton
-          onClick={() => window.open('https://github.com/ozcanonur/Discord-clone', '_blank')}
-          tooltipText='GitHub'
-        >
+        <CustomButton onClick={openGithub} tooltipText='GitHub'>
           <GitHubIcon />
         </CustomButton>
       </div>

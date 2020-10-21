@@ -39,9 +39,14 @@ const privateUserStyles = createStyles({
   discordIcon: {
     height: '2.4rem',
   },
+  indicators: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   messageNotification: {
-    height: '1.5rem',
+    fontSize: '2rem',
     fill: 'rgba(220,221,222)',
+    marginLeft: '0.5rem',
   },
   button: {
     padding: 0,

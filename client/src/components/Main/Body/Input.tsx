@@ -8,7 +8,8 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import { Picker } from 'emoji-mart';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
-import { message } from '../../../actions/socket';
+import { ReactComponent as TypingSvg } from '../../../assets/typing.svg';
+import { message, typing, stopTyping } from '../../../actions/socket';
 import inputStyles from '../styles/input';
 
 const useStyles = makeStyles(inputStyles);
@@ -19,12 +20,18 @@ const Input = () => {
   const [inputValue, setInputValue] = useState('');
   const [emojiMenuVisible, setEmojiMenuVisible] = useState(false);
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
+  const typingUsers = useSelector((state: RootState) => state.typing);
+
+  const usersTypingHere = typingUsers.filter((e) => e.channelId === selectedChannel._id);
+
+  const dispatch = useDispatch();
 
   const handleChange = (value: string) => {
     setInputValue(value);
-  };
 
-  const dispatch = useDispatch();
+    if (value.trim() === '') dispatch(stopTyping());
+    else dispatch(typing());
+  };
 
   const handleSubmit = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
@@ -80,6 +87,19 @@ const Input = () => {
           </div>
         </div>
       </OutsideClickHandler>
+      {usersTypingHere.length > 0 ? (
+        <div className={classes.typingContainer}>
+          <TypingSvg className={classes.typingSvg} />
+          <div className={classes.typingUser}>
+            {usersTypingHere.map((e, key) => {
+              const comma =
+                usersTypingHere.length !== 0 && key !== usersTypingHere.length - 1 ? ', ' : '';
+              return <span key={key}>{`${e.username}${comma}`}</span>;
+            })}
+          </div>
+          <div className={classes.typingText}>typing...</div>
+        </div>
+      ) : null}
     </div>
   );
 };

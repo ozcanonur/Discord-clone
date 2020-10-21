@@ -44,6 +44,9 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
 
   const dispatch = useDispatch();
   const selectChannelOnClick = () => {
+    // Don't select the same channel if attempted
+    if (channel._id === selectedChannel._id) return;
+
     dispatch(selectChannel(channel));
     dispatch(selectChannelIo(channel));
 

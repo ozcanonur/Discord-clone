@@ -36,6 +36,9 @@ const Channel = ({ channel }: ChannelProps) => {
   const dispatch = useDispatch();
 
   const selectChannelOnClick = () => {
+    // Don't select the same channel if attempted
+    if (channel._id === selectedChannel._id) return;
+
     // If previous channel was a voice channel
     if (selectedChannel.isVoice) {
       playLeaveSound();
