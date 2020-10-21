@@ -75,7 +75,24 @@ const App = () => {
     if (blob && root) root.removeChild(blob);
 
     // Just to cleanup things by switching to no channel
+    // And clean voice thingies
     return () => {
+      // @ts-ignore
+      const streams = window.streams;
+      if (streams) {
+        streams.forEach((stream: any) => {
+          stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
+            track.stop();
+          });
+        });
+      }
+
+      // Remove all audio html elements
+      const audios = document.getElementsByTagName('audio');
+      while (audios[0]) {
+        audios[0].parentNode?.removeChild(audios[0]);
+      }
+
       dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
     };
   }, []);

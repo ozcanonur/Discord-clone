@@ -43,13 +43,16 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
     selectedServer.channels.find((c) => c._id === channel._id)?.voiceUsers || [];
 
   const dispatch = useDispatch();
-  const selectChannelOnClick = (channel: Channel) => {
+  const selectChannelOnClick = () => {
     dispatch(selectChannel(channel));
     dispatch(selectChannelIo(channel));
 
-    // @ts-ignore
-    const newPeer = new Peer(id);
-    dispatch(setPeer(newPeer));
+    // Initialize the peer id if haven't already
+    if (peer.id !== id) {
+      // @ts-ignore
+      const newPeer = new Peer(id);
+      dispatch(setPeer(newPeer));
+    }
     playJoinSound();
   };
 
@@ -57,34 +60,39 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
     if (!(peer.id === id && selectedChannel._id === channel._id && voiceUsersInChannel.length > 1))
       return;
 
+    // @ts-ignore
+    window.streams = [];
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
-        // Make it a global variable to mute/unmute
-        // @ts-ignore
-        window.mediaStream = stream;
-
-        voiceUsersInChannel.forEach((voiceUser) => {
-          if (voiceUser._id !== id) peer.call(voiceUser._id, stream);
-        });
-      })
-      .catch((err) => console.log(err));
-
-    peer.on('call', (call) => {
-      navigator.mediaDevices
-        .getUserMedia({ audio: true })
-        .then((stream) => {
+        // Answer if somebody calls
+        peer.on('call', (call) => {
           call.answer(stream);
+
+          const audio = document.createElement('audio');
+          // Send them your stream
+          call.on('stream', (remoteStream) => {
+            addAudio(audio, remoteStream);
+          });
+        });
+
+        // Call others and send your stream
+        for (let voiceUser of voiceUsersInChannel) {
+          // Don't call yourself :)
+          if (voiceUser._id === id) continue;
+
+          const call = peer.call(voiceUser._id, stream);
+          // Keep track of the stream for muting/unmuting mic
+          // @ts-ignore
+          window.streams.push(stream);
+
           const audio = document.createElement('audio');
           call.on('stream', (remoteStream) => {
             addAudio(audio, remoteStream);
           });
-          call.on('close', () => {
-            audio.remove();
-          });
-        })
-        .catch((err) => console.log(err));
-    });
+        }
+      })
+      .catch((err) => console.error(err));
   }, [voiceUsersInChannel.length]);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -98,7 +106,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
       <div style={{ width: '100%' }} onContextMenu={(e) => openContextMenu(e)}>
         <ListItem
           button
-          onClick={() => selectChannelOnClick(channel)}
+          onClick={selectChannelOnClick}
           selected={selectedChannel.name === channel.name}
           classes={{ selected: classes.channelSelected, root: classes.channel }}
           disableGutters

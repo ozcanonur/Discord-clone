@@ -37,7 +37,12 @@ const Footer = () => {
 
   const toggleMic = () => {
     // @ts-ignore
-    window.mediaStream.getAudioTracks()[0].enabled = !micOpen;
+    const streams = window.streams;
+    if (streams) {
+      streams.forEach((stream: any) => {
+        stream.getAudioTracks()[0].enabled = !micOpen;
+      });
+    }
     setMicOpen(!micOpen);
   };
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Peer from 'peerjs';
 import useSound from 'use-sound';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
@@ -28,7 +27,6 @@ const Channel = ({ channel }: ChannelProps) => {
 
   const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
   const notifications = useSelector((state: RootState) => state.notifications);
-  const peer: Peer = useSelector((state: RootState) => state.peer);
   const [playLeaveSound] = useSound(leaveSound);
 
   const pinNotification = notifications.find(
@@ -41,12 +39,20 @@ const Channel = ({ channel }: ChannelProps) => {
     // If previous channel was a voice channel
     if (selectedChannel.isVoice) {
       playLeaveSound();
-      // Destroy the peer instance
-      peer.destroy();
       // Remove all audio html elements
       const audios = document.getElementsByTagName('audio');
       while (audios[0]) {
         audios[0].parentNode?.removeChild(audios[0]);
+      }
+
+      // @ts-ignore
+      const streams = window.streams;
+      if (streams) {
+        streams.forEach((stream: any) => {
+          stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
+            track.stop();
+          });
+        });
       }
     }
     dispatch(selectChannel(channel));

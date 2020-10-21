@@ -12,7 +12,7 @@ import Header from './Header';
 import ActiveUsers from '../Main/Body/ActiveUsers';
 import Chat from './Chat';
 import AddFriendBox from './AddFriendBox';
-import { connect } from '../../actions/socket';
+import { connect, selectChannel as selectChannelIo } from '../../actions/socket';
 import { login, selectServerName } from '../../actions/react';
 import indexStyles from './styles/index';
 
@@ -33,6 +33,7 @@ const Private = () => {
     dispatch(login(name, id));
     dispatch(connect(name));
     dispatch(selectServerName('private'));
+    dispatch(selectChannelIo({ _id: undefined, name: '', isVoice: false, voiceUsers: [] }));
   };
 
   const authenticate = async () => {
@@ -53,6 +54,23 @@ const Private = () => {
   };
 
   useEffect(() => {
+    // Clean voice thingies
+    // @ts-ignore
+    const streams = window.streams;
+    if (streams) {
+      streams.forEach((stream: any) => {
+        stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
+          track.stop();
+        });
+      });
+    }
+
+    // Remove all audio html elements
+    const audios = document.getElementsByTagName('audio');
+    while (audios[0]) {
+      audios[0].parentNode?.removeChild(audios[0]);
+    }
+
     // If user is coming directly to /private instead of the login route (refresh etc.)
     if (user.name === null) init();
     else dispatchInitState(user.name, user.id);

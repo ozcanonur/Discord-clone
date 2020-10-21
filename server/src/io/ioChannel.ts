@@ -93,6 +93,11 @@ export const onUserSelectedChannel = async (
     socket.leave(user.currentChannel._id.toString());
     // Remove the user from voiceUsers of the channel if present
     removeIfVoiceAndEmitServers(io, user);
+
+    // Return if the user only 'left' the current channel
+    // Happens on route change etc.
+    // Just because I didn't want to implement a user left channel handler only for this
+    if (channel._id === undefined) return;
   }
 
   // Join the new channel

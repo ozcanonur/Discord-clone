@@ -35,8 +35,8 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
     admin: '',
   };
 
-  const deleteChannelOnClick = (channelId: string) => {
-    dispatch(deleteChannel(channelId));
+  const deleteChannelOnClick = () => {
+    dispatch(deleteChannel(channel._id));
     dispatch(clearMessages());
     const fallbackChannel = selectedServer.channels[0] || {
       _id: '',
@@ -45,6 +45,7 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
       voiceUsers: [],
     };
     dispatch(selectChannel(fallbackChannel));
+    dispatch(selectChannelIo(fallbackChannel));
     setAnchorEl(null);
   };
 
@@ -81,7 +82,7 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
         modalOpen={modalOpen}
         setModalOpen={setModalOpen}
         itemName={channel.name}
-        confirmAction={() => deleteChannelOnClick(channel._id)}
+        confirmAction={deleteChannelOnClick}
       />
     </OutsideClickHandler>
   );

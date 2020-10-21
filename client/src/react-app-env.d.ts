@@ -18,7 +18,7 @@ interface VoiceUser {
 }
 
 interface Channel {
-  _id: string;
+  _id: string | undefined;
   name: string;
   isVoice: boolean;
   voiceUsers: VoiceUser[];

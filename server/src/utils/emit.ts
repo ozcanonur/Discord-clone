@@ -77,12 +77,10 @@ export const emitMessagesToChannel = (io: SocketIO.Server, channel: IChannel) =>
 
 export const removeIfVoiceAndEmitServers = async (io: SocketIO.Server, user: IUser) => {
   const oldChannel = await Channel.findOne({ _id: user.currentChannel._id }).populate('voiceUsers');
-  const wasOnVoice = oldChannel.voiceUsers.some(
-    (u: IUser) => u._id.toString() === user._id.toString()
-  );
+  const wasOnVoice = oldChannel.voiceUsers.some((u) => u._id.toString() === user._id.toString());
   if (wasOnVoice) {
     oldChannel.voiceUsers = oldChannel.voiceUsers.filter(
-      (u: IUser) => u._id.toString() !== user._id.toString()
+      (u) => u._id.toString() !== user._id.toString()
     );
     await oldChannel.save();
 

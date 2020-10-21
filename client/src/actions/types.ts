@@ -169,7 +169,7 @@ export namespace ClientIOActions {
   export interface DeleteChannelIOAction {
     type: string;
     payload: {
-      channelId: string;
+      channelId: string | undefined;
     };
   }
 
