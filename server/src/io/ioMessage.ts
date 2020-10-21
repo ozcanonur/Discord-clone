@@ -9,6 +9,7 @@ export const onUserTyping = async (io: SocketIO.Server, socket: Socket) => {
   // Find the user's current channel and name
   const { name, currentChannel } = await User.findOne({ socketId: socket.id });
 
+  if (!currentChannel) return;
   // Find all the users who are currently in the channel
   // @ts-ignore, WOOP
   const users = await User.find({ currentChannel: { _id: currentChannel._id } });
@@ -25,6 +26,8 @@ export const onUserTyping = async (io: SocketIO.Server, socket: Socket) => {
 export const onUserStoppedTyping = async (io: SocketIO.Server, socket: Socket) => {
   // Find the user's current channel and name
   const { name, currentChannel } = await User.findOne({ socketId: socket.id });
+
+  if (!currentChannel) return;
 
   // Find all the users who are currently in the channel
   // @ts-ignore, WOOP

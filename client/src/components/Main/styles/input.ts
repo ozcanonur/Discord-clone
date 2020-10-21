@@ -106,7 +106,7 @@ const inputStyles = createStyles({
     fontWeight: 1000,
   },
   typingText: {
-    marginLeft: '0.4rem',
+    marginLeft: '0.3rem',
     fontWeight: 400,
   },
 });

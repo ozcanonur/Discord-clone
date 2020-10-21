@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Main from './components/Main';
 import Servers from './components/Servers';
 import Channels from './components/Channels';
-import { connect } from './actions/socket';
+import { connect, stopTyping } from './actions/socket';
 import { login, selectServerName, addPinNotification, selectChannel } from './actions/react';
 
 const App = () => {
@@ -69,14 +69,10 @@ const App = () => {
     // If user is coming from any other route
     else dispatchInitState(user.name, user.id);
 
-    // Remove blob canvas
-    const blob = document.getElementsByTagName('canvas')[0];
-    const root = document.getElementById('root');
-    if (blob && root) root.removeChild(blob);
-
     // Just to cleanup things by switching to no channel
     // And clean voice thingies
     return () => {
+      dispatch(stopTyping());
       // @ts-ignore
       const streams = window.streams;
       if (streams) {
@@ -99,7 +95,7 @@ const App = () => {
 
   return (
     <Grid container direction='row'>
-      <Grid item style={{ width: '35rem' }}>
+      <Grid item style={{ width: '35rem', zIndex: 9999 }}>
         <Grid container direction='row'>
           <Grid item xs={3}>
             <Servers />
@@ -109,7 +105,7 @@ const App = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs>
+      <Grid item xs style={{ zIndex: 9999 }}>
         <Main />
       </Grid>
     </Grid>

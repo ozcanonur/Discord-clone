@@ -14,7 +14,7 @@ const loginStyles = createStyles({
   loginContainer: {
     width: '50rem',
     position: 'absolute',
-    left: '20%',
+    left: '25%',
     top: '50%',
     transform: 'translateY(-50%)',
     zIndex: 9,

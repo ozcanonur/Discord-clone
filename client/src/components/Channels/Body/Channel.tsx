@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import ChannelContextMenu from './ChannelContextMenu';
 import { selectChannel } from '../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../actions/socket';
+import { selectChannel as selectChannelIo, stopTyping } from '../../../actions/socket';
 import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 import leaveSound from '../../../assets/discord-leave.mp3';
 
@@ -38,6 +38,8 @@ const Channel = ({ channel }: ChannelProps) => {
   const selectChannelOnClick = () => {
     // Don't select the same channel if attempted
     if (channel._id === selectedChannel._id) return;
+
+    dispatch(stopTyping());
 
     // If previous channel was a voice channel
     if (selectedChannel.isVoice) {

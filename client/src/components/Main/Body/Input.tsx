@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import TextField from '@material-ui/core/TextField';
@@ -28,10 +28,22 @@ const Input = () => {
 
   const handleChange = (value: string) => {
     setInputValue(value);
-
-    if (value.trim() === '') dispatch(stopTyping());
-    else dispatch(typing());
   };
+
+  useEffect(() => {
+    let mounted = true;
+    // Throttle
+    const timeoutId = setTimeout(() => {
+      if (inputValue.trim() === '') dispatch(stopTyping());
+      else dispatch(typing());
+    }, 250);
+
+    return () => {
+      clearTimeout(timeoutId);
+      mounted = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputValue]);
 
   const handleSubmit = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {

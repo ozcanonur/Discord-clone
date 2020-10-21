@@ -8,7 +8,7 @@ import { disconnect } from '../../actions/socket';
 import Login from './Login';
 import Register from './Register';
 import loginStyles from './styles/login';
-import Blob from './blob';
+import { generateBlob } from './blob';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -25,7 +25,11 @@ const LoginPage = () => {
 
   // Blob animation on top left
   const root = document.getElementById('root');
-  if (root) root.appendChild(Blob);
+  if (root) {
+    root.appendChild(generateBlob(3000, '#242424', 50));
+    root.appendChild(generateBlob(2000, '#36393f', 33));
+    root.appendChild(generateBlob(1000, '#dadbdc', 16));
+  }
 
   return (
     <div id='container' className={classes.container}>

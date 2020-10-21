@@ -12,7 +12,7 @@ import Header from './Header';
 import ActiveUsers from '../Main/Body/ActiveUsers';
 import Chat from './Chat';
 import AddFriendBox from './AddFriendBox';
-import { connect, selectChannel as selectChannelIo } from '../../actions/socket';
+import { connect, selectChannel as selectChannelIo, stopTyping } from '../../actions/socket';
 import { login, selectServerName } from '../../actions/react';
 import indexStyles from './styles/index';
 
@@ -54,6 +54,7 @@ const Private = () => {
   };
 
   useEffect(() => {
+    dispatch(stopTyping());
     // Clean voice thingies
     // @ts-ignore
     const streams = window.streams;
@@ -78,7 +79,7 @@ const Private = () => {
 
   return (
     <Grid container direction='row'>
-      <Grid item style={{ width: '35rem' }}>
+      <Grid item style={{ width: '35rem', zIndex: 9999 }}>
         <Grid container direction='row'>
           <Grid item xs={3}>
             <ServerList />
@@ -88,7 +89,7 @@ const Private = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs>
+      <Grid item xs style={{ zIndex: 9999 }}>
         <div className={classes.container}>
           <Header />
           <div className={classes.chatContainer}>
