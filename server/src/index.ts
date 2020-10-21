@@ -23,8 +23,10 @@ const limiter = rateLimit({
   message: 'Too many requests, please try again later.',
 });
 
+const staticPath = process.env.DEPLOY_STATIC || '../client/build';
+
 // Middlewares
-app.use(express.static('../client/build'));
+app.use(express.static(staticPath));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
@@ -65,9 +67,10 @@ app.use('/', discordRouter);
   await User.updateMany({}, { online: false });
 })();
 
+const catchAllPath = process.env.DEPLOY_CATCH_ALL || '../client/build/index.html';
 // Catch all
 app.get('/*', function (_req, res) {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'), function (err) {
+  res.sendFile(path.join(__dirname, catchAllPath), function (err) {
     if (err) res.status(500).send(err);
   });
 });
