@@ -16,7 +16,7 @@ const searchModalStyles = createStyles({
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
-    width: '50vw',
+    width: '70rem',
     maxHeight: '50vh',
     position: 'absolute',
     top: '20vh',

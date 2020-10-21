@@ -75,7 +75,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
           })
           .catch((err) => console.log(err));
       }
-    }, 200);
+    }, 100);
 
     return function cleanUp() {
       clearTimeout(timeoutId);

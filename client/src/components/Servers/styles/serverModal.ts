@@ -18,7 +18,7 @@ const serverModalStyles = createStyles({
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
-    width: '25vw',
+    width: '40rem',
     position: 'absolute',
     top: '20vh',
   },

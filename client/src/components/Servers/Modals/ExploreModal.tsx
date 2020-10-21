@@ -90,7 +90,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
         setImgDescToServerResults(servers);
         if (mounted) setSearchResults(servers);
       });
-    }, 200);
+    }, 100);
 
     return function cleanUp() {
       clearTimeout(timeoutId);

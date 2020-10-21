@@ -14,8 +14,8 @@ const exploreModalStyles = createStyles({
     alignItems: 'center',
     borderRadius: '6px',
     outline: 'none',
-    maxHeight: '80vh',
-    width: '70vw',
+    height: '80vh',
+    width: '90rem',
   },
   inputContainer: {
     padding: '2rem',

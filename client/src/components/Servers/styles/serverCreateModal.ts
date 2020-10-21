@@ -16,7 +16,7 @@ const serverCreateModalStyles = createStyles({
     justifyContent: 'center',
     borderRadius: '6px',
     outline: 'none',
-    width: '25vw',
+    width: '45rem',
     position: 'absolute',
     top: '20vh',
   },
@@ -32,6 +32,7 @@ const serverCreateModalStyles = createStyles({
     color: '#4f5660',
     opacity: 0.8,
     textAlign: 'center',
+    marginTop: '0.5rem',
   },
   modalIconUpload: {
     color: 'white',

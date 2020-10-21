@@ -35,7 +35,7 @@ const Input = () => {
     const timeoutId = setTimeout(() => {
       if (inputValue.trim() === '') dispatch(stopTyping());
       else dispatch(typing());
-    }, 250);
+    }, 100);
 
     return () => {
       clearTimeout(timeoutId);

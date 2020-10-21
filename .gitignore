@@ -10,3 +10,4 @@ yarn-error.log*
 .history/
 .dist/
 .vscode/
+deployment/

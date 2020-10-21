@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node -r dotenv/config build/index.js",
+    "start": "node -r dotenv/config build/index.js",
     "start:build": "tsc -w",
     "start:run": "nodemon -r dotenv/config build/index.js",
     "client": "cd ../client && yarn start",
@@ -37,7 +37,6 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "socket.io": "^2.3.0",
-    "ts-node": "^9.0.0",
     "typescript": "^4.0.3"
   },
   "devDependencies": {
