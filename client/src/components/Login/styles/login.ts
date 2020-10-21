@@ -41,7 +41,7 @@ const loginStyles = createStyles({
   form: {
     color: '#dcddde',
     width: '100%',
-    marginTop: '1rem',
+    marginTop: '2rem',
   },
   submit: {
     backgroundColor: '#7289da',

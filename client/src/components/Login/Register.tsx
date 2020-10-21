@@ -69,6 +69,9 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
         <Typography component='h1' variant='h5' className={classes.title}>
           Create a new account
         </Typography>
+        <Typography component='h1' variant='h5' className={classes.subtitle}>
+          And get in!
+        </Typography>
         <form className={classes.form} noValidate>
           <TextField
             variant='outlined'
