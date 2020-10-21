@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import rateLimit from 'express-rate-limit';
 
+import User from './db/models/user';
 import authRouter from './routes/auth';
 import discordRouter from './routes/discord';
 
@@ -31,7 +32,9 @@ app.use('/login', limiter);
 app.use('/register', limiter);
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN,
+    // origin: process.env.CORS_ORIGIN,
+    // credentials: true,
+    origin: '*',
     credentials: true,
   })
 );
@@ -56,6 +59,11 @@ import './io/io';
 // Setup API routes
 app.use('/', authRouter);
 app.use('/', discordRouter);
+
+// Make everyone offline for testing, WOOP
+(async () => {
+  await User.updateMany({}, { online: false });
+})();
 
 // Catch all
 app.get('/*', function (_req, res) {

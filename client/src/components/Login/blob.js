@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
 
 const SCALE = 0.25;
@@ -31,7 +32,6 @@ export const generateBlob = (radius, color, segments) => {
       const bumpRadius = 100;
       const halfBumpRadius = bumpRadius / 2;
 
-      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < this.segments + 2; i++) {
         this.anchors.push(0, 0);
         this.radii.push(Math.random() * bumpRadius - halfBumpRadius);
@@ -113,7 +113,6 @@ export const generateBlob = (radius, color, segments) => {
     const leng = p.length;
     let prev;
 
-    // eslint-disable-next-line no-plusplus
     for (let i = 2; i < leng; i++) {
       prev = i - 2;
       avg.push((p[prev] + p[i]) / 2);

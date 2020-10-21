@@ -5,6 +5,7 @@ const loginStyles = createStyles({
   container: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#242424',
     backgroundImage: 'url(' + bgImage + ')',
     backgroundSize: 'cover',
     backgroundPosition: 'center',

@@ -79,7 +79,7 @@ const Private = () => {
 
   return (
     <Grid container direction='row'>
-      <Grid item style={{ width: '35rem', zIndex: 9999 }}>
+      <Grid item style={{ width: '35rem', zIndex: 1 }}>
         <Grid container direction='row'>
           <Grid item xs={3}>
             <ServerList />
@@ -89,7 +89,7 @@ const Private = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs style={{ zIndex: 9999 }}>
+      <Grid item xs style={{ zIndex: 1 }}>
         <div className={classes.container}>
           <Header />
           <div className={classes.chatContainer}>

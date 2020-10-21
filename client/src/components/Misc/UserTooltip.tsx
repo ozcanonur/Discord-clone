@@ -42,16 +42,20 @@ const UserTooltip = ({ name, style }: Props) => {
   const [userNote, setUserNote] = useState('');
 
   const getServers = async () => {
-    return await axios.get('/userServers', { params: { name } });
+    return await axios.get('/userServers', { params: { name }, withCredentials: true });
   };
 
   const getNotes = async () => {
-    return await axios.get('/note', { params: { name: user.name, otherUserName: name } });
+    return await axios.get('/note', {
+      params: { name: user.name, otherUserName: name },
+      withCredentials: true,
+    });
   };
 
   const getChannelIds = async (serverName: string) => {
     return await axios.get('/channelIds', {
       params: { serverName },
+      withCredentials: true,
     });
   };
 
@@ -74,7 +78,11 @@ const UserTooltip = ({ name, style }: Props) => {
 
   const postNote = async () => {
     try {
-      return await axios.post('/note', { name: user.name, otherUserName: name, note: inputValue });
+      return await axios.post(
+        '/note',
+        { name: user.name, otherUserName: name, note: inputValue },
+        { withCredentials: true }
+      );
     } catch (err) {
       console.warn(err);
     }

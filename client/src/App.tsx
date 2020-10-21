@@ -95,7 +95,7 @@ const App = () => {
 
   return (
     <Grid container direction='row'>
-      <Grid item style={{ width: '35rem', zIndex: 9999 }}>
+      <Grid item style={{ width: '35rem', zIndex: 1 }}>
         <Grid container direction='row'>
           <Grid item xs={3}>
             <Servers />
@@ -105,7 +105,7 @@ const App = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs style={{ zIndex: 9999 }}>
+      <Grid item xs style={{ zIndex: 1 }}>
         <Main />
       </Grid>
     </Grid>

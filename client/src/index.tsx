@@ -33,7 +33,13 @@ const theme = createMuiTheme({
   },
 });
 
-const socket = io('http://localhost:5000');
+const serverUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000'
+    : 'https://ozcanonur-discord.herokuapp.com';
+
+// @ts-ignore
+const socket = io(serverUrl);
 const socketIoMiddleware = createSocketIoMiddleware(socket, 'io/');
 
 export const store = createStore(

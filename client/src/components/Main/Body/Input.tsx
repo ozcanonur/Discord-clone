@@ -31,7 +31,6 @@ const Input = () => {
   };
 
   useEffect(() => {
-    let mounted = true;
     // Throttle
     const timeoutId = setTimeout(() => {
       if (inputValue.trim() === '') dispatch(stopTyping());
@@ -40,7 +39,6 @@ const Input = () => {
 
     return () => {
       clearTimeout(timeoutId);
-      mounted = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);

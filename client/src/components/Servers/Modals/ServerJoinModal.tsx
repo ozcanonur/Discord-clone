@@ -48,6 +48,7 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
   const getPinNotifications = async () => {
     const response = await axios.get('/channelIds', {
       params: { serverName: inputValue },
+      withCredentials: true,
     });
 
     dispatch(addPinNotifications('pin', response.data));

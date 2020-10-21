@@ -26,9 +26,8 @@ const LoginPage = () => {
   // Blob animation on top left
   const root = document.getElementById('root');
   if (root) {
-    root.appendChild(generateBlob(3000, '#242424', 50));
-    root.appendChild(generateBlob(2000, '#36393f', 33));
-    root.appendChild(generateBlob(1000, '#dadbdc', 16));
+    root.appendChild(generateBlob(3000, '#242424', 30));
+    root.appendChild(generateBlob(2000, '#36393f', 20));
   }
 
   return (

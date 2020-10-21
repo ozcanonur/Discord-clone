@@ -59,7 +59,7 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
           Welcome back!
         </Typography>
         <Typography component='h1' variant='h5' className={classes.subtitle}>
-          We're so excited to see you!
+          We're so excited to see you again!
         </Typography>
         <form className={classes.form} noValidate>
           <TextField

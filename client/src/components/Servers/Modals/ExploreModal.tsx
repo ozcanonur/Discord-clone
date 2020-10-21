@@ -53,6 +53,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
     try {
       const response = await axios.get('/exploreServers', {
         params: { name, text: inputText },
+        withCredentials: true,
       });
       return response.data;
     } catch (err) {

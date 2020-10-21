@@ -68,6 +68,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
         axios
           .get('/search', {
             params,
+            withCredentials: true,
           })
           .then((res) => {
             if (mounted) setSearchResults(res.data);
