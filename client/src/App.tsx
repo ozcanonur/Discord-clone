@@ -68,6 +68,12 @@ const App = () => {
     if (user.name === null) init();
     // If user is coming from any other route
     else dispatchInitState(user.name, user.id);
+
+    // Remove blob canvas
+    const blob = document.getElementsByTagName('canvas')[0];
+    const root = document.getElementById('root');
+    if (blob && root) root.removeChild(blob);
+
     // Just to cleanup things by switching to no channel
     return () => {
       dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));

@@ -8,6 +8,7 @@ import { disconnect } from '../../actions/socket';
 import Login from './Login';
 import Register from './Register';
 import loginStyles from './styles/login';
+import Blob from './blob';
 
 const useStyles = makeStyles(loginStyles);
 
@@ -22,13 +23,19 @@ const LoginPage = () => {
     dispatch(disconnect());
   }, []);
 
+  // Blob animation on top left
+  const root = document.getElementById('root');
+  if (root) root.appendChild(Blob);
+
   return (
-    <div className={classes.container}>
-      {registerOpen ? (
-        <Register registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
-      ) : (
-        <Login registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
-      )}
+    <div id='container' className={classes.container}>
+      <div className={classes.loginContainer}>
+        {registerOpen ? (
+          <Register registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+        ) : (
+          <Login registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+        )}
+      </div>
     </div>
   );
 };

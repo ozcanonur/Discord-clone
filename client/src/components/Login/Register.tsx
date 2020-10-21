@@ -61,7 +61,7 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
   };
 
   return (
-    <Slide in={registerOpen} direction='left' timeout={500} mountOnEnter unmountOnExit>
+    <Slide in={registerOpen} direction='right' timeout={500} mountOnEnter unmountOnExit>
       <div className={classes.login}>
         <Avatar className={classes.avatar}>
           <LockOpenRoundedIcon classes={{ root: classes.avatarIcon }} />
@@ -136,7 +136,7 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               className={classes.submit}
               onClick={closeRegister}
             >
-              Back
+              Back to Login
             </Button>
             <Button
               fullWidth

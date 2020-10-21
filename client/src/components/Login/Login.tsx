@@ -56,7 +56,10 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
           <VpnKeyRoundedIcon classes={{ root: classes.avatarIcon }} />
         </Avatar>
         <Typography component='h1' variant='h5' className={classes.title}>
-          Sign in
+          Welcome back!
+        </Typography>
+        <Typography component='h1' variant='h5' className={classes.subtitle}>
+          We're so excited to see you!
         </Typography>
         <form className={classes.form} noValidate>
           <TextField

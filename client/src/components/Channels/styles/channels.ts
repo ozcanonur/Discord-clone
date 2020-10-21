@@ -96,6 +96,7 @@ const channelsStyles = createStyles({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
+    cursor: 'default',
   },
 });
 export default channelsStyles;

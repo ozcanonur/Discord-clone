@@ -4,11 +4,11 @@ const voiceUserStyles = createStyles({
   container: {
     transition: 'all .2s ease-in-out',
     '&:hover': {
-      backgroundColor: '#40434a !important',
-      borderRadius: '4px',
+      backgroundColor: 'inherit !important',
     },
     marginBottom: '4px',
     padding: '0.3rem',
+    cursor: 'default',
   },
   iconContainer: {
     backgroundColor: '#7289da',
@@ -21,7 +21,6 @@ const voiceUserStyles = createStyles({
     justifyContent: 'center',
     alignSelf: 'flex-start',
     position: 'relative',
-    cursor: 'pointer',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
   },
   text: {

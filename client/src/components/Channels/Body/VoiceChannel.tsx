@@ -60,6 +60,9 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
     navigator.mediaDevices
       .getUserMedia({ audio: true })
       .then((stream) => {
+        // console.log(stream);
+        // navigator.allMediaStreams = [];
+        // navigator.allMediaStreams.push(stream);
         voiceUsersInChannel.forEach((voiceUser) => {
           if (voiceUser._id !== id) peer.call(voiceUser._id, stream);
         });

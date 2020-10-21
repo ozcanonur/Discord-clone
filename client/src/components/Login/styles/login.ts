@@ -1,22 +1,30 @@
 import createStyles from '@material-ui/core/styles/createStyles';
+import bgImage from '../../../assets/discordBg.jpg';
 
 const loginStyles = createStyles({
   container: {
     width: '100%',
     height: '100%',
-    padding: '10% 35%',
-    backgroundColor: '#202225',
+    backgroundImage: 'url(' + bgImage + ')',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
 
-    '@media (min-width: 1600px)': {
-      padding: '10% 38%',
-    },
+    '@media (min-width: 1600px)': {},
+  },
+  loginContainer: {
+    width: '50rem',
+    position: 'absolute',
+    left: '20%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 9,
   },
   login: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '2rem',
+    padding: '3rem 2.5rem',
     borderRadius: '1rem',
     backgroundColor: '#36393F',
   },
@@ -33,14 +41,15 @@ const loginStyles = createStyles({
   form: {
     color: '#dcddde',
     width: '100%',
+    marginTop: '1rem',
   },
   submit: {
     backgroundColor: '#7289da',
     color: 'rgb(220,221,222)',
-    fontSize: '2rem',
+    fontSize: '1.8rem',
     marginTop: '2rem',
     textTransform: 'none',
-    width: '12rem',
+    width: '14rem',
     '&:hover': {
       backgroundColor: '#5869a8',
     },
@@ -48,8 +57,12 @@ const loginStyles = createStyles({
   inputProps: {
     color: '#dcddde',
     fontSize: '2rem',
-    boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
-    backgroundColor: '#40444B',
+    // boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.2)',
+    backgroundColor: '#303339',
+
+    '& > input': {
+      padding: '1.5rem',
+    },
   },
   root: {
     '& label': {
@@ -63,6 +76,12 @@ const loginStyles = createStyles({
   title: {
     fontSize: '2rem',
     color: '#dcddde',
+  },
+  subtitle: {
+    fontSize: '1.5rem',
+    opacity: 0.8,
+    color: 'rgb(220,221,222)',
+    marginTop: '1rem',
   },
   buttons: {
     display: 'flex',
