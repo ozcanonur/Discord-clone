@@ -38,8 +38,6 @@ app.use('/login', limiter);
 app.use('/register', limiter);
 app.use(
   cors({
-    // origin: process.env.CORS_ORIGIN,
-    // credentials: true,
     origin: '*',
     credentials: true,
   })

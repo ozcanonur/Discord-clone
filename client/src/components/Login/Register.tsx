@@ -22,11 +22,11 @@ interface Props {
 const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
-  const [username, setUserName] = useState('');
+  const [username, setUserName] = useState('Onur');
   const [usernameError, setUsernameError] = useState(false);
   const [usernameErrorText, setUsernameErrorText] = useState('');
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('asdasd');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorText, setPasswordErrorText] = useState('');
 

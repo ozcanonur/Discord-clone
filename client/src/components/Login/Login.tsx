@@ -22,8 +22,8 @@ interface Props {
 const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('Onur');
+  const [password, setPassword] = useState('asdasd');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 

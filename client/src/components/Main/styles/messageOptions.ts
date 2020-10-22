@@ -2,10 +2,14 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 const messageOptionsStyles = createStyles({
   container: {
-    position: 'relative',
+    position: 'absolute',
+    bottom: '-0.5rem',
+    right: '-0.2rem',
+    padding: '1rem',
+    paddingRight: 0,
+    visibility: 'hidden',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   optionIcon: {
     fontSize: '2.3rem',

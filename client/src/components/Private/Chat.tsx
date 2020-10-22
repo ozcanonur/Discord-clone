@@ -12,6 +12,7 @@ import Input from '../Main/Body/Input';
 import { ReactComponent as Loading } from '../../assets/spinner.svg';
 import { deleteMessage } from '../../actions/socket';
 import chatStyles from '../Main/styles/chat';
+import MessageOptions from '../Main/Body/MessageOptions';
 
 const useStyles = makeStyles(chatStyles);
 
@@ -80,20 +81,8 @@ const Chat = () => {
               {shownMessages.map((message: Message, key) => (
                 <ListItem key={key} disableGutters className={classes.listItem}>
                   <Message key={key} message={message} />
-                  <div className={classes.messageOptions}>
-                    {message.username === name ? (
-                      <Tooltip
-                        enterDelay={0}
-                        placement='top'
-                        title='Delete message'
-                        classes={{ tooltip: classes.notificationTooltip }}
-                      >
-                        <DeleteForeverRoundedIcon
-                          className={classes.optionIcon}
-                          onClick={() => deleteMessageOnClick(message)}
-                        />
-                      </Tooltip>
-                    ) : null}
+                  <div className={classes.messageOptionsContainer}>
+                    <MessageOptions message={message} disablePin={true} />
                   </div>
                 </ListItem>
               ))}

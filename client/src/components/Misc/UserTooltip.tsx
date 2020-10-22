@@ -123,7 +123,6 @@ const UserTooltip = ({ name, style }: Props) => {
 
   const addFriendOnClick = () => {
     dispatch(addFriend(name));
-    setInputValue('');
   };
 
   return (

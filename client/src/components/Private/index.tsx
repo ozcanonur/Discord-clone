@@ -33,7 +33,7 @@ const Private = () => {
     dispatch(login(name, id));
     dispatch(connect(name));
     dispatch(selectServerName('private'));
-    dispatch(selectChannelIo({ _id: undefined, name: '', isVoice: false, voiceUsers: [] }));
+    // ({ _id: undefined, name: '', isVoice: false, voiceUsers: [] }));
   };
 
   const authenticate = async () => {

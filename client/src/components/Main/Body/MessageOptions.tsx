@@ -12,9 +12,10 @@ const useStyles = makeStyles(messageOptionsStyles);
 
 interface Props {
   message: Message;
+  disablePin?: boolean;
 }
 
-const MessageOptions = ({ message }: Props) => {
+const MessageOptions = ({ message, disablePin }: Props) => {
   const classes = useStyles();
 
   const { name } = useSelector((state: RootState) => state.user);
@@ -42,17 +43,19 @@ const MessageOptions = ({ message }: Props) => {
           <DeleteForeverRoundedIcon className={classes.optionIcon} onClick={deleteMessageOnClick} />
         </Tooltip>
       ) : null}
-      <Tooltip
-        enterDelay={0}
-        placement='top'
-        title='Pin message'
-        classes={{ tooltip: classes.notificationTooltip }}
-      >
-        <PinLogo
-          className={`${classes.optionIcon} ${classes.pinLogo}`}
-          onClick={pinMessageOnClick}
-        />
-      </Tooltip>
+      {!disablePin ? (
+        <Tooltip
+          enterDelay={0}
+          placement='top'
+          title='Pin message'
+          classes={{ tooltip: classes.notificationTooltip }}
+        >
+          <PinLogo
+            className={`${classes.optionIcon} ${classes.pinLogo}`}
+            onClick={pinMessageOnClick}
+          />
+        </Tooltip>
+      ) : null}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import User, { IUser } from '../db/models/user';
+import User from '../db/models/user';
 import Channel from '../db/models/channel';
 
 import { getFriendRequestValidationError } from '../utils/validation';
@@ -31,7 +31,7 @@ export const onUserAddedFriend = async (
 
   // Check if they messaged before, if not, create a new channel for them
   const messagedBefore = user.usersMessagedBefore.some(
-    (otherUser: IUser) => otherUser.name === friendName
+    (otherUser) => otherUser.name === friendName
   );
   if (!messagedBefore) {
     // Create a new channel for their chat and save
@@ -43,6 +43,7 @@ export const onUserAddedFriend = async (
     user.usersMessagedBefore.push(friend);
     friend.usersMessagedBefore.push(user);
   }
+
   // Add the friend to the user, also to messagedBefore
   user.friends.push(friend);
   await user.save();
@@ -119,7 +120,7 @@ export const onUserSelectedPrivateChannel = async (
   socket: Socket,
   action: SelectPrivateChannelIOAction
 ) => {
-  const { username } = action.payload;
+  const { username: friendName } = action.payload;
 
   const user = await User.findOne({ socketId: socket.id }).populate('currentChannel');
 
@@ -132,17 +133,15 @@ export const onUserSelectedPrivateChannel = async (
 
   // Find the channel, try both combinations since we don't know who added who
   // And we created the channel name via concating the user names
-  const populateFields = {
+  const regex = new RegExp(`(${user.name}${friendName}|${friendName}${user.name})_private`);
+  const channel = await Channel.findOne({ name: { $regex: regex } }).populate({
     path: 'messages',
     model: 'Message',
     populate: {
       path: 'user',
       model: 'User',
     },
-  };
-  const channel =
-    (await Channel.findOne({ name: `${user.name}${username}_private` }).populate(populateFields)) ||
-    (await Channel.findOne({ name: `${username}${user.name}_private` }).populate(populateFields));
+  });
 
   // Join the new channel
   socket.join(channel._id.toString());
