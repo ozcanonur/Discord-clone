@@ -9,7 +9,6 @@
     "client": "cd ../client && yarn start",
     "server": "nodemon -r dotenv/config src/index.js",
     "dev": "concurrently --kill-others-on-fail \"yarn:start:*\" \"yarn client\"",
-    "debug": "nodemon --inspect src/index.js",
     "build:deploy": "tsc --outDir ../deployment",
     "deploy": "cd ../deployment && yarn deploy"
   },

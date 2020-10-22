@@ -16,12 +16,13 @@ const useStyles = makeStyles(loginStyles);
 interface Props {
   registerOpen: boolean;
   setRegisterOpen: (x: boolean) => void;
+  blob: HTMLCanvasElement;
 }
 
-const Register = ({ registerOpen, setRegisterOpen }: Props) => {
+const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
-  const [username, setUserName] = useState('Onur');
+  const [username, setUserName] = useState('');
   const [usernameError, setUsernameError] = useState(false);
   const [usernameErrorText, setUsernameErrorText] = useState('');
 
@@ -48,7 +49,14 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
       const params = { username, password };
       try {
         const response = await axios.post('/register', params, { withCredentials: true });
-        if (response.status === 201) history.push('/main');
+        if (response.status === 201) {
+          blob.style.transform = 'scale(10)';
+
+          setTimeout(() => {
+            blob.style.transform = 'scale(0)';
+            history.push('/main');
+          }, 1000);
+        }
       } catch (err) {
         setUsernameError(true);
         setUsernameErrorText('User already exists.');
@@ -90,7 +98,6 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputProps,
               },
-              autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {
@@ -114,11 +121,12 @@ const Register = ({ registerOpen, setRegisterOpen }: Props) => {
             id='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete='current-password'
+            autoComplete='new-password'
             InputProps={{
               classes: {
                 root: classes.inputProps,
               },
+              autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {

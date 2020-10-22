@@ -16,13 +16,14 @@ const useStyles = makeStyles(loginStyles);
 interface Props {
   registerOpen: boolean;
   setRegisterOpen: (x: boolean) => void;
+  blob: HTMLCanvasElement;
 }
 
-const Login = ({ registerOpen, setRegisterOpen }: Props) => {
+const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
   const [username, setUsername] = useState('Onur');
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('asdasd');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 
@@ -32,7 +33,14 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
 
     try {
       const response = await axios.post('/login', params, { withCredentials: true });
-      if (response.status === 200) history.push('/main');
+      if (response.status === 200) {
+        blob.style.transform = 'scale(10)';
+
+        setTimeout(() => {
+          blob.style.transform = 'scale(0)';
+          history.push('/main');
+        }, 1000);
+      }
     } catch (err) {
       console.error(err.response);
       if (err.response.status === 409) {
@@ -71,6 +79,7 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
             label='Name'
             name='name'
             autoFocus
+            autoComplete='name'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             classes={{ root: classes.root }}
@@ -78,7 +87,6 @@ const Login = ({ registerOpen, setRegisterOpen }: Props) => {
               classes: {
                 root: classes.inputProps,
               },
-              autoComplete: 'off',
             }}
             InputLabelProps={{
               classes: {

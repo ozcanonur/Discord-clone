@@ -47,6 +47,7 @@ const ChannelContextMenu = ({ channel, anchorEl, setAnchorEl }: Props) => {
     dispatch(selectChannel(fallbackChannel));
     dispatch(selectChannelIo(fallbackChannel));
     setAnchorEl(null);
+    setModalOpen(false);
   };
 
   const handleClose = () => {

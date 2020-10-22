@@ -76,6 +76,7 @@ const chatStyles = createStyles({
   infiniteScroll: {
     display: 'flex',
     flexDirection: 'column-reverse',
+    overflow: 'inherit !important',
   },
   loadingContainer: {
     alignSelf: 'center',

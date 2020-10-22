@@ -29,7 +29,11 @@ const staticPath = process.env.DEPLOY_STATIC || '../client/build';
 app.use(express.static(staticPath));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 app.use('/login', limiter);
 app.use('/register', limiter);
 app.use(
@@ -68,6 +72,7 @@ app.use('/', discordRouter);
 })();
 
 const catchAllPath = process.env.DEPLOY_CATCH_ALL || '../client/build/index.html';
+
 // Catch all
 app.get('/*', function (_req, res) {
   res.sendFile(path.join(__dirname, catchAllPath), function (err) {

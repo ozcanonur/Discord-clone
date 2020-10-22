@@ -103,8 +103,8 @@ const ContextMenu = ({ server, anchorEl, setAnchorEl }: Props) => {
         <MenuItem
           classes={{ root: classes.menuItemDelete }}
           disableGutters
-          disabled={server.admin !== id}
           onClick={openDeleteModal}
+          disabled={server.admin !== id}
         >
           Delete Server
         </MenuItem>

@@ -1,6 +1,5 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-param-reassign */
-
 const SCALE = 0.25;
 const TWO_PI = Math.PI * 2;
 const HALF_PI = Math.PI / 2;
@@ -9,11 +8,12 @@ export const generateBlob = (radius, color, segments) => {
   const canvas = document.createElement('canvas');
   const c = canvas.getContext('2d');
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth / 2;
+  canvas.height = window.innerHeight / 2;
   canvas.style.position = 'absolute';
   canvas.style.top = '0';
   canvas.style.height = '100%';
+  canvas.style.transition = 'transform 1s';
 
   class Blob {
     constructor(radius, color, segments) {

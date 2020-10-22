@@ -10,6 +10,12 @@ const indexStyles = createStyles({
     overflowY: 'auto',
     padding: '0.8rem',
   },
+  serverList: {
+    padding: 0,
+  },
+  listItem: {
+    padding: 0,
+  },
 });
 
 export default indexStyles;

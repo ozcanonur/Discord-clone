@@ -29,7 +29,7 @@ const PinnedMessageInput = () => {
 
   const createPinOnClick = (e: any) => {
     if (e.which === 13 && !e.shiftKey) {
-      if (inputValue.trim() === '' || selectedChannel.name !== '')
+      if (inputValue.trim() === '' || selectedChannel.name === '')
         return console.warn(`You need to select a channel first`);
       dispatch(
         // @ts-ignore

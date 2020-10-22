@@ -25,18 +25,23 @@ const LoginPage = () => {
 
   // Blob animation on top left
   const root = document.getElementById('root');
+  const blob1 = generateBlob(2000, '#242424', 30);
+  const blob2 = generateBlob(1300, '#36393f', 20);
+
+  const blobs = document.getElementsByTagName('canvas');
   if (root) {
-    root.appendChild(generateBlob(3000, '#242424', 30));
-    root.appendChild(generateBlob(2000, '#36393f', 20));
+    while (blobs[0]) root.removeChild(blobs[0]);
+    root.appendChild(blob1);
+    root.appendChild(blob2);
   }
 
   return (
     <div id='container' className={classes.container}>
       <div className={classes.loginContainer}>
         {registerOpen ? (
-          <Register registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+          <Register registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} blob={blob1} />
         ) : (
-          <Login registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} />
+          <Login registerOpen={registerOpen} setRegisterOpen={setRegisterOpen} blob={blob1} />
         )}
       </div>
     </div>
