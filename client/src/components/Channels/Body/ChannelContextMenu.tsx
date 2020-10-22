@@ -7,10 +7,10 @@ import OutsideClickHandler from 'react-outside-click-handler';
 
 import { clearMessages, selectChannel } from '../../../actions/react';
 import { deleteChannel, selectChannel as selectChannelIo } from '../../../actions/socket';
-import channelsStyles from '../styles/channels';
 import ConfirmationModal from '../../Misc/ConfirmationModal';
+import channelContextMenuStyles from '../styles/channelContextMenu';
 
-const useStyles = makeStyles(channelsStyles);
+const useStyles = makeStyles(channelContextMenuStyles);
 
 interface Props {
   channel: Channel;
