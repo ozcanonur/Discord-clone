@@ -68,6 +68,6 @@ interface RootState {
     error?: string;
   };
   notifications: Notification[];
-  peer: any;
+  peer: Peer;
   typing: TypingUser[];
 }

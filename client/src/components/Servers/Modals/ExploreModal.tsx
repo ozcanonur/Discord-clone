@@ -92,7 +92,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
       });
     }, 100);
 
-    return function cleanUp() {
+    return () => {
       clearTimeout(timeoutId);
       mounted = false;
     };
@@ -114,10 +114,10 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
       }}
     >
       <Slide in={modalOpen} direction='down'>
-        <div className={classes.modalContainer}>
-          <div className={classes.inputContainer}>
+        <div className={classes.subContainer}>
+          <div className={classes.textFieldContainer}>
             <TextField
-              className={classes.input}
+              className={classes.textField}
               placeholder='Search for a server'
               variant='outlined'
               fullWidth
@@ -128,7 +128,7 @@ const ExploreModal = ({ modalOpen, setModalOpen }: Props) => {
               onChange={(e) => setInputText(e.target.value)}
             />
           </div>
-          <div className={classes.serversContainer}>
+          <div className={classes.servers}>
             {searchResults.map((res, key) => (
               <ExploreServerCard key={key} res={res} setModalOpen={setModalOpen} />
             ))}

@@ -16,7 +16,7 @@ const useStyles = makeStyles(contextMenuStyles);
 
 interface Props {
   server: Server;
-  anchorEl: any;
+  anchorEl: Element;
   setAnchorEl: any;
 }
 

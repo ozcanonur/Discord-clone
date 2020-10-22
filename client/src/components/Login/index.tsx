@@ -7,10 +7,10 @@ import { login } from '../../actions/react';
 import { disconnect } from '../../actions/socket';
 import Login from './Login';
 import Register from './Register';
-import loginStyles from './styles/login';
+import indexStyles from './styles/index';
 import { generateBlob } from './blob';
 
-const useStyles = makeStyles(loginStyles);
+const useStyles = makeStyles(indexStyles);
 
 const LoginPage = () => {
   const classes = useStyles();

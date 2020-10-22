@@ -15,9 +15,9 @@ const ServerList = () => {
   const servers = useSelector((state: RootState) => state.servers);
 
   return (
-    <div className={classes.list}>
+    <div className={classes.container}>
       <Options />
-      <List className={classes.serverList}>
+      <List className={classes.list}>
         {servers.map((server: Server, key) => (
           <Server key={key} server={server} />
         ))}

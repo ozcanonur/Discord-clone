@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const activeUserStyles = createStyles({
-  user: {
+  container: {
     width: '100%',
     maxWidth: '20rem',
     display: 'flex',

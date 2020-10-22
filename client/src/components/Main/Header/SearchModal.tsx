@@ -92,8 +92,8 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
     if (type === '#') {
       // Find the channel and server
       // And dispatch to switch to them
-      let channel: any;
-      let server: any;
+      let channel: Channel | null = null;
+      let server: Server | null = null;
       let found = false;
       for (let i = 0; i < servers.length; i += 1) {
         const s = servers[i];
@@ -108,6 +108,8 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
           if (found) break;
         }
       }
+
+      if (!(channel && server)) return;
 
       dispatch(selectServerName(server.name));
       dispatch(selectChannel(channel));

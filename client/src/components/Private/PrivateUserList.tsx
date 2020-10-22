@@ -38,7 +38,7 @@ const PrivateUserList = () => {
           </div>
           <div className={classes.directMessages}>Direct messages</div>
           <div className={classes.userList}>
-            {friends.map(({ name }, key: number) => (
+            {friends.map(({ name }, key) => (
               <PrivateUser key={key} username={name} isFriend />
             ))}
           </div>
@@ -50,7 +50,7 @@ const PrivateUserList = () => {
           </div>
           <div className={classes.directMessages}>Direct messages</div>
           <div className={classes.userList}>
-            {otherUsers.map(({ name }, key: number) => (
+            {otherUsers.map(({ name }, key) => (
               <PrivateUser key={key} username={name} />
             ))}
           </div>

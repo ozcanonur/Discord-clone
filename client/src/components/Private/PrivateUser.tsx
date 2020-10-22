@@ -63,7 +63,7 @@ const PrivateUser = ({ username, isFriend }: Props) => {
 
   return (
     <div
-      className={classes.user}
+      className={classes.container}
       onClick={selectPrivateChannelOnClick}
       style={{
         backgroundColor: selectedPrivateUser === username ? '#40434a' : 'inherit',

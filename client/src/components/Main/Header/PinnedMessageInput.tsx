@@ -27,7 +27,7 @@ const PinnedMessageInput = () => {
 
   const dispatch = useDispatch();
 
-  const createPinOnClick = (e: any) => {
+  const createPinOnClick = (e: React.KeyboardEvent) => {
     if (e.which === 13 && !e.shiftKey) {
       if (inputValue.trim() === '' || selectedChannel.name === '')
         return console.warn(`You need to select a channel first`);
@@ -55,12 +55,12 @@ const PinnedMessageInput = () => {
 
   return (
     <div className={classes.pinFooter}>
-      <div className={classes.inputContainer}>
+      <div className={classes.container}>
         <TextField
           placeholder='Create a pin'
           variant='outlined'
           fullWidth
-          InputLabelProps={{ className: classes.inputLabel }}
+          InputLabelProps={{ className: classes.textFieldLabel }}
           InputProps={{
             className: `${classes.inputProps} ${classes.pinnedInputProps}`,
           }}

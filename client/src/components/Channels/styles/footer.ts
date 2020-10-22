@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const footerStyles = createStyles({
-  footer: {
+  container: {
     height: '6rem',
     color: 'white',
     padding: '1rem',

@@ -53,11 +53,10 @@ const AddFriendBox = () => {
         You can add a friend with their name. It&apos;s cAsE sEnSitIvE!
       </div>
       <TextField
-        className={classes.inputContainer}
+        className={classes.textField}
         placeholder='Enter a Username'
         variant='outlined'
         fullWidth
-        InputLabelProps={{ className: classes.inputLabel }}
         InputProps={{
           className: classes.inputProps,
           endAdornment: (

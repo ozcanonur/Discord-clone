@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const indexStyles = createStyles({
-  channelList: {
+  container: {
     height: '100vh',
     backgroundColor: '#2f3136',
     color: 'white',

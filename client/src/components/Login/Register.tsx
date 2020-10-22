@@ -70,7 +70,7 @@ const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
 
   return (
     <Slide in={registerOpen} direction='right' timeout={500} mountOnEnter unmountOnExit>
-      <div className={classes.login}>
+      <div className={classes.container}>
         <Avatar className={classes.avatar}>
           <LockOpenRoundedIcon classes={{ root: classes.avatarIcon }} />
         </Avatar>
@@ -93,7 +93,7 @@ const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
             autoFocus
             value={username}
             onChange={(e) => setUserName(e.target.value)}
-            classes={{ root: classes.root }}
+            classes={{ root: classes.textFieldRoot }}
             InputProps={{
               classes: {
                 root: classes.inputProps,
@@ -144,7 +144,7 @@ const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
               fullWidth
               variant='contained'
               color='primary'
-              className={classes.submit}
+              className={classes.button}
               onClick={closeRegister}
             >
               Back to Login
@@ -153,7 +153,7 @@ const Register = ({ registerOpen, setRegisterOpen, blob }: Props) => {
               fullWidth
               variant='contained'
               color='primary'
-              className={classes.submit}
+              className={classes.button}
               onClick={registerOnClick}
             >
               Confirm

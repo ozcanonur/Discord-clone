@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const inputStyles = createStyles({
-  inputContainer: {
+  container: {
     backgroundColor: '#40444b',
     display: 'flex',
     fontSize: '1.5rem',
@@ -33,7 +33,7 @@ const inputStyles = createStyles({
       color: '#dcddde',
     },
   },
-  inputLabel: {
+  textFieldLabel: {
     fontSize: '1.6rem',
   },
   inputProps: {

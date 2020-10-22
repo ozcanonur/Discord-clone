@@ -8,13 +8,13 @@ import ContextMenu from './ContextMenu';
 import ServerIcon from './ServerIcon';
 import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
 import { selectChannel as selectChannelIo } from '../../actions/socket';
-import indexStyles from './styles/index';
+import serverStyles from './styles/server';
 
 interface Props {
   server: Server;
 }
 
-const useStyles = makeStyles(indexStyles);
+const useStyles = makeStyles(serverStyles);
 
 const Server = ({ server }: Props) => {
   const classes = useStyles();
@@ -43,8 +43,8 @@ const Server = ({ server }: Props) => {
     if (history.location.pathname === '/private') history.push('/main');
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openContextMenuOnClick = (e: any) => {
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const openContextMenuOnClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
   };

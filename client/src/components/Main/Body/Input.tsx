@@ -43,7 +43,7 @@ const Input = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue]);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.KeyboardEvent) => {
     if (e.which === 13 && !e.shiftKey) {
       if (inputValue.trim() === '') return;
       dispatch(message(inputValue));
@@ -66,13 +66,13 @@ const Input = () => {
   };
 
   return (
-    <div className={classes.inputContainer}>
+    <div className={classes.container}>
       <TextField
         multiline
         placeholder={`Message # ${selectedChannel.name}`}
         variant='outlined'
         fullWidth
-        InputLabelProps={{ className: classes.inputLabel }}
+        InputLabelProps={{ className: classes.textFieldLabel }}
         InputProps={{
           className: classes.inputProps,
           startAdornment: (

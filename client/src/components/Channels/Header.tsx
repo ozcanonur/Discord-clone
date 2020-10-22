@@ -12,7 +12,7 @@ const Header = () => {
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
 
   return (
-    <div className={classes.header}>
+    <div className={classes.container}>
       <div className={classes.serverName}>{selectedServerName}</div>
     </div>
   );

@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <div className={classes.headerContainer}>
+    <div className={classes.container}>
       <div className={classes.statusContainer}>
         <QuestionAnswerRoundedIcon className={classes.friendsIcon} />
         <div className={classes.friendsText}>Private Messages</div>

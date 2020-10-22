@@ -33,7 +33,7 @@ const Message = ({ message, pinned = false }: Props) => {
 
   const { username, createdAt, message: messageText } = message;
 
-  const handleUserIconClick = (e: any) => {
+  const handleUserIconClick = (e: React.MouseEvent) => {
     // // Display tooltip facing top or bottom depending on the view height and click position
     if (e.clientY < window.innerHeight / 2)
       setTooltipPosition(window.innerHeight - e.clientY - 400);

@@ -42,10 +42,7 @@ const serverUrl =
 const socket = io(serverUrl);
 const socketIoMiddleware = createSocketIoMiddleware(socket, 'io/');
 
-export const store = createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(socketIoMiddleware))
-);
+const store = createStore(reducers, composeWithDevTools(applyMiddleware(socketIoMiddleware)));
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

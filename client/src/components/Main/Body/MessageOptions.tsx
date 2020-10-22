@@ -6,9 +6,9 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
 import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 import { deleteMessage, createPin } from '../../../actions/socket';
-import chatStyles from '../styles/chat';
+import messageOptionsStyles from '../styles/messageOptions';
 
-const useStyles = makeStyles(chatStyles);
+const useStyles = makeStyles(messageOptionsStyles);
 
 interface Props {
   message: Message;
@@ -31,7 +31,7 @@ const MessageOptions = ({ message }: Props) => {
   };
 
   return (
-    <div className={classes.messageOptions}>
+    <div className={classes.container}>
       {message.username === name ? (
         <Tooltip
           enterDelay={0}

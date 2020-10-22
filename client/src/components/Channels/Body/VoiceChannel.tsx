@@ -14,9 +14,9 @@ import VoiceUser from './VoiceUser';
 import joinSound from '../../../assets/discord-join.mp3';
 import { selectChannel, setPeer } from '../../../actions/react';
 import { selectChannel as selectChannelIo } from '../../../actions/socket';
-import channelsStyles from '../styles/channels';
+import channelStyles from '../styles/channel';
 
-const useStyles = makeStyles(channelsStyles);
+const useStyles = makeStyles(channelStyles);
 
 const addAudio = (audio: HTMLAudioElement, remoteStream: MediaStream) => {
   audio.srcObject = remoteStream;
@@ -98,8 +98,8 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
       .catch((err) => console.error(err));
   }, [voiceUsersInChannel.length]);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openContextMenu = (e: any) => {
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const openContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
   };

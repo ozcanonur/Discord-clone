@@ -14,7 +14,7 @@ const useStyles = makeStyles(channelsStyles);
 
 interface Props {
   channel: Channel;
-  anchorEl: any;
+  anchorEl: Element | null;
   setAnchorEl: any;
 }
 

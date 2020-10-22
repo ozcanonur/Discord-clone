@@ -45,7 +45,7 @@ const Channels = ({ channels, isVoice }: Props) => {
   };
 
   return (
-    <div className={classes.category}>
+    <div className={classes.container}>
       <div className={classes.categoryDescription}>
         <IconButton className={classes.iconButton} onClick={toggleListOpen}>
           {listOpen ? (
@@ -65,7 +65,7 @@ const Channels = ({ channels, isVoice }: Props) => {
       <Slide in={listOpen} direction='right' unmountOnExit mountOnEnter>
         <div>
           {channels.length > 0 ? (
-            <List className={classes.channelList}>
+            <List className={classes.list}>
               {isVoice
                 ? channels.map((channel: Channel, key: number) => (
                     <VoiceChannel key={key} channel={channel} selectedServer={selectedServer} />

@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const headerStyles = createStyles({
-  headerContainer: {
+  container: {
     height: '6rem',
     backgroundColor: '#36393f',
     color: 'white',

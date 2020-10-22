@@ -6,7 +6,7 @@ const channelCreateModalStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: '#36393f',
     boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
@@ -42,7 +42,7 @@ const channelCreateModalStyles = createStyles({
     textTransform: 'uppercase',
     opacity: 0.6,
   },
-  input: {
+  textField: {
     marginTop: '1rem',
   },
   inputProps: {

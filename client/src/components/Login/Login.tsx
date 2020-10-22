@@ -22,8 +22,8 @@ interface Props {
 const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('Onur');
-  const [password, setPassword] = useState('asdasd');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 
@@ -59,7 +59,7 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
 
   return (
     <Slide in={!registerOpen} direction='right' timeout={500} mountOnEnter unmountOnExit>
-      <div className={classes.login}>
+      <div className={classes.container}>
         <Avatar className={classes.avatar}>
           <VpnKeyRoundedIcon classes={{ root: classes.avatarIcon }} />
         </Avatar>
@@ -82,7 +82,7 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
             autoComplete='name'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            classes={{ root: classes.root }}
+            classes={{ root: classes.textFieldRoot }}
             InputProps={{
               classes: {
                 root: classes.inputProps,
@@ -127,7 +127,7 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
               fullWidth
               variant='contained'
               color='primary'
-              className={classes.submit}
+              className={classes.button}
               onClick={openRegister}
             >
               Register
@@ -136,7 +136,7 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
               fullWidth
               variant='contained'
               color='primary'
-              className={classes.submit}
+              className={classes.button}
               onClick={loginOnClick}
             >
               Sign in

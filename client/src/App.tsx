@@ -76,7 +76,7 @@ const App = () => {
       // @ts-ignore
       const streams = window.streams;
       if (streams) {
-        streams.forEach((stream: any) => {
+        streams.forEach((stream: MediaStream) => {
           stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
             track.stop();
           });

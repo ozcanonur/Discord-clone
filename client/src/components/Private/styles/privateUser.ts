@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const privateUserStyles = createStyles({
-  user: {
+  container: {
     display: 'flex',
     alignItems: 'center',
     marginTop: '1rem',

@@ -8,7 +8,7 @@ const serverModalStyles = createStyles({
     position: 'absolute',
     top: '30vh',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: 'white',
     boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',

@@ -17,12 +17,11 @@ const addFriendBoxStyles = createStyles({
     opacity: 0.8,
     marginTop: '1.5rem',
   },
-  inputContainer: {
+  textField: {
     marginTop: '2rem',
     backgroundColor: 'rgba(0,0,0, 0.1)',
     borderRadius: '1rem',
   },
-  inputLabel: {},
   inputProps: {
     fontSize: '1.5rem',
     fontWeight: 500,

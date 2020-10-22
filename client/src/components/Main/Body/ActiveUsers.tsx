@@ -18,7 +18,7 @@ const ActiveUsers = () => {
 
   return (
     <Fade in={activeUsersOpen} mountOnEnter unmountOnExit>
-      <List className={classes.activeUsers}>
+      <List className={classes.list}>
         <ListItem disableGutters className={classes.usersStatus}>
           {`Online - ${usernames.length}`}
         </ListItem>

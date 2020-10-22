@@ -86,7 +86,7 @@ const userTooltipStyles = createStyles({
     fontSize: '1.4rem',
     overflow: 'auto',
   },
-  inputLabel: {
+  textFieldLabel: {
     color: '#dcddde',
     fontFamily: 'Whitney Medium, sans-serif',
   },

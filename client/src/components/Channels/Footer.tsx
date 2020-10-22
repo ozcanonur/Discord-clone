@@ -39,7 +39,7 @@ const Footer = () => {
     // @ts-ignore
     const streams = window.streams;
     if (streams) {
-      streams.forEach((stream: any) => {
+      streams.forEach((stream: MediaStream) => {
         stream.getAudioTracks()[0].enabled = !micOpen;
       });
     }
@@ -56,7 +56,7 @@ const Footer = () => {
   };
 
   return (
-    <div className={classes.footer}>
+    <div className={classes.container}>
       <div className={classes.iconContainer}>
         <div className={classes.discordIconContainer}>
           <DiscordIcon className={classes.discordIcon} />

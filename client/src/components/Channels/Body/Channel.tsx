@@ -12,9 +12,9 @@ import { selectChannel as selectChannelIo, stopTyping } from '../../../actions/s
 import { ReactComponent as PinLogo } from '../../../assets/office.svg';
 import leaveSound from '../../../assets/discord-leave.mp3';
 
-import channelsStyles from '../styles/channels';
+import channelStyles from '../styles/channel';
 
-const useStyles = makeStyles(channelsStyles);
+const useStyles = makeStyles(channelStyles);
 
 interface ChannelProps {
   channel: Channel;
@@ -53,7 +53,7 @@ const Channel = ({ channel }: ChannelProps) => {
       // @ts-ignore
       const streams = window.streams;
       if (streams) {
-        streams.forEach((stream: any) => {
+        streams.forEach((stream: MediaStream) => {
           stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
             track.stop();
           });
@@ -64,14 +64,14 @@ const Channel = ({ channel }: ChannelProps) => {
     dispatch(selectChannelIo(channel));
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openContextMenu = (e: any) => {
+  const [anchorEl, setAnchorEl] = useState<any>(null);
+  const openContextMenu = (e: React.MouseEvent) => {
     e.preventDefault();
     setAnchorEl(e.currentTarget);
   };
 
   return (
-    <div className={classes.channelContainer} onContextMenu={(e) => openContextMenu(e)}>
+    <div className={classes.container} onContextMenu={(e) => openContextMenu(e)}>
       <ListItem
         button
         onClick={selectChannelOnClick}

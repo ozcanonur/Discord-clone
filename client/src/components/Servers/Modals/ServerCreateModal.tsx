@@ -72,7 +72,7 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
       }}
     >
       <Slide in={modalOpen} direction='down'>
-        <div className={classes.modalContainer}>
+        <div className={classes.subContainer}>
           <div className={classes.modalHeading}>Customize your server</div>
           <div className={classes.modalSubHeading}>
             Give your server a personality with a name and an icon.
@@ -80,10 +80,10 @@ const ServerCreateModal = ({ modalOpen, setModalOpen }: Props) => {
           <div className={classes.modalSubHeading} style={{ marginBottom: '0.2rem' }}>
             You can always change it later.
           </div>
-          <div className={classes.modalInputContainer}>
-            <div className={classes.inputLabel}>Server name</div>
+          <div className={classes.textFieldContainer}>
+            <div className={classes.textFieldLabel}>Server name</div>
             <TextField
-              className={classes.input}
+              className={classes.textField}
               variant='outlined'
               fullWidth
               InputProps={{

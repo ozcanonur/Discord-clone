@@ -20,7 +20,7 @@ const Body = () => {
   const [textChannels, voiceChannels] = partition(selectedServer.channels, { isVoice: false });
 
   return (
-    <div className={classes.body}>
+    <div className={classes.container}>
       {selectedServerName !== '' ? (
         <>
           <Channels channels={textChannels} />

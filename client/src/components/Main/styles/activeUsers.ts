@@ -1,7 +1,7 @@
 import createStyles from '@material-ui/core/styles/createStyles';
 
 const activeUsersStyles = createStyles({
-  activeUsers: {
+  list: {
     minWidth: '26rem',
     backgroundColor: '#2f3136',
     padding: '2rem',

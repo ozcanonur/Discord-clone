@@ -6,7 +6,7 @@ const exploreModalStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: '#36393f',
     boxShadow: '0 1rem 1rem #000000',
     display: 'flex',
@@ -17,11 +17,11 @@ const exploreModalStyles = createStyles({
     height: '80vh',
     width: '90rem',
   },
-  inputContainer: {
+  textFieldContainer: {
     padding: '2rem',
     width: '100%',
   },
-  input: {
+  textField: {
     backgroundColor: '#72767d',
     borderRadius: '1rem',
     boxShadow: '0 1rem 1rem rgba(0, 0, 0, 0.2)',
@@ -39,7 +39,7 @@ const exploreModalStyles = createStyles({
     color: '#dcddde',
     fontFamily: 'Whitney Medium, sans-serif',
   },
-  serversContainer: {
+  servers: {
     width: '100%',
     padding: '2rem',
     paddingTop: '1rem',

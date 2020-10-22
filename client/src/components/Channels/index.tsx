@@ -12,7 +12,7 @@ const ChannelList = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.channelList}>
+    <div className={classes.container}>
       <Header />
       <Body />
       <Footer />

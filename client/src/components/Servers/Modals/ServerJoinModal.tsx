@@ -77,14 +77,14 @@ const ServerJoinModal = ({ modalOpen, setModalOpen }: Props) => {
       }}
     >
       <Slide in={modalOpen} direction='down'>
-        <div className={classes.modalContainer}>
+        <div className={classes.subContainer}>
           <div className={classes.modalHeading}>Join a Server</div>
           <div className={classes.modalSubHeading}>
             Enter a server name below to join an existing server
           </div>
-          <div className={classes.inputLabel}>Server name</div>
+          <div className={classes.textFieldLabel}>Server name</div>
           <TextField
-            className={classes.input}
+            className={classes.textField}
             variant='outlined'
             fullWidth
             InputProps={{

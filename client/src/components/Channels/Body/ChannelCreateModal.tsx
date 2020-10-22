@@ -81,12 +81,12 @@ const ChannelCreateModal = ({ modalOpen, setModalOpen, selectedServer, isVoice }
       }}
     >
       <Slide in={modalOpen} direction='down'>
-        <div className={classes.modalContainer}>
+        <div className={classes.subContainer}>
           <div className={classes.modalHeading}>Create channel</div>
           <div className={classes.modalInputContainer}>
             <div className={classes.inputLabel}>Channel name</div>
             <TextField
-              className={classes.input}
+              className={classes.textField}
               variant='outlined'
               fullWidth
               InputProps={{

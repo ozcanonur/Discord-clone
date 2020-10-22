@@ -6,7 +6,7 @@ const confirmationModalStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: '#36393f',
     boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',

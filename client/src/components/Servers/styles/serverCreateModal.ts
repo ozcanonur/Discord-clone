@@ -6,7 +6,7 @@ const serverCreateModalStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: 'white',
     boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
@@ -38,20 +38,20 @@ const serverCreateModalStyles = createStyles({
     color: 'white',
     marginTop: '1rem',
   },
-  modalInputContainer: {
+  textFieldContainer: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     marginTop: '2rem',
   },
-  inputLabel: {
+  textFieldLabel: {
     fontSize: '1.5rem',
     color: '#4f5660',
     fontWeight: 900,
     textTransform: 'uppercase',
     opacity: 0.8,
   },
-  input: {
+  textField: {
     marginTop: '1rem',
   },
   inputProps: {

@@ -35,7 +35,7 @@ const ConfirmationModal = ({ modalOpen, setModalOpen, itemName, confirmAction }:
       }}
     >
       <Slide in={modalOpen} direction='down'>
-        <div className={classes.modalContainer}>
+        <div className={classes.subContainer}>
           <div className={classes.warningTextContainer}>
             <span className={classes.warningText}>Are you sure you want to delete</span>
             <span className={classes.warningItem}>{`${itemName}?`}</span>

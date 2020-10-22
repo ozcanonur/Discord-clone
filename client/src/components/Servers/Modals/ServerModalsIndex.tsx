@@ -47,7 +47,7 @@ const ServerModalsIndex = ({ modalOpen, setModalOpen }: Props) => {
         }}
       >
         <Slide in={modalOpen} direction='down'>
-          <div className={classes.modalContainer}>
+          <div className={classes.subContainer}>
             <div className={classes.modalHeading}>Create a server</div>
             <div className={classes.modalSubHeading}>
               Your server is where you and your friends hang out. Make yours and start talking.

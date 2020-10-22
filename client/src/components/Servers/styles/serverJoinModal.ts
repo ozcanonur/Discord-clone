@@ -6,7 +6,7 @@ const serverJoinModalStyles = createStyles({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContainer: {
+  subContainer: {
     backgroundColor: 'white',
     boxShadow: '0 1rem 1rem #000000',
     padding: '2rem',
@@ -34,7 +34,7 @@ const serverJoinModalStyles = createStyles({
     marginBottom: '2rem',
     textAlign: 'center',
   },
-  inputLabel: {
+  textFieldLabel: {
     alignSelf: 'flex-start',
     fontSize: '1.5rem',
     color: '#4f5660',
@@ -42,7 +42,7 @@ const serverJoinModalStyles = createStyles({
     textTransform: 'uppercase',
     fontWeight: 900,
   },
-  input: {
+  textField: {
     marginTop: '1rem',
   },
   inputProps: {

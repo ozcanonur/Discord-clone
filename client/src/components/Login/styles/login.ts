@@ -3,24 +3,6 @@ import bgImage from '../../../assets/discordBg.jpg';
 
 const loginStyles = createStyles({
   container: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#242424',
-    backgroundImage: 'url(' + bgImage + ')',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-
-    '@media (min-width: 1600px)': {},
-  },
-  loginContainer: {
-    width: '50rem',
-    position: 'absolute',
-    left: '25%',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    zIndex: 9,
-  },
-  login: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -44,7 +26,7 @@ const loginStyles = createStyles({
     width: '100%',
     marginTop: '2rem',
   },
-  submit: {
+  button: {
     backgroundColor: '#7289da',
     color: 'rgb(220,221,222)',
     fontSize: '1.8rem',
@@ -58,14 +40,13 @@ const loginStyles = createStyles({
   inputProps: {
     color: '#dcddde',
     fontSize: '2rem',
-    // boxShadow: '0 0.5rem 1rem rgba(0, 0, 0, 0.2)',
     backgroundColor: '#303339',
 
     '& > input': {
       padding: '1.5rem',
     },
   },
-  root: {
+  textFieldRoot: {
     '& label': {
       fontSize: '1.5rem',
     },

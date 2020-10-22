@@ -70,7 +70,7 @@ export const typing = (
 
 export const messages = (
   state: Message[] = [],
-  action: ServerIOActions.IOResponseMessagesAction | any
+  action: ServerIOActions.IOResponseMessagesAction
 ) => {
   switch (action.type) {
     case 'io/messages':

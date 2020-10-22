@@ -11,7 +11,7 @@ interface StyleProps {
 }
 
 const useStyles = makeStyles<Theme, StyleProps>({
-  serverContainer: {
+  container: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -88,7 +88,7 @@ const ServerIcon = ({ children, onClick, style, privateRoute, isOption, name }: 
   const shortenServerName = (name: string) => name.split(' ').map((word) => word.slice(0, 1));
 
   return (
-    <div onClick={onClick} className={classes.serverContainer}>
+    <div onClick={onClick} className={classes.container}>
       <Tooltip
         title={name}
         arrow

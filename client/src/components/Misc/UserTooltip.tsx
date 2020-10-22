@@ -88,7 +88,7 @@ const UserTooltip = ({ name, style }: Props) => {
     }
   };
 
-  const handleNoteSubmit = async (e: any) => {
+  const handleNoteSubmit = async (e: React.KeyboardEvent) => {
     if (inputValue.trim() === '') return;
 
     if (e.which === 13 && !e.shiftKey) {
@@ -159,7 +159,7 @@ const UserTooltip = ({ name, style }: Props) => {
           placeholder='Set note'
           variant='outlined'
           fullWidth
-          InputLabelProps={{ className: classes.inputLabel }}
+          InputLabelProps={{ className: classes.textFieldLabel }}
           InputProps={{
             className: classes.inputProps,
           }}
