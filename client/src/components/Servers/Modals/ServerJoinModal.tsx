@@ -8,8 +8,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
-import { clearIoResponse, addPinNotifications } from '../../../actions/react';
-import { joinServer } from '../../../actions/socket';
+import { clearIoResponse, addPinNotifications } from 'actions/react';
+import { joinServer } from 'actions/socket';
 import serverJoinModalStyles from '../styles/serverJoinModal';
 
 const useStyles = makeStyles(serverJoinModalStyles);

@@ -8,8 +8,8 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import { Picker } from 'emoji-mart';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 
-import { ReactComponent as TypingSvg } from '../../../assets/typing.svg';
-import { message, typing, stopTyping } from '../../../actions/socket';
+import { ReactComponent as TypingSvg } from 'assets/typing.svg';
+import { message, typing, stopTyping } from 'actions/socket';
 import inputStyles from '../styles/input';
 
 const useStyles = makeStyles(inputStyles);

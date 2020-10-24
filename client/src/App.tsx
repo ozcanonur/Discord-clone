@@ -5,11 +5,11 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
-import Main from './components/Main';
-import Servers from './components/Servers';
-import Channels from './components/Channels';
-import { connect, stopTyping } from './actions/socket';
-import { login, selectServerName, addPinNotification, selectChannel } from './actions/react';
+import Main from 'components/Main';
+import Servers from 'components/Servers';
+import Channels from 'components/Channels';
+import { connect, stopTyping } from 'actions/socket';
+import { login, selectServerName, addPinNotification, selectChannel } from 'actions/react';
 
 const App = () => {
   const user = useSelector((state: RootState) => state.user);

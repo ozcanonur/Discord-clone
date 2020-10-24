@@ -1,5 +1,5 @@
 import Peer from 'peerjs';
-import { InternalActions } from '../actions/types';
+import { InternalActions } from 'actions/types';
 
 export const selectedServerName = (
   state: string | null = null,

@@ -1,7 +1,7 @@
 import React from 'react';
 import GitHubIcon from '@material-ui/icons/GitHub';
 
-import CustomButton from '../../Misc/Button';
+import CustomButton from 'components/Misc/Button';
 
 const GithubButton = () => {
   const openGithub = () => {

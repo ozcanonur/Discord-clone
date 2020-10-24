@@ -12,8 +12,8 @@ import Header from './Header';
 import ActiveUsers from '../Main/Body/ActiveUsers';
 import Chat from './Chat';
 import AddFriendBox from './AddFriendBox';
-import { connect, selectChannel as selectChannelIo, stopTyping } from '../../actions/socket';
-import { login, selectServerName } from '../../actions/react';
+import { connect, stopTyping } from 'actions/socket';
+import { login, selectServerName } from 'actions/react';
 import indexStyles from './styles/index';
 
 const useStyles = makeStyles(indexStyles);

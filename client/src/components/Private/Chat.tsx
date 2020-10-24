@@ -3,14 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Message from '../Main/Body/Message';
 import Input from '../Main/Body/Input';
-import { ReactComponent as Loading } from '../../assets/spinner.svg';
-import { deleteMessage } from '../../actions/socket';
+import { ReactComponent as Loading } from 'assets/spinner.svg';
+import { deleteMessage } from 'actions/socket';
 import chatStyles from '../Main/styles/chat';
 import MessageOptions from '../Main/Body/MessageOptions';
 

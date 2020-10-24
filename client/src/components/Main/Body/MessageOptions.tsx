@@ -4,8 +4,8 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
-import { ReactComponent as PinLogo } from '../../../assets/office.svg';
-import { deleteMessage, createPin } from '../../../actions/socket';
+import { ReactComponent as PinLogo } from 'assets/office.svg';
+import { deleteMessage, createPin } from 'actions/socket';
 import messageOptionsStyles from '../styles/messageOptions';
 
 const useStyles = makeStyles(messageOptionsStyles);

@@ -9,7 +9,7 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import 'emoji-mart/css/emoji-mart.css';
 
 import inputStyles from '../styles/input';
-import { createPin } from '../../../actions/socket';
+import { createPin } from 'actions/socket';
 
 const useStyles = makeStyles(inputStyles);
 

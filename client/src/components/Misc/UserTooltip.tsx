@@ -9,7 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
+import { ReactComponent as DiscordIcon } from 'assets/discordIcon.svg';
 import {
   selectPrivateChannel,
   selectPrivateUser,
@@ -17,13 +17,13 @@ import {
   addPinNotifications,
   selectServerName,
   selectChannel,
-} from '../../actions/react';
+} from 'actions/react';
 import {
   joinServer,
   selectPrivateChannel as selectPrivateChannelIo,
   connectNewPrivateUser,
   addFriend,
-} from '../../actions/socket';
+} from 'actions/socket';
 import userTooltipStyles from './styles/userTooltip';
 
 const useStyles = makeStyles(userTooltipStyles);

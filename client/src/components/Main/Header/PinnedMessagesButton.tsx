@@ -4,9 +4,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 import PinnedMessages from './PinnedMessages';
-import CustomButton from '../../Misc/Button';
-import { clearPinNotification } from '../../../actions/react';
-import { ReactComponent as PinLogo } from '../../../assets/office.svg';
+import CustomButton from 'components/Misc/Button';
+import { clearPinNotification } from 'actions/react';
+import { ReactComponent as PinLogo } from 'assets/office.svg';
 import headerStyles from '../styles/header';
 
 const useStyles = makeStyles(headerStyles);

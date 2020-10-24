@@ -5,9 +5,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import { clearMessages, selectChannel } from '../../../actions/react';
-import { deleteChannel, selectChannel as selectChannelIo } from '../../../actions/socket';
-import ConfirmationModal from '../../Misc/ConfirmationModal';
+import { clearMessages, selectChannel } from 'actions/react';
+import { deleteChannel, selectChannel as selectChannelIo } from 'actions/socket';
+import ConfirmationModal from 'components/Misc/ConfirmationModal';
 import channelContextMenuStyles from '../styles/channelContextMenu';
 
 const useStyles = makeStyles(channelContextMenuStyles);

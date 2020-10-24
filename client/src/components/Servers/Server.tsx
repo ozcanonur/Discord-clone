@@ -6,8 +6,8 @@ import ListItem from '@material-ui/core/ListItem';
 
 import ContextMenu from './ContextMenu';
 import ServerIcon from './ServerIcon';
-import { selectServerName, selectChannel, clearMessages } from '../../actions/react';
-import { selectChannel as selectChannelIo } from '../../actions/socket';
+import { selectServerName, selectChannel, clearMessages } from 'actions/react';
+import { selectChannel as selectChannelIo } from 'actions/socket';
 import serverStyles from './styles/server';
 
 interface Props {

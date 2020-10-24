@@ -5,9 +5,9 @@ import Notifications from '@material-ui/icons/Notifications';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import { clearPrivateNotification } from '../../../actions/react';
+import { clearPrivateNotification } from 'actions/react';
 import headerStyles from '../styles/header';
-import CustomButton from '../../Misc/Button';
+import CustomButton from 'components/Misc/Button';
 
 const useStyles = makeStyles(headerStyles);
 

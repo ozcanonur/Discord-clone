@@ -1,6 +1,5 @@
-import uniqBy from 'lodash/uniqBy';
-import uniqWith from 'lodash/uniqWith';
-import { ServerIOActions } from '../actions/types';
+import { uniqBy, uniqWith } from 'lodash';
+import { ServerIOActions } from 'actions/types';
 
 export const activeUsers = (
   state: string[] = [],

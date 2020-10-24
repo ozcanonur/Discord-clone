@@ -11,7 +11,7 @@ import PeopleAlt from '@material-ui/icons/PeopleAlt';
 import ServerIcon from './ServerIcon';
 import ServerModal from './Modals/ServerModalsIndex';
 import ExploreModal from './Modals/ExploreModal';
-import { selectServerName, clearMessages, selectPrivateUser } from '../../actions/react';
+import { selectServerName, clearMessages, selectPrivateUser } from 'actions/react';
 import optionsStyles from './styles/options';
 
 const useStyles = makeStyles(optionsStyles);

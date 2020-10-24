@@ -11,9 +11,9 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 
 import ChannelContextMenu from './ChannelContextMenu';
 import VoiceUser from './VoiceUser';
-import joinSound from '../../../assets/discord-join.mp3';
-import { selectChannel, setPeer } from '../../../actions/react';
-import { selectChannel as selectChannelIo } from '../../../actions/socket';
+import joinSound from 'assets/discord-join.mp3';
+import { selectChannel, setPeer } from 'actions/react';
+import { selectChannel as selectChannelIo } from 'actions/socket';
 import channelStyles from '../styles/channel';
 
 const useStyles = makeStyles(channelStyles);

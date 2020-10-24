@@ -11,8 +11,8 @@ import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
-import { ReactComponent as DiscordIcon } from '../../assets/discordIcon.svg';
-import Button from '../Misc/Button';
+import { ReactComponent as DiscordIcon } from 'assets/discordIcon.svg';
+import Button from 'components/Misc/Button';
 import footerStyles from './styles/footer';
 
 const useStyles = makeStyles(footerStyles);

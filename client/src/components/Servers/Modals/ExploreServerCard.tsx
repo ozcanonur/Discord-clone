@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import axios from 'axios';
 
-import { joinServer } from '../../../actions/socket';
-import { selectServerName, selectChannel, addPinNotifications } from '../../../actions/react';
+import { joinServer } from 'actions/socket';
+import { selectServerName, selectChannel, addPinNotifications } from 'actions/react';
 import serverCardStyles from '../styles/serverCard';
 
 const useStyles = makeStyles(serverCardStyles);

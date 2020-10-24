@@ -11,13 +11,13 @@ import {
   selectPrivateChannel as selectPrivateChannelIo,
   addFriend,
   removeFriend,
-} from '../../actions/socket';
+} from 'actions/socket';
 import {
   selectPrivateChannel,
   selectPrivateUser,
   selectTabInPrivate,
   clearPrivateNotification,
-} from '../../actions/react';
+} from 'actions/react';
 import privateUserStyles from './styles/privateUser';
 
 const useStyles = makeStyles(privateUserStyles);

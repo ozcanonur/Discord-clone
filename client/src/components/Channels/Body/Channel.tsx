@@ -7,10 +7,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import ChannelContextMenu from './ChannelContextMenu';
-import { selectChannel } from '../../../actions/react';
-import { selectChannel as selectChannelIo, stopTyping } from '../../../actions/socket';
-import { ReactComponent as PinLogo } from '../../../assets/office.svg';
-import leaveSound from '../../../assets/discord-leave.mp3';
+import { selectChannel } from 'actions/react';
+import { selectChannel as selectChannelIo, stopTyping } from 'actions/socket';
+import { ReactComponent as PinLogo } from 'assets/office.svg';
+import leaveSound from 'assets/discord-leave.mp3';
 
 import channelStyles from '../styles/channel';
 

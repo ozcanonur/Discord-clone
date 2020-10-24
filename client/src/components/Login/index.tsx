@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 
-import { login } from '../../actions/react';
-import { disconnect } from '../../actions/socket';
+import { login } from 'actions/react';
+import { disconnect } from 'actions/socket';
 import Login from './Login';
 import Register from './Register';
 import indexStyles from './styles/index';

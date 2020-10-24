@@ -3,9 +3,9 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import Fade from '@material-ui/core/Fade';
 import OutsideClickHandler from 'react-outside-click-handler';
 
-import UserTooltip from '../../Misc/UserTooltip';
+import UserTooltip from 'components/Misc/UserTooltip';
 import messageStyles from '../styles/message';
-import { ReactComponent as DiscordIcon } from '../../../assets/discordIcon.svg';
+import { ReactComponent as DiscordIcon } from 'assets/discordIcon.svg';
 
 const useStyles = makeStyles(messageStyles);
 

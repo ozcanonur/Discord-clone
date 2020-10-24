@@ -19,11 +19,11 @@ import {
   selectPrivateChannel,
   selectPrivateUser,
   selectTabInPrivate,
-} from '../../../actions/react';
+} from 'actions/react';
 import {
   selectChannel as selectChannelIo,
   selectPrivateChannel as selectPrivateChannelIo,
-} from '../../../actions/socket';
+} from 'actions/socket';
 import searchModalStyles from '../styles/searchModal';
 
 const useStyles = makeStyles(searchModalStyles);

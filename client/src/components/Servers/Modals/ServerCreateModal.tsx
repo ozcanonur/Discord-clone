@@ -7,8 +7,8 @@ import Slide from '@material-ui/core/Slide';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import { clearIoResponse } from '../../../actions/react';
-import { createServer } from '../../../actions/socket';
+import { clearIoResponse } from 'actions/react';
+import { createServer } from 'actions/socket';
 import serverCreateModalStyles from '../styles/serverCreateModal';
 
 const useStyles = makeStyles(serverCreateModalStyles);
