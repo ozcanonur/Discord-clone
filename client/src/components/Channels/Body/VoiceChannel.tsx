@@ -39,8 +39,7 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
   const peer: Peer = useSelector((state: RootState) => state.peer);
   const [playJoinSound] = useSound(joinSound);
 
-  const voiceUsersInChannel =
-    selectedServer.channels.find((c) => c._id === channel._id)?.voiceUsers || [];
+  const voiceUsersInChannel = selectedServer.channels.find((c) => c._id === channel._id)?.voiceUsers || [];
 
   const dispatch = useDispatch();
   const selectChannelOnClick = () => {
@@ -52,16 +51,24 @@ const VoiceChannel = ({ channel, selectedServer }: ChannelProps) => {
 
     // Initialize the peer id if haven't already
     if (peer.id !== id) {
+      playJoinSound();
       // @ts-ignore
-      const newPeer = new Peer(id);
+
+      const peerId = id === null ? undefined : id;
+      const port = window.location.hostname.includes('localhost') ? 5000 : 443;
+      const secure = !window.location.hostname.includes('localhost');
+      const newPeer = new Peer(peerId, {
+        host: window.location.hostname,
+        secure,
+        port,
+        path: '/peerjs',
+      });
       dispatch(setPeer(newPeer));
     }
-    playJoinSound();
   };
 
   useEffect(() => {
-    if (!(peer.id === id && selectedChannel._id === channel._id && voiceUsersInChannel.length > 1))
-      return;
+    if (!(peer.id === id && selectedChannel._id === channel._id && voiceUsersInChannel.length > 1)) return;
 
     // @ts-ignore
     window.streams = [];

@@ -9,6 +9,7 @@ import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import rateLimit from 'express-rate-limit';
+const peer = require('peer');
 
 import User from './db/models/user';
 import authRouter from './routes/auth';
@@ -63,6 +64,8 @@ import './io/io';
 // Setup API routes
 app.use('/', authRouter);
 app.use('/', discordRouter);
+// WebRTC server
+app.use('/peerjs', peer.ExpressPeerServer(server));
 
 // Make everyone offline for testing, WOOP
 (async () => {

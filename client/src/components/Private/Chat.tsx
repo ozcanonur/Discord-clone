@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -8,7 +8,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Message from '../Main/Body/Message';
 import Input from '../Main/Body/Input';
 import { ReactComponent as Loading } from 'assets/spinner.svg';
-import { deleteMessage } from 'actions/socket';
 import chatStyles from '../Main/styles/chat';
 import MessageOptions from '../Main/Body/MessageOptions';
 
@@ -43,11 +42,6 @@ const Chat = () => {
       const additionalCount = Math.min(20, messages.length - shownMessagesCount);
       setShownMessagesCount(shownMessagesCount + additionalCount);
     }, 1000);
-  };
-
-  const dispatch = useDispatch();
-  const deleteMessageOnClick = (message: Message) => {
-    dispatch(deleteMessage(message));
   };
 
   return (
