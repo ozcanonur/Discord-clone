@@ -24,12 +24,6 @@ const Server = ({ server }: Props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const selectFirstChannelInServer = (server: Server) => {
-    const firstChannel = server.channels[0];
-    dispatch(selectChannel(firstChannel));
-    dispatch(selectChannelIo(firstChannel));
-  };
-
   const selectServerOnClick = (server: Server) => {
     // Don't reselect the same server
     if (selectedServerName === server.name) return;
@@ -37,8 +31,14 @@ const Server = ({ server }: Props) => {
     dispatch(clearMessages());
     dispatch(selectServerName(server.name));
     // Select the first channel if we can
-    if (server.channels.length > 0) selectFirstChannelInServer(server);
-    else dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
+    if (server.channels.length > 0) {
+      const firstChannel = server.channels[0];
+      dispatch(selectChannel(firstChannel));
+      dispatch(selectChannelIo(firstChannel));
+    } else {
+      dispatch(selectChannel({ _id: '', name: '', isVoice: false, voiceUsers: [] }));
+      dispatch(selectChannelIo({ _id: undefined, name: '', isVoice: false, voiceUsers: [] }));
+    }
     // Change route if coming from /private
     if (history.location.pathname === '/private') history.push('/main');
   };
@@ -53,11 +53,7 @@ const Server = ({ server }: Props) => {
     <div onContextMenu={(e) => openContextMenuOnClick(e)}>
       <ListItem disableGutters className={classes.listItem}>
         <div>
-          <ServerIcon
-            onClick={() => selectServerOnClick(server)}
-            privateRoute={false}
-            name={server.name}
-          >
+          <ServerIcon onClick={() => selectServerOnClick(server)} privateRoute={false} name={server.name}>
             {server.name}
           </ServerIcon>
         </div>

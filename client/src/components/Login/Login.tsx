@@ -22,8 +22,8 @@ interface Props {
 const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
   const classes = useStyles();
 
-  const [username, setUsername] = useState('Onur');
-  const [password, setPassword] = useState('asdasd');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState('');
 
@@ -123,22 +123,10 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
             }}
           />
           <div className={classes.buttons}>
-            <Button
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.button}
-              onClick={openRegister}
-            >
+            <Button fullWidth variant='contained' color='primary' className={classes.button} onClick={openRegister}>
               Register
             </Button>
-            <Button
-              fullWidth
-              variant='contained'
-              color='primary'
-              className={classes.button}
-              onClick={loginOnClick}
-            >
+            <Button fullWidth variant='contained' color='primary' className={classes.button} onClick={loginOnClick}>
               Sign in
             </Button>
           </div>
