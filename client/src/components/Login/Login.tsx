@@ -124,7 +124,7 @@ const Login = ({ registerOpen, setRegisterOpen, blob }: Props) => {
           />
           <div className={classes.buttons}>
             <Button fullWidth variant='contained' color='primary' className={classes.button} onClick={openRegister}>
-              Register
+              Register new account
             </Button>
             <Button fullWidth variant='contained' color='primary' className={classes.button} onClick={loginOnClick}>
               Sign in

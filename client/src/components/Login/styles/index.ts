@@ -13,7 +13,7 @@ const loginStyles = createStyles({
     '@media (min-width: 1600px)': {},
   },
   loginContainer: {
-    width: '50rem',
+    width: '55rem',
     position: 'absolute',
     left: '25%',
     top: '50%',

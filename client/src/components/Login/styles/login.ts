@@ -27,12 +27,13 @@ const loginStyles = createStyles({
     marginTop: '2rem',
   },
   button: {
+    boxShadow: '0 .5rem .5rem rgba(0, 0, 0, 0.1)',
     backgroundColor: '#7289da',
     color: 'rgb(220,221,222)',
     fontSize: '1.8rem',
     marginTop: '2rem',
     textTransform: 'none',
-    width: '14rem',
+    width: '21rem',
     '&:hover': {
       backgroundColor: '#5869a8',
     },
