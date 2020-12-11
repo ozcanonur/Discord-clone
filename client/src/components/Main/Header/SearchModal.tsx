@@ -13,17 +13,8 @@ import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
-import {
-  selectChannel,
-  selectServerName,
-  selectPrivateChannel,
-  selectPrivateUser,
-  selectTabInPrivate,
-} from 'actions/react';
-import {
-  selectChannel as selectChannelIo,
-  selectPrivateChannel as selectPrivateChannelIo,
-} from 'actions/socket';
+import { selectChannel, selectServerName, selectPrivateChannel, selectPrivateUser, selectTabInPrivate } from 'actions/react';
+import { selectChannel as selectChannelIo, selectPrivateChannel as selectPrivateChannelIo, connectNewPrivateUser } from 'actions/socket';
 import searchModalStyles from '../styles/searchModal';
 
 const useStyles = makeStyles(searchModalStyles);
@@ -120,6 +111,7 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
       if (location.pathname !== '/main') history.push('/main');
     } else if (type === '@') {
       // resultName = username in this case
+      dispatch(connectNewPrivateUser(resultName));
       dispatch(selectPrivateChannel(resultName));
       dispatch(selectPrivateChannelIo(resultName));
       dispatch(selectPrivateUser(resultName));
@@ -166,16 +158,9 @@ const SearchModal = ({ modalOpen, setModalOpen }: Props) => {
           ) : (
             <List className={classes.results}>
               {searchResults.map((res: SearchResult, key) => (
-                <ListItem
-                  key={key}
-                  disableGutters
-                  className={classes.result}
-                  onClick={() => redirectOnClick(res.type, res.id, res.name)}
-                >
+                <ListItem key={key} disableGutters className={classes.result} onClick={() => redirectOnClick(res.type, res.id, res.name)}>
                   <div className={classes.resultText}>{`${res.type} ${res.name}`}</div>
-                  <div className={classes.resultSecondaryText}>
-                    {res.type === '@' ? 'User' : res.server}
-                  </div>
+                  <div className={classes.resultSecondaryText}>{res.type === '@' ? 'User' : res.server}</div>
                 </ListItem>
               ))}
             </List>

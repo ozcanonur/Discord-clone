@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import ListItem from '@material-ui/core/ListItem';
+import useSound from 'use-sound';
 
 import ContextMenu from './ContextMenu';
 import ServerIcon from './ServerIcon';
 import { selectServerName, selectChannel, clearMessages } from 'actions/react';
-import { selectChannel as selectChannelIo } from 'actions/socket';
+import { selectChannel as selectChannelIo, stopTyping } from 'actions/socket';
 import serverStyles from './styles/server';
+import leaveSound from 'assets/discord-leave.mp3';
 
 interface Props {
   server: Server;
@@ -20,6 +22,8 @@ const Server = ({ server }: Props) => {
   const classes = useStyles();
 
   const selectedServerName = useSelector((state: RootState) => state.selectedServerName);
+  const selectedChannel = useSelector((state: RootState) => state.selectedChannel);
+  const [playLeaveSound] = useSound(leaveSound);
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -27,6 +31,29 @@ const Server = ({ server }: Props) => {
   const selectServerOnClick = (server: Server) => {
     // Don't reselect the same server
     if (selectedServerName === server.name) return;
+
+    dispatch(stopTyping());
+
+    // If previous channel was a voice channel
+    if (selectedChannel.isVoice) {
+      playLeaveSound();
+      // Remove all audio html elements
+      const audios = document.getElementsByTagName('audio');
+      while (audios[0]) {
+        audios[0].parentNode?.removeChild(audios[0]);
+      }
+
+      // @ts-ignore
+      const streams = window.streams;
+      if (streams) {
+        streams.forEach((stream: MediaStream) => {
+          stream.getAudioTracks().forEach((track: MediaStreamTrack) => {
+            track.stop();
+          });
+        });
+      }
+    }
+
     // Clear the messages in case
     dispatch(clearMessages());
     dispatch(selectServerName(server.name));
